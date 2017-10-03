@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal;
 
+import java.io.Serializable;
 import java.io.StringWriter;
 
 import org.simpleframework.xml.core.Persister;
@@ -12,7 +13,8 @@ import javax.xml.bind.JAXBException;
  * Classe utilizada como base para objetos serializaveis.<br>
  * Automatiza a transformacao para xml no metodo toString.
  */
-public abstract class DFBase {
+public abstract class DFBase implements Serializable {
+    private static final long serialVersionUID = 6887612399839814676L;
 
     @Override
     public String toString() {
