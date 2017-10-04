@@ -1,6 +1,6 @@
 package com.fincatto.mdfe300.classes;
 
-import com.fincatto.dfe.classes.DFAmbiente;
+import com.fincatto.documentofiscal.DFAmbiente;
 
 /**
  * <h1>URLs dos serviços</h1><br>

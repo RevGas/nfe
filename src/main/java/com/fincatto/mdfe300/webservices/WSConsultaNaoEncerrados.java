@@ -6,7 +6,6 @@ import java.net.URL;
 import javax.xml.bind.JAXBElement;
 import javax.xml.ws.Holder;
 
-import com.fincatto.nfe310.NFeConfig;
 import com.fincatto.mdfe300.classes.MDFAutorizador;
 
 import br.inf.portalfiscal.mdfe.TConsMDFeNaoEnc;

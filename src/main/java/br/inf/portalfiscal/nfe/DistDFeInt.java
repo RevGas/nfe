@@ -8,7 +8,7 @@
 
 package br.inf.portalfiscal.nfe;
 
-import com.fincatto.nfe310.classes.NFBase;
+import com.fincatto.documentofiscal.DFBase;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -91,7 +91,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "consChNFe"
 })
 @XmlRootElement(name = "distDFeInt")
-public class DistDFeInt extends NFBase {
+public class DistDFeInt extends DFBase {
 
     @XmlElement(required = true)
     protected String tpAmb;

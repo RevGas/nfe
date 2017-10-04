@@ -7,6 +7,7 @@ import br.inf.portalfiscal.mdfe.TRetConsReciMDFe;
 import br.inf.portalfiscal.mdfe.TRetConsSitMDFe;
 import br.inf.portalfiscal.mdfe.TRetConsStatServ;
 import br.inf.portalfiscal.mdfe.TRetEvento;
+import com.fincatto.documentofiscal.SocketFactory;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -16,7 +17,6 @@ import java.security.cert.CertificateException;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import com.fincatto.dfe.webservices.DFSocketFactory;
 import com.fincatto.mdfe300.MDFeConfig;
 import com.fincatto.mdfe300.classes.RetornoEnvioMDFe;
 import java.net.MalformedURLException;
@@ -31,7 +31,7 @@ public class MDFFacade {
     private final WSRecepcaoEvento wsRecepcaoEventoMDF;
 
     public MDFFacade(final MDFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
-    	HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
+    	HttpsURLConnection.setDefaultSSLSocketFactory(new SocketFactory(config).createSSLContext().getSocketFactory());
 
         // inicia os servicos disponíveis
         this.wsRecepcaoMDF = new WSRecepcao(config);

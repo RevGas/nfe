@@ -11,7 +11,6 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.Holder;
 
-import com.fincatto.nfe310.assinatura.AssinaturaDigital;
 import com.fincatto.mdfe300.classes.MDFAutorizador;
 
 import br.inf.portalfiscal.mdfe.TEnviMDFe;
@@ -22,6 +21,7 @@ import br.inf.portalfiscal.mdfe.wsdl.mdferecepcao.MdfeCabecMsg;
 import br.inf.portalfiscal.mdfe.wsdl.mdferecepcao.MdfeDadosMsg;
 import br.inf.portalfiscal.mdfe.wsdl.mdferecepcao.MdfeRecepcaoLoteResult;
 import br.inf.portalfiscal.mdfe.wsdl.mdferecepcao.ObjectFactory;
+import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.mdfe300.MDFeConfig;
 import com.fincatto.mdfe300.classes.RetornoEnvioMDFe;
 

@@ -8,7 +8,7 @@
 
 package br.inf.portalfiscal.nfe;
 
-import com.fincatto.nfe310.classes.NFBase;
+import com.fincatto.documentofiscal.DFBase;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -81,7 +81,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "loteDistDFeInt"
 })
 @XmlRootElement(name = "retDistDFeInt")
-public class RetDistDFeInt extends NFBase {
+public class RetDistDFeInt extends DFBase {
 
     @XmlElement(required = true)
     protected String tpAmb;
