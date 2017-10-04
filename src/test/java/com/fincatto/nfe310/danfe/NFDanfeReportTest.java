@@ -41,7 +41,7 @@ public class NFDanfeReportTest {
         notaProcessada.setNota(nota);
 
         NFDanfeReport danfe = new NFDanfeReport(notaProcessada);
-        final byte[] fileByte = danfe.gerarDanfeNFe(null);
+        final byte[] fileByte = danfe.gerarDanfeNFe(null, null);
         Assert.assertTrue(fileByte.length > 0);
     }
 
@@ -65,7 +65,7 @@ public class NFDanfeReportTest {
         notaProcessada.getNota().getInfo().getIdentificacao().setModelo(DFModelo.NFCE);
 
         NFDanfeReport danfe = new NFDanfeReport(notaProcessada);
-        danfe.gerarDanfeNFe(null);
+        danfe.gerarDanfeNFe(null, null);
     }
 
     @Test(expected = IllegalStateException.class)

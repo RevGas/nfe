@@ -53,11 +53,11 @@ public class NFDanfeReport {
 	public NFDanfeReport(NFNotaProcessada nota) {
 		this.nota = nota;
 	}
-	
-	public byte[] gerarDanfeNFe(byte[] logoEmpresa) throws Exception {
-		return toPDF(createJasperPrintNFe(logoEmpresa));
+
+	public byte[] gerarDanfeNFe(byte[] logoEmpresa, String marcaDagua) throws Exception {
+		return toPDF(createJasperPrintNFe(logoEmpresa, marcaDagua));
 	}
-	
+
 	public byte[] gerarDanfeNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, NFCePagamento... pags) throws Exception {
 		return toPDF(createJasperPrintNFCe(informacoesComplementares, mostrarMsgFinalizacao, pags));
 	}
@@ -65,8 +65,8 @@ public class NFDanfeReport {
     private static byte[] toPDF(JasperPrint print) throws JRException {
     	return JasperExportManager.exportReportToPdf(print);
     }
-    
-    public JasperPrint createJasperPrintNFe(byte[] logoEmpresa) throws IOException, ParserConfigurationException, SAXException, JRException {
+
+	public JasperPrint createJasperPrintNFe(byte[] logoEmpresa, String marcaDagua) throws IOException, ParserConfigurationException, SAXException, JRException {
     	if (!DFModelo.NFE.equals(nota.getNota().getInfo().getIdentificacao().getModelo())) {
 			throw new IllegalStateException("Nao e possivel gerar DANFe NFe de uma NFCe");
 		}
@@ -79,6 +79,7 @@ public class NFDanfeReport {
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("SUBREPORT_DUPLICATAS", subDuplicatas);
             parameters.put("LOGO_EMPRESA", (logoEmpresa == null ? null : new ByteArrayInputStream(logoEmpresa)));
+			parameters.put("MARCA_DAGUA", marcaDagua);
             
             return JasperFillManager.fillReport(in, parameters, new JRXmlDataSource(convertStringXMl2DOM(), "/nfeProc/NFe/infNFe/det"));
         }
