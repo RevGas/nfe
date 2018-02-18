@@ -1,6 +1,5 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
