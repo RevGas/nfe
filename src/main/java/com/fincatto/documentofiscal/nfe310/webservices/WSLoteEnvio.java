@@ -11,8 +11,8 @@ import org.simpleframework.xml.stream.Format;
 import org.w3c.dom.Element;
 
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
+import com.fincatto.documentofiscal.nfe310.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe310.classes.lote.envio.NFLoteEnvioRetorno;
@@ -32,9 +32,12 @@ import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao.svan.NfeDadosMsg;
 import com.fincatto.documentofiscal.parsers.DFParser;
 import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
 import com.fincatto.documentofiscal.validadores.xsd.XMLValidador;
+
 import java.io.StringReader;
+import java.util.Iterator;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
+
 
 class WSLoteEnvio {
 
@@ -176,11 +179,11 @@ class WSLoteEnvio {
 
         // Create the JAXBContext
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
-        
+
         Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
         StringReader reader = new StringReader(loteAssinadoXml);
         JAXBElement<TEnviNFe> tEnviNFe = (JAXBElement<TEnviNFe>) jaxbUnmarshaller.unmarshal(reader);
-        
+
         final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
         nfeDadosMsg.getContent().add(tEnviNFe);
 
