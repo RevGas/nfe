@@ -72,6 +72,8 @@ public class WSFacade {
         if (lote.getIndicadorProcessamento().equals(NFLoteIndicadorProcessamento.PROCESSAMENTO_SINCRONO)
                 && lote.getNotas().size()>1) {
             throw new IllegalArgumentException("Apenas uma nota permitida no modo sincrono!");
+        }else if(lote.getNotas().size()==0){
+            throw new IllegalArgumentException("Nenhuma nota informada no envio do Lote!");
         }
         return this.wsLoteEnvio.enviaLote(lote);
     }

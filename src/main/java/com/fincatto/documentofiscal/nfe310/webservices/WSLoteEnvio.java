@@ -34,7 +34,6 @@ import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
 import com.fincatto.documentofiscal.validadores.xsd.XMLValidador;
 
 import java.io.StringReader;
-import java.util.Iterator;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
@@ -63,7 +62,6 @@ class WSLoteEnvio {
             nota.getInfo().getIdentificacao().setDigitoVerificador(geraChave.getDV());
             nota.getInfo().setIdentificador(geraChave.getChaveAcesso());
         }
-
         // assina o lote
         final String documentoAssinado = new AssinaturaDigital(this.config).assinarDocumento(lote.toString());
         final NFLoteEnvio loteAssinado = new DFParser().loteParaObjeto(documentoAssinado);
@@ -85,7 +83,6 @@ class WSLoteEnvio {
                     throw new IllegalArgumentException(String.format("Modelo de nota desconhecida: %s", nota.getInfo().getIdentificacao().getModelo()));
             }
         }
-
         // verifica se todas as notas do lote sao do mesmo modelo
         if ((qtdNF > 0) && (qtdNFC > 0)) {
             throw new IllegalArgumentException("Lote contendo notas de modelos diferentes!");
