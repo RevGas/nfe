@@ -16,22 +16,22 @@ class WSRecepcaoLote {
     private static final Logger LOGGER = LoggerFactory.getLogger(WSRecepcaoLote.class);
     private final CTeConfig config;
 
-    WSRecepcaoLote(final CTeConfig config) {
-        this.config = config;
+    WSRecepcaoLote(final CTeConfig config){
+            this.config = config;
     }
 
     public CTeEnvioLoteRetornoDados envioRecepcao(CTeEnvioLote cteRecepcaoLote) throws Exception {
-        //assina o lote
-        final String documentoAssinado = new AssinaturaDigital(this.config).assinarDocumento(cteRecepcaoLote.toString());
-        final CTeEnvioLote loteAssinado = new DFParser().cteRecepcaoParaObjeto(documentoAssinado);
+            //assina o lote
+            final String documentoAssinado = new AssinaturaDigital(this.config).assinarDocumento(cteRecepcaoLote.toString(), "infCte");
+            final CTeEnvioLote loteAssinado = new DFParser().cteRecepcaoParaObjeto(documentoAssinado);
 
-        //comunica o lote
-        final CTeEnvioLoteRetorno retorno = comunicaLote(documentoAssinado);
-        return new CTeEnvioLoteRetornoDados(retorno, loteAssinado);
+            //comunica o lote
+            final CTeEnvioLoteRetorno retorno = comunicaLote(documentoAssinado);
+            return new CTeEnvioLoteRetornoDados(retorno, loteAssinado);
     }
 
     private CTeEnvioLoteRetorno comunicaLote(final String loteAssinadoXml) throws Exception {
         throw new UnsupportedOperationException("Nao suportado ainda");
     }
-
+    
 }
