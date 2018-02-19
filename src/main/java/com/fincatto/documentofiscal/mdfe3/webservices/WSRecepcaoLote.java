@@ -9,7 +9,6 @@ import com.fincatto.documentofiscal.parsers.DFParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 class WSRecepcaoLote {
 
     private static final String MDFE_ELEMENTO = "MDFe";
