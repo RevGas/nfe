@@ -1,11 +1,8 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
 import com.fincatto.documentofiscal.cte300.CTeConfig;
-import com.fincatto.documentofiscal.cte300.classes.CTAutorizador31;
 import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsulta;
 import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsultaRetorno;
-import com.fincatto.documentofiscal.cte300.parsers.CTChaveParser;
-import com.fincatto.documentofiscal.persister.DFPersister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

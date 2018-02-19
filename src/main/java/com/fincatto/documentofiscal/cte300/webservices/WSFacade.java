@@ -15,6 +15,7 @@ import com.fincatto.documentofiscal.cte300.classes.consultastatusservico.CTeCons
 import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLote;
 import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLoteRetornoDados;
 import com.fincatto.documentofiscal.cte300.classes.enviolote.consulta.CTeConsultaRecLoteRet;
+import com.fincatto.documentofiscal.cte300.classes.evento.cancelamento.CTeRetornoCancelamento;
 import javax.net.ssl.HttpsURLConnection;
 
 public class WSFacade {
@@ -23,6 +24,7 @@ public class WSFacade {
     private final WSRecepcaoLote wsRecepcaoLote;
     private final WSNotaConsulta wsNotaConsulta;
     private final WSRecepcaoLoteRetorno wsRecepcaoLoteRetorno;
+    private final WSCancelamento wsCancelamento;
 
     public WSFacade(final CTeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
         HttpsURLConnection.setDefaultSSLSocketFactory(new SocketFactory(config).createSSLContext().getSocketFactory());
@@ -30,6 +32,7 @@ public class WSFacade {
         this.wsRecepcaoLote = new WSRecepcaoLote(config);
         this.wsRecepcaoLoteRetorno = new WSRecepcaoLoteRetorno(config);
         this.wsNotaConsulta = new WSNotaConsulta(config);
+        this.wsCancelamento = new WSCancelamento(config);
     }
 
     /**
@@ -46,8 +49,8 @@ public class WSFacade {
 
     /**
      * Faz o envio do lote para a SEFAZ
-     *
-     * @param cteRecepcao
+     * 
+     * @param cteRecepcao a ser eviado para a SEFAZ
      * @return dados do retorno do envio do lote e o xml assinado
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com
      * o sefaz
@@ -79,5 +82,31 @@ public class WSFacade {
      */
     public CTeNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
         return this.wsNotaConsulta.consultaNota(chaveDeAcesso);
+    }
+
+    /**
+     * Faz o cancelamento do CTe
+     *
+     * @param chave     chave de acesso da nota
+     * @param numeroProtocolo numero do protocolo da nota
+     * @param motivo          motivo do cancelamento
+     * @return dados do cancelamento da nota retornado pelo webservice
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+     */
+    public CTeRetornoCancelamento cancelaNota(final String chave, final String numeroProtocolo, final String motivo) throws Exception {
+        return this.wsCancelamento.cancelaNota(chave, numeroProtocolo, motivo);
+    }
+
+    /**
+     * Faz o cancelamento da nota com evento ja assinado
+     * ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
+     *
+     * @param chave       chave de acesso da nota
+     * @param eventoAssinadoXml evento ja assinado em formato XML
+     * @return dados do cancelamento da nota retornado pelo webservice
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+     */
+    public CTeRetornoCancelamento cancelaNotaAssinada(final String chave, final String eventoAssinadoXml) throws Exception {
+        return this.wsCancelamento.cancelaNotaAssinada(chave, eventoAssinadoXml);
     }
 }
