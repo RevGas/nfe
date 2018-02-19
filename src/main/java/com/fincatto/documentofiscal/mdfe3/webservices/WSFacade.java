@@ -4,7 +4,6 @@ import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.SocketFactory;
 import com.fincatto.documentofiscal.mdfe3.MDFeConfig;
 import com.fincatto.documentofiscal.mdfe3.classes.consultastatusservico.MDFeConsStatServRet;
-import org.apache.commons.httpclient.protocol.Protocol;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -12,6 +11,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import javax.net.ssl.HttpsURLConnection;
 
 public class WSFacade {
 
@@ -24,14 +24,14 @@ public class WSFacade {
 //	private final WSRecepcaoLoteRetorno wsRecepcaoLoteRetorno;
 
     public WSFacade(final MDFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
-        Protocol.registerProtocol("https", new Protocol("https", new SocketFactory(config), 443));
+        HttpsURLConnection.setDefaultSSLSocketFactory(new SocketFactory(config).createSSLContext().getSocketFactory());
         this.wsStatusConsulta = new WSStatusConsulta(config);
 //        this.wsRecepcaoLote = new WSRecepcaoLote(config);
 //        this.wsRecepcaoLoteRetorno = new WSRecepcaoLoteRetorno(config);
 //        this.wsNotaConsulta = new WSNotaConsulta(config);
 //        this.wsCancelamento = new WSCancelamento(config);
     }
-    
+
     /**
      * Faz a consulta de status responsavel pela UF, no caso apenas o RS está disponível
      *
@@ -51,5 +51,5 @@ public class WSFacade {
     public MDFeConsStatServRet consultaStatus() throws Exception {
         return this.wsStatusConsulta.consultaStatus(DFUnidadeFederativa.RS);
     }
-    
+
 }
