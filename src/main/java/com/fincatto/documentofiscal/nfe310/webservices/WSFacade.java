@@ -69,8 +69,11 @@ public class WSFacade {
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
     public NFLoteEnvioRetornoDados enviaLote(final NFLoteEnvio lote) throws Exception {
-        if (lote.getIndicadorProcessamento().equals(NFLoteIndicadorProcessamento.PROCESSAMENTO_SINCRONO)) {
-            throw new IllegalStateException("Utilize o método enviaLoteSincrono");
+        if (lote.getIndicadorProcessamento().equals(NFLoteIndicadorProcessamento.PROCESSAMENTO_SINCRONO)
+                && lote.getNotas().size()>1) {
+            throw new IllegalArgumentException("Apenas uma nota permitida no modo sincrono!");
+        }else if(lote.getNotas().size()==0){
+            throw new IllegalArgumentException("Nenhuma nota informada no envio do Lote!");
         }
         return this.wsLoteEnvio.enviaLote(lote);
     }
