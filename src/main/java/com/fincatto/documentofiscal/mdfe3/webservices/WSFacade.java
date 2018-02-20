@@ -3,12 +3,13 @@ package com.fincatto.documentofiscal.mdfe3.webservices;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.SocketFactory;
 import com.fincatto.documentofiscal.mdfe3.MDFeConfig;
+import com.fincatto.documentofiscal.mdfe3.classes.consultaRecibo.MDFeConsultaReciboRetorno;
+import com.fincatto.documentofiscal.mdfe3.classes.consultanaoencerrados.MDFeConsultaNaoEncerradosRetorno;
 import com.fincatto.documentofiscal.mdfe3.classes.consultastatusservico.MDFeConsStatServRet;
 import com.fincatto.documentofiscal.mdfe3.classes.lote.envio.MDFEnvioLote;
 import com.fincatto.documentofiscal.mdfe3.classes.lote.envio.MDFEnvioLoteRetornoDados;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.consulta.MDFeNotaConsultaRetorno;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeRetorno;
-import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeRetornoCancelamento;
 import org.joda.time.LocalDate;
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class WSFacade {
     private final WSNotaConsulta wsNotaConsulta;
     private final WSCancelamento wsCancelamento;
     private final WSEncerramento wsEncerramento;
+    private final WSConsultaRecibo wsConsultaRecibo;
+    private final WSConsultaNaoEncerrados wsConsultaNaoEncerrados;
 
 //	private final WSRecepcaoLoteRetorno wsRecepcaoLoteRetorno;
     public WSFacade(final MDFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
@@ -36,6 +39,8 @@ public class WSFacade {
         this.wsNotaConsulta = new WSNotaConsulta(config);
         this.wsCancelamento = new WSCancelamento(config);
         this.wsEncerramento = new WSEncerramento(config);
+        this.wsConsultaRecibo = new WSConsultaRecibo(config);
+        this.wsConsultaNaoEncerrados = new WSConsultaNaoEncerrados(config);
     }
 
     /**
@@ -115,12 +120,37 @@ public class WSFacade {
      *
      * @param chaveAcesso     chave de acesso da nota
      * @param numeroProtocolo numero do protocolo da nota
+     * @param codigoMunicipio
+     * @param dataEncerramento
+     * @param unidadeFederativa
      * @return dados do encerramento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
     public MDFeRetorno encerramento(final String chaveAcesso, final String numeroProtocolo
             , final String codigoMunicipio, final LocalDate dataEncerramento, final DFUnidadeFederativa unidadeFederativa) throws Exception {
         return this.wsEncerramento.encerraMdfe(chaveAcesso, numeroProtocolo, codigoMunicipio, dataEncerramento, unidadeFederativa);
+    }
+
+    /**
+     * Faz a consulta do recibo do MDF-e
+     *
+     * @param numeroRecibo recibo do processamento do arquivo MDF-e
+     * @return dados da consulta da nota retornado pelo webservice
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+     */
+    public MDFeConsultaReciboRetorno consultaRecibo(final String numeroRecibo) throws Exception {
+        return this.wsConsultaRecibo.consultaRecibo(numeroRecibo);
+    }
+
+    /**
+     * Faz a consulta do recibo do MDF-e
+     *
+     * @param cnpj CNPJ do Emitente do MDF-e
+     * @return Retorno de Pedido de Consulta MDF-e não Encerrados
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+     */
+    public MDFeConsultaNaoEncerradosRetorno consultaNaoEncerrados(final String cnpj) throws Exception {
+        return this.wsConsultaNaoEncerrados.consultaNaoEncerrados(cnpj);
     }
 
 }

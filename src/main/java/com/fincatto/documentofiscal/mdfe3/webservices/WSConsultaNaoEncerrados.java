@@ -1,13 +1,8 @@
 package com.fincatto.documentofiscal.mdfe3.webservices;
 
-import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.mdfe3.MDFeConfig;
-import com.fincatto.documentofiscal.mdfe3.classes.MDFAutorizador3;
-import com.fincatto.documentofiscal.mdfe3.classes.consultastatusservico.MDFeConsStatServ;
-import com.fincatto.documentofiscal.mdfe3.classes.consultastatusservico.MDFeConsStatServRet;
-import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.Format;
+import com.fincatto.documentofiscal.mdfe3.classes.consultanaoencerrados.MDFeConsultaNaoEncerrados;
+import com.fincatto.documentofiscal.mdfe3.classes.consultanaoencerrados.MDFeConsultaNaoEncerradosRetorno;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +16,7 @@ import java.rmi.RemoteException;
  */
 class WSConsultaNaoEncerrados {
 
-    private static final String NOME_SERVICO = "STATUS";
+    private static final String NOME_SERVICO = "CONSULTAR NÃO ENCERRADOS";
     private static final Logger LOGGER = LoggerFactory.getLogger(WSConsultaNaoEncerrados.class);
     private final MDFeConfig config;
 
@@ -29,19 +24,20 @@ class WSConsultaNaoEncerrados {
         this.config = config;
     }
 
-    MDFeConsStatServRet consultaStatus(final DFUnidadeFederativa uf) throws Exception {
+    MDFeConsultaNaoEncerradosRetorno consultaNaoEncerrados(final String cnpj) throws Exception {
         throw new UnsupportedOperationException("Nao suportado ainda");
     }
 
-    private MDFeConsStatServ gerarDadosConsulta(final DFUnidadeFederativa unidadeFederativa) {
-        final MDFeConsStatServ consStatServ = new MDFeConsStatServ();
-        consStatServ.setAmbiente(this.config.getAmbiente());
-        consStatServ.setVersao(MDFeConfig.VERSAO);
-        consStatServ.setServico(WSConsultaNaoEncerrados.NOME_SERVICO);
-        return consStatServ;
+    private MDFeConsultaNaoEncerrados gerarDadosConsulta(final String cnpj) {
+        final MDFeConsultaNaoEncerrados encerrados = new MDFeConsultaNaoEncerrados();
+        encerrados.setAmbiente(this.config.getAmbiente());
+        encerrados.setVersao(MDFeConfig.VERSAO);
+        encerrados.setCnpj(cnpj);
+        encerrados.setServico(WSConsultaNaoEncerrados.NOME_SERVICO);
+        return encerrados;
     }
 
-    private String efetuaConsultaStatus(final String omElement, final DFUnidadeFederativa unidadeFederativa) throws RemoteException {
+    private String efetuaConsultaStatus(final String omElement) throws RemoteException {
         throw new UnsupportedOperationException("Nao suportado ainda");
     }
 }
