@@ -1,32 +1,32 @@
 package com.fincatto.documentofiscal.validadores;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
 
 public abstract class StringValidador {
 
     public static void mmaaaa(final String mmaaaa) {
         try {
-            new SimpleDateFormat("mm/yyyy").parse(mmaaaa);
-        } catch (final ParseException e) {
+            DateTimeFormatter.ofPattern("mm/yyyy").parse(mmaaaa);
+        } catch (final Exception e) {
             throw new IllegalStateException(String.format("Formato invalido (mm/aaaa) (%s)", mmaaaa));
         }
     }
 
     public static void aamm(final String aamm) {
         try {
-            new SimpleDateFormat("yymm").parse(aamm);
-        } catch (final ParseException e) {
+            DateTimeFormatter.ofPattern("yymm").parse(aamm);
+        } catch (final Exception e) {
             throw new IllegalStateException(String.format("Formato invalido (aamm) (%s)", aamm));
         }
     }
 
     public static void codigoDeBarras(final String codigoDeBarras) {
-        final Matcher matcher = Pattern.compile("^([0-9]{0}|[0-9]{8}|[0-9]{12,14})$").matcher(codigoDeBarras);
+        final Matcher matcher = Pattern.compile("^([0-9]{0}|[0-9]{8}|[0-9]{12,14}|SEM GTIN)$").matcher(codigoDeBarras);
         if (!matcher.find()) {
             throw new IllegalStateException(String.format("Codigo de barras com formato invalido (%s)", codigoDeBarras));
         }
@@ -39,6 +39,37 @@ public abstract class StringValidador {
                 throw new IllegalStateException(String.format("Telefone de tamanho invalido (%s)", telefone));
             }
         }
+    }
+
+    public static String telefone(final String telefone, final String info) {
+        if (telefone != null) {
+            final Matcher matcher = Pattern.compile("^[0-9]{6,14}$").matcher(telefone);
+            if (!matcher.find()) {
+                throw new IllegalStateException(String.format("Telefone de tamanho invalido (%s) em %s", telefone, info));
+            }
+        }
+        return telefone;
+    }
+
+    public static void email(final String email) {
+        if (email != null) {
+            final String regex = "^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$";
+            final Matcher matcher = Pattern.compile(regex).matcher(email);
+            if (!matcher.find()) {
+                throw new IllegalStateException(String.format("Email invalido (%s)", email));
+            }
+        }
+    }
+
+    public static String email(final String email, final String info) {
+        if (email != null) {
+            final String regex = "^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$";
+            final Matcher matcher = Pattern.compile(regex).matcher(email);
+            if (!matcher.find()) {
+                throw new IllegalStateException(String.format("Email invalido (%s) em %s", email, info));
+            }
+        }
+        return email;
     }
 
     public static void tamanho256(final String string, final String info) {
@@ -64,13 +95,13 @@ public abstract class StringValidador {
             StringValidador.intervalo(string, 2, 60, info);
         }
     }
-    
+
     public static void tamanho2ate40(final String string, final String info) {
         if (string != null) {
             StringValidador.intervalo(string, 2, 40, info);
         }
     }
-    
+
     public static void tamanho2ate255(final String string, final String info) {
         if (string != null) {
             StringValidador.intervalo(string, 2, 255, info);
@@ -92,6 +123,13 @@ public abstract class StringValidador {
     public static void tamanho20(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoMaximo(string, 20, info);
+        }
+    }
+
+    public static void tamanho20N(final String string, final String info) {
+        if (string != null) {
+            StringValidador.apenasNumerico(string, info);
+            StringValidador.tamanho20(string, info);
         }
     }
 
@@ -122,6 +160,15 @@ public abstract class StringValidador {
         }
     }
 
+    public static void placaDeVeiculo(final String placaVeiculo, final String info) {
+        if (placaVeiculo != null) {
+            final Matcher matcher = Pattern.compile("^([A-Z]{2,3}[0-9]{4}|[A-Z]{3,4}[0-9]{3})$").matcher(placaVeiculo);
+            if (!matcher.find()) {
+                throw new IllegalStateException(String.format("%s nao esta no padrao (%s)", info, placaVeiculo));
+            }
+        }
+    }
+
     public static void cnpj(final String cnpj) {
         if (cnpj != null) {
             final Matcher matcher = Pattern.compile("^[0-9]{14}$").matcher(cnpj);
@@ -131,6 +178,16 @@ public abstract class StringValidador {
         }
     }
 
+    public static String cnpj(final String cnpj, final String info) {
+        if (cnpj != null) {
+            final Matcher matcher = Pattern.compile("^[0-9]{14}$").matcher(cnpj);
+            if (!matcher.find()) {
+                throw new IllegalStateException(String.format("Formato CNPJ Invalido (%s) em %s", cnpj, info));
+            }
+        }
+        return cnpj;
+    }
+
     public static void cpf(final String cpf) {
         if (cpf != null) {
             final Matcher matcher = Pattern.compile("^[0-9]{11}$").matcher(cpf);
@@ -138,6 +195,16 @@ public abstract class StringValidador {
                 throw new IllegalStateException(String.format("Formato CPF Invalido (%s)", cpf));
             }
         }
+    }
+
+    public static String cpf(final String cpf, final String info) {
+        if (cpf != null) {
+            final Matcher matcher = Pattern.compile("^[0-9]{11}$").matcher(cpf);
+            if (!matcher.find()) {
+                throw new IllegalStateException(String.format("Formato CPF Invalido (%s) em %s", cpf, info));
+            }
+        }
+        return cpf;
     }
 
     public static void inscricaoEstadual(final String inscricaoEstadual) {
@@ -158,6 +225,16 @@ public abstract class StringValidador {
         }
     }
 
+    public static String inscricaoEstadualSemIsencao(final String inscricaoEstadual, final String info) {
+        if (inscricaoEstadual != null) {
+            final Matcher matcher = Pattern.compile("^([0-9]{2,14}|)$").matcher(inscricaoEstadual);
+            if (!matcher.find()) {
+                throw new IllegalStateException(String.format("Inscricao estadual invalido (%s) em %s", inscricaoEstadual, info));
+            }
+        }
+        return inscricaoEstadual;
+    }
+
     public static void exatamente3(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoExato(string, 3, info);
@@ -175,10 +252,10 @@ public abstract class StringValidador {
             StringValidador.validaTamanhoExato(string, 9, info);
         }
     }
-    
+
     public static void exatamente9N(final String string, final String info) {
         if (string != null) {
-        	StringValidador.apenasNumerico(string, info);
+            StringValidador.apenasNumerico(string, info);
             StringValidador.validaTamanhoExato(string, 9, info);
         }
     }
@@ -213,6 +290,12 @@ public abstract class StringValidador {
         }
     }
 
+    public static void exatamente13(final String string, final String info) {
+        if (string != null) {
+            StringValidador.validaTamanhoExato(string, 13, info);
+        }
+    }
+
     public static void tamanho15(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoMaximo(string, 15, info);
@@ -230,26 +313,26 @@ public abstract class StringValidador {
             StringValidador.validaTamanhoMaximo(string, 120, info);
         }
     }
-    
+
     public static void tamanho160(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoMaximo(string, 160, info);
         }
     }
-    
+
     public static void tamanho10(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoMaximo(string, 10, info);
         }
     }
-    
+
     public static void tamanho10N(final String string, final String info) {
         if (string != null) {
-        	StringValidador.apenasNumerico(string, info);
+            StringValidador.apenasNumerico(string, info);
             StringValidador.validaTamanhoMaximo(string, 10, info);
         }
     }
-    
+
     public static void tamanho100(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoMaximo(string, 100, info);
@@ -261,7 +344,7 @@ public abstract class StringValidador {
             StringValidador.validaTamanhoMaximo(string, 6, info);
         }
     }
-    
+
     public static void tamanho6N(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoMaximo(string, 6, info);
@@ -294,20 +377,20 @@ public abstract class StringValidador {
 
     public static void exatamente8N(final String string, final String info) {
         if (string != null) {
-        	StringValidador.apenasNumerico(string, info);
+            StringValidador.apenasNumerico(string, info);
             StringValidador.validaTamanhoExato(string, 8, info);
         }
     }
-    
+
     public static void exatamente2(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoExato(string, 2, info);
         }
     }
-    
+
     public static void exatamente2N(final String string, final String info) {
         if (string != null) {
-        	StringValidador.apenasNumerico(string, info);
+            StringValidador.apenasNumerico(string, info);
             StringValidador.validaTamanhoExato(string, 2, info);
         }
     }
@@ -335,7 +418,7 @@ public abstract class StringValidador {
             StringValidador.intervalo(string, 5, 20, info);
         }
     }
-    
+
     public static void tamanho5a14(final String string, final String info) {
         if (string != null) {
             StringValidador.intervalo(string, 5, 14, info);
@@ -353,11 +436,11 @@ public abstract class StringValidador {
             StringValidador.intervalo(string, 2, 4, info);
         }
     }
-    
+
     public static void tamanho2a9N(final String string, final String info) {
         if (string != null) {
-        	StringValidador.apenasNumerico(string, info);
-            StringValidador.intervalo(string, 2, 4, info);
+            StringValidador.apenasNumerico(string, info);
+            StringValidador.intervalo(string, 2, 9, info);
         }
     }
 
@@ -377,6 +460,12 @@ public abstract class StringValidador {
     public static void tamanho100a600(final String string, final String info) {
         if (string != null) {
             StringValidador.intervalo(string, 100, 600, info);
+        }
+    }
+
+    public static void tamanho2a95(final String string, final String info) {
+        if (string != null) {
+            StringValidador.intervalo(string, 2, 95, info);
         }
     }
 
@@ -426,20 +515,20 @@ public abstract class StringValidador {
             StringValidador.validaTamanhoMaximo(string, 15, info);
         }
     }
-    
+
     public static void tamanho14N(final String string, final String info) {
         if (string != null) {
             StringValidador.apenasNumerico(string, info);
             StringValidador.validaTamanhoMaximo(string, 14, info);
         }
     }
-    
+
     public static void tamanho4(final String string, final String info) {
         if (string != null) {
             StringValidador.validaTamanhoMaximo(string, 4, info);
         }
     }
-    
+
     public static void tamanho4N(final String string, final String info) {
         if (string != null) {
             StringValidador.apenasNumerico(string, info);
@@ -467,7 +556,7 @@ public abstract class StringValidador {
             StringValidador.validaTamanhoMaximo(string, 3, info);
         }
     }
-    
+
     public static void tamanho2N(final String string, final String info) {
         if (string != null) {
             StringValidador.apenasNumerico(string, info);
@@ -480,6 +569,52 @@ public abstract class StringValidador {
             StringValidador.apenasNumerico(string, info);
             StringValidador.validaTamanhoExato(string, 20, info);
         }
+    }
+
+    /**
+     * Método para validação de Strings.
+     * @param paraValidar String a ser validada
+     * @param info Informação de retorno caso haja erro.
+     * @param tamanho tamanho para validação da {@code String} , pode ser {@code null} :
+     * @param exatamente
+     *
+     *            <pre>
+     * se false {@code null} a {@code String}
+     *                   não precisa ter o tamanho exato do parametro anterior.
+     *            </pre>
+     *
+     * @param numerico se true {@code null} a {@code String} precisa ser numérica[0-9].
+     * @return retorna a própria {@code String} {@param paraValidar}.
+     */
+    public static String validador(final String paraValidar, final String info, Integer tamanho, Boolean exatamente, Boolean numerico) {
+        tamanho = ObjectUtils.defaultIfNull(tamanho, 1);
+        exatamente = ObjectUtils.defaultIfNull(exatamente, false);
+        numerico = ObjectUtils.defaultIfNull(numerico, true);
+        if (paraValidar != null) {
+            if (numerico) {
+                StringValidador.apenasNumerico(paraValidar, info);
+            }
+            if (exatamente) {
+                StringValidador.validaTamanhoExato(paraValidar, tamanho, info);
+            } else {
+                StringValidador.validaTamanhoMaximo(paraValidar, tamanho, info);
+            }
+        }
+        return paraValidar;
+    }
+
+    /**
+     * @See #validador
+     */
+    public static String validador(final String paraValidar, final String info, final Integer tamanho, final Boolean exatamente) {
+        return StringValidador.validador(paraValidar, info, tamanho, exatamente, null);
+    }
+
+    /**
+     * @See #validador
+     */
+    public static String validador(final String paraValidar, final String info, final Integer tamanho) {
+        return StringValidador.validador(paraValidar, info, tamanho, null, null);
     }
 
     public static void fci(final String numeroControleFCI) {
@@ -524,6 +659,43 @@ public abstract class StringValidador {
         }
     }
 
+    public static String validaIntervalo(final String string, final int inicio, final int fim, final String info) {
+        return StringValidador.validaIntervalo(string, inicio, fim, info, false);
+    }
+
+    public static String validaIntervalo(final String string, final int inicio, final int fim, final String info, Boolean isNumeric) {
+        isNumeric = ObjectUtils.defaultIfNull(isNumeric, false);
+        if (isNumeric) {
+            StringValidador.apenasNumerico(string, info);
+        }
+        StringValidador.intervalo(string, inicio, fim, info);
+        return string;
+    }
+
+    /**
+     * Valida um número com N {@param digitos}.
+     *
+     * <pre>
+     *
+     *  StringValidador.capacidadeNDigitos("10000", "info" , 5)   = "10000"
+     *  StringValidador.capacidadeNDigitos("5", "info" , 2)   = "5"
+     * </pre>
+     *
+     * @throws IllegalStateException se<br>
+     *             {@code capacidade = "10000" } & {@code digitos = 3}, ou seja , {@code capacidade.length()-1 > digitos  }
+     * @param capacidade
+     * @param info
+     * @param digitos
+     * @return
+     */
+    public static String capacidadeNDigitos(final String capacidade, final String info, final int digitos) {
+        final Matcher matcher = Pattern.compile("^(0|[1-9]{1}[0-9]{0," + digitos + "})$").matcher(capacidade);
+        if (!matcher.find()) {
+            throw new IllegalStateException(String.format("%s fora do padrao (%s)", info, capacidade));
+        }
+        return capacidade;
+    }
+
     public static void nve(final String nve) {
         final Matcher matcher = Pattern.compile("^[A-Z]{2}[0-9]{4}$").matcher(nve);
         if (!matcher.find()) {
@@ -546,9 +718,9 @@ public abstract class StringValidador {
         StringValidador.validaTamanhoExato(string, 15, info);
         StringValidador.apenasNumerico(string, info);
     }
-    
+
     public static void exatamente11N(final String string, final String info) {
-    	StringValidador.apenasNumerico(string, info);
+        StringValidador.apenasNumerico(string, info);
         StringValidador.validaTamanhoExato(string, 11, info);
     }
 
@@ -564,4 +736,11 @@ public abstract class StringValidador {
             throw new IllegalStateException(String.format("Identificador fora do padrao (%s)", identificador));
         }
     }
+
+    public static void equals(final String test, final String tested) {
+        if (!StringUtils.equals(test, tested)) {
+            throw new IllegalStateException(String.format("Valor('%s') não corresponde com o padrao('%s')", (Object[]) new String[] { tested, test }));
+        }
+    }
+
 }

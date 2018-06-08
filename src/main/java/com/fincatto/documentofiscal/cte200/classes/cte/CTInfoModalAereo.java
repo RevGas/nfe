@@ -1,6 +1,6 @@
 package com.fincatto.documentofiscal.cte200.classes.cte;
 
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 import org.simpleframework.xml.Element;
 
 import com.fincatto.documentofiscal.DFBase;
@@ -12,7 +12,7 @@ public class CTInfoModalAereo extends DFBase {
     private String numeroMinuta;
 
     @Element(name = "nOCA", required = false)
-    private LocalDate numeroOperacional;
+    private String numeroOperacional;
 
     @Element(name = "dPrevAereo")
     private LocalDate dataPrevisaoEntrega;

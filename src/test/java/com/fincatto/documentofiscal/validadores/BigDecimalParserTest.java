@@ -1,9 +1,9 @@
 package com.fincatto.documentofiscal.validadores;
 
-import java.math.BigDecimal;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.math.BigDecimal;
 
 public class BigDecimalParserTest {
 
@@ -15,6 +15,13 @@ public class BigDecimalParserTest {
         Assert.assertEquals("0.012", BigDecimalParser.tamanho11Com3CasasDecimais(new BigDecimal(".012"), ""));
     }
 
+    @Test
+    public void tamanho13Com2CasasDecimais() {
+        Assert.assertNull(BigDecimalParser.tamanho13Com2CasasDecimais(null, ""));
+        Assert.assertEquals("1.00", BigDecimalParser.tamanho13Com2CasasDecimais(new BigDecimal("1"), ""));
+        Assert.assertEquals("0.01", BigDecimalParser.tamanho13Com2CasasDecimais(new BigDecimal(".01"), ""));
+        Assert.assertEquals("0.10", BigDecimalParser.tamanho13Com2CasasDecimais(new BigDecimal(".1"), ""));
+    }
     @Test
     public void tamanho15Com2CasasDecimais() {
         Assert.assertNull(BigDecimalParser.tamanho15Com2CasasDecimais(null, ""));
@@ -60,6 +67,15 @@ public class BigDecimalParserTest {
         Assert.assertEquals("0.0001", BigDecimalParser.tamanho16ComAte4CasasDecimais(new BigDecimal("0.0001"), ""));
         Assert.assertEquals("0.1", BigDecimalParser.tamanho16ComAte4CasasDecimais(new BigDecimal("0.1"), ""));
         Assert.assertEquals("1", BigDecimalParser.tamanho16ComAte4CasasDecimais(new BigDecimal("1"), ""));
+    }
+
+    @Test
+    public void tamanho15ComAte6CasasDecimais() {
+        Assert.assertNull(BigDecimalParser.tamanho15comAte6CasasDecimais(null, ""));
+        Assert.assertEquals("999999999.999999", BigDecimalParser.tamanho15comAte6CasasDecimais(new BigDecimal("999999999.999999"), ""));
+        Assert.assertEquals("0.0001", BigDecimalParser.tamanho15comAte6CasasDecimais(new BigDecimal("0.0001"), ""));
+        Assert.assertEquals("0.1", BigDecimalParser.tamanho15comAte6CasasDecimais(new BigDecimal("0.1"), ""));
+        Assert.assertEquals("1", BigDecimalParser.tamanho15comAte6CasasDecimais(new BigDecimal("1"), ""));
     }
 
     @Test
@@ -141,4 +157,25 @@ public class BigDecimalParserTest {
     public void naoDevePermitirExtrapolar21Caracteres() {
         BigDecimalParser.tamanho21ComAte10CasasDecimais(new BigDecimal("999999999999.9999999999"), "");
     }
+
+    @Test(expected = NumberFormatException.class)
+    public void validaTamanhoErro() {
+        BigDecimalParser.validaTamanho(new BigDecimal("10.00000"),
+                "", 11,4, true);
+    }
+
+    @Test
+    public void validaTamanho() {
+        BigDecimalParser.validaTamanho(new BigDecimal("10.00000"),
+                "", 11,5, true);
+
+        BigDecimalParser.validaTamanho(new BigDecimal("10.000"),
+                "", 11,5, false);
+
+        BigDecimalParser.validaTamanho(new BigDecimal("99999.99999"),
+                "", 11,5, false);
+
+    }
+
+
 }

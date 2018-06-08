@@ -40,7 +40,7 @@ public class CTeNotaInfoIdentificacaoTomadorServico4 extends DFBase {
     private String telefone;
 
     @Element(name = "enderToma", required = true)
-    private CTNotaEndereco enderTomadorServico;
+    private CTeNotaEndereco enderTomadorServico;
 
     @Element(name = "email", required = false)
     private String email;
@@ -68,6 +68,9 @@ public class CTeNotaInfoIdentificacaoTomadorServico4 extends DFBase {
      * Obs: Informar os dados cadastrais do tomador do serviço
      */
     public void setTomadorServico(final CTTomadorServico tomadorServico) {
+        if (!CTTomadorServico.TOMADOR_4.contains(tomadorServico)) {
+            throw new IllegalArgumentException("O tomador do servico n\u00e3o \u00e9 v\u00e1lido para este papel");
+        }
         this.tomadorServico = tomadorServico;
     }
 
@@ -146,14 +149,14 @@ public class CTeNotaInfoIdentificacaoTomadorServico4 extends DFBase {
         this.telefone = telefone;
     }
 
-    public CTNotaEndereco getEnderTomadorServico() {
+    public CTeNotaEndereco getEnderTomadorServico() {
         return this.enderTomadorServico;
     }
 
     /**
      * Dados do endereço
      */
-    public void setEnderTomadorServico(final CTNotaEndereco enderTomadorServico) {
+    public void setEnderTomadorServico(final CTeNotaEndereco enderTomadorServico) {
         this.enderTomadorServico = enderTomadorServico;
     }
 
@@ -166,6 +169,7 @@ public class CTeNotaInfoIdentificacaoTomadorServico4 extends DFBase {
      */
     public void setEmail(final String email) {
         StringValidador.tamanho60(email, "Endereço de email");
+        StringValidador.email(email);
         this.email = email;
     }
 }
