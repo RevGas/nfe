@@ -5,17 +5,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.Format;
 import org.w3c.dom.Element;
 
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.classes.lote.consulta.NFLoteConsulta;
 import com.fincatto.documentofiscal.nfe310.classes.lote.consulta.NFLoteConsultaRetorno;
 import com.fincatto.nfe310.converters.ElementStringConverter;
 import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
+import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.stream.Format;
 
 import br.inf.portalfiscal.nfe.wsdl.nferetautorizacao.svan.NfeCabecMsg;
 import br.inf.portalfiscal.nfe.wsdl.nferetautorizacao.svan.NfeDadosMsg;
@@ -39,14 +39,14 @@ class WSLoteConsulta {
         final NFLoteConsulta consulta = new NFLoteConsulta();
         consulta.setRecibo(numeroRecibo);
         consulta.setAmbiente(this.config.getAmbiente());
-        consulta.setVersao(new BigDecimal(NFeConfig.VERSAO));
+        consulta.setVersao(new BigDecimal(this.config.getVersao()));
         return consulta;
     }
 
     private String efetuaConsulta(final String xml, final DFModelo modelo) throws RemoteException, MalformedURLException {
         final NfeCabecMsg nfeCabecMsg = new NfeCabecMsg();
         nfeCabecMsg.setCUF(this.config.getCUF().getCodigoIbge());
-        nfeCabecMsg.setVersaoDados(NFeConfig.VERSAO);
+        nfeCabecMsg.setVersaoDados(this.config.getVersao());
 
         final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
         nfeDadosMsg.getContent().add(ElementStringConverter.read(xml));

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Collections;
 
-import org.joda.time.DateTime;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.stream.Format;
 import org.w3c.dom.Element;
@@ -24,11 +23,12 @@ import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.RecepcaoEvento;
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.RecepcaoEventoSoap;
 
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.parsers.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
+import java.time.ZonedDateTime;
 
 public class WSManifestacaoDestinatario {
 
@@ -61,7 +61,7 @@ public class WSManifestacaoDestinatario {
         infoEvento.setAmbiente(this.config.getAmbiente());
         infoEvento.setChave(chaveParser.getChave());
         infoEvento.setCnpj(cnpj);
-        infoEvento.setDataHoraEvento(DateTime.now());
+        infoEvento.setDataHoraEvento(ZonedDateTime.now(config.getTimeZone().toZoneId()));
         infoEvento.setId(String.format("ID%s%s0%s", tipoEvento.getCodigo(), chaveAcesso, "1"));
         infoEvento.setNumeroSequencialEvento(1);
         infoEvento.setOrgao(DFUnidadeFederativa.RFB);
@@ -75,7 +75,7 @@ public class WSManifestacaoDestinatario {
 
         final NFEnviaEventoManifestacaoDestinatario enviaEvento = new NFEnviaEventoManifestacaoDestinatario();
         enviaEvento.setEvento(Collections.singletonList(evento));
-        enviaEvento.setIdLote(Long.toString(DateTime.now().getMillis()));
+        enviaEvento.setIdLote(Long.toString(ZonedDateTime.now(this.config.getTimeZone().toZoneId()).toInstant().toEpochMilli()));
         enviaEvento.setVersao(WSManifestacaoDestinatario.VERSAO_LEIAUTE);
         return enviaEvento;
     }

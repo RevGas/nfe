@@ -1,6 +1,7 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
 import br.inf.portalfiscal.nfe.TEnviNFe;
+import br.inf.portalfiscal.nfe.TProtNFe;
 import java.net.URL;
 
 import javax.xml.bind.JAXBElement;
@@ -12,7 +13,7 @@ import org.w3c.dom.Element;
 
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe310.classes.lote.envio.NFLoteEnvioRetorno;
@@ -29,14 +30,21 @@ import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao.svan.NfeAutorizacaoLoteResult
 import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao.svan.NfeAutorizacaoSoap;
 import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao.svan.NfeCabecMsg;
 import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao.svan.NfeDadosMsg;
+import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.NfeAutorizacao3;
+import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.NfeAutorizacaoSoap12;
+import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.parsers.DFParser;
+import com.fincatto.documentofiscal.persister.DFPersister;
+import com.fincatto.documentofiscal.transformers.DFLocalDateTimeTransformer;
 import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
 import com.fincatto.documentofiscal.validadores.xsd.XMLValidador;
 
 import java.io.StringReader;
+import java.net.MalformedURLException;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-
+import javax.xml.ws.Holder;
 
 class WSLoteEnvio {
 
@@ -146,12 +154,12 @@ class WSLoteEnvio {
         //envia o lote para a sefaz
         final NfeCabecMsg nfeCabecMsg = new NfeCabecMsg();
         nfeCabecMsg.setCUF(this.config.getCUF().getCodigoIbge());
-        nfeCabecMsg.setVersaoDados(NFeConfig.VERSAO);
+        nfeCabecMsg.setVersaoDados(this.config.getVersao());
 
         final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
         nfeDadosMsg.getContent().add(ElementStringConverter.read(loteAssinadoXml));
 
-        //define o tipo de emissao
+        // define o tipo de emissao
         final NFAutorizador31 autorizador = NFAutorizador31.valueOfTipoEmissao(this.config.getTipoEmissao(), this.config.getCUF());
 
         final String endpoint = DFModelo.NFE.equals(modelo) ? autorizador.getNfeAutorizacao(this.config.getAmbiente()) : autorizador.getNfceAutorizacao(this.config.getAmbiente());
@@ -169,21 +177,6 @@ class WSLoteEnvio {
         //valida o lote assinado, para verificar se o xsd foi satisfeito, antes de comunicar com a sefaz
         XMLValidador.validaLote(loteAssinadoXml);
 
-        //envia o lote para a sefaz
-        final NfeCabecMsg nfeCabecMsg = new NfeCabecMsg();
-        nfeCabecMsg.setCUF(this.config.getCUF().getCodigoIbge());
-        nfeCabecMsg.setVersaoDados(NFeConfig.VERSAO);
-
-        // Create the JAXBContext
-        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
-
-        Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
-        StringReader reader = new StringReader(loteAssinadoXml);
-        JAXBElement<TEnviNFe> tEnviNFe = (JAXBElement<TEnviNFe>) jaxbUnmarshaller.unmarshal(reader);
-
-        final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
-        nfeDadosMsg.getContent().add(tEnviNFe);
-
         //define o tipo de emissao
         final NFAutorizador31 autorizador = NFAutorizador31.valueOfTipoEmissao(this.config.getTipoEmissao(), this.config.getCUF());
 
@@ -192,10 +185,77 @@ class WSLoteEnvio {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para Autorizacao " + modelo.name() + ", autorizador " + autorizador.name());
         }
 
-        NfeAutorizacaoSoap port = new NfeAutorizacao(new URL(endpoint)).getNfeAutorizacaoSoap12();
-        NfeAutorizacaoLoteResult result = port.nfeAutorizacaoLote(nfeDadosMsg, nfeCabecMsg);
+        return getTRetEnviNFe(endpoint, this.config.getCUF(), loteAssinadoXml);
+    }
 
-        return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+    private TRetEnviNFe getTRetEnviNFe(final String endpoint, final DFUnidadeFederativa uf, String loteAssinadoXml) throws MalformedURLException, JAXBException, Exception {
+
+        switch (uf) {
+            case PR :
+                //envia o lote para a sefaz
+                Holder<br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.NfeCabecMsg> nfeCabecMsgPR = new Holder<>();
+                nfeCabecMsgPR.value = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.NfeCabecMsg();
+                nfeCabecMsgPR.value.setCUF(this.config.getCUF().getCodigoIbge());
+                nfeCabecMsgPR.value.setVersaoDados(this.config.getVersao());
+
+                final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.NfeDadosMsg nfeDadosMsgPR = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.NfeDadosMsg();
+                nfeDadosMsgPR.getContent().add(ElementStringConverter.read(loteAssinadoXml));
+
+                NfeAutorizacaoSoap12 portPR = new NfeAutorizacao3(new URL(endpoint)).getNfeAutorizacaoServicePort();
+                br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.NfeAutorizacaoLoteResult resultPR = portPR.nfeAutorizacaoLote(nfeDadosMsgPR, nfeCabecMsgPR);
+                NFLoteEnvioRetorno nFLoteEnvioRetorno = new DFPersister().read(NFLoteEnvioRetorno.class, ElementStringConverter.write((Element) resultPR.getContent().get(0)));
+
+                TRetEnviNFe tRetEnviNFePR = new TRetEnviNFe();
+                tRetEnviNFePR.setCStat(nFLoteEnvioRetorno.getStatus());
+                tRetEnviNFePR.setCUF(nFLoteEnvioRetorno.getUf().getCodigo());
+                tRetEnviNFePR.setDhRecbto(new DFLocalDateTimeTransformer().write(nFLoteEnvioRetorno.getDataRecebimento()));
+                TRetEnviNFe.InfRec infRec = new TRetEnviNFe.InfRec();
+                infRec.setNRec(nFLoteEnvioRetorno.getInfoRecebimento() == null ? null : nFLoteEnvioRetorno.getInfoRecebimento().getRecibo());
+                infRec.setTMed(nFLoteEnvioRetorno.getInfoRecebimento() == null ? null : nFLoteEnvioRetorno.getInfoRecebimento().getTempoMedio());
+                tRetEnviNFePR.setInfRec(infRec);
+                if (nFLoteEnvioRetorno.getProtocoloInfo() != null) {
+                    TProtNFe tProtNFe = new TProtNFe();
+                    TProtNFe.InfProt infProt = new TProtNFe.InfProt();
+                    infProt.setCStat(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : nFLoteEnvioRetorno.getProtocoloInfo().getStatus());
+                    infProt.setChNFe(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : nFLoteEnvioRetorno.getProtocoloInfo().getChave());
+                    infProt.setDhRecbto(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : new DFLocalDateTimeTransformer().write(nFLoteEnvioRetorno.getProtocoloInfo().getDataRecebimento()));
+                    infProt.setDigVal(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : nFLoteEnvioRetorno.getProtocoloInfo().getValidador().getBytes());
+                    infProt.setId(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : nFLoteEnvioRetorno.getProtocoloInfo().getIdentificador());
+                    infProt.setNProt(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : nFLoteEnvioRetorno.getProtocoloInfo().getNumeroProtocolo());
+                    infProt.setTpAmb(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : nFLoteEnvioRetorno.getProtocoloInfo().getAmbiente().getCodigo());
+                    infProt.setVerAplic(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : nFLoteEnvioRetorno.getProtocoloInfo().getVersaoAplicacao());
+                    infProt.setXMotivo(nFLoteEnvioRetorno.getProtocoloInfo() == null ? null : nFLoteEnvioRetorno.getProtocoloInfo().getMotivo());
+                    tProtNFe.setInfProt(infProt);
+                    tProtNFe.setSignature(null);
+                    tProtNFe.setVersao(nFLoteEnvioRetorno.getVersaoAplicacao());
+                    tRetEnviNFePR.setProtNFe(tProtNFe);
+                }
+                tRetEnviNFePR.setTpAmb(nFLoteEnvioRetorno.getAmbiente().getCodigo());
+                tRetEnviNFePR.setVerAplic(nFLoteEnvioRetorno.getVersaoAplicacao());
+                tRetEnviNFePR.setVersao(nFLoteEnvioRetorno.getVersao());
+                tRetEnviNFePR.setXMotivo(nFLoteEnvioRetorno.getMotivo());
+
+                return tRetEnviNFePR;
+            default : //SVAN
+//                // Create the JAXBContext
+                JAXBContext contextSVAN = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
+
+                Unmarshaller jaxbUnmarshallerSVAN = contextSVAN.createUnmarshaller();
+                StringReader readerSVAN = new StringReader(loteAssinadoXml);
+                JAXBElement<TEnviNFe> tEnviNFeSVAN = (JAXBElement<TEnviNFe>) jaxbUnmarshallerSVAN.unmarshal(readerSVAN);
+
+                //envia o lote para a sefaz
+                final NfeCabecMsg nfeCabecMsgSVAN = new NfeCabecMsg();
+                nfeCabecMsgSVAN.setCUF(this.config.getCUF().getCodigoIbge());
+                nfeCabecMsgSVAN.setVersaoDados(this.config.getVersao());
+
+                final NfeDadosMsg nfeDadosMsgSVAN = new NfeDadosMsg();
+                nfeDadosMsgSVAN.getContent().add(tEnviNFeSVAN);
+
+                NfeAutorizacaoSoap portSVAN = new NfeAutorizacao(new URL(endpoint)).getNfeAutorizacaoSoap12();
+                NfeAutorizacaoLoteResult resultSVAN = portSVAN.nfeAutorizacaoLote(nfeDadosMsgSVAN, nfeCabecMsgSVAN);
+                return ((JAXBElement<TRetEnviNFe>) resultSVAN.getContent().get(0)).getValue();
+        }
     }
 
 }

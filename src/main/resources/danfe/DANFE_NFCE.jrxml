@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-07-19T15:41:35 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DANFE_NFCE" pageWidth="226" pageHeight="1000" columnWidth="226" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="f2ad8431-eb6a-4415-9a7a-8bcb81e49e5d">
 	<property name="ireport.zoom" value="7.0"/>
 	<property name="ireport.x" value="0"/>
@@ -38,10 +37,10 @@
 	<field name="nota.info.informacoesAdicionais.informacoesAdicionaisInteresseFisco" class="java.lang.String"/>
 	<field name="nota.info.identificacao.numeroNota" class="java.lang.String"/>
 	<field name="nota.info.identificacao.serie" class="java.lang.String"/>
-	<field name="nota.info.identificacao.dataHoraEmissao" class="org.joda.time.DateTime"/>
+	<field name="nota.info.identificacao.dataHoraEmissao" class="java.time.ZonedDateTime"/>
 	<field name="nota.info.identificacao.ambiente.codigo" class="java.lang.String"/>
 	<field name="nota.info.chaveAcesso" class="java.lang.String"/>
-	<field name="protocolo.protocoloInfo.dataRecebimento" class="org.joda.time.LocalDateTime"/>
+	<field name="protocolo.protocoloInfo.dataRecebimento" class="java.time.LocalDateTime"/>
 	<field name="protocolo.protocoloInfo.numeroProtocolo" class="java.lang.String"/>
 	<field name="nota.info.destinatario.cnpj" class="java.lang.String"/>
 	<field name="nota.info.destinatario.cpf" class="java.lang.String"/>
@@ -147,7 +146,7 @@ $F{nota.info.emitente.cnpj}.substring(12, 14)]]></textFieldExpression>
 					<font fontName="Arial Narrow" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Protocolo de Autorização: "+$F{protocolo.protocoloInfo.numeroProtocolo}+" "+
-$F{protocolo.protocoloInfo.dataRecebimento}.toString("dd/MM/yyyy HH:mm:ss")]]></textFieldExpression>
+java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format($F{protocolo.protocoloInfo.dataRecebimento})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement positionType="Float" x="8" y="74" width="197" height="10" isRemoveLineWhenBlank="true" uuid="fd6c261c-361c-4c75-bc8f-cca70f2415f3">
@@ -285,7 +284,7 @@ $V{ACRESCIMOS}.signum() < 0 ? "DESCONTOS R$" : "ACRÉSCIMOS R$"]]></textFieldExp
 				<textElement>
 					<font fontName="Arial Narrow" size="8" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nota.info.identificacao.dataHoraEmissao}.toString("dd/MM/yyyy HH:mm:ss")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format($F{nota.info.identificacao.dataHoraEmissao})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="8" y="134" width="197" height="10" uuid="0f7f9fa5-e04f-4fc4-bf20-47973e0e5e99"/>

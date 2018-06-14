@@ -2,18 +2,14 @@ package com.fincatto.documentofiscal.mdfe3.webservices;
 
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.mdfe3.MDFeConfig;
-import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeDetalhamentoEvento;
-import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeEnviaEventoEncerramento;
-import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeEvento;
-import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeInfoEvento;
-import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeRetorno;
+import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.*;
 import com.fincatto.documentofiscal.mdfe3.classes.parsers.MDFChaveParser;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 /**
  * Created by Eldevan Nery Junior on 17/11/17.
@@ -62,7 +58,7 @@ class WSEncerramento {
         infoEvento.setAmbiente(this.config.getAmbiente());
         infoEvento.setChave(chaveAcesso);
         infoEvento.setCnpj(chaveParser.getCnpjEmitente());
-        infoEvento.setDataHoraEvento(DateTime.now());
+        infoEvento.setDataHoraEvento(ZonedDateTime.now(this.config.getTimeZone().toZoneId()));
         infoEvento.setId(String.format("ID%s%s0%s", WSEncerramento.EVENTO_ENCERRAMENTO, chaveAcesso, "1"));
         infoEvento.setNumeroSequencialEvento(1);
         infoEvento.setOrgao(chaveParser.getNFUnidadeFederativa().getCodigoIbge());

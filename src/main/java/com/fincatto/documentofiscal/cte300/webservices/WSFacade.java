@@ -9,7 +9,7 @@ import java.security.cert.CertificateException;
 
 import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsultaRetorno;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.SocketFactory;
+import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 import com.fincatto.documentofiscal.cte300.classes.consultastatusservico.CTeConsStatServRet;
 import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLote;
@@ -27,7 +27,7 @@ public class WSFacade {
     private final WSCancelamento wsCancelamento;
 
     public WSFacade(final CTeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
-        HttpsURLConnection.setDefaultSSLSocketFactory(new SocketFactory(config).createSSLContext().getSocketFactory());
+        HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
         this.wsStatusConsulta = new WSStatusConsulta(config);
         this.wsRecepcaoLote = new WSRecepcaoLote(config);
         this.wsRecepcaoLoteRetorno = new WSRecepcaoLoteRetorno(config);

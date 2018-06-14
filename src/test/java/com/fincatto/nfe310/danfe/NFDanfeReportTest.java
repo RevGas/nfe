@@ -1,11 +1,11 @@
 package com.fincatto.nfe310.danfe;
 
 import com.fincatto.documentofiscal.nfe310.FabricaDeObjetosFake;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.nfe310.classes.NFProtocolo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.nota.NFNota;
 import com.fincatto.documentofiscal.nfe310.classes.nota.NFNotaInfoSuplementar;
 import com.fincatto.documentofiscal.nfe310.classes.nota.NFNotaProcessada;

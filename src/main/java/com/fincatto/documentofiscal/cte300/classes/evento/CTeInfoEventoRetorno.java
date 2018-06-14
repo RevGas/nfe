@@ -1,6 +1,6 @@
 package com.fincatto.documentofiscal.cte300.classes.evento;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 
@@ -9,6 +9,7 @@ import com.fincatto.documentofiscal.DFBase;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 
 public class CTeInfoEventoRetorno extends DFBase {
+    private static final long serialVersionUID = -3599530698491518711L;
 
     @Attribute(name = "Id", required = false)
     private String id;

@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 
 public class NFeConfigFake extends NFeConfig {
 
@@ -60,8 +61,8 @@ public class NFeConfigFake extends NFeConfig {
     @Override
     public String getCertificadoAlias() {
         try {
-            return getCertificadoKeyStore().aliases().nextElement();
-        } catch (KeyStoreException e) {
+            return this.getCertificadoKeyStore().aliases().nextElement();
+        } catch (final KeyStoreException e) {
             e.printStackTrace();
         }
         return null;

@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
 
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.classes.evento.inutilizacao.NFEnviaEventoInutilizacao;
@@ -21,6 +20,7 @@ import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeDadosMsg;
 import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeInutilizacao2;
 import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeInutilizacao2Soap;
 import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeInutilizacaoNF2Result;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 
 class WSInutilizacao {
 

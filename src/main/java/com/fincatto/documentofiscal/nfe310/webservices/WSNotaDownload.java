@@ -5,8 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.Format;
 import org.w3c.dom.Element;
 
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
@@ -21,6 +19,8 @@ import br.inf.portalfiscal.nfe.wsdl.nfedownloadnf.svan.NfeDownloadNFResult;
 import br.inf.portalfiscal.nfe.wsdl.nfedownloadnf.svan.NfeDownloadNFSoap;
 import com.fincatto.documentofiscal.DFConfig;
 import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
+import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.stream.Format;
 
 
 class WSNotaDownload {

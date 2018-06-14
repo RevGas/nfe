@@ -1,21 +1,11 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
-import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.rmi.RemoteException;
-import java.util.Collections;
-
-import javax.xml.stream.XMLStreamException;
-
-import org.joda.time.DateTime;
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.Format;
 import org.w3c.dom.Element;
 
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.classes.evento.NFEnviaEventoRetorno;
@@ -27,12 +17,21 @@ import com.fincatto.nfe310.converters.ElementStringConverter;
 import com.fincatto.documentofiscal.nfe310.parsers.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.persister.DFPersister;
 import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
+import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.stream.Format;
+
+import javax.xml.stream.XMLStreamException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.time.ZonedDateTime;
+import java.util.Collections;
 
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.NfeCabecMsg;
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.NfeDadosMsg;
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.NfeRecepcaoEventoResult;
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.RecepcaoEvento;
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.RecepcaoEventoSoap;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 
 class WSCartaCorrecao {
 
@@ -61,8 +60,8 @@ class WSCartaCorrecao {
 
         final NFTipoEvento cartaCorrecao = new NFTipoEvento();
         cartaCorrecao.setVersao(WSCartaCorrecao.VERSAO_LEIAUTE);
-        cartaCorrecao.setDescricaoEvento(EVENTO_DESCRICAO);
-        cartaCorrecao.setCondicaoUso(EVENTO_CONDICAO_USO);
+        cartaCorrecao.setDescricaoEvento(WSCartaCorrecao.EVENTO_DESCRICAO);
+        cartaCorrecao.setCondicaoUso(WSCartaCorrecao.EVENTO_CONDICAO_USO);
         cartaCorrecao.setTextoCorrecao(textoCorrecao);
 
         final NFInfoEvento infoEvento = new NFInfoEvento();
@@ -70,7 +69,7 @@ class WSCartaCorrecao {
         infoEvento.setDadosEvento(cartaCorrecao);
         infoEvento.setChave(chaveAcesso);
         infoEvento.setCnpj(chaveParser.getCnpjEmitente());
-        infoEvento.setDataHoraEvento(DateTime.now());
+        infoEvento.setDataHoraEvento(ZonedDateTime.now(this.config.getTimeZone().toZoneId()));
         infoEvento.setId(String.format("ID%s%s%02d", WSCartaCorrecao.EVENTO_CODIGO, chaveAcesso, numeroSequencialEvento));
         infoEvento.setNumeroSequencialEvento(numeroSequencialEvento);
         infoEvento.setOrgao(chaveParser.getNFUnidadeFederativa());
@@ -83,7 +82,7 @@ class WSCartaCorrecao {
 
         final NFEnviaEventoCartaCorrecao enviaEvento = new NFEnviaEventoCartaCorrecao();
         enviaEvento.setEvento(Collections.singletonList(evento));
-        enviaEvento.setIdLote(Long.toString(DateTime.now().getMillis()));
+        enviaEvento.setIdLote(Long.toString(ZonedDateTime.now(this.config.getTimeZone().toZoneId()).toInstant().toEpochMilli()));
         enviaEvento.setVersao(WSCartaCorrecao.VERSAO_LEIAUTE);
         return enviaEvento;
     }

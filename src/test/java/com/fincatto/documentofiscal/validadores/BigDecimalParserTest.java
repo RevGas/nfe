@@ -16,6 +16,13 @@ public class BigDecimalParserTest {
     }
 
     @Test
+    public void tamanho13Com2CasasDecimais() {
+        Assert.assertNull(BigDecimalParser.tamanho13Com2CasasDecimais(null, ""));
+        Assert.assertEquals("1.00", BigDecimalParser.tamanho13Com2CasasDecimais(new BigDecimal("1"), ""));
+        Assert.assertEquals("0.01", BigDecimalParser.tamanho13Com2CasasDecimais(new BigDecimal(".01"), ""));
+        Assert.assertEquals("0.10", BigDecimalParser.tamanho13Com2CasasDecimais(new BigDecimal(".1"), ""));
+    }
+    @Test
     public void tamanho15Com2CasasDecimais() {
         Assert.assertNull(BigDecimalParser.tamanho15Com2CasasDecimais(null, ""));
         Assert.assertEquals("0.01", BigDecimalParser.tamanho15Com2CasasDecimais(new BigDecimal(".01"), ""));
@@ -60,6 +67,15 @@ public class BigDecimalParserTest {
         Assert.assertEquals("0.0001", BigDecimalParser.tamanho16ComAte4CasasDecimais(new BigDecimal("0.0001"), ""));
         Assert.assertEquals("0.1", BigDecimalParser.tamanho16ComAte4CasasDecimais(new BigDecimal("0.1"), ""));
         Assert.assertEquals("1", BigDecimalParser.tamanho16ComAte4CasasDecimais(new BigDecimal("1"), ""));
+    }
+
+    @Test
+    public void tamanho15ComAte6CasasDecimais() {
+        Assert.assertNull(BigDecimalParser.tamanho15comAte6CasasDecimais(null, ""));
+        Assert.assertEquals("999999999.999999", BigDecimalParser.tamanho15comAte6CasasDecimais(new BigDecimal("999999999.999999"), ""));
+        Assert.assertEquals("0.0001", BigDecimalParser.tamanho15comAte6CasasDecimais(new BigDecimal("0.0001"), ""));
+        Assert.assertEquals("0.1", BigDecimalParser.tamanho15comAte6CasasDecimais(new BigDecimal("0.1"), ""));
+        Assert.assertEquals("1", BigDecimalParser.tamanho15comAte6CasasDecimais(new BigDecimal("1"), ""));
     }
 
     @Test

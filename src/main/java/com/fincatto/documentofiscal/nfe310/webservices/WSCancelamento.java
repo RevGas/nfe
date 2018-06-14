@@ -1,10 +1,6 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
-import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Collections;
-
-import org.joda.time.DateTime;
 import org.w3c.dom.Element;
 
 import com.fincatto.documentofiscal.DFModelo;
@@ -20,6 +16,9 @@ import com.fincatto.nfe310.converters.ElementStringConverter;
 import com.fincatto.documentofiscal.nfe310.parsers.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.persister.DFPersister;
 
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.util.Collections;
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.NfeCabecMsg;
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.NfeDadosMsg;
 import br.inf.portalfiscal.nfe.wsdl.recepcaoevento.svan.NfeRecepcaoEventoResult;
@@ -60,7 +59,7 @@ class WSCancelamento {
         infoEvento.setAmbiente(this.config.getAmbiente());
         infoEvento.setChave(chaveAcesso);
         infoEvento.setCnpj(chaveParser.getCnpjEmitente());
-        infoEvento.setDataHoraEvento(DateTime.now());
+        infoEvento.setDataHoraEvento(ZonedDateTime.now(this.config.getTimeZone().toZoneId()));
         infoEvento.setId(String.format("ID%s%s0%s", WSCancelamento.EVENTO_CANCELAMENTO, chaveAcesso, "1"));
         infoEvento.setNumeroSequencialEvento(1);
         infoEvento.setOrgao(chaveParser.getNFUnidadeFederativa());
@@ -74,7 +73,7 @@ class WSCancelamento {
 
         final NFEnviaEventoCancelamento enviaEvento = new NFEnviaEventoCancelamento();
         enviaEvento.setEvento(Collections.singletonList(evento));
-        enviaEvento.setIdLote(Long.toString(DateTime.now().getMillis()));
+        enviaEvento.setIdLote(Long.toString(ZonedDateTime.now(this.config.getTimeZone().toZoneId()).toInstant().toEpochMilli()));
         enviaEvento.setVersao(WSCancelamento.VERSAO_LEIAUTE);
         return enviaEvento;
     }

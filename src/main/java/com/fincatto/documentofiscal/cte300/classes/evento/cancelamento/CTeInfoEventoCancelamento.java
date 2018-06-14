@@ -1,18 +1,20 @@
 package com.fincatto.documentofiscal.cte300.classes.evento.cancelamento;
 
+import java.math.BigDecimal;
+
+import java.time.ZonedDateTime;
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
+
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFBase;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.validadores.BigDecimalParser;
 import com.fincatto.documentofiscal.validadores.IntegerValidador;
 import com.fincatto.documentofiscal.validadores.StringValidador;
-import org.joda.time.DateTime;
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
-
-import java.math.BigDecimal;
 
 public class CTeInfoEventoCancelamento extends DFBase {
+    private static final long serialVersionUID = -9071000192790378973L;
 
     @Attribute(name = "Id", required = false)
     private String id;
@@ -33,7 +35,7 @@ public class CTeInfoEventoCancelamento extends DFBase {
     private String chave;
 
     @Element(name = "dhEvento", required = true)
-    private DateTime dataHoraEvento;
+    private ZonedDateTime dataHoraEvento;
 
     @Element(name = "tpEvento", required = true)
     private String codigoEvento;
@@ -105,11 +107,11 @@ public class CTeInfoEventoCancelamento extends DFBase {
         this.chave = chave;
     }
 
-    public DateTime getDataHoraEvento() {
+    public ZonedDateTime getDataHoraEvento() {
         return this.dataHoraEvento;
     }
 
-    public void setDataHoraEvento(final DateTime dataHoraEvento) {
+    public void setDataHoraEvento(final ZonedDateTime dataHoraEvento) {
         this.dataHoraEvento = dataHoraEvento;
     }
 
@@ -139,19 +141,19 @@ public class CTeInfoEventoCancelamento extends DFBase {
         return this.orgao;
     }
 
-    public void setNumeroSequencialEvento(Integer numeroSequencialEvento) {
+    public void setNumeroSequencialEvento(final Integer numeroSequencialEvento) {
         this.numeroSequencialEvento = numeroSequencialEvento;
     }
 
-    public void setVersaoEvento(String versaoEvento) {
+    public void setVersaoEvento(final String versaoEvento) {
         this.versaoEvento = versaoEvento;
     }
 
     public CTeDetalhamentoEventoCancelamento getCancelamento() {
-        return cancelamento;
+        return this.cancelamento;
     }
 
-    public void setCancelamento(CTeDetalhamentoEventoCancelamento cancelamento) {
+    public void setCancelamento(final CTeDetalhamentoEventoCancelamento cancelamento) {
         this.cancelamento = cancelamento;
     }
 }

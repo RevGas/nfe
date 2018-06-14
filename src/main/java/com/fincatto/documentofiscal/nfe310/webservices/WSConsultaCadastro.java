@@ -11,7 +11,7 @@ import org.simpleframework.xml.stream.Format;
 import org.w3c.dom.Element;
 
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.classes.cadastro.NFConsultaCadastro;
 import com.fincatto.documentofiscal.nfe310.classes.cadastro.NFInfoConsultaCadastro;

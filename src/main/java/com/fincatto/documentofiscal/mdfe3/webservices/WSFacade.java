@@ -1,7 +1,7 @@
 package com.fincatto.documentofiscal.mdfe3.webservices;
 
+import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.SocketFactory;
 import com.fincatto.documentofiscal.mdfe3.MDFeConfig;
 import com.fincatto.documentofiscal.mdfe3.classes.consultaRecibo.MDFeConsultaReciboRetorno;
 import com.fincatto.documentofiscal.mdfe3.classes.consultanaoencerrados.MDFeConsultaNaoEncerradosRetorno;
@@ -10,7 +10,6 @@ import com.fincatto.documentofiscal.mdfe3.classes.lote.envio.MDFEnvioLote;
 import com.fincatto.documentofiscal.mdfe3.classes.lote.envio.MDFEnvioLoteRetornoDados;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.consulta.MDFeNotaConsultaRetorno;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeRetorno;
-import org.joda.time.LocalDate;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -18,6 +17,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.time.LocalDate;
 import javax.net.ssl.HttpsURLConnection;
 
 public class WSFacade {
@@ -32,7 +32,7 @@ public class WSFacade {
 
 //	private final WSRecepcaoLoteRetorno wsRecepcaoLoteRetorno;
     public WSFacade(final MDFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
-        HttpsURLConnection.setDefaultSSLSocketFactory(new SocketFactory(config).createSSLContext().getSocketFactory());
+        HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
         this.wsStatusConsulta = new WSStatusConsulta(config);
         this.wsRecepcaoLote = new WSRecepcaoLote(config);
 //        this.wsRecepcaoLoteRetorno = new WSRecepcaoLoteRetorno(config);

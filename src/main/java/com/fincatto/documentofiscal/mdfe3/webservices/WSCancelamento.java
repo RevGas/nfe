@@ -7,11 +7,12 @@ import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeInfoEvento;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeRetornoCancelamento;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.cancelamento.MDFeEnviaEventoCancelamento;
 import com.fincatto.documentofiscal.mdfe3.classes.parsers.MDFChaveParser;
-import org.joda.time.DateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 /**
  * Created by Eldevan Nery Junior on 17/11/17.
@@ -55,7 +56,7 @@ class WSCancelamento {
         infoEvento.setAmbiente(this.config.getAmbiente());
         infoEvento.setChave(chaveAcesso);
         infoEvento.setCnpj(chaveParser.getCnpjEmitente());
-        infoEvento.setDataHoraEvento(DateTime.now());
+        infoEvento.setDataHoraEvento(ZonedDateTime.now(this.config.getTimeZone().toZoneId()));
         infoEvento.setId(String.format("ID%s%s0%s", WSCancelamento.EVENTO_CANCELAMENTO, chaveAcesso, "1"));
         infoEvento.setNumeroSequencialEvento(1);
         infoEvento.setOrgao(chaveParser.getNFUnidadeFederativa().getCodigoIbge());

@@ -13,10 +13,9 @@ import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeDadosMsg;
 import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeStatusServico2;
 import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeStatusServico2Soap;
 import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeStatusServicoNF2Result;
-import com.fincatto.documentofiscal.DFConfig;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.nfe310.NFeConfig;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.classes.statusservico.consulta.NFStatusServicoConsulta;
 import com.fincatto.documentofiscal.nfe310.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
@@ -26,9 +25,9 @@ import com.fincatto.nfe310.converters.ElementStringConverter;
 class WSStatusConsulta {
 
     private static final String NOME_SERVICO = "STATUS";
-    private final DFConfig config;
+    private final NFeConfig config;
 
-    WSStatusConsulta(final DFConfig config) {
+    WSStatusConsulta(final NFeConfig config) {
         this.config = config;
     }
 
@@ -40,7 +39,7 @@ class WSStatusConsulta {
         final NFStatusServicoConsulta consStatServ = new NFStatusServicoConsulta();
         consStatServ.setUf(unidadeFederativa);
         consStatServ.setAmbiente(this.config.getAmbiente());
-        consStatServ.setVersao(NFeConfig.VERSAO);
+        consStatServ.setVersao(this.config.getVersao());
         consStatServ.setServico(WSStatusConsulta.NOME_SERVICO);
         return consStatServ;
     }
@@ -50,7 +49,7 @@ class WSStatusConsulta {
         NfeCabecMsg cabecMsg = new NfeCabecMsg();
 
         cabecMsg.setCUF(unidadeFederativa.getCodigoIbge());
-        cabecMsg.setVersaoDados(NFeConfig.VERSAO);
+        cabecMsg.setVersaoDados(this.config.getVersao());
 
         dadosMsg.getContent().add(ElementStringConverter.read(xml));
 
