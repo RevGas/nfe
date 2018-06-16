@@ -7,10 +7,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
+import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFProtocoloEventoCartaCorrecao;
 
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
@@ -20,9 +20,6 @@ import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetorno
 import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFTipoEventoManifestacaoDestinatario;
 import com.fincatto.documentofiscal.nfe400.classes.lote.consulta.NFLoteConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
-import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvioRetorno;
-import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvioRetornoDados;
-import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteIndicadorProcessamento;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
 
@@ -61,12 +58,7 @@ public class WSFacade {
      * @return dados do lote retornado pelo webservice, alem do lote assinado
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFLoteEnvioRetornoDados enviaLote(final NFLoteEnvio lote) throws Exception {
-        if (lote.getIndicadorProcessamento().equals(NFLoteIndicadorProcessamento.PROCESSAMENTO_SINCRONO) && lote.getNotas().size() > 1) {
-            throw new IllegalArgumentException("Apenas uma nota permitida no modo sincrono!");
-        } else if (lote.getNotas().size() == 0) {
-            throw new IllegalArgumentException("Nenhuma nota informada no envio do Lote!");
-        }
+    public TRetEnviNFe enviaLote(final NFLoteEnvio lote) throws Exception {
         return this.wsLoteEnvio.enviaLote(lote);
     }
 
@@ -81,7 +73,7 @@ public class WSFacade {
      * @return dados do lote retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFLoteEnvioRetorno enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo) throws Exception {
+    public TRetEnviNFe enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo) throws Exception {
         return this.wsLoteEnvio.enviaLoteAssinado(loteAssinadoXml, modelo);
     }
 
