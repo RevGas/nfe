@@ -11,6 +11,7 @@ import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFProtocoloEventoCartaCorrecao;
 
 import com.fincatto.documentofiscal.DFModelo;
+import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
@@ -22,6 +23,7 @@ import com.fincatto.documentofiscal.nfe400.classes.lote.consulta.NFLoteConsultaR
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
+import javax.net.ssl.HttpsURLConnection;
 
 public class WSFacade {
 
@@ -37,7 +39,7 @@ public class WSFacade {
 //    private final WSDistribuicaoNFe wSDistribuicaoNFe;
 
     public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
-//        Protocol.registerProtocol("https", new Protocol("https", new DFSocketFactory(config), 443));
+        HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
 
         // inicia os servicos disponiveis da nfe
         this.wsLoteEnvio = new WSLoteEnvio(config);
