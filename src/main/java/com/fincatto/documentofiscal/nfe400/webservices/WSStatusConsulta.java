@@ -1,15 +1,27 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeStatusServicoNF2Result;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.svrs.NFeStatusServico4;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.svrs.NFeStatusServico4Soap;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.svrs.NfeDadosMsg;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.svrs.NfeResultMsg;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.NFAutorizador400;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsulta;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
+import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
+import com.fincatto.nfe310.converters.ElementStringConverter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
+import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.stream.Format;
+import org.w3c.dom.Element;
 
 class WSStatusConsulta {
 
@@ -22,14 +34,7 @@ class WSStatusConsulta {
     }
 
     NFStatusServicoConsultaRetorno consultaStatus(final DFUnidadeFederativa uf, final DFModelo modelo) throws Exception {
-//        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosConsulta(uf).toString());
-//        WSStatusConsulta.LOGGER.debug(omElementConsulta.toString());
-
-//        final OMElement omElementResult = this.efetuaConsultaStatus(omElementConsulta, uf, modelo);
-//        WSStatusConsulta.LOGGER.debug(omElementResult.toString());
-
-//        return new Persister(new DFRegistryMatcher(), new Format(0)).read(NFStatusServicoConsultaRetorno.class, omElementResult.toString());
-        return null;
+        return new Persister(new DFRegistryMatcher(), new Format(0)).read(NFStatusServicoConsultaRetorno.class, efetuaConsultaStatus(gerarDadosConsulta(uf).toString(), uf, modelo));
     }
 
     private NFStatusServicoConsulta gerarDadosConsulta(final DFUnidadeFederativa unidadeFederativa) {
@@ -41,16 +46,20 @@ class WSStatusConsulta {
         return consStatServ;
     }
 
-    private String efetuaConsultaStatus(final String omElement, final DFUnidadeFederativa unidadeFederativa, final DFModelo modelo) throws RemoteException {
-//        final NfeStatusServico4Stub.NfeDadosMsg dados = new NfeStatusServico4Stub.NfeDadosMsg();
-//        dados.setExtraElement(omElement);
+    private String efetuaConsultaStatus(final String xml, final DFUnidadeFederativa unidadeFederativa, final DFModelo modelo) throws RemoteException, MalformedURLException {
+        NfeDadosMsg dadosMsg = new NfeDadosMsg();
+
+        dadosMsg.getContent().add(ElementStringConverter.read(xml));
 
         final NFAutorizador400 autorizador = NFAutorizador400.valueOfCodigoUF(unidadeFederativa);
         final String endpoint = DFModelo.NFCE.equals(modelo) ? autorizador.getNfceStatusServico(this.config.getAmbiente()) : autorizador.getNfeStatusServico(this.config.getAmbiente());
         if (endpoint == null) {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para StatusServico " + modelo.name() + ", autorizador " + autorizador.name() + ", UF " + unidadeFederativa.name());
         }
-//        return new NfeStatusServico4Stub(endpoint).nfeStatusServicoNF(dados).getExtraElement();
-        return null;
+
+        NFeStatusServico4Soap port = new NFeStatusServico4(new URL(endpoint)).getNFeStatusServico4Soap();
+        NfeResultMsg result = port.nfeStatusServicoNF(dadosMsg);
+
+        return ElementStringConverter.write((Element) result.getContent().get(0));
     }
 }
