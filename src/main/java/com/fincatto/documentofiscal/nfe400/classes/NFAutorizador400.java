@@ -488,7 +488,7 @@ public enum NFAutorizador400 {
 
         @Override
         public String getNfceAutorizacao(final DFAmbiente ambiente) {
-            return SVAN.getNfceAutorizacao(ambiente);
+            return SVRS.getNfceAutorizacao(ambiente);
         }
 
         @Override
