@@ -1,5 +1,6 @@
-package br.inf.portalfiscal.mdfe.wsdl.mdferecepcaoevento;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.hom;
 
+import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.*;
 import com.fincatto.nfe310.utils.SOAPHandlerUtil;
 import java.util.Set;
 import java.util.logging.Level;
@@ -12,7 +13,7 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
-public class SOAPHandlerMDFeRecepcaoEvento implements SOAPHandler<SOAPMessageContext> {
+public class SOAPHandlerNFeAutorizacao implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public Set<QName> getHeaders() {
@@ -26,9 +27,8 @@ public class SOAPHandlerMDFeRecepcaoEvento implements SOAPHandler<SOAPMessageCon
                 SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
                 SOAPBody body = msg.getBody();
 
-                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/mdfe");
+                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/nfe");
                 SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.w3.org/2000/09/xmldsig#");
-                SOAPHandlerUtil.addListNamespacetoAddAttribute("eventoMDFe", "http://www.portalfiscal.inf.br/mdfe");
                 SOAPHandlerUtil.addListNamespacetoAddAttribute("Signature", "http://www.w3.org/2000/09/xmldsig#");
 
                 SOAPHandlerUtil.getNamespaces(body);

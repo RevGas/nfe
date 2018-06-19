@@ -26,7 +26,7 @@ public class SOAPHandlerNFeAutorizacao implements SOAPHandler<SOAPMessageContext
                 SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
                 SOAPBody body = msg.getBody();
 
-                SOAPHandlerUtil.addListNamespacetoAdd("NFe", "http://www.portalfiscal.inf.br/nfe");
+                SOAPHandlerUtil.addListNamespacetoAddAttribute("NFe", "http://www.portalfiscal.inf.br/nfe");
 
                 SOAPHandlerUtil.getNamespaces(body);
                 SOAPHandlerUtil.forEachNode(body.getFirstChild());

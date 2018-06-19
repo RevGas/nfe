@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svrs;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.hom;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -24,13 +24,20 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _NfeDadosMsgZip_QNAME = new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4", "nfeDadosMsgZip");
-    private final static QName _NfeResultMsg_QNAME = new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4", "nfeResultMsg");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link NfeAutorizacaoLoteZipResult }
+     * 
+     */
+    public NfeAutorizacaoLoteZipResult createNfeAutorizacaoLoteZipResult() {
+        return new NfeAutorizacaoLoteZipResult();
     }
 
     /**
@@ -42,11 +49,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link NfeResultMsg }
+     * Create an instance of {@link NfeAutorizacaoLoteResult }
      * 
      */
-    public NfeResultMsg createNfeResultMsg() {
-        return new NfeResultMsg();
+    public NfeAutorizacaoLoteResult createNfeAutorizacaoLoteResult() {
+        return new NfeAutorizacaoLoteResult();
     }
 
     /**
@@ -56,15 +63,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4", name = "nfeDadosMsgZip")
     public JAXBElement<String> createNfeDadosMsgZip(String value) {
         return new JAXBElement<String>(_NfeDadosMsgZip_QNAME, String.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link NfeResultMsg }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4", name = "nfeResultMsg")
-    public JAXBElement<NfeResultMsg> createNfeResultMsg(NfeResultMsg value) {
-        return new JAXBElement<NfeResultMsg>(_NfeResultMsg_QNAME, NfeResultMsg.class, null, value);
     }
 
 }

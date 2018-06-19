@@ -26,7 +26,7 @@ public class SOAPHandlerMDFeRetRecepcao implements SOAPHandler<SOAPMessageContex
                 SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
                 SOAPBody body = msg.getBody();
 
-                SOAPHandlerUtil.addListURIToRemove("http://www.portalfiscal.inf.br/mdfe");
+                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/mdfe");
                 SOAPHandlerUtil.getNamespaces(body.getFirstChild());
                 SOAPHandlerUtil.forEachNode(body.getFirstChild());
             } catch (SOAPException ex) {

@@ -26,10 +26,10 @@ public class SOAPHandlerMDFeRecepcao implements SOAPHandler<SOAPMessageContext> 
                 SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
                 SOAPBody body = msg.getBody();
 
-                SOAPHandlerUtil.addListURIToRemove("http://www.portalfiscal.inf.br/mdfe");
-                SOAPHandlerUtil.addListURIToRemove("http://www.w3.org/2000/09/xmldsig#");
-                SOAPHandlerUtil.addListNamespacetoAdd("MDFe", "http://www.portalfiscal.inf.br/mdfe");
-                SOAPHandlerUtil.addListNamespacetoAdd("Signature", "http://www.w3.org/2000/09/xmldsig#");
+                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/mdfe");
+                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.w3.org/2000/09/xmldsig#");
+                SOAPHandlerUtil.addListNamespacetoAddAttribute("MDFe", "http://www.portalfiscal.inf.br/mdfe");
+                SOAPHandlerUtil.addListNamespacetoAddAttribute("Signature", "http://www.w3.org/2000/09/xmldsig#");
 
                 SOAPHandlerUtil.getNamespaces(body);
                 SOAPHandlerUtil.forEachNode(body.getFirstChild());

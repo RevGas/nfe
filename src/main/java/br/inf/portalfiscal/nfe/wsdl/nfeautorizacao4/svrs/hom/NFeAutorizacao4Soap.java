@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svrs.hom;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

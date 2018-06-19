@@ -1,5 +1,5 @@
 
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.pro;
 
 import java.util.HashMap;
 import java.util.Map;

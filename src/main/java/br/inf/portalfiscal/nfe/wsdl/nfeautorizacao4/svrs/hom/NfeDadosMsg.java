@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svrs.hom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +33,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "content"
 })
-@XmlRootElement(name = "nfeAutorizacaoLoteZipResult")
-public class NfeAutorizacaoLoteZipResult {
+@XmlRootElement(name = "nfeDadosMsg")
+public class NfeDadosMsg {
 
     @XmlMixed
     @XmlAnyElement(lax = true)

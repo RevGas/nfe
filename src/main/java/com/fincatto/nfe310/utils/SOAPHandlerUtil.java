@@ -110,7 +110,7 @@ public class SOAPHandlerUtil {
      * Adiciona URIs onde o prefixo será removido do XML
      * @param uri
      */
-    public static void addListURIToRemove(String uri) {
+    public static void addListURIToRemovePrefixOfNamespace(String uri) {
         listURIToRemove.add(uri);
     }
 
@@ -119,7 +119,7 @@ public class SOAPHandlerUtil {
      * @param nodeName
      * @param uri
      */
-    public static void addListNamespacetoAdd(String nodeName, String uri) {
+    public static void addListNamespacetoAddAttribute(String nodeName, String uri) {
         listNamespacetoAdd.put(nodeName, uri);
     }
 

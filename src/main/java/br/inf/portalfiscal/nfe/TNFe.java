@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2017.01.19 às 09:08:27 PM BRT 
+// Gerado em: 2018.06.18 às 05:41:25 PM BRT 
 //
 
 
@@ -62,16 +62,6 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                 &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
  *                                   &lt;minLength value="1"/&gt;
  *                                   &lt;maxLength value="60"/&gt;
- *                                 &lt;/restriction&gt;
- *                               &lt;/simpleType&gt;
- *                             &lt;/element&gt;
- *                             &lt;element name="indPag"&gt;
- *                               &lt;simpleType&gt;
- *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *                                   &lt;whiteSpace value="preserve"/&gt;
- *                                   &lt;enumeration value="0"/&gt;
- *                                   &lt;enumeration value="1"/&gt;
- *                                   &lt;enumeration value="2"/&gt;
  *                                 &lt;/restriction&gt;
  *                               &lt;/simpleType&gt;
  *                             &lt;/element&gt;
@@ -156,6 +146,7 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                   &lt;enumeration value="2"/&gt;
  *                                   &lt;enumeration value="3"/&gt;
  *                                   &lt;enumeration value="4"/&gt;
+ *                                   &lt;enumeration value="5"/&gt;
  *                                   &lt;enumeration value="9"/&gt;
  *                                 &lt;/restriction&gt;
  *                               &lt;/simpleType&gt;
@@ -206,6 +197,7 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                                                       &lt;whiteSpace value="preserve"/&gt;
  *                                                       &lt;enumeration value="01"/&gt;
+ *                                                       &lt;enumeration value="02"/&gt;
  *                                                     &lt;/restriction&gt;
  *                                                   &lt;/simpleType&gt;
  *                                                 &lt;/element&gt;
@@ -525,7 +517,7 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                         &lt;simpleType&gt;
  *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                                             &lt;whiteSpace value="preserve"/&gt;
- *                                             &lt;pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
+ *                                             &lt;pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
  *                                           &lt;/restriction&gt;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
@@ -553,11 +545,30 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                           &lt;/restriction&gt;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
- *                                       &lt;element name="CEST" minOccurs="0"&gt;
+ *                                       &lt;sequence minOccurs="0"&gt;
+ *                                         &lt;element name="CEST"&gt;
+ *                                           &lt;simpleType&gt;
+ *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                               &lt;whiteSpace value="preserve"/&gt;
+ *                                               &lt;pattern value="[0-9]{7}"/&gt;
+ *                                             &lt;/restriction&gt;
+ *                                           &lt;/simpleType&gt;
+ *                                         &lt;/element&gt;
+ *                                         &lt;element name="indEscala" minOccurs="0"&gt;
+ *                                           &lt;simpleType&gt;
+ *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                               &lt;enumeration value="S"/&gt;
+ *                                               &lt;enumeration value="N"/&gt;
+ *                                             &lt;/restriction&gt;
+ *                                           &lt;/simpleType&gt;
+ *                                         &lt;/element&gt;
+ *                                         &lt;element name="CNPJFab" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+ *                                       &lt;/sequence&gt;
+ *                                       &lt;element name="cBenef" minOccurs="0"&gt;
  *                                         &lt;simpleType&gt;
  *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                                             &lt;whiteSpace value="preserve"/&gt;
- *                                             &lt;pattern value="[0-9]{7}"/&gt;
+ *                                             &lt;pattern value="([!-ÿ]{8}|[!-ÿ]{10})?"/&gt;
  *                                           &lt;/restriction&gt;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
@@ -592,7 +603,7 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                         &lt;simpleType&gt;
  *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                                             &lt;whiteSpace value="preserve"/&gt;
- *                                             &lt;pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
+ *                                             &lt;pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
  *                                           &lt;/restriction&gt;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
@@ -786,6 +797,35 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
  *                                       &lt;element name="nFCI" type="{http://www.portalfiscal.inf.br/nfe}TGuid" minOccurs="0"/&gt;
+ *                                       &lt;element name="rastro" maxOccurs="500" minOccurs="0"&gt;
+ *                                         &lt;complexType&gt;
+ *                                           &lt;complexContent&gt;
+ *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                                               &lt;sequence&gt;
+ *                                                 &lt;element name="nLote"&gt;
+ *                                                   &lt;simpleType&gt;
+ *                                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                                       &lt;minLength value="1"/&gt;
+ *                                                       &lt;maxLength value="20"/&gt;
+ *                                                     &lt;/restriction&gt;
+ *                                                   &lt;/simpleType&gt;
+ *                                                 &lt;/element&gt;
+ *                                                 &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
+ *                                                 &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
+ *                                                 &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
+ *                                                 &lt;element name="cAgreg" minOccurs="0"&gt;
+ *                                                   &lt;simpleType&gt;
+ *                                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                                       &lt;whiteSpace value="preserve"/&gt;
+ *                                                       &lt;pattern value="[0-9]{1,20}"/&gt;
+ *                                                     &lt;/restriction&gt;
+ *                                                   &lt;/simpleType&gt;
+ *                                                 &lt;/element&gt;
+ *                                               &lt;/sequence&gt;
+ *                                             &lt;/restriction&gt;
+ *                                           &lt;/complexContent&gt;
+ *                                         &lt;/complexType&gt;
+ *                                       &lt;/element&gt;
  *                                       &lt;choice minOccurs="0"&gt;
  *                                         &lt;element name="veicProd"&gt;
  *                                           &lt;complexType&gt;
@@ -1004,22 +1044,18 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                             &lt;/complexContent&gt;
  *                                           &lt;/complexType&gt;
  *                                         &lt;/element&gt;
- *                                         &lt;element name="med" maxOccurs="500"&gt;
+ *                                         &lt;element name="med"&gt;
  *                                           &lt;complexType&gt;
  *                                             &lt;complexContent&gt;
  *                                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                                                 &lt;sequence&gt;
- *                                                   &lt;element name="nLote"&gt;
+ *                                                   &lt;element name="cProdANVISA"&gt;
  *                                                     &lt;simpleType&gt;
  *                                                       &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
- *                                                         &lt;minLength value="1"/&gt;
- *                                                         &lt;maxLength value="20"/&gt;
+ *                                                         &lt;length value="13"/&gt;
  *                                                       &lt;/restriction&gt;
  *                                                     &lt;/simpleType&gt;
  *                                                   &lt;/element&gt;
- *                                                   &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
- *                                                   &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
- *                                                   &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
  *                                                   &lt;element name="vPMC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                 &lt;/sequence&gt;
  *                                               &lt;/restriction&gt;
@@ -1082,7 +1118,18 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                       &lt;/restriction&gt;
  *                                                     &lt;/simpleType&gt;
  *                                                   &lt;/element&gt;
- *                                                   &lt;element name="pMixGN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0204v" minOccurs="0"/&gt;
+ *                                                   &lt;element name="descANP"&gt;
+ *                                                     &lt;simpleType&gt;
+ *                                                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                                         &lt;minLength value="2"/&gt;
+ *                                                         &lt;maxLength value="95"/&gt;
+ *                                                       &lt;/restriction&gt;
+ *                                                     &lt;/simpleType&gt;
+ *                                                   &lt;/element&gt;
+ *                                                   &lt;element name="pGLP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+ *                                                   &lt;element name="pGNn" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+ *                                                   &lt;element name="pGNi" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+ *                                                   &lt;element name="vPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
  *                                                   &lt;element name="CODIF" minOccurs="0"&gt;
  *                                                     &lt;simpleType&gt;
  *                                                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -1203,6 +1250,10 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                             &lt;/sequence&gt;
  *                                                           &lt;/restriction&gt;
  *                                                         &lt;/complexContent&gt;
@@ -1236,6 +1287,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                               &lt;element name="modBCST"&gt;
  *                                                                 &lt;simpleType&gt;
  *                                                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -1254,6 +1310,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                             &lt;/sequence&gt;
  *                                                           &lt;/restriction&gt;
  *                                                         &lt;/complexContent&gt;
@@ -1288,6 +1349,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                               &lt;sequence minOccurs="0"&gt;
  *                                                                 &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                                 &lt;element name="motDesICMS"&gt;
@@ -1339,6 +1405,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
  *                                                                 &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                                 &lt;element name="motDesICMS"&gt;
  *                                                                   &lt;simpleType&gt;
@@ -1389,6 +1460,7 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                                       &lt;enumeration value="10"/&gt;
  *                                                                       &lt;enumeration value="11"/&gt;
  *                                                                       &lt;enumeration value="16"/&gt;
+ *                                                                       &lt;enumeration value="90"/&gt;
  *                                                                     &lt;/restriction&gt;
  *                                                                   &lt;/simpleType&gt;
  *                                                                 &lt;/element&gt;
@@ -1430,6 +1502,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="pDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
  *                                                               &lt;element name="vICMSDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
  *                                                               &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                             &lt;/sequence&gt;
  *                                                           &lt;/restriction&gt;
  *                                                         &lt;/complexContent&gt;
@@ -1451,7 +1528,19 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;/element&gt;
  *                                                               &lt;sequence minOccurs="0"&gt;
  *                                                                 &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
  *                                                                 &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;/sequence&gt;
  *                                                             &lt;/sequence&gt;
  *                                                           &lt;/restriction&gt;
@@ -1487,6 +1576,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                               &lt;element name="modBCST"&gt;
  *                                                                 &lt;simpleType&gt;
  *                                                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -1505,6 +1599,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                               &lt;sequence minOccurs="0"&gt;
  *                                                                 &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                                 &lt;element name="motDesICMS"&gt;
@@ -1553,6 +1652,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                                 &lt;element name="pRedBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc" minOccurs="0"/&gt;
  *                                                                 &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                                 &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;sequence minOccurs="0"&gt;
+ *                                                                   &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                   &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                   &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;/sequence&gt;
  *                                                               &lt;/sequence&gt;
  *                                                               &lt;sequence minOccurs="0"&gt;
  *                                                                 &lt;element name="modBCST"&gt;
@@ -1573,6 +1677,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                                 &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                                 &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                                 &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;sequence minOccurs="0"&gt;
+ *                                                                   &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                   &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                   &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;/sequence&gt;
  *                                                               &lt;/sequence&gt;
  *                                                               &lt;sequence minOccurs="0"&gt;
  *                                                                 &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -1658,6 +1767,7 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                                                                     &lt;whiteSpace value="preserve"/&gt;
  *                                                                     &lt;enumeration value="41"/&gt;
+ *                                                                     &lt;enumeration value="60"/&gt;
  *                                                                   &lt;/restriction&gt;
  *                                                                 &lt;/simpleType&gt;
  *                                                               &lt;/element&gt;
@@ -1745,6 +1855,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                               &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vCredICMSSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                             &lt;/sequence&gt;
@@ -1785,6 +1900,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                               &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
  *                                                             &lt;/sequence&gt;
  *                                                           &lt;/restriction&gt;
  *                                                         &lt;/complexContent&gt;
@@ -1806,7 +1926,19 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                               &lt;/element&gt;
  *                                                               &lt;sequence minOccurs="0"&gt;
  *                                                                 &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
  *                                                                 &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                               &lt;/sequence&gt;
+ *                                                               &lt;sequence minOccurs="0"&gt;
+ *                                                                 &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                 &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                               &lt;/sequence&gt;
  *                                                             &lt;/sequence&gt;
  *                                                           &lt;/restriction&gt;
@@ -1863,6 +1995,11 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                                 &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                                 &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                                 &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;sequence minOccurs="0"&gt;
+ *                                                                   &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                   &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+ *                                                                   &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                                 &lt;/sequence&gt;
  *                                                               &lt;/sequence&gt;
  *                                                               &lt;sequence minOccurs="0"&gt;
  *                                                                 &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
@@ -2271,7 +2408,8 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                                               &lt;sequence&gt;
  *                                                 &lt;element name="vBCUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
- *                                                 &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
+ *                                                 &lt;element name="vBCFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+ *                                                 &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04" minOccurs="0"/&gt;
  *                                                 &lt;element name="pICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
  *                                                 &lt;element name="pICMSInter"&gt;
  *                                                   &lt;simpleType&gt;
@@ -2284,7 +2422,7 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                                   &lt;/simpleType&gt;
  *                                                 &lt;/element&gt;
  *                                                 &lt;element name="pICMSInterPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
- *                                                 &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                                 &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
  *                                                 &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                                 &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                               &lt;/sequence&gt;
@@ -2356,14 +2494,18 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                       &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
  *                                       &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
  *                                       &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+ *                                       &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                       &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                       &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vProd" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vFrete" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vSeg" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vDesc" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vII" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vIPI" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                       &lt;element name="vIPIDevol" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vPIS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vCOFINS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
  *                                       &lt;element name="vOutro" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -2442,6 +2584,8 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                   &lt;enumeration value="0"/&gt;
  *                                   &lt;enumeration value="1"/&gt;
  *                                   &lt;enumeration value="2"/&gt;
+ *                                   &lt;enumeration value="3"/&gt;
+ *                                   &lt;enumeration value="4"/&gt;
  *                                   &lt;enumeration value="9"/&gt;
  *                                 &lt;/restriction&gt;
  *                               &lt;/simpleType&gt;
@@ -2649,45 +2793,26 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                       &lt;/complexContent&gt;
  *                     &lt;/complexType&gt;
  *                   &lt;/element&gt;
- *                   &lt;element name="pag" maxOccurs="100" minOccurs="0"&gt;
+ *                   &lt;element name="pag"&gt;
  *                     &lt;complexType&gt;
  *                       &lt;complexContent&gt;
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                           &lt;sequence&gt;
- *                             &lt;element name="tPag"&gt;
- *                               &lt;simpleType&gt;
- *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *                                   &lt;whiteSpace value="preserve"/&gt;
- *                                   &lt;enumeration value="01"/&gt;
- *                                   &lt;enumeration value="02"/&gt;
- *                                   &lt;enumeration value="03"/&gt;
- *                                   &lt;enumeration value="04"/&gt;
- *                                   &lt;enumeration value="05"/&gt;
- *                                   &lt;enumeration value="10"/&gt;
- *                                   &lt;enumeration value="11"/&gt;
- *                                   &lt;enumeration value="12"/&gt;
- *                                   &lt;enumeration value="13"/&gt;
- *                                   &lt;enumeration value="99"/&gt;
- *                                 &lt;/restriction&gt;
- *                               &lt;/simpleType&gt;
- *                             &lt;/element&gt;
- *                             &lt;element name="vPag" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
- *                             &lt;element name="card" minOccurs="0"&gt;
+ *                             &lt;element name="detPag" maxOccurs="100"&gt;
  *                               &lt;complexType&gt;
  *                                 &lt;complexContent&gt;
  *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                                     &lt;sequence&gt;
- *                                       &lt;element name="tpIntegra" minOccurs="0"&gt;
+ *                                       &lt;element name="indPag" minOccurs="0"&gt;
  *                                         &lt;simpleType&gt;
  *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                                             &lt;whiteSpace value="preserve"/&gt;
+ *                                             &lt;enumeration value="0"/&gt;
  *                                             &lt;enumeration value="1"/&gt;
- *                                             &lt;enumeration value="2"/&gt;
  *                                           &lt;/restriction&gt;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
- *                                       &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
- *                                       &lt;element name="tBand" minOccurs="0"&gt;
+ *                                       &lt;element name="tPag"&gt;
  *                                         &lt;simpleType&gt;
  *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                                             &lt;whiteSpace value="preserve"/&gt;
@@ -2695,23 +2820,70 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                                             &lt;enumeration value="02"/&gt;
  *                                             &lt;enumeration value="03"/&gt;
  *                                             &lt;enumeration value="04"/&gt;
+ *                                             &lt;enumeration value="05"/&gt;
+ *                                             &lt;enumeration value="10"/&gt;
+ *                                             &lt;enumeration value="11"/&gt;
+ *                                             &lt;enumeration value="12"/&gt;
+ *                                             &lt;enumeration value="13"/&gt;
+ *                                             &lt;enumeration value="14"/&gt;
+ *                                             &lt;enumeration value="15"/&gt;
+ *                                             &lt;enumeration value="90"/&gt;
  *                                             &lt;enumeration value="99"/&gt;
  *                                           &lt;/restriction&gt;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
- *                                       &lt;element name="cAut" minOccurs="0"&gt;
- *                                         &lt;simpleType&gt;
- *                                           &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
- *                                             &lt;minLength value="1"/&gt;
- *                                             &lt;maxLength value="20"/&gt;
- *                                           &lt;/restriction&gt;
- *                                         &lt;/simpleType&gt;
+ *                                       &lt;element name="vPag" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+ *                                       &lt;element name="card" minOccurs="0"&gt;
+ *                                         &lt;complexType&gt;
+ *                                           &lt;complexContent&gt;
+ *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                                               &lt;sequence&gt;
+ *                                                 &lt;element name="tpIntegra"&gt;
+ *                                                   &lt;simpleType&gt;
+ *                                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                                       &lt;whiteSpace value="preserve"/&gt;
+ *                                                       &lt;enumeration value="1"/&gt;
+ *                                                       &lt;enumeration value="2"/&gt;
+ *                                                     &lt;/restriction&gt;
+ *                                                   &lt;/simpleType&gt;
+ *                                                 &lt;/element&gt;
+ *                                                 &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+ *                                                 &lt;element name="tBand" minOccurs="0"&gt;
+ *                                                   &lt;simpleType&gt;
+ *                                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                                       &lt;whiteSpace value="preserve"/&gt;
+ *                                                       &lt;enumeration value="01"/&gt;
+ *                                                       &lt;enumeration value="02"/&gt;
+ *                                                       &lt;enumeration value="03"/&gt;
+ *                                                       &lt;enumeration value="04"/&gt;
+ *                                                       &lt;enumeration value="05"/&gt;
+ *                                                       &lt;enumeration value="06"/&gt;
+ *                                                       &lt;enumeration value="07"/&gt;
+ *                                                       &lt;enumeration value="08"/&gt;
+ *                                                       &lt;enumeration value="09"/&gt;
+ *                                                       &lt;enumeration value="99"/&gt;
+ *                                                     &lt;/restriction&gt;
+ *                                                   &lt;/simpleType&gt;
+ *                                                 &lt;/element&gt;
+ *                                                 &lt;element name="cAut" minOccurs="0"&gt;
+ *                                                   &lt;simpleType&gt;
+ *                                                     &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
+ *                                                       &lt;minLength value="1"/&gt;
+ *                                                       &lt;maxLength value="20"/&gt;
+ *                                                     &lt;/restriction&gt;
+ *                                                   &lt;/simpleType&gt;
+ *                                                 &lt;/element&gt;
+ *                                               &lt;/sequence&gt;
+ *                                             &lt;/restriction&gt;
+ *                                           &lt;/complexContent&gt;
+ *                                         &lt;/complexType&gt;
  *                                       &lt;/element&gt;
  *                                     &lt;/sequence&gt;
  *                                   &lt;/restriction&gt;
  *                                 &lt;/complexContent&gt;
  *                               &lt;/complexType&gt;
  *                             &lt;/element&gt;
+ *                             &lt;element name="vTroco" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
  *                           &lt;/sequence&gt;
  *                         &lt;/restriction&gt;
  *                       &lt;/complexContent&gt;
@@ -2980,7 +3152,15 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *                         &lt;whiteSpace value="preserve"/&gt;
  *                         &lt;minLength value="100"/&gt;
  *                         &lt;maxLength value="600"/&gt;
- *                         &lt;pattern value="((HTTPS?|https?)://.*\?chNFe=[0-9]{44}&amp;nVersao=[0-9]{3}&amp;tpAmb=[1-2](&amp;cDest=([A-Za-z0-9.:+-/)(]{0}|[A-Za-z0-9.:+-/)(]{5,20})?)?&amp;dhEmi=[A-Fa-f0-9]{50}&amp;vNF=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;vICMS=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;digVal=[A-Fa-f0-9]{56}&amp;cIdToken=[0-9]{6}&amp;cHashQRCode=[A-Fa-f0-9]{40})"/&gt;
+ *                         &lt;pattern value="(((HTTPS?|https?)://.*\?chNFe=[0-9]{44}&amp;nVersao=[0-9]{3}&amp;tpAmb=[1-2](&amp;cDest=([A-Za-z0-9.:+-/)(]{0}|[A-Za-z0-9.:+-/)(]{5,20})?)?&amp;dhEmi=[A-Fa-f0-9]{50}&amp;vNF=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;vICMS=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;digVal=[A-Fa-f0-9]{56}&amp;cIdToken=[0-9]{6}&amp;cHashQRCode=[A-Fa-f0-9]{40})|((HTTPS?|https?)://.*\?p=([0-9]{34}1[0-9]{9})\|[2]\|[1-2]\|(0|[1-9]{1}([0-9]{1,5})?)\|[A-Fa-f0-9]{40})|((HTTPS?|https?)://.*\?p=([0-9]{34}9[0-9]{9})\|[2]\|[1-2]\|([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-1]{1})\|(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)\|[A-Fa-f0-9]{56}\|(0|[1-9]{1}([0-9]{1,5})?)\|[A-Fa-f0-9]{40}))"/&gt;
+ *                       &lt;/restriction&gt;
+ *                     &lt;/simpleType&gt;
+ *                   &lt;/element&gt;
+ *                   &lt;element name="urlChave"&gt;
+ *                     &lt;simpleType&gt;
+ *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                         &lt;minLength value="21"/&gt;
+ *                         &lt;maxLength value="85"/&gt;
  *                       &lt;/restriction&gt;
  *                     &lt;/simpleType&gt;
  *                   &lt;/element&gt;
@@ -3117,16 +3297,6 @@ public class TNFe {
      *                       &lt;/restriction&gt;
      *                     &lt;/simpleType&gt;
      *                   &lt;/element&gt;
-     *                   &lt;element name="indPag"&gt;
-     *                     &lt;simpleType&gt;
-     *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
-     *                         &lt;whiteSpace value="preserve"/&gt;
-     *                         &lt;enumeration value="0"/&gt;
-     *                         &lt;enumeration value="1"/&gt;
-     *                         &lt;enumeration value="2"/&gt;
-     *                       &lt;/restriction&gt;
-     *                     &lt;/simpleType&gt;
-     *                   &lt;/element&gt;
      *                   &lt;element name="mod" type="{http://www.portalfiscal.inf.br/nfe}TMod"/&gt;
      *                   &lt;element name="serie" type="{http://www.portalfiscal.inf.br/nfe}TSerie"/&gt;
      *                   &lt;element name="nNF" type="{http://www.portalfiscal.inf.br/nfe}TNF"/&gt;
@@ -3208,6 +3378,7 @@ public class TNFe {
      *                         &lt;enumeration value="2"/&gt;
      *                         &lt;enumeration value="3"/&gt;
      *                         &lt;enumeration value="4"/&gt;
+     *                         &lt;enumeration value="5"/&gt;
      *                         &lt;enumeration value="9"/&gt;
      *                       &lt;/restriction&gt;
      *                     &lt;/simpleType&gt;
@@ -3258,6 +3429,7 @@ public class TNFe {
      *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *                                             &lt;whiteSpace value="preserve"/&gt;
      *                                             &lt;enumeration value="01"/&gt;
+     *                                             &lt;enumeration value="02"/&gt;
      *                                           &lt;/restriction&gt;
      *                                         &lt;/simpleType&gt;
      *                                       &lt;/element&gt;
@@ -3577,7 +3749,7 @@ public class TNFe {
      *                               &lt;simpleType&gt;
      *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *                                   &lt;whiteSpace value="preserve"/&gt;
-     *                                   &lt;pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
+     *                                   &lt;pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
      *                                 &lt;/restriction&gt;
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
@@ -3605,11 +3777,30 @@ public class TNFe {
      *                                 &lt;/restriction&gt;
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
-     *                             &lt;element name="CEST" minOccurs="0"&gt;
+     *                             &lt;sequence minOccurs="0"&gt;
+     *                               &lt;element name="CEST"&gt;
+     *                                 &lt;simpleType&gt;
+     *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                     &lt;whiteSpace value="preserve"/&gt;
+     *                                     &lt;pattern value="[0-9]{7}"/&gt;
+     *                                   &lt;/restriction&gt;
+     *                                 &lt;/simpleType&gt;
+     *                               &lt;/element&gt;
+     *                               &lt;element name="indEscala" minOccurs="0"&gt;
+     *                                 &lt;simpleType&gt;
+     *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                     &lt;enumeration value="S"/&gt;
+     *                                     &lt;enumeration value="N"/&gt;
+     *                                   &lt;/restriction&gt;
+     *                                 &lt;/simpleType&gt;
+     *                               &lt;/element&gt;
+     *                               &lt;element name="CNPJFab" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+     *                             &lt;/sequence&gt;
+     *                             &lt;element name="cBenef" minOccurs="0"&gt;
      *                               &lt;simpleType&gt;
      *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *                                   &lt;whiteSpace value="preserve"/&gt;
-     *                                   &lt;pattern value="[0-9]{7}"/&gt;
+     *                                   &lt;pattern value="([!-ÿ]{8}|[!-ÿ]{10})?"/&gt;
      *                                 &lt;/restriction&gt;
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
@@ -3644,7 +3835,7 @@ public class TNFe {
      *                               &lt;simpleType&gt;
      *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *                                   &lt;whiteSpace value="preserve"/&gt;
-     *                                   &lt;pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
+     *                                   &lt;pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
      *                                 &lt;/restriction&gt;
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
@@ -3838,6 +4029,35 @@ public class TNFe {
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
      *                             &lt;element name="nFCI" type="{http://www.portalfiscal.inf.br/nfe}TGuid" minOccurs="0"/&gt;
+     *                             &lt;element name="rastro" maxOccurs="500" minOccurs="0"&gt;
+     *                               &lt;complexType&gt;
+     *                                 &lt;complexContent&gt;
+     *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                                     &lt;sequence&gt;
+     *                                       &lt;element name="nLote"&gt;
+     *                                         &lt;simpleType&gt;
+     *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                             &lt;minLength value="1"/&gt;
+     *                                             &lt;maxLength value="20"/&gt;
+     *                                           &lt;/restriction&gt;
+     *                                         &lt;/simpleType&gt;
+     *                                       &lt;/element&gt;
+     *                                       &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
+     *                                       &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
+     *                                       &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
+     *                                       &lt;element name="cAgreg" minOccurs="0"&gt;
+     *                                         &lt;simpleType&gt;
+     *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                             &lt;whiteSpace value="preserve"/&gt;
+     *                                             &lt;pattern value="[0-9]{1,20}"/&gt;
+     *                                           &lt;/restriction&gt;
+     *                                         &lt;/simpleType&gt;
+     *                                       &lt;/element&gt;
+     *                                     &lt;/sequence&gt;
+     *                                   &lt;/restriction&gt;
+     *                                 &lt;/complexContent&gt;
+     *                               &lt;/complexType&gt;
+     *                             &lt;/element&gt;
      *                             &lt;choice minOccurs="0"&gt;
      *                               &lt;element name="veicProd"&gt;
      *                                 &lt;complexType&gt;
@@ -4056,22 +4276,18 @@ public class TNFe {
      *                                   &lt;/complexContent&gt;
      *                                 &lt;/complexType&gt;
      *                               &lt;/element&gt;
-     *                               &lt;element name="med" maxOccurs="500"&gt;
+     *                               &lt;element name="med"&gt;
      *                                 &lt;complexType&gt;
      *                                   &lt;complexContent&gt;
      *                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *                                       &lt;sequence&gt;
-     *                                         &lt;element name="nLote"&gt;
+     *                                         &lt;element name="cProdANVISA"&gt;
      *                                           &lt;simpleType&gt;
      *                                             &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
-     *                                               &lt;minLength value="1"/&gt;
-     *                                               &lt;maxLength value="20"/&gt;
+     *                                               &lt;length value="13"/&gt;
      *                                             &lt;/restriction&gt;
      *                                           &lt;/simpleType&gt;
      *                                         &lt;/element&gt;
-     *                                         &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
-     *                                         &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
-     *                                         &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
      *                                         &lt;element name="vPMC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                       &lt;/sequence&gt;
      *                                     &lt;/restriction&gt;
@@ -4134,7 +4350,18 @@ public class TNFe {
      *                                             &lt;/restriction&gt;
      *                                           &lt;/simpleType&gt;
      *                                         &lt;/element&gt;
-     *                                         &lt;element name="pMixGN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0204v" minOccurs="0"/&gt;
+     *                                         &lt;element name="descANP"&gt;
+     *                                           &lt;simpleType&gt;
+     *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                               &lt;minLength value="2"/&gt;
+     *                                               &lt;maxLength value="95"/&gt;
+     *                                             &lt;/restriction&gt;
+     *                                           &lt;/simpleType&gt;
+     *                                         &lt;/element&gt;
+     *                                         &lt;element name="pGLP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+     *                                         &lt;element name="pGNn" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+     *                                         &lt;element name="pGNi" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+     *                                         &lt;element name="vPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
      *                                         &lt;element name="CODIF" minOccurs="0"&gt;
      *                                           &lt;simpleType&gt;
      *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -4255,6 +4482,10 @@ public class TNFe {
      *                                                     &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                   &lt;/sequence&gt;
      *                                                 &lt;/restriction&gt;
      *                                               &lt;/complexContent&gt;
@@ -4288,6 +4519,11 @@ public class TNFe {
      *                                                     &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                     &lt;element name="modBCST"&gt;
      *                                                       &lt;simpleType&gt;
      *                                                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -4306,6 +4542,11 @@ public class TNFe {
      *                                                     &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                   &lt;/sequence&gt;
      *                                                 &lt;/restriction&gt;
      *                                               &lt;/complexContent&gt;
@@ -4340,6 +4581,11 @@ public class TNFe {
      *                                                     &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                     &lt;sequence minOccurs="0"&gt;
      *                                                       &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                       &lt;element name="motDesICMS"&gt;
@@ -4391,6 +4637,11 @@ public class TNFe {
      *                                                     &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
      *                                                       &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                       &lt;element name="motDesICMS"&gt;
      *                                                         &lt;simpleType&gt;
@@ -4441,6 +4692,7 @@ public class TNFe {
      *                                                             &lt;enumeration value="10"/&gt;
      *                                                             &lt;enumeration value="11"/&gt;
      *                                                             &lt;enumeration value="16"/&gt;
+     *                                                             &lt;enumeration value="90"/&gt;
      *                                                           &lt;/restriction&gt;
      *                                                         &lt;/simpleType&gt;
      *                                                       &lt;/element&gt;
@@ -4482,6 +4734,11 @@ public class TNFe {
      *                                                     &lt;element name="pDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
      *                                                     &lt;element name="vICMSDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
      *                                                     &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                   &lt;/sequence&gt;
      *                                                 &lt;/restriction&gt;
      *                                               &lt;/complexContent&gt;
@@ -4503,7 +4760,19 @@ public class TNFe {
      *                                                     &lt;/element&gt;
      *                                                     &lt;sequence minOccurs="0"&gt;
      *                                                       &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
      *                                                       &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;/sequence&gt;
      *                                                   &lt;/sequence&gt;
      *                                                 &lt;/restriction&gt;
@@ -4539,6 +4808,11 @@ public class TNFe {
      *                                                     &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                     &lt;element name="modBCST"&gt;
      *                                                       &lt;simpleType&gt;
      *                                                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -4557,6 +4831,11 @@ public class TNFe {
      *                                                     &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                     &lt;sequence minOccurs="0"&gt;
      *                                                       &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                       &lt;element name="motDesICMS"&gt;
@@ -4605,6 +4884,11 @@ public class TNFe {
      *                                                       &lt;element name="pRedBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc" minOccurs="0"/&gt;
      *                                                       &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                       &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;sequence minOccurs="0"&gt;
+     *                                                         &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                         &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                         &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;/sequence&gt;
      *                                                     &lt;/sequence&gt;
      *                                                     &lt;sequence minOccurs="0"&gt;
      *                                                       &lt;element name="modBCST"&gt;
@@ -4625,6 +4909,11 @@ public class TNFe {
      *                                                       &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                       &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                       &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;sequence minOccurs="0"&gt;
+     *                                                         &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                         &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                         &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;/sequence&gt;
      *                                                     &lt;/sequence&gt;
      *                                                     &lt;sequence minOccurs="0"&gt;
      *                                                       &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -4710,6 +4999,7 @@ public class TNFe {
      *                                                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *                                                           &lt;whiteSpace value="preserve"/&gt;
      *                                                           &lt;enumeration value="41"/&gt;
+     *                                                           &lt;enumeration value="60"/&gt;
      *                                                         &lt;/restriction&gt;
      *                                                       &lt;/simpleType&gt;
      *                                                     &lt;/element&gt;
@@ -4797,6 +5087,11 @@ public class TNFe {
      *                                                     &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                     &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vCredICMSSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                   &lt;/sequence&gt;
@@ -4837,6 +5132,11 @@ public class TNFe {
      *                                                     &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                     &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
      *                                                   &lt;/sequence&gt;
      *                                                 &lt;/restriction&gt;
      *                                               &lt;/complexContent&gt;
@@ -4858,7 +5158,19 @@ public class TNFe {
      *                                                     &lt;/element&gt;
      *                                                     &lt;sequence minOccurs="0"&gt;
      *                                                       &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
      *                                                       &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                     &lt;/sequence&gt;
+     *                                                     &lt;sequence minOccurs="0"&gt;
+     *                                                       &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                       &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                     &lt;/sequence&gt;
      *                                                   &lt;/sequence&gt;
      *                                                 &lt;/restriction&gt;
@@ -4915,6 +5227,11 @@ public class TNFe {
      *                                                       &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                                       &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                                       &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;sequence minOccurs="0"&gt;
+     *                                                         &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                         &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+     *                                                         &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                                       &lt;/sequence&gt;
      *                                                     &lt;/sequence&gt;
      *                                                     &lt;sequence minOccurs="0"&gt;
      *                                                       &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
@@ -5323,7 +5640,8 @@ public class TNFe {
      *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *                                     &lt;sequence&gt;
      *                                       &lt;element name="vBCUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
-     *                                       &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
+     *                                       &lt;element name="vBCFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+     *                                       &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04" minOccurs="0"/&gt;
      *                                       &lt;element name="pICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
      *                                       &lt;element name="pICMSInter"&gt;
      *                                         &lt;simpleType&gt;
@@ -5336,7 +5654,7 @@ public class TNFe {
      *                                         &lt;/simpleType&gt;
      *                                       &lt;/element&gt;
      *                                       &lt;element name="pICMSInterPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
-     *                                       &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                                       &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
      *                                       &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                       &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                                     &lt;/sequence&gt;
@@ -5408,14 +5726,18 @@ public class TNFe {
      *                             &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
      *                             &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
      *                             &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+     *                             &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                             &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                             &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vProd" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vFrete" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vSeg" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vDesc" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vII" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vIPI" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                             &lt;element name="vIPIDevol" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vPIS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vCOFINS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
      *                             &lt;element name="vOutro" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -5494,6 +5816,8 @@ public class TNFe {
      *                         &lt;enumeration value="0"/&gt;
      *                         &lt;enumeration value="1"/&gt;
      *                         &lt;enumeration value="2"/&gt;
+     *                         &lt;enumeration value="3"/&gt;
+     *                         &lt;enumeration value="4"/&gt;
      *                         &lt;enumeration value="9"/&gt;
      *                       &lt;/restriction&gt;
      *                     &lt;/simpleType&gt;
@@ -5701,45 +6025,26 @@ public class TNFe {
      *             &lt;/complexContent&gt;
      *           &lt;/complexType&gt;
      *         &lt;/element&gt;
-     *         &lt;element name="pag" maxOccurs="100" minOccurs="0"&gt;
+     *         &lt;element name="pag"&gt;
      *           &lt;complexType&gt;
      *             &lt;complexContent&gt;
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *                 &lt;sequence&gt;
-     *                   &lt;element name="tPag"&gt;
-     *                     &lt;simpleType&gt;
-     *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
-     *                         &lt;whiteSpace value="preserve"/&gt;
-     *                         &lt;enumeration value="01"/&gt;
-     *                         &lt;enumeration value="02"/&gt;
-     *                         &lt;enumeration value="03"/&gt;
-     *                         &lt;enumeration value="04"/&gt;
-     *                         &lt;enumeration value="05"/&gt;
-     *                         &lt;enumeration value="10"/&gt;
-     *                         &lt;enumeration value="11"/&gt;
-     *                         &lt;enumeration value="12"/&gt;
-     *                         &lt;enumeration value="13"/&gt;
-     *                         &lt;enumeration value="99"/&gt;
-     *                       &lt;/restriction&gt;
-     *                     &lt;/simpleType&gt;
-     *                   &lt;/element&gt;
-     *                   &lt;element name="vPag" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
-     *                   &lt;element name="card" minOccurs="0"&gt;
+     *                   &lt;element name="detPag" maxOccurs="100"&gt;
      *                     &lt;complexType&gt;
      *                       &lt;complexContent&gt;
      *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *                           &lt;sequence&gt;
-     *                             &lt;element name="tpIntegra" minOccurs="0"&gt;
+     *                             &lt;element name="indPag" minOccurs="0"&gt;
      *                               &lt;simpleType&gt;
      *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *                                   &lt;whiteSpace value="preserve"/&gt;
+     *                                   &lt;enumeration value="0"/&gt;
      *                                   &lt;enumeration value="1"/&gt;
-     *                                   &lt;enumeration value="2"/&gt;
      *                                 &lt;/restriction&gt;
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
-     *                             &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
-     *                             &lt;element name="tBand" minOccurs="0"&gt;
+     *                             &lt;element name="tPag"&gt;
      *                               &lt;simpleType&gt;
      *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *                                   &lt;whiteSpace value="preserve"/&gt;
@@ -5747,23 +6052,70 @@ public class TNFe {
      *                                   &lt;enumeration value="02"/&gt;
      *                                   &lt;enumeration value="03"/&gt;
      *                                   &lt;enumeration value="04"/&gt;
+     *                                   &lt;enumeration value="05"/&gt;
+     *                                   &lt;enumeration value="10"/&gt;
+     *                                   &lt;enumeration value="11"/&gt;
+     *                                   &lt;enumeration value="12"/&gt;
+     *                                   &lt;enumeration value="13"/&gt;
+     *                                   &lt;enumeration value="14"/&gt;
+     *                                   &lt;enumeration value="15"/&gt;
+     *                                   &lt;enumeration value="90"/&gt;
      *                                   &lt;enumeration value="99"/&gt;
      *                                 &lt;/restriction&gt;
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
-     *                             &lt;element name="cAut" minOccurs="0"&gt;
-     *                               &lt;simpleType&gt;
-     *                                 &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
-     *                                   &lt;minLength value="1"/&gt;
-     *                                   &lt;maxLength value="20"/&gt;
-     *                                 &lt;/restriction&gt;
-     *                               &lt;/simpleType&gt;
+     *                             &lt;element name="vPag" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+     *                             &lt;element name="card" minOccurs="0"&gt;
+     *                               &lt;complexType&gt;
+     *                                 &lt;complexContent&gt;
+     *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                                     &lt;sequence&gt;
+     *                                       &lt;element name="tpIntegra"&gt;
+     *                                         &lt;simpleType&gt;
+     *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                             &lt;whiteSpace value="preserve"/&gt;
+     *                                             &lt;enumeration value="1"/&gt;
+     *                                             &lt;enumeration value="2"/&gt;
+     *                                           &lt;/restriction&gt;
+     *                                         &lt;/simpleType&gt;
+     *                                       &lt;/element&gt;
+     *                                       &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+     *                                       &lt;element name="tBand" minOccurs="0"&gt;
+     *                                         &lt;simpleType&gt;
+     *                                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                                             &lt;whiteSpace value="preserve"/&gt;
+     *                                             &lt;enumeration value="01"/&gt;
+     *                                             &lt;enumeration value="02"/&gt;
+     *                                             &lt;enumeration value="03"/&gt;
+     *                                             &lt;enumeration value="04"/&gt;
+     *                                             &lt;enumeration value="05"/&gt;
+     *                                             &lt;enumeration value="06"/&gt;
+     *                                             &lt;enumeration value="07"/&gt;
+     *                                             &lt;enumeration value="08"/&gt;
+     *                                             &lt;enumeration value="09"/&gt;
+     *                                             &lt;enumeration value="99"/&gt;
+     *                                           &lt;/restriction&gt;
+     *                                         &lt;/simpleType&gt;
+     *                                       &lt;/element&gt;
+     *                                       &lt;element name="cAut" minOccurs="0"&gt;
+     *                                         &lt;simpleType&gt;
+     *                                           &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
+     *                                             &lt;minLength value="1"/&gt;
+     *                                             &lt;maxLength value="20"/&gt;
+     *                                           &lt;/restriction&gt;
+     *                                         &lt;/simpleType&gt;
+     *                                       &lt;/element&gt;
+     *                                     &lt;/sequence&gt;
+     *                                   &lt;/restriction&gt;
+     *                                 &lt;/complexContent&gt;
+     *                               &lt;/complexType&gt;
      *                             &lt;/element&gt;
      *                           &lt;/sequence&gt;
      *                         &lt;/restriction&gt;
      *                       &lt;/complexContent&gt;
      *                     &lt;/complexType&gt;
      *                   &lt;/element&gt;
+     *                   &lt;element name="vTroco" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
      *                 &lt;/sequence&gt;
      *               &lt;/restriction&gt;
      *             &lt;/complexContent&gt;
@@ -6061,7 +6413,8 @@ public class TNFe {
         @XmlElement(required = true)
         protected TNFe.InfNFe.Transp transp;
         protected TNFe.InfNFe.Cobr cobr;
-        protected List<TNFe.InfNFe.Pag> pag;
+        @XmlElement(required = true)
+        protected TNFe.InfNFe.Pag pag;
         protected TNFe.InfNFe.InfAdic infAdic;
         protected TNFe.InfNFe.Exporta exporta;
         protected TNFe.InfNFe.Compra compra;
@@ -6348,32 +6701,27 @@ public class TNFe {
         }
 
         /**
-         * Gets the value of the pag property.
+         * Obtém o valor da propriedade pag.
          * 
-         * <p>
-         * This accessor method returns a reference to the live list,
-         * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the pag property.
-         * 
-         * <p>
-         * For example, to add a new item, do as follows:
-         * <pre>
-         *    getPag().add(newItem);
-         * </pre>
-         * 
-         * 
-         * <p>
-         * Objects of the following type(s) are allowed in the list
-         * {@link TNFe.InfNFe.Pag }
-         * 
-         * 
+         * @return
+         *     possible object is
+         *     {@link TNFe.InfNFe.Pag }
+         *     
          */
-        public List<TNFe.InfNFe.Pag> getPag() {
-            if (pag == null) {
-                pag = new ArrayList<TNFe.InfNFe.Pag>();
-            }
-            return this.pag;
+        public TNFe.InfNFe.Pag getPag() {
+            return pag;
+        }
+
+        /**
+         * Define o valor da propriedade pag.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link TNFe.InfNFe.Pag }
+         *     
+         */
+        public void setPag(TNFe.InfNFe.Pag value) {
+            this.pag = value;
         }
 
         /**
@@ -8414,7 +8762,7 @@ public class TNFe {
          *                     &lt;simpleType&gt;
          *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
          *                         &lt;whiteSpace value="preserve"/&gt;
-         *                         &lt;pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
+         *                         &lt;pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
          *                       &lt;/restriction&gt;
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
@@ -8442,11 +8790,30 @@ public class TNFe {
          *                       &lt;/restriction&gt;
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
-         *                   &lt;element name="CEST" minOccurs="0"&gt;
+         *                   &lt;sequence minOccurs="0"&gt;
+         *                     &lt;element name="CEST"&gt;
+         *                       &lt;simpleType&gt;
+         *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                           &lt;whiteSpace value="preserve"/&gt;
+         *                           &lt;pattern value="[0-9]{7}"/&gt;
+         *                         &lt;/restriction&gt;
+         *                       &lt;/simpleType&gt;
+         *                     &lt;/element&gt;
+         *                     &lt;element name="indEscala" minOccurs="0"&gt;
+         *                       &lt;simpleType&gt;
+         *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                           &lt;enumeration value="S"/&gt;
+         *                           &lt;enumeration value="N"/&gt;
+         *                         &lt;/restriction&gt;
+         *                       &lt;/simpleType&gt;
+         *                     &lt;/element&gt;
+         *                     &lt;element name="CNPJFab" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+         *                   &lt;/sequence&gt;
+         *                   &lt;element name="cBenef" minOccurs="0"&gt;
          *                     &lt;simpleType&gt;
          *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
          *                         &lt;whiteSpace value="preserve"/&gt;
-         *                         &lt;pattern value="[0-9]{7}"/&gt;
+         *                         &lt;pattern value="([!-ÿ]{8}|[!-ÿ]{10})?"/&gt;
          *                       &lt;/restriction&gt;
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
@@ -8481,7 +8848,7 @@ public class TNFe {
          *                     &lt;simpleType&gt;
          *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
          *                         &lt;whiteSpace value="preserve"/&gt;
-         *                         &lt;pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
+         *                         &lt;pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
          *                       &lt;/restriction&gt;
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
@@ -8675,6 +9042,35 @@ public class TNFe {
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
          *                   &lt;element name="nFCI" type="{http://www.portalfiscal.inf.br/nfe}TGuid" minOccurs="0"/&gt;
+         *                   &lt;element name="rastro" maxOccurs="500" minOccurs="0"&gt;
+         *                     &lt;complexType&gt;
+         *                       &lt;complexContent&gt;
+         *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *                           &lt;sequence&gt;
+         *                             &lt;element name="nLote"&gt;
+         *                               &lt;simpleType&gt;
+         *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                                   &lt;minLength value="1"/&gt;
+         *                                   &lt;maxLength value="20"/&gt;
+         *                                 &lt;/restriction&gt;
+         *                               &lt;/simpleType&gt;
+         *                             &lt;/element&gt;
+         *                             &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
+         *                             &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
+         *                             &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
+         *                             &lt;element name="cAgreg" minOccurs="0"&gt;
+         *                               &lt;simpleType&gt;
+         *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                                   &lt;whiteSpace value="preserve"/&gt;
+         *                                   &lt;pattern value="[0-9]{1,20}"/&gt;
+         *                                 &lt;/restriction&gt;
+         *                               &lt;/simpleType&gt;
+         *                             &lt;/element&gt;
+         *                           &lt;/sequence&gt;
+         *                         &lt;/restriction&gt;
+         *                       &lt;/complexContent&gt;
+         *                     &lt;/complexType&gt;
+         *                   &lt;/element&gt;
          *                   &lt;choice minOccurs="0"&gt;
          *                     &lt;element name="veicProd"&gt;
          *                       &lt;complexType&gt;
@@ -8893,22 +9289,18 @@ public class TNFe {
          *                         &lt;/complexContent&gt;
          *                       &lt;/complexType&gt;
          *                     &lt;/element&gt;
-         *                     &lt;element name="med" maxOccurs="500"&gt;
+         *                     &lt;element name="med"&gt;
          *                       &lt;complexType&gt;
          *                         &lt;complexContent&gt;
          *                           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
          *                             &lt;sequence&gt;
-         *                               &lt;element name="nLote"&gt;
+         *                               &lt;element name="cProdANVISA"&gt;
          *                                 &lt;simpleType&gt;
          *                                   &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
-         *                                     &lt;minLength value="1"/&gt;
-         *                                     &lt;maxLength value="20"/&gt;
+         *                                     &lt;length value="13"/&gt;
          *                                   &lt;/restriction&gt;
          *                                 &lt;/simpleType&gt;
          *                               &lt;/element&gt;
-         *                               &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
-         *                               &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
-         *                               &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
          *                               &lt;element name="vPMC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                             &lt;/sequence&gt;
          *                           &lt;/restriction&gt;
@@ -8971,7 +9363,18 @@ public class TNFe {
          *                                   &lt;/restriction&gt;
          *                                 &lt;/simpleType&gt;
          *                               &lt;/element&gt;
-         *                               &lt;element name="pMixGN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0204v" minOccurs="0"/&gt;
+         *                               &lt;element name="descANP"&gt;
+         *                                 &lt;simpleType&gt;
+         *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                                     &lt;minLength value="2"/&gt;
+         *                                     &lt;maxLength value="95"/&gt;
+         *                                   &lt;/restriction&gt;
+         *                                 &lt;/simpleType&gt;
+         *                               &lt;/element&gt;
+         *                               &lt;element name="pGLP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+         *                               &lt;element name="pGNn" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+         *                               &lt;element name="pGNi" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+         *                               &lt;element name="vPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
          *                               &lt;element name="CODIF" minOccurs="0"&gt;
          *                                 &lt;simpleType&gt;
          *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -9092,6 +9495,10 @@ public class TNFe {
          *                                           &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                         &lt;/sequence&gt;
          *                                       &lt;/restriction&gt;
          *                                     &lt;/complexContent&gt;
@@ -9125,6 +9532,11 @@ public class TNFe {
          *                                           &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                           &lt;element name="modBCST"&gt;
          *                                             &lt;simpleType&gt;
          *                                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -9143,6 +9555,11 @@ public class TNFe {
          *                                           &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                         &lt;/sequence&gt;
          *                                       &lt;/restriction&gt;
          *                                     &lt;/complexContent&gt;
@@ -9177,6 +9594,11 @@ public class TNFe {
          *                                           &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                           &lt;sequence minOccurs="0"&gt;
          *                                             &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                             &lt;element name="motDesICMS"&gt;
@@ -9228,6 +9650,11 @@ public class TNFe {
          *                                           &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
          *                                             &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                             &lt;element name="motDesICMS"&gt;
          *                                               &lt;simpleType&gt;
@@ -9278,6 +9705,7 @@ public class TNFe {
          *                                                   &lt;enumeration value="10"/&gt;
          *                                                   &lt;enumeration value="11"/&gt;
          *                                                   &lt;enumeration value="16"/&gt;
+         *                                                   &lt;enumeration value="90"/&gt;
          *                                                 &lt;/restriction&gt;
          *                                               &lt;/simpleType&gt;
          *                                             &lt;/element&gt;
@@ -9319,6 +9747,11 @@ public class TNFe {
          *                                           &lt;element name="pDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
          *                                           &lt;element name="vICMSDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
          *                                           &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                         &lt;/sequence&gt;
          *                                       &lt;/restriction&gt;
          *                                     &lt;/complexContent&gt;
@@ -9340,7 +9773,19 @@ public class TNFe {
          *                                           &lt;/element&gt;
          *                                           &lt;sequence minOccurs="0"&gt;
          *                                             &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
          *                                             &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;/sequence&gt;
          *                                         &lt;/sequence&gt;
          *                                       &lt;/restriction&gt;
@@ -9376,6 +9821,11 @@ public class TNFe {
          *                                           &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                           &lt;element name="modBCST"&gt;
          *                                             &lt;simpleType&gt;
          *                                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -9394,6 +9844,11 @@ public class TNFe {
          *                                           &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                           &lt;sequence minOccurs="0"&gt;
          *                                             &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                             &lt;element name="motDesICMS"&gt;
@@ -9442,6 +9897,11 @@ public class TNFe {
          *                                             &lt;element name="pRedBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc" minOccurs="0"/&gt;
          *                                             &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                             &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;sequence minOccurs="0"&gt;
+         *                                               &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                               &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                               &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;/sequence&gt;
          *                                           &lt;/sequence&gt;
          *                                           &lt;sequence minOccurs="0"&gt;
          *                                             &lt;element name="modBCST"&gt;
@@ -9462,6 +9922,11 @@ public class TNFe {
          *                                             &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                             &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                             &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;sequence minOccurs="0"&gt;
+         *                                               &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                               &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                               &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;/sequence&gt;
          *                                           &lt;/sequence&gt;
          *                                           &lt;sequence minOccurs="0"&gt;
          *                                             &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -9547,6 +10012,7 @@ public class TNFe {
          *                                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
          *                                                 &lt;whiteSpace value="preserve"/&gt;
          *                                                 &lt;enumeration value="41"/&gt;
+         *                                                 &lt;enumeration value="60"/&gt;
          *                                               &lt;/restriction&gt;
          *                                             &lt;/simpleType&gt;
          *                                           &lt;/element&gt;
@@ -9634,6 +10100,11 @@ public class TNFe {
          *                                           &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                           &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vCredICMSSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                         &lt;/sequence&gt;
@@ -9674,6 +10145,11 @@ public class TNFe {
          *                                           &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                           &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
          *                                         &lt;/sequence&gt;
          *                                       &lt;/restriction&gt;
          *                                     &lt;/complexContent&gt;
@@ -9695,7 +10171,19 @@ public class TNFe {
          *                                           &lt;/element&gt;
          *                                           &lt;sequence minOccurs="0"&gt;
          *                                             &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
          *                                             &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                           &lt;/sequence&gt;
+         *                                           &lt;sequence minOccurs="0"&gt;
+         *                                             &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                             &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                           &lt;/sequence&gt;
          *                                         &lt;/sequence&gt;
          *                                       &lt;/restriction&gt;
@@ -9752,6 +10240,11 @@ public class TNFe {
          *                                             &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                                             &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                                             &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;sequence minOccurs="0"&gt;
+         *                                               &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                               &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+         *                                               &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                                             &lt;/sequence&gt;
          *                                           &lt;/sequence&gt;
          *                                           &lt;sequence minOccurs="0"&gt;
          *                                             &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
@@ -10160,7 +10653,8 @@ public class TNFe {
          *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
          *                           &lt;sequence&gt;
          *                             &lt;element name="vBCUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
-         *                             &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
+         *                             &lt;element name="vBCFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+         *                             &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04" minOccurs="0"/&gt;
          *                             &lt;element name="pICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
          *                             &lt;element name="pICMSInter"&gt;
          *                               &lt;simpleType&gt;
@@ -10173,7 +10667,7 @@ public class TNFe {
          *                               &lt;/simpleType&gt;
          *                             &lt;/element&gt;
          *                             &lt;element name="pICMSInterPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
-         *                             &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                             &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
          *                             &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                             &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                           &lt;/sequence&gt;
@@ -10417,6 +10911,10 @@ public class TNFe {
              *                                 &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                               &lt;/sequence&gt;
              *                             &lt;/restriction&gt;
              *                           &lt;/complexContent&gt;
@@ -10450,6 +10948,11 @@ public class TNFe {
              *                                 &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                                 &lt;element name="modBCST"&gt;
              *                                   &lt;simpleType&gt;
              *                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -10468,6 +10971,11 @@ public class TNFe {
              *                                 &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                               &lt;/sequence&gt;
              *                             &lt;/restriction&gt;
              *                           &lt;/complexContent&gt;
@@ -10502,6 +11010,11 @@ public class TNFe {
              *                                 &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                                 &lt;sequence minOccurs="0"&gt;
              *                                   &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                   &lt;element name="motDesICMS"&gt;
@@ -10553,6 +11066,11 @@ public class TNFe {
              *                                 &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
              *                                   &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                   &lt;element name="motDesICMS"&gt;
              *                                     &lt;simpleType&gt;
@@ -10603,6 +11121,7 @@ public class TNFe {
              *                                         &lt;enumeration value="10"/&gt;
              *                                         &lt;enumeration value="11"/&gt;
              *                                         &lt;enumeration value="16"/&gt;
+             *                                         &lt;enumeration value="90"/&gt;
              *                                       &lt;/restriction&gt;
              *                                     &lt;/simpleType&gt;
              *                                   &lt;/element&gt;
@@ -10644,6 +11163,11 @@ public class TNFe {
              *                                 &lt;element name="pDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
              *                                 &lt;element name="vICMSDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
              *                                 &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                               &lt;/sequence&gt;
              *                             &lt;/restriction&gt;
              *                           &lt;/complexContent&gt;
@@ -10665,7 +11189,19 @@ public class TNFe {
              *                                 &lt;/element&gt;
              *                                 &lt;sequence minOccurs="0"&gt;
              *                                   &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
              *                                   &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;/sequence&gt;
              *                               &lt;/sequence&gt;
              *                             &lt;/restriction&gt;
@@ -10701,6 +11237,11 @@ public class TNFe {
              *                                 &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                                 &lt;element name="modBCST"&gt;
              *                                   &lt;simpleType&gt;
              *                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -10719,6 +11260,11 @@ public class TNFe {
              *                                 &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                                 &lt;sequence minOccurs="0"&gt;
              *                                   &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                   &lt;element name="motDesICMS"&gt;
@@ -10767,6 +11313,11 @@ public class TNFe {
              *                                   &lt;element name="pRedBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc" minOccurs="0"/&gt;
              *                                   &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                   &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;sequence minOccurs="0"&gt;
+             *                                     &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                     &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                     &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;/sequence&gt;
              *                                 &lt;/sequence&gt;
              *                                 &lt;sequence minOccurs="0"&gt;
              *                                   &lt;element name="modBCST"&gt;
@@ -10787,6 +11338,11 @@ public class TNFe {
              *                                   &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                   &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                   &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;sequence minOccurs="0"&gt;
+             *                                     &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                     &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                     &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;/sequence&gt;
              *                                 &lt;/sequence&gt;
              *                                 &lt;sequence minOccurs="0"&gt;
              *                                   &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -10872,6 +11428,7 @@ public class TNFe {
              *                                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
              *                                       &lt;whiteSpace value="preserve"/&gt;
              *                                       &lt;enumeration value="41"/&gt;
+             *                                       &lt;enumeration value="60"/&gt;
              *                                     &lt;/restriction&gt;
              *                                   &lt;/simpleType&gt;
              *                                 &lt;/element&gt;
@@ -10959,6 +11516,11 @@ public class TNFe {
              *                                 &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                                 &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vCredICMSSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                               &lt;/sequence&gt;
@@ -10999,6 +11561,11 @@ public class TNFe {
              *                                 &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                 &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
              *                               &lt;/sequence&gt;
              *                             &lt;/restriction&gt;
              *                           &lt;/complexContent&gt;
@@ -11020,7 +11587,19 @@ public class TNFe {
              *                                 &lt;/element&gt;
              *                                 &lt;sequence minOccurs="0"&gt;
              *                                   &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
              *                                   &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                 &lt;/sequence&gt;
+             *                                 &lt;sequence minOccurs="0"&gt;
+             *                                   &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                   &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                 &lt;/sequence&gt;
              *                               &lt;/sequence&gt;
              *                             &lt;/restriction&gt;
@@ -11077,6 +11656,11 @@ public class TNFe {
              *                                   &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                                   &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                                   &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;sequence minOccurs="0"&gt;
+             *                                     &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                     &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+             *                                     &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                                   &lt;/sequence&gt;
              *                                 &lt;/sequence&gt;
              *                                 &lt;sequence minOccurs="0"&gt;
              *                                   &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
@@ -11485,7 +12069,8 @@ public class TNFe {
              *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
              *                 &lt;sequence&gt;
              *                   &lt;element name="vBCUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
-             *                   &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
+             *                   &lt;element name="vBCFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+             *                   &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04" minOccurs="0"/&gt;
              *                   &lt;element name="pICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
              *                   &lt;element name="pICMSInter"&gt;
              *                     &lt;simpleType&gt;
@@ -11498,7 +12083,7 @@ public class TNFe {
              *                     &lt;/simpleType&gt;
              *                   &lt;/element&gt;
              *                   &lt;element name="pICMSInterPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
-             *                   &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *                   &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
              *                   &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                   &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                 &lt;/sequence&gt;
@@ -11521,16 +12106,16 @@ public class TNFe {
             public static class Imposto {
 
                 @XmlElementRefs({
-                    @XmlElementRef(name = "ICMSUFDest", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
-                    @XmlElementRef(name = "PIS", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
                     @XmlElementRef(name = "PISST", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
-                    @XmlElementRef(name = "COFINS", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
-                    @XmlElementRef(name = "vTotTrib", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
+                    @XmlElementRef(name = "COFINSST", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
+                    @XmlElementRef(name = "ICMSUFDest", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
+                    @XmlElementRef(name = "II", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
+                    @XmlElementRef(name = "PIS", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
                     @XmlElementRef(name = "ICMS", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
                     @XmlElementRef(name = "IPI", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
-                    @XmlElementRef(name = "II", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
-                    @XmlElementRef(name = "ISSQN", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
-                    @XmlElementRef(name = "COFINSST", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false)
+                    @XmlElementRef(name = "COFINS", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
+                    @XmlElementRef(name = "vTotTrib", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false),
+                    @XmlElementRef(name = "ISSQN", namespace = "http://www.portalfiscal.inf.br/nfe", type = JAXBElement.class, required = false)
                 })
                 protected List<JAXBElement<?>> content;
 
@@ -11540,8 +12125,8 @@ public class TNFe {
                  * <p>
                  * Você está obtendo esta propriedade "catch-all" pelo seguinte motivo: 
                  * O nome do campo "IPI" é usado por duas partes diferentes de um esquema. Consulte: 
-                 * linha 3256 de file:/Users/higomatos/Documents/DFe/NFe/Schemas/PL_008i2_CFOP_EXTERNO/leiauteNFe_v3.10.xsd
-                 * linha 3224 de file:/Users/higomatos/Documents/DFe/NFe/Schemas/PL_008i2_CFOP_EXTERNO/leiauteNFe_v3.10.xsd
+                 * linha 3611 de file:/Users/rafael/Downloads/PL_009_V4_2016_002_v160/leiauteNFe_v4.00.xsd
+                 * linha 3579 de file:/Users/rafael/Downloads/PL_009_V4_2016_002_v160/leiauteNFe_v4.00.xsd
                  * <p>
                  * Para eliminar esta propriedade, aplique uma personalização de propriedade a uma 
                  * das seguintes declarações, a fim de alterar seus nomes: 
@@ -11562,16 +12147,16 @@ public class TNFe {
                  * 
                  * <p>
                  * Objects of the following type(s) are allowed in the list
-                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.ICMSUFDest }{@code >}
-                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.PIS }{@code >}
                  * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.PISST }{@code >}
-                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.COFINS }{@code >}
-                 * {@link JAXBElement }{@code <}{@link String }{@code >}
+                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.COFINSST }{@code >}
+                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.ICMSUFDest }{@code >}
+                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.II }{@code >}
+                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.PIS }{@code >}
                  * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.ICMS }{@code >}
                  * {@link JAXBElement }{@code <}{@link TIpi }{@code >}
-                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.II }{@code >}
+                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.COFINS }{@code >}
+                 * {@link JAXBElement }{@code <}{@link String }{@code >}
                  * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.ISSQN }{@code >}
-                 * {@link JAXBElement }{@code <}{@link TNFe.InfNFe.Det.Imposto.COFINSST }{@code >}
                  * 
                  * 
                  */
@@ -12634,6 +13219,10 @@ public class TNFe {
                  *                   &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                 &lt;/sequence&gt;
                  *               &lt;/restriction&gt;
                  *             &lt;/complexContent&gt;
@@ -12667,6 +13256,11 @@ public class TNFe {
                  *                   &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                   &lt;element name="modBCST"&gt;
                  *                     &lt;simpleType&gt;
                  *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -12685,6 +13279,11 @@ public class TNFe {
                  *                   &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                 &lt;/sequence&gt;
                  *               &lt;/restriction&gt;
                  *             &lt;/complexContent&gt;
@@ -12719,6 +13318,11 @@ public class TNFe {
                  *                   &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                   &lt;sequence minOccurs="0"&gt;
                  *                     &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                     &lt;element name="motDesICMS"&gt;
@@ -12770,6 +13374,11 @@ public class TNFe {
                  *                   &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
                  *                     &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                     &lt;element name="motDesICMS"&gt;
                  *                       &lt;simpleType&gt;
@@ -12820,6 +13429,7 @@ public class TNFe {
                  *                           &lt;enumeration value="10"/&gt;
                  *                           &lt;enumeration value="11"/&gt;
                  *                           &lt;enumeration value="16"/&gt;
+                 *                           &lt;enumeration value="90"/&gt;
                  *                         &lt;/restriction&gt;
                  *                       &lt;/simpleType&gt;
                  *                     &lt;/element&gt;
@@ -12861,6 +13471,11 @@ public class TNFe {
                  *                   &lt;element name="pDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
                  *                   &lt;element name="vICMSDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
                  *                   &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                 &lt;/sequence&gt;
                  *               &lt;/restriction&gt;
                  *             &lt;/complexContent&gt;
@@ -12882,7 +13497,19 @@ public class TNFe {
                  *                   &lt;/element&gt;
                  *                   &lt;sequence minOccurs="0"&gt;
                  *                     &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
                  *                     &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;/sequence&gt;
                  *                 &lt;/sequence&gt;
                  *               &lt;/restriction&gt;
@@ -12918,6 +13545,11 @@ public class TNFe {
                  *                   &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                   &lt;element name="modBCST"&gt;
                  *                     &lt;simpleType&gt;
                  *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -12936,6 +13568,11 @@ public class TNFe {
                  *                   &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                   &lt;sequence minOccurs="0"&gt;
                  *                     &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                     &lt;element name="motDesICMS"&gt;
@@ -12984,6 +13621,11 @@ public class TNFe {
                  *                     &lt;element name="pRedBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc" minOccurs="0"/&gt;
                  *                     &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                     &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;sequence minOccurs="0"&gt;
+                 *                       &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                       &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                       &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;/sequence&gt;
                  *                   &lt;/sequence&gt;
                  *                   &lt;sequence minOccurs="0"&gt;
                  *                     &lt;element name="modBCST"&gt;
@@ -13004,6 +13646,11 @@ public class TNFe {
                  *                     &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                     &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                     &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;sequence minOccurs="0"&gt;
+                 *                       &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                       &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                       &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;/sequence&gt;
                  *                   &lt;/sequence&gt;
                  *                   &lt;sequence minOccurs="0"&gt;
                  *                     &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -13089,6 +13736,7 @@ public class TNFe {
                  *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
                  *                         &lt;whiteSpace value="preserve"/&gt;
                  *                         &lt;enumeration value="41"/&gt;
+                 *                         &lt;enumeration value="60"/&gt;
                  *                       &lt;/restriction&gt;
                  *                     &lt;/simpleType&gt;
                  *                   &lt;/element&gt;
@@ -13176,6 +13824,11 @@ public class TNFe {
                  *                   &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                   &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vCredICMSSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                 &lt;/sequence&gt;
@@ -13216,6 +13869,11 @@ public class TNFe {
                  *                   &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                   &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
                  *                 &lt;/sequence&gt;
                  *               &lt;/restriction&gt;
                  *             &lt;/complexContent&gt;
@@ -13237,7 +13895,19 @@ public class TNFe {
                  *                   &lt;/element&gt;
                  *                   &lt;sequence minOccurs="0"&gt;
                  *                     &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
                  *                     &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                   &lt;/sequence&gt;
+                 *                   &lt;sequence minOccurs="0"&gt;
+                 *                     &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                     &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                   &lt;/sequence&gt;
                  *                 &lt;/sequence&gt;
                  *               &lt;/restriction&gt;
@@ -13294,6 +13964,11 @@ public class TNFe {
                  *                     &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *                     &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *                     &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;sequence minOccurs="0"&gt;
+                 *                       &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                       &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                 *                       &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *                     &lt;/sequence&gt;
                  *                   &lt;/sequence&gt;
                  *                   &lt;sequence minOccurs="0"&gt;
                  *                     &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
@@ -13811,6 +14486,10 @@ public class TNFe {
                      *         &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
                      *       &lt;/sequence&gt;
                      *     &lt;/restriction&gt;
                      *   &lt;/complexContent&gt;
@@ -13826,7 +14505,9 @@ public class TNFe {
                         "modBC",
                         "vbc",
                         "picms",
-                        "vicms"
+                        "vicms",
+                        "pfcp",
+                        "vfcp"
                     })
                     public static class ICMS00 {
 
@@ -13842,6 +14523,10 @@ public class TNFe {
                         protected String picms;
                         @XmlElement(name = "vICMS", required = true)
                         protected String vicms;
+                        @XmlElement(name = "pFCP")
+                        protected String pfcp;
+                        @XmlElement(name = "vFCP")
+                        protected String vfcp;
 
                         /**
                          * Obtém o valor da propriedade orig.
@@ -13985,6 +14670,54 @@ public class TNFe {
                          */
                         public void setVICMS(String value) {
                             this.vicms = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCP() {
+                            return pfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCP(String value) {
+                            this.pfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCP() {
+                            return vfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCP(String value) {
+                            this.vfcp = value;
                         }
 
                     }
@@ -14023,6 +14756,11 @@ public class TNFe {
                      *         &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
                      *         &lt;element name="modBCST"&gt;
                      *           &lt;simpleType&gt;
                      *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -14041,6 +14779,11 @@ public class TNFe {
                      *         &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
                      *       &lt;/sequence&gt;
                      *     &lt;/restriction&gt;
                      *   &lt;/complexContent&gt;
@@ -14057,12 +14800,18 @@ public class TNFe {
                         "vbc",
                         "picms",
                         "vicms",
+                        "vbcfcp",
+                        "pfcp",
+                        "vfcp",
                         "modBCST",
                         "pmvast",
                         "pRedBCST",
                         "vbcst",
                         "picmsst",
-                        "vicmsst"
+                        "vicmsst",
+                        "vbcfcpst",
+                        "pfcpst",
+                        "vfcpst"
                     })
                     public static class ICMS10 {
 
@@ -14078,6 +14827,12 @@ public class TNFe {
                         protected String picms;
                         @XmlElement(name = "vICMS", required = true)
                         protected String vicms;
+                        @XmlElement(name = "vBCFCP")
+                        protected String vbcfcp;
+                        @XmlElement(name = "pFCP")
+                        protected String pfcp;
+                        @XmlElement(name = "vFCP")
+                        protected String vfcp;
                         @XmlElement(required = true)
                         protected String modBCST;
                         @XmlElement(name = "pMVAST")
@@ -14089,6 +14844,12 @@ public class TNFe {
                         protected String picmsst;
                         @XmlElement(name = "vICMSST", required = true)
                         protected String vicmsst;
+                        @XmlElement(name = "vBCFCPST")
+                        protected String vbcfcpst;
+                        @XmlElement(name = "pFCPST")
+                        protected String pfcpst;
+                        @XmlElement(name = "vFCPST")
+                        protected String vfcpst;
 
                         /**
                          * Obtém o valor da propriedade orig.
@@ -14232,6 +14993,78 @@ public class TNFe {
                          */
                         public void setVICMS(String value) {
                             this.vicms = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vbcfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCP() {
+                            return vbcfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCP(String value) {
+                            this.vbcfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCP() {
+                            return pfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCP(String value) {
+                            this.pfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCP() {
+                            return vfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCP(String value) {
+                            this.vfcp = value;
                         }
 
                         /**
@@ -14378,6 +15211,78 @@ public class TNFe {
                             this.vicmsst = value;
                         }
 
+                        /**
+                         * Obtém o valor da propriedade vbcfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPST() {
+                            return vbcfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPST(String value) {
+                            this.vbcfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPST() {
+                            return pfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPST(String value) {
+                            this.pfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPST() {
+                            return vfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPST(String value) {
+                            this.vfcpst = value;
+                        }
+
                     }
 
 
@@ -14416,6 +15321,11 @@ public class TNFe {
                      *         &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
                      *           &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *           &lt;element name="motDesICMS"&gt;
                      *             &lt;simpleType&gt;
@@ -14445,6 +15355,9 @@ public class TNFe {
                         "vbc",
                         "picms",
                         "vicms",
+                        "vbcfcp",
+                        "pfcp",
+                        "vfcp",
                         "vicmsDeson",
                         "motDesICMS"
                     })
@@ -14464,6 +15377,12 @@ public class TNFe {
                         protected String picms;
                         @XmlElement(name = "vICMS", required = true)
                         protected String vicms;
+                        @XmlElement(name = "vBCFCP")
+                        protected String vbcfcp;
+                        @XmlElement(name = "pFCP")
+                        protected String pfcp;
+                        @XmlElement(name = "vFCP")
+                        protected String vfcp;
                         @XmlElement(name = "vICMSDeson")
                         protected String vicmsDeson;
                         protected String motDesICMS;
@@ -14637,6 +15556,78 @@ public class TNFe {
                         }
 
                         /**
+                         * Obtém o valor da propriedade vbcfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCP() {
+                            return vbcfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCP(String value) {
+                            this.vbcfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCP() {
+                            return pfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCP(String value) {
+                            this.pfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCP() {
+                            return vfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCP(String value) {
+                            this.vfcp = value;
+                        }
+
+                        /**
                          * Obtém o valor da propriedade vicmsDeson.
                          * 
                          * @return
@@ -14725,6 +15716,11 @@ public class TNFe {
                      *         &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
                      *           &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *           &lt;element name="motDesICMS"&gt;
                      *             &lt;simpleType&gt;
@@ -14755,6 +15751,9 @@ public class TNFe {
                         "vbcst",
                         "picmsst",
                         "vicmsst",
+                        "vbcfcpst",
+                        "pfcpst",
+                        "vfcpst",
                         "vicmsDeson",
                         "motDesICMS"
                     })
@@ -14775,6 +15774,12 @@ public class TNFe {
                         protected String picmsst;
                         @XmlElement(name = "vICMSST", required = true)
                         protected String vicmsst;
+                        @XmlElement(name = "vBCFCPST")
+                        protected String vbcfcpst;
+                        @XmlElement(name = "pFCPST")
+                        protected String pfcpst;
+                        @XmlElement(name = "vFCPST")
+                        protected String vfcpst;
                         @XmlElement(name = "vICMSDeson")
                         protected String vicmsDeson;
                         protected String motDesICMS;
@@ -14972,6 +15977,78 @@ public class TNFe {
                         }
 
                         /**
+                         * Obtém o valor da propriedade vbcfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPST() {
+                            return vbcfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPST(String value) {
+                            this.vbcfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPST() {
+                            return pfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPST(String value) {
+                            this.pfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPST() {
+                            return vfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPST(String value) {
+                            this.vfcpst = value;
+                        }
+
+                        /**
                          * Obtém o valor da propriedade vicmsDeson.
                          * 
                          * @return
@@ -15060,6 +16137,7 @@ public class TNFe {
                      *                 &lt;enumeration value="10"/&gt;
                      *                 &lt;enumeration value="11"/&gt;
                      *                 &lt;enumeration value="16"/&gt;
+                     *                 &lt;enumeration value="90"/&gt;
                      *               &lt;/restriction&gt;
                      *             &lt;/simpleType&gt;
                      *           &lt;/element&gt;
@@ -15225,6 +16303,11 @@ public class TNFe {
                      *         &lt;element name="pDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
                      *         &lt;element name="vICMSDif" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
                      *         &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
                      *       &lt;/sequence&gt;
                      *     &lt;/restriction&gt;
                      *   &lt;/complexContent&gt;
@@ -15244,7 +16327,10 @@ public class TNFe {
                         "vicmsOp",
                         "pDif",
                         "vicmsDif",
-                        "vicms"
+                        "vicms",
+                        "vbcfcp",
+                        "pfcp",
+                        "vfcp"
                     })
                     public static class ICMS51 {
 
@@ -15265,6 +16351,12 @@ public class TNFe {
                         protected String vicmsDif;
                         @XmlElement(name = "vICMS")
                         protected String vicms;
+                        @XmlElement(name = "vBCFCP")
+                        protected String vbcfcp;
+                        @XmlElement(name = "pFCP")
+                        protected String pfcp;
+                        @XmlElement(name = "vFCP")
+                        protected String vfcp;
 
                         /**
                          * Obtém o valor da propriedade orig.
@@ -15506,6 +16598,78 @@ public class TNFe {
                             this.vicms = value;
                         }
 
+                        /**
+                         * Obtém o valor da propriedade vbcfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCP() {
+                            return vbcfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCP(String value) {
+                            this.vbcfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCP() {
+                            return pfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCP(String value) {
+                            this.pfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCP() {
+                            return vfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCP(String value) {
+                            this.vfcp = value;
+                        }
+
                     }
 
 
@@ -15530,7 +16694,19 @@ public class TNFe {
                      *         &lt;/element&gt;
                      *         &lt;sequence minOccurs="0"&gt;
                      *           &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
                      *           &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;/sequence&gt;
                      *       &lt;/sequence&gt;
                      *     &lt;/restriction&gt;
@@ -15545,7 +16721,15 @@ public class TNFe {
                         "orig",
                         "cst",
                         "vbcstRet",
-                        "vicmsstRet"
+                        "pst",
+                        "vicmsstRet",
+                        "vbcfcpstRet",
+                        "pfcpstRet",
+                        "vfcpstRet",
+                        "pRedBCEfet",
+                        "vbcEfet",
+                        "picmsEfet",
+                        "vicmsEfet"
                     })
                     public static class ICMS60 {
 
@@ -15555,8 +16739,23 @@ public class TNFe {
                         protected String cst;
                         @XmlElement(name = "vBCSTRet")
                         protected String vbcstRet;
+                        @XmlElement(name = "pST")
+                        protected String pst;
                         @XmlElement(name = "vICMSSTRet")
                         protected String vicmsstRet;
+                        @XmlElement(name = "vBCFCPSTRet")
+                        protected String vbcfcpstRet;
+                        @XmlElement(name = "pFCPSTRet")
+                        protected String pfcpstRet;
+                        @XmlElement(name = "vFCPSTRet")
+                        protected String vfcpstRet;
+                        protected String pRedBCEfet;
+                        @XmlElement(name = "vBCEfet")
+                        protected String vbcEfet;
+                        @XmlElement(name = "pICMSEfet")
+                        protected String picmsEfet;
+                        @XmlElement(name = "vICMSEfet")
+                        protected String vicmsEfet;
 
                         /**
                          * Obtém o valor da propriedade orig.
@@ -15631,6 +16830,30 @@ public class TNFe {
                         }
 
                         /**
+                         * Obtém o valor da propriedade pst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPST() {
+                            return pst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPST(String value) {
+                            this.pst = value;
+                        }
+
+                        /**
                          * Obtém o valor da propriedade vicmsstRet.
                          * 
                          * @return
@@ -15652,6 +16875,174 @@ public class TNFe {
                          */
                         public void setVICMSSTRet(String value) {
                             this.vicmsstRet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vbcfcpstRet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPSTRet() {
+                            return vbcfcpstRet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpstRet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPSTRet(String value) {
+                            this.vbcfcpstRet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpstRet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPSTRet() {
+                            return pfcpstRet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpstRet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPSTRet(String value) {
+                            this.pfcpstRet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpstRet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPSTRet() {
+                            return vfcpstRet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpstRet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPSTRet(String value) {
+                            this.vfcpstRet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pRedBCEfet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPRedBCEfet() {
+                            return pRedBCEfet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pRedBCEfet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPRedBCEfet(String value) {
+                            this.pRedBCEfet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vbcEfet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCEfet() {
+                            return vbcEfet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcEfet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCEfet(String value) {
+                            this.vbcEfet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade picmsEfet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPICMSEfet() {
+                            return picmsEfet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade picmsEfet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPICMSEfet(String value) {
+                            this.picmsEfet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vicmsEfet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVICMSEfet() {
+                            return vicmsEfet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vicmsEfet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVICMSEfet(String value) {
+                            this.vicmsEfet = value;
                         }
 
                     }
@@ -15691,6 +17082,11 @@ public class TNFe {
                      *         &lt;element name="vBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
                      *         &lt;element name="modBCST"&gt;
                      *           &lt;simpleType&gt;
                      *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -15709,6 +17105,11 @@ public class TNFe {
                      *         &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
                      *         &lt;sequence minOccurs="0"&gt;
                      *           &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *           &lt;element name="motDesICMS"&gt;
@@ -15739,12 +17140,18 @@ public class TNFe {
                         "vbc",
                         "picms",
                         "vicms",
+                        "vbcfcp",
+                        "pfcp",
+                        "vfcp",
                         "modBCST",
                         "pmvast",
                         "pRedBCST",
                         "vbcst",
                         "picmsst",
                         "vicmsst",
+                        "vbcfcpst",
+                        "pfcpst",
+                        "vfcpst",
                         "vicmsDeson",
                         "motDesICMS"
                     })
@@ -15764,6 +17171,12 @@ public class TNFe {
                         protected String picms;
                         @XmlElement(name = "vICMS", required = true)
                         protected String vicms;
+                        @XmlElement(name = "vBCFCP")
+                        protected String vbcfcp;
+                        @XmlElement(name = "pFCP")
+                        protected String pfcp;
+                        @XmlElement(name = "vFCP")
+                        protected String vfcp;
                         @XmlElement(required = true)
                         protected String modBCST;
                         @XmlElement(name = "pMVAST")
@@ -15775,6 +17188,12 @@ public class TNFe {
                         protected String picmsst;
                         @XmlElement(name = "vICMSST", required = true)
                         protected String vicmsst;
+                        @XmlElement(name = "vBCFCPST")
+                        protected String vbcfcpst;
+                        @XmlElement(name = "pFCPST")
+                        protected String pfcpst;
+                        @XmlElement(name = "vFCPST")
+                        protected String vfcpst;
                         @XmlElement(name = "vICMSDeson")
                         protected String vicmsDeson;
                         protected String motDesICMS;
@@ -15948,6 +17367,78 @@ public class TNFe {
                         }
 
                         /**
+                         * Obtém o valor da propriedade vbcfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCP() {
+                            return vbcfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCP(String value) {
+                            this.vbcfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCP() {
+                            return pfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCP(String value) {
+                            this.pfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCP() {
+                            return vfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCP(String value) {
+                            this.vfcp = value;
+                        }
+
+                        /**
                          * Obtém o valor da propriedade modBCST.
                          * 
                          * @return
@@ -16089,6 +17580,78 @@ public class TNFe {
                          */
                         public void setVICMSST(String value) {
                             this.vicmsst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vbcfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPST() {
+                            return vbcfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPST(String value) {
+                            this.vbcfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPST() {
+                            return pfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPST(String value) {
+                            this.pfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPST() {
+                            return vfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPST(String value) {
+                            this.vfcpst = value;
                         }
 
                         /**
@@ -16177,6 +17740,11 @@ public class TNFe {
                      *           &lt;element name="pRedBC" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc" minOccurs="0"/&gt;
                      *           &lt;element name="pICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *           &lt;element name="vICMS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;sequence minOccurs="0"&gt;
+                     *             &lt;element name="vBCFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *             &lt;element name="pFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *             &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;/sequence&gt;
                      *         &lt;/sequence&gt;
                      *         &lt;sequence minOccurs="0"&gt;
                      *           &lt;element name="modBCST"&gt;
@@ -16197,6 +17765,11 @@ public class TNFe {
                      *           &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *           &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *           &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;sequence minOccurs="0"&gt;
+                     *             &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *             &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *             &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;/sequence&gt;
                      *         &lt;/sequence&gt;
                      *         &lt;sequence minOccurs="0"&gt;
                      *           &lt;element name="vICMSDeson" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -16228,12 +17801,18 @@ public class TNFe {
                         "pRedBC",
                         "picms",
                         "vicms",
+                        "vbcfcp",
+                        "pfcp",
+                        "vfcp",
                         "modBCST",
                         "pmvast",
                         "pRedBCST",
                         "vbcst",
                         "picmsst",
                         "vicmsst",
+                        "vbcfcpst",
+                        "pfcpst",
+                        "vfcpst",
                         "vicmsDeson",
                         "motDesICMS"
                     })
@@ -16251,6 +17830,12 @@ public class TNFe {
                         protected String picms;
                         @XmlElement(name = "vICMS")
                         protected String vicms;
+                        @XmlElement(name = "vBCFCP")
+                        protected String vbcfcp;
+                        @XmlElement(name = "pFCP")
+                        protected String pfcp;
+                        @XmlElement(name = "vFCP")
+                        protected String vfcp;
                         protected String modBCST;
                         @XmlElement(name = "pMVAST")
                         protected String pmvast;
@@ -16261,6 +17846,12 @@ public class TNFe {
                         protected String picmsst;
                         @XmlElement(name = "vICMSST")
                         protected String vicmsst;
+                        @XmlElement(name = "vBCFCPST")
+                        protected String vbcfcpst;
+                        @XmlElement(name = "pFCPST")
+                        protected String pfcpst;
+                        @XmlElement(name = "vFCPST")
+                        protected String vfcpst;
                         @XmlElement(name = "vICMSDeson")
                         protected String vicmsDeson;
                         protected String motDesICMS;
@@ -16434,6 +18025,78 @@ public class TNFe {
                         }
 
                         /**
+                         * Obtém o valor da propriedade vbcfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCP() {
+                            return vbcfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCP(String value) {
+                            this.vbcfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCP() {
+                            return pfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCP(String value) {
+                            this.pfcp = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcp.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCP() {
+                            return vfcp;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcp.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCP(String value) {
+                            this.vfcp = value;
+                        }
+
+                        /**
                          * Obtém o valor da propriedade modBCST.
                          * 
                          * @return
@@ -16575,6 +18238,78 @@ public class TNFe {
                          */
                         public void setVICMSST(String value) {
                             this.vicmsst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vbcfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPST() {
+                            return vbcfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPST(String value) {
+                            this.vbcfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPST() {
+                            return pfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPST(String value) {
+                            this.pfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPST() {
+                            return vfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPST(String value) {
+                            this.vfcpst = value;
                         }
 
                         /**
@@ -17380,6 +19115,11 @@ public class TNFe {
                      *         &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
                      *         &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vCredICMSSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *       &lt;/sequence&gt;
@@ -17400,6 +19140,9 @@ public class TNFe {
                         "vbcst",
                         "picmsst",
                         "vicmsst",
+                        "vbcfcpst",
+                        "pfcpst",
+                        "vfcpst",
                         "pCredSN",
                         "vCredICMSSN"
                     })
@@ -17420,6 +19163,12 @@ public class TNFe {
                         protected String picmsst;
                         @XmlElement(name = "vICMSST", required = true)
                         protected String vicmsst;
+                        @XmlElement(name = "vBCFCPST")
+                        protected String vbcfcpst;
+                        @XmlElement(name = "pFCPST")
+                        protected String pfcpst;
+                        @XmlElement(name = "vFCPST")
+                        protected String vfcpst;
                         @XmlElement(required = true)
                         protected String pCredSN;
                         @XmlElement(required = true)
@@ -17618,6 +19367,78 @@ public class TNFe {
                         }
 
                         /**
+                         * Obtém o valor da propriedade vbcfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPST() {
+                            return vbcfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPST(String value) {
+                            this.vbcfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPST() {
+                            return pfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPST(String value) {
+                            this.pfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPST() {
+                            return vfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPST(String value) {
+                            this.vfcpst = value;
+                        }
+
+                        /**
                          * Obtém o valor da propriedade pCredSN.
                          * 
                          * @return
@@ -17706,6 +19527,11 @@ public class TNFe {
                      *         &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *         &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
                      *       &lt;/sequence&gt;
                      *     &lt;/restriction&gt;
                      *   &lt;/complexContent&gt;
@@ -17723,7 +19549,10 @@ public class TNFe {
                         "pRedBCST",
                         "vbcst",
                         "picmsst",
-                        "vicmsst"
+                        "vicmsst",
+                        "vbcfcpst",
+                        "pfcpst",
+                        "vfcpst"
                     })
                     public static class ICMSSN202 {
 
@@ -17742,6 +19571,12 @@ public class TNFe {
                         protected String picmsst;
                         @XmlElement(name = "vICMSST", required = true)
                         protected String vicmsst;
+                        @XmlElement(name = "vBCFCPST")
+                        protected String vbcfcpst;
+                        @XmlElement(name = "pFCPST")
+                        protected String pfcpst;
+                        @XmlElement(name = "vFCPST")
+                        protected String vfcpst;
 
                         /**
                          * Obtém o valor da propriedade orig.
@@ -17935,6 +19770,78 @@ public class TNFe {
                             this.vicmsst = value;
                         }
 
+                        /**
+                         * Obtém o valor da propriedade vbcfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPST() {
+                            return vbcfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPST(String value) {
+                            this.vbcfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPST() {
+                            return pfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPST(String value) {
+                            this.pfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPST() {
+                            return vfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPST(String value) {
+                            this.vfcpst = value;
+                        }
+
                     }
 
 
@@ -17959,7 +19866,19 @@ public class TNFe {
                      *         &lt;/element&gt;
                      *         &lt;sequence minOccurs="0"&gt;
                      *           &lt;element name="vBCSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
                      *           &lt;element name="vICMSSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="vBCFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *         &lt;/sequence&gt;
+                     *         &lt;sequence minOccurs="0"&gt;
+                     *           &lt;element name="pRedBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vBCEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;element name="pICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *           &lt;element name="vICMSEfet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *         &lt;/sequence&gt;
                      *       &lt;/sequence&gt;
                      *     &lt;/restriction&gt;
@@ -17974,7 +19893,15 @@ public class TNFe {
                         "orig",
                         "csosn",
                         "vbcstRet",
-                        "vicmsstRet"
+                        "pst",
+                        "vicmsstRet",
+                        "vbcfcpstRet",
+                        "pfcpstRet",
+                        "vfcpstRet",
+                        "pRedBCEfet",
+                        "vbcEfet",
+                        "picmsEfet",
+                        "vicmsEfet"
                     })
                     public static class ICMSSN500 {
 
@@ -17984,8 +19911,23 @@ public class TNFe {
                         protected String csosn;
                         @XmlElement(name = "vBCSTRet")
                         protected String vbcstRet;
+                        @XmlElement(name = "pST")
+                        protected String pst;
                         @XmlElement(name = "vICMSSTRet")
                         protected String vicmsstRet;
+                        @XmlElement(name = "vBCFCPSTRet")
+                        protected String vbcfcpstRet;
+                        @XmlElement(name = "pFCPSTRet")
+                        protected String pfcpstRet;
+                        @XmlElement(name = "vFCPSTRet")
+                        protected String vfcpstRet;
+                        protected String pRedBCEfet;
+                        @XmlElement(name = "vBCEfet")
+                        protected String vbcEfet;
+                        @XmlElement(name = "pICMSEfet")
+                        protected String picmsEfet;
+                        @XmlElement(name = "vICMSEfet")
+                        protected String vicmsEfet;
 
                         /**
                          * Obtém o valor da propriedade orig.
@@ -18060,6 +20002,30 @@ public class TNFe {
                         }
 
                         /**
+                         * Obtém o valor da propriedade pst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPST() {
+                            return pst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPST(String value) {
+                            this.pst = value;
+                        }
+
+                        /**
                          * Obtém o valor da propriedade vicmsstRet.
                          * 
                          * @return
@@ -18081,6 +20047,174 @@ public class TNFe {
                          */
                         public void setVICMSSTRet(String value) {
                             this.vicmsstRet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vbcfcpstRet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPSTRet() {
+                            return vbcfcpstRet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpstRet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPSTRet(String value) {
+                            this.vbcfcpstRet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpstRet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPSTRet() {
+                            return pfcpstRet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpstRet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPSTRet(String value) {
+                            this.pfcpstRet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpstRet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPSTRet() {
+                            return vfcpstRet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpstRet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPSTRet(String value) {
+                            this.vfcpstRet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pRedBCEfet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPRedBCEfet() {
+                            return pRedBCEfet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pRedBCEfet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPRedBCEfet(String value) {
+                            this.pRedBCEfet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vbcEfet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCEfet() {
+                            return vbcEfet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcEfet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCEfet(String value) {
+                            this.vbcEfet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade picmsEfet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPICMSEfet() {
+                            return picmsEfet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade picmsEfet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPICMSEfet(String value) {
+                            this.picmsEfet = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vicmsEfet.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVICMSEfet() {
+                            return vicmsEfet;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vicmsEfet.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVICMSEfet(String value) {
+                            this.vicmsEfet = value;
                         }
 
                     }
@@ -18141,6 +20275,11 @@ public class TNFe {
                      *           &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                      *           &lt;element name="pICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                      *           &lt;element name="vICMSST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;sequence minOccurs="0"&gt;
+                     *             &lt;element name="vBCFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *             &lt;element name="pFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Opc"/&gt;
+                     *             &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                     *           &lt;/sequence&gt;
                      *         &lt;/sequence&gt;
                      *         &lt;sequence minOccurs="0"&gt;
                      *           &lt;element name="pCredSN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
@@ -18169,6 +20308,9 @@ public class TNFe {
                         "vbcst",
                         "picmsst",
                         "vicmsst",
+                        "vbcfcpst",
+                        "pfcpst",
+                        "vfcpst",
                         "pCredSN",
                         "vCredICMSSN"
                     })
@@ -18196,6 +20338,12 @@ public class TNFe {
                         protected String picmsst;
                         @XmlElement(name = "vICMSST")
                         protected String vicmsst;
+                        @XmlElement(name = "vBCFCPST")
+                        protected String vbcfcpst;
+                        @XmlElement(name = "pFCPST")
+                        protected String pfcpst;
+                        @XmlElement(name = "vFCPST")
+                        protected String vfcpst;
                         protected String pCredSN;
                         protected String vCredICMSSN;
 
@@ -18512,6 +20660,78 @@ public class TNFe {
                         }
 
                         /**
+                         * Obtém o valor da propriedade vbcfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVBCFCPST() {
+                            return vbcfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vbcfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVBCFCPST(String value) {
+                            this.vbcfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade pfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getPFCPST() {
+                            return pfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade pfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setPFCPST(String value) {
+                            this.pfcpst = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade vfcpst.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getVFCPST() {
+                            return vfcpst;
+                        }
+
+                        /**
+                         * Define o valor da propriedade vfcpst.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setVFCPST(String value) {
+                            this.vfcpst = value;
+                        }
+
+                        /**
                          * Obtém o valor da propriedade pCredSN.
                          * 
                          * @return
@@ -18578,6 +20798,7 @@ public class TNFe {
                      *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
                      *               &lt;whiteSpace value="preserve"/&gt;
                      *               &lt;enumeration value="41"/&gt;
+                     *               &lt;enumeration value="60"/&gt;
                      *             &lt;/restriction&gt;
                      *           &lt;/simpleType&gt;
                      *         &lt;/element&gt;
@@ -18777,7 +20998,8 @@ public class TNFe {
                  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
                  *       &lt;sequence&gt;
                  *         &lt;element name="vBCUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
-                 *         &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
+                 *         &lt;element name="vBCFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+                 *         &lt;element name="pFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04" minOccurs="0"/&gt;
                  *         &lt;element name="pICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
                  *         &lt;element name="pICMSInter"&gt;
                  *           &lt;simpleType&gt;
@@ -18790,7 +21012,7 @@ public class TNFe {
                  *           &lt;/simpleType&gt;
                  *         &lt;/element&gt;
                  *         &lt;element name="pICMSInterPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04"/&gt;
-                 *         &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *         &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
                  *         &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *         &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
                  *       &lt;/sequence&gt;
@@ -18804,6 +21026,7 @@ public class TNFe {
                 @XmlAccessorType(XmlAccessType.FIELD)
                 @XmlType(name = "", propOrder = {
                     "vbcufDest",
+                    "vbcfcpufDest",
                     "pfcpufDest",
                     "picmsufDest",
                     "picmsInter",
@@ -18816,7 +21039,9 @@ public class TNFe {
 
                     @XmlElement(name = "vBCUFDest", required = true)
                     protected String vbcufDest;
-                    @XmlElement(name = "pFCPUFDest", required = true)
+                    @XmlElement(name = "vBCFCPUFDest")
+                    protected String vbcfcpufDest;
+                    @XmlElement(name = "pFCPUFDest")
                     protected String pfcpufDest;
                     @XmlElement(name = "pICMSUFDest", required = true)
                     protected String picmsufDest;
@@ -18824,7 +21049,7 @@ public class TNFe {
                     protected String picmsInter;
                     @XmlElement(name = "pICMSInterPart", required = true)
                     protected String picmsInterPart;
-                    @XmlElement(name = "vFCPUFDest", required = true)
+                    @XmlElement(name = "vFCPUFDest")
                     protected String vfcpufDest;
                     @XmlElement(name = "vICMSUFDest", required = true)
                     protected String vicmsufDest;
@@ -18853,6 +21078,30 @@ public class TNFe {
                      */
                     public void setVBCUFDest(String value) {
                         this.vbcufDest = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade vbcfcpufDest.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getVBCFCPUFDest() {
+                        return vbcfcpufDest;
+                    }
+
+                    /**
+                     * Define o valor da propriedade vbcfcpufDest.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setVBCFCPUFDest(String value) {
+                        this.vbcfcpufDest = value;
                     }
 
                     /**
@@ -20863,7 +23112,7 @@ public class TNFe {
              *           &lt;simpleType&gt;
              *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
              *               &lt;whiteSpace value="preserve"/&gt;
-             *               &lt;pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
+             *               &lt;pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
              *             &lt;/restriction&gt;
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
@@ -20891,11 +23140,30 @@ public class TNFe {
              *             &lt;/restriction&gt;
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
-             *         &lt;element name="CEST" minOccurs="0"&gt;
+             *         &lt;sequence minOccurs="0"&gt;
+             *           &lt;element name="CEST"&gt;
+             *             &lt;simpleType&gt;
+             *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *                 &lt;whiteSpace value="preserve"/&gt;
+             *                 &lt;pattern value="[0-9]{7}"/&gt;
+             *               &lt;/restriction&gt;
+             *             &lt;/simpleType&gt;
+             *           &lt;/element&gt;
+             *           &lt;element name="indEscala" minOccurs="0"&gt;
+             *             &lt;simpleType&gt;
+             *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *                 &lt;enumeration value="S"/&gt;
+             *                 &lt;enumeration value="N"/&gt;
+             *               &lt;/restriction&gt;
+             *             &lt;/simpleType&gt;
+             *           &lt;/element&gt;
+             *           &lt;element name="CNPJFab" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+             *         &lt;/sequence&gt;
+             *         &lt;element name="cBenef" minOccurs="0"&gt;
              *           &lt;simpleType&gt;
              *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
              *               &lt;whiteSpace value="preserve"/&gt;
-             *               &lt;pattern value="[0-9]{7}"/&gt;
+             *               &lt;pattern value="([!-ÿ]{8}|[!-ÿ]{10})?"/&gt;
              *             &lt;/restriction&gt;
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
@@ -20930,7 +23198,7 @@ public class TNFe {
              *           &lt;simpleType&gt;
              *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
              *               &lt;whiteSpace value="preserve"/&gt;
-             *               &lt;pattern value="[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
+             *               &lt;pattern value="SEM GTIN|[0-9]{0}|[0-9]{8}|[0-9]{12,14}"/&gt;
              *             &lt;/restriction&gt;
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
@@ -21124,6 +23392,35 @@ public class TNFe {
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
              *         &lt;element name="nFCI" type="{http://www.portalfiscal.inf.br/nfe}TGuid" minOccurs="0"/&gt;
+             *         &lt;element name="rastro" maxOccurs="500" minOccurs="0"&gt;
+             *           &lt;complexType&gt;
+             *             &lt;complexContent&gt;
+             *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+             *                 &lt;sequence&gt;
+             *                   &lt;element name="nLote"&gt;
+             *                     &lt;simpleType&gt;
+             *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *                         &lt;minLength value="1"/&gt;
+             *                         &lt;maxLength value="20"/&gt;
+             *                       &lt;/restriction&gt;
+             *                     &lt;/simpleType&gt;
+             *                   &lt;/element&gt;
+             *                   &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
+             *                   &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
+             *                   &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
+             *                   &lt;element name="cAgreg" minOccurs="0"&gt;
+             *                     &lt;simpleType&gt;
+             *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *                         &lt;whiteSpace value="preserve"/&gt;
+             *                         &lt;pattern value="[0-9]{1,20}"/&gt;
+             *                       &lt;/restriction&gt;
+             *                     &lt;/simpleType&gt;
+             *                   &lt;/element&gt;
+             *                 &lt;/sequence&gt;
+             *               &lt;/restriction&gt;
+             *             &lt;/complexContent&gt;
+             *           &lt;/complexType&gt;
+             *         &lt;/element&gt;
              *         &lt;choice minOccurs="0"&gt;
              *           &lt;element name="veicProd"&gt;
              *             &lt;complexType&gt;
@@ -21342,22 +23639,18 @@ public class TNFe {
              *               &lt;/complexContent&gt;
              *             &lt;/complexType&gt;
              *           &lt;/element&gt;
-             *           &lt;element name="med" maxOccurs="500"&gt;
+             *           &lt;element name="med"&gt;
              *             &lt;complexType&gt;
              *               &lt;complexContent&gt;
              *                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
              *                   &lt;sequence&gt;
-             *                     &lt;element name="nLote"&gt;
+             *                     &lt;element name="cProdANVISA"&gt;
              *                       &lt;simpleType&gt;
              *                         &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
-             *                           &lt;minLength value="1"/&gt;
-             *                           &lt;maxLength value="20"/&gt;
+             *                           &lt;length value="13"/&gt;
              *                         &lt;/restriction&gt;
              *                       &lt;/simpleType&gt;
              *                     &lt;/element&gt;
-             *                     &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
-             *                     &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
-             *                     &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
              *                     &lt;element name="vPMC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *                   &lt;/sequence&gt;
              *                 &lt;/restriction&gt;
@@ -21420,7 +23713,18 @@ public class TNFe {
              *                         &lt;/restriction&gt;
              *                       &lt;/simpleType&gt;
              *                     &lt;/element&gt;
-             *                     &lt;element name="pMixGN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0204v" minOccurs="0"/&gt;
+             *                     &lt;element name="descANP"&gt;
+             *                       &lt;simpleType&gt;
+             *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *                           &lt;minLength value="2"/&gt;
+             *                           &lt;maxLength value="95"/&gt;
+             *                         &lt;/restriction&gt;
+             *                       &lt;/simpleType&gt;
+             *                     &lt;/element&gt;
+             *                     &lt;element name="pGLP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+             *                     &lt;element name="pGNn" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+             *                     &lt;element name="pGNi" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+             *                     &lt;element name="vPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
              *                     &lt;element name="CODIF" minOccurs="0"&gt;
              *                       &lt;simpleType&gt;
              *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -21511,6 +23815,9 @@ public class TNFe {
                 "ncm",
                 "nve",
                 "cest",
+                "indEscala",
+                "cnpjFab",
+                "cBenef",
                 "extipi",
                 "cfop",
                 "uCom",
@@ -21531,6 +23838,7 @@ public class TNFe {
                 "xPed",
                 "nItemPed",
                 "nfci",
+                "rastro",
                 "veicProd",
                 "med",
                 "arma",
@@ -21551,6 +23859,10 @@ public class TNFe {
                 protected List<String> nve;
                 @XmlElement(name = "CEST")
                 protected String cest;
+                protected String indEscala;
+                @XmlElement(name = "CNPJFab")
+                protected String cnpjFab;
+                protected String cBenef;
                 @XmlElement(name = "EXTIPI")
                 protected String extipi;
                 @XmlElement(name = "CFOP", required = true)
@@ -21584,8 +23896,9 @@ public class TNFe {
                 protected String nItemPed;
                 @XmlElement(name = "nFCI")
                 protected String nfci;
+                protected List<TNFe.InfNFe.Det.Prod.Rastro> rastro;
                 protected TNFe.InfNFe.Det.Prod.VeicProd veicProd;
-                protected List<TNFe.InfNFe.Det.Prod.Med> med;
+                protected TNFe.InfNFe.Det.Prod.Med med;
                 protected List<TNFe.InfNFe.Det.Prod.Arma> arma;
                 protected TNFe.InfNFe.Det.Prod.Comb comb;
                 @XmlElement(name = "nRECOPI")
@@ -21738,6 +24051,78 @@ public class TNFe {
                  */
                 public void setCEST(String value) {
                     this.cest = value;
+                }
+
+                /**
+                 * Obtém o valor da propriedade indEscala.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getIndEscala() {
+                    return indEscala;
+                }
+
+                /**
+                 * Define o valor da propriedade indEscala.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setIndEscala(String value) {
+                    this.indEscala = value;
+                }
+
+                /**
+                 * Obtém o valor da propriedade cnpjFab.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getCNPJFab() {
+                    return cnpjFab;
+                }
+
+                /**
+                 * Define o valor da propriedade cnpjFab.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setCNPJFab(String value) {
+                    this.cnpjFab = value;
+                }
+
+                /**
+                 * Obtém o valor da propriedade cBenef.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getCBenef() {
+                    return cBenef;
+                }
+
+                /**
+                 * Define o valor da propriedade cBenef.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setCBenef(String value) {
+                    this.cBenef = value;
                 }
 
                 /**
@@ -22231,6 +24616,35 @@ public class TNFe {
                 }
 
                 /**
+                 * Gets the value of the rastro property.
+                 * 
+                 * <p>
+                 * This accessor method returns a reference to the live list,
+                 * not a snapshot. Therefore any modification you make to the
+                 * returned list will be present inside the JAXB object.
+                 * This is why there is not a <CODE>set</CODE> method for the rastro property.
+                 * 
+                 * <p>
+                 * For example, to add a new item, do as follows:
+                 * <pre>
+                 *    getRastro().add(newItem);
+                 * </pre>
+                 * 
+                 * 
+                 * <p>
+                 * Objects of the following type(s) are allowed in the list
+                 * {@link TNFe.InfNFe.Det.Prod.Rastro }
+                 * 
+                 * 
+                 */
+                public List<TNFe.InfNFe.Det.Prod.Rastro> getRastro() {
+                    if (rastro == null) {
+                        rastro = new ArrayList<TNFe.InfNFe.Det.Prod.Rastro>();
+                    }
+                    return this.rastro;
+                }
+
+                /**
                  * Obtém o valor da propriedade veicProd.
                  * 
                  * @return
@@ -22255,32 +24669,27 @@ public class TNFe {
                 }
 
                 /**
-                 * Gets the value of the med property.
+                 * Obtém o valor da propriedade med.
                  * 
-                 * <p>
-                 * This accessor method returns a reference to the live list,
-                 * not a snapshot. Therefore any modification you make to the
-                 * returned list will be present inside the JAXB object.
-                 * This is why there is not a <CODE>set</CODE> method for the med property.
-                 * 
-                 * <p>
-                 * For example, to add a new item, do as follows:
-                 * <pre>
-                 *    getMed().add(newItem);
-                 * </pre>
-                 * 
-                 * 
-                 * <p>
-                 * Objects of the following type(s) are allowed in the list
-                 * {@link TNFe.InfNFe.Det.Prod.Med }
-                 * 
-                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link TNFe.InfNFe.Det.Prod.Med }
+                 *     
                  */
-                public List<TNFe.InfNFe.Det.Prod.Med> getMed() {
-                    if (med == null) {
-                        med = new ArrayList<TNFe.InfNFe.Det.Prod.Med>();
-                    }
-                    return this.med;
+                public TNFe.InfNFe.Det.Prod.Med getMed() {
+                    return med;
+                }
+
+                /**
+                 * Define o valor da propriedade med.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link TNFe.InfNFe.Det.Prod.Med }
+                 *     
+                 */
+                public void setMed(TNFe.InfNFe.Det.Prod.Med value) {
+                    this.med = value;
                 }
 
                 /**
@@ -22547,7 +24956,18 @@ public class TNFe {
                  *             &lt;/restriction&gt;
                  *           &lt;/simpleType&gt;
                  *         &lt;/element&gt;
-                 *         &lt;element name="pMixGN" type="{http://www.portalfiscal.inf.br/nfe}TDec_0204v" minOccurs="0"/&gt;
+                 *         &lt;element name="descANP"&gt;
+                 *           &lt;simpleType&gt;
+                 *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+                 *               &lt;minLength value="2"/&gt;
+                 *               &lt;maxLength value="95"/&gt;
+                 *             &lt;/restriction&gt;
+                 *           &lt;/simpleType&gt;
+                 *         &lt;/element&gt;
+                 *         &lt;element name="pGLP" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+                 *         &lt;element name="pGNn" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+                 *         &lt;element name="pGNi" type="{http://www.portalfiscal.inf.br/nfe}TDec_0302a04Max100" minOccurs="0"/&gt;
+                 *         &lt;element name="vPart" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
                  *         &lt;element name="CODIF" minOccurs="0"&gt;
                  *           &lt;simpleType&gt;
                  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -22618,7 +25038,11 @@ public class TNFe {
                 @XmlAccessorType(XmlAccessType.FIELD)
                 @XmlType(name = "", propOrder = {
                     "cProdANP",
-                    "pMixGN",
+                    "descANP",
+                    "pglp",
+                    "pgNn",
+                    "pgNi",
+                    "vPart",
                     "codif",
                     "qTemp",
                     "ufCons",
@@ -22629,7 +25053,15 @@ public class TNFe {
 
                     @XmlElement(required = true)
                     protected String cProdANP;
-                    protected String pMixGN;
+                    @XmlElement(required = true)
+                    protected String descANP;
+                    @XmlElement(name = "pGLP")
+                    protected String pglp;
+                    @XmlElement(name = "pGNn")
+                    protected String pgNn;
+                    @XmlElement(name = "pGNi")
+                    protected String pgNi;
+                    protected String vPart;
                     @XmlElement(name = "CODIF")
                     protected String codif;
                     protected String qTemp;
@@ -22665,27 +25097,123 @@ public class TNFe {
                     }
 
                     /**
-                     * Obtém o valor da propriedade pMixGN.
+                     * Obtém o valor da propriedade descANP.
                      * 
                      * @return
                      *     possible object is
                      *     {@link String }
                      *     
                      */
-                    public String getPMixGN() {
-                        return pMixGN;
+                    public String getDescANP() {
+                        return descANP;
                     }
 
                     /**
-                     * Define o valor da propriedade pMixGN.
+                     * Define o valor da propriedade descANP.
                      * 
                      * @param value
                      *     allowed object is
                      *     {@link String }
                      *     
                      */
-                    public void setPMixGN(String value) {
-                        this.pMixGN = value;
+                    public void setDescANP(String value) {
+                        this.descANP = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade pglp.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getPGLP() {
+                        return pglp;
+                    }
+
+                    /**
+                     * Define o valor da propriedade pglp.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setPGLP(String value) {
+                        this.pglp = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade pgNn.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getPGNn() {
+                        return pgNn;
+                    }
+
+                    /**
+                     * Define o valor da propriedade pgNn.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setPGNn(String value) {
+                        this.pgNn = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade pgNi.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getPGNi() {
+                        return pgNi;
+                    }
+
+                    /**
+                     * Define o valor da propriedade pgNi.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setPGNi(String value) {
+                        this.pgNi = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade vPart.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getVPart() {
+                        return vPart;
+                    }
+
+                    /**
+                     * Define o valor da propriedade vPart.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setVPart(String value) {
+                        this.vPart = value;
                     }
 
                     /**
@@ -23997,9 +26525,98 @@ public class TNFe {
                  *   &lt;complexContent&gt;
                  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
                  *       &lt;sequence&gt;
-                 *         &lt;element name="nLote"&gt;
+                 *         &lt;element name="cProdANVISA"&gt;
                  *           &lt;simpleType&gt;
                  *             &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
+                 *               &lt;length value="13"/&gt;
+                 *             &lt;/restriction&gt;
+                 *           &lt;/simpleType&gt;
+                 *         &lt;/element&gt;
+                 *         &lt;element name="vPMC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *       &lt;/sequence&gt;
+                 *     &lt;/restriction&gt;
+                 *   &lt;/complexContent&gt;
+                 * &lt;/complexType&gt;
+                 * </pre>
+                 * 
+                 * 
+                 */
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "", propOrder = {
+                    "cProdANVISA",
+                    "vpmc"
+                })
+                public static class Med {
+
+                    @XmlElement(required = true)
+                    protected String cProdANVISA;
+                    @XmlElement(name = "vPMC", required = true)
+                    protected String vpmc;
+
+                    /**
+                     * Obtém o valor da propriedade cProdANVISA.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getCProdANVISA() {
+                        return cProdANVISA;
+                    }
+
+                    /**
+                     * Define o valor da propriedade cProdANVISA.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setCProdANVISA(String value) {
+                        this.cProdANVISA = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade vpmc.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getVPMC() {
+                        return vpmc;
+                    }
+
+                    /**
+                     * Define o valor da propriedade vpmc.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setVPMC(String value) {
+                        this.vpmc = value;
+                    }
+
+                }
+
+
+                /**
+                 * <p>Classe Java de anonymous complex type.
+                 * 
+                 * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+                 * 
+                 * <pre>
+                 * &lt;complexType&gt;
+                 *   &lt;complexContent&gt;
+                 *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+                 *       &lt;sequence&gt;
+                 *         &lt;element name="nLote"&gt;
+                 *           &lt;simpleType&gt;
+                 *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
                  *               &lt;minLength value="1"/&gt;
                  *               &lt;maxLength value="20"/&gt;
                  *             &lt;/restriction&gt;
@@ -24008,7 +26625,14 @@ public class TNFe {
                  *         &lt;element name="qLote" type="{http://www.portalfiscal.inf.br/nfe}TDec_0803v"/&gt;
                  *         &lt;element name="dFab" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
                  *         &lt;element name="dVal" type="{http://www.portalfiscal.inf.br/nfe}TData"/&gt;
-                 *         &lt;element name="vPMC" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+                 *         &lt;element name="cAgreg" minOccurs="0"&gt;
+                 *           &lt;simpleType&gt;
+                 *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+                 *               &lt;whiteSpace value="preserve"/&gt;
+                 *               &lt;pattern value="[0-9]{1,20}"/&gt;
+                 *             &lt;/restriction&gt;
+                 *           &lt;/simpleType&gt;
+                 *         &lt;/element&gt;
                  *       &lt;/sequence&gt;
                  *     &lt;/restriction&gt;
                  *   &lt;/complexContent&gt;
@@ -24023,9 +26647,9 @@ public class TNFe {
                     "qLote",
                     "dFab",
                     "dVal",
-                    "vpmc"
+                    "cAgreg"
                 })
-                public static class Med {
+                public static class Rastro {
 
                     @XmlElement(required = true)
                     protected String nLote;
@@ -24035,8 +26659,7 @@ public class TNFe {
                     protected String dFab;
                     @XmlElement(required = true)
                     protected String dVal;
-                    @XmlElement(name = "vPMC", required = true)
-                    protected String vpmc;
+                    protected String cAgreg;
 
                     /**
                      * Obtém o valor da propriedade nLote.
@@ -24135,27 +26758,27 @@ public class TNFe {
                     }
 
                     /**
-                     * Obtém o valor da propriedade vpmc.
+                     * Obtém o valor da propriedade cAgreg.
                      * 
                      * @return
                      *     possible object is
                      *     {@link String }
                      *     
                      */
-                    public String getVPMC() {
-                        return vpmc;
+                    public String getCAgreg() {
+                        return cAgreg;
                     }
 
                     /**
-                     * Define o valor da propriedade vpmc.
+                     * Define o valor da propriedade cAgreg.
                      * 
                      * @param value
                      *     allowed object is
                      *     {@link String }
                      *     
                      */
-                    public void setVPMC(String value) {
-                        this.vpmc = value;
+                    public void setCAgreg(String value) {
+                        this.cAgreg = value;
                     }
 
                 }
@@ -25546,16 +28169,6 @@ public class TNFe {
          *             &lt;/restriction&gt;
          *           &lt;/simpleType&gt;
          *         &lt;/element&gt;
-         *         &lt;element name="indPag"&gt;
-         *           &lt;simpleType&gt;
-         *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
-         *               &lt;whiteSpace value="preserve"/&gt;
-         *               &lt;enumeration value="0"/&gt;
-         *               &lt;enumeration value="1"/&gt;
-         *               &lt;enumeration value="2"/&gt;
-         *             &lt;/restriction&gt;
-         *           &lt;/simpleType&gt;
-         *         &lt;/element&gt;
          *         &lt;element name="mod" type="{http://www.portalfiscal.inf.br/nfe}TMod"/&gt;
          *         &lt;element name="serie" type="{http://www.portalfiscal.inf.br/nfe}TSerie"/&gt;
          *         &lt;element name="nNF" type="{http://www.portalfiscal.inf.br/nfe}TNF"/&gt;
@@ -25637,6 +28250,7 @@ public class TNFe {
          *               &lt;enumeration value="2"/&gt;
          *               &lt;enumeration value="3"/&gt;
          *               &lt;enumeration value="4"/&gt;
+         *               &lt;enumeration value="5"/&gt;
          *               &lt;enumeration value="9"/&gt;
          *             &lt;/restriction&gt;
          *           &lt;/simpleType&gt;
@@ -25687,6 +28301,7 @@ public class TNFe {
          *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
          *                                   &lt;whiteSpace value="preserve"/&gt;
          *                                   &lt;enumeration value="01"/&gt;
+         *                                   &lt;enumeration value="02"/&gt;
          *                                 &lt;/restriction&gt;
          *                               &lt;/simpleType&gt;
          *                             &lt;/element&gt;
@@ -25787,7 +28402,6 @@ public class TNFe {
             "cuf",
             "cnf",
             "natOp",
-            "indPag",
             "mod",
             "serie",
             "nnf",
@@ -25817,8 +28431,6 @@ public class TNFe {
             protected String cnf;
             @XmlElement(required = true)
             protected String natOp;
-            @XmlElement(required = true)
-            protected String indPag;
             @XmlElement(required = true)
             protected String mod;
             @XmlElement(required = true)
@@ -25927,30 +28539,6 @@ public class TNFe {
              */
             public void setNatOp(String value) {
                 this.natOp = value;
-            }
-
-            /**
-             * Obtém o valor da propriedade indPag.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
-             */
-            public String getIndPag() {
-                return indPag;
-            }
-
-            /**
-             * Define o valor da propriedade indPag.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
-             */
-            public void setIndPag(String value) {
-                this.indPag = value;
             }
 
             /**
@@ -26470,6 +29058,7 @@ public class TNFe {
              *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
              *                         &lt;whiteSpace value="preserve"/&gt;
              *                         &lt;enumeration value="01"/&gt;
+             *                         &lt;enumeration value="02"/&gt;
              *                       &lt;/restriction&gt;
              *                     &lt;/simpleType&gt;
              *                   &lt;/element&gt;
@@ -26856,6 +29445,7 @@ public class TNFe {
                  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
                  *               &lt;whiteSpace value="preserve"/&gt;
                  *               &lt;enumeration value="01"/&gt;
+                 *               &lt;enumeration value="02"/&gt;
                  *             &lt;/restriction&gt;
                  *           &lt;/simpleType&gt;
                  *         &lt;/element&gt;
@@ -27885,40 +30475,21 @@ public class TNFe {
          *   &lt;complexContent&gt;
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
          *       &lt;sequence&gt;
-         *         &lt;element name="tPag"&gt;
-         *           &lt;simpleType&gt;
-         *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
-         *               &lt;whiteSpace value="preserve"/&gt;
-         *               &lt;enumeration value="01"/&gt;
-         *               &lt;enumeration value="02"/&gt;
-         *               &lt;enumeration value="03"/&gt;
-         *               &lt;enumeration value="04"/&gt;
-         *               &lt;enumeration value="05"/&gt;
-         *               &lt;enumeration value="10"/&gt;
-         *               &lt;enumeration value="11"/&gt;
-         *               &lt;enumeration value="12"/&gt;
-         *               &lt;enumeration value="13"/&gt;
-         *               &lt;enumeration value="99"/&gt;
-         *             &lt;/restriction&gt;
-         *           &lt;/simpleType&gt;
-         *         &lt;/element&gt;
-         *         &lt;element name="vPag" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
-         *         &lt;element name="card" minOccurs="0"&gt;
+         *         &lt;element name="detPag" maxOccurs="100"&gt;
          *           &lt;complexType&gt;
          *             &lt;complexContent&gt;
          *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
          *                 &lt;sequence&gt;
-         *                   &lt;element name="tpIntegra" minOccurs="0"&gt;
+         *                   &lt;element name="indPag" minOccurs="0"&gt;
          *                     &lt;simpleType&gt;
          *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
          *                         &lt;whiteSpace value="preserve"/&gt;
+         *                         &lt;enumeration value="0"/&gt;
          *                         &lt;enumeration value="1"/&gt;
-         *                         &lt;enumeration value="2"/&gt;
          *                       &lt;/restriction&gt;
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
-         *                   &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
-         *                   &lt;element name="tBand" minOccurs="0"&gt;
+         *                   &lt;element name="tPag"&gt;
          *                     &lt;simpleType&gt;
          *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
          *                         &lt;whiteSpace value="preserve"/&gt;
@@ -27926,23 +30497,70 @@ public class TNFe {
          *                         &lt;enumeration value="02"/&gt;
          *                         &lt;enumeration value="03"/&gt;
          *                         &lt;enumeration value="04"/&gt;
+         *                         &lt;enumeration value="05"/&gt;
+         *                         &lt;enumeration value="10"/&gt;
+         *                         &lt;enumeration value="11"/&gt;
+         *                         &lt;enumeration value="12"/&gt;
+         *                         &lt;enumeration value="13"/&gt;
+         *                         &lt;enumeration value="14"/&gt;
+         *                         &lt;enumeration value="15"/&gt;
+         *                         &lt;enumeration value="90"/&gt;
          *                         &lt;enumeration value="99"/&gt;
          *                       &lt;/restriction&gt;
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
-         *                   &lt;element name="cAut" minOccurs="0"&gt;
-         *                     &lt;simpleType&gt;
-         *                       &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
-         *                         &lt;minLength value="1"/&gt;
-         *                         &lt;maxLength value="20"/&gt;
-         *                       &lt;/restriction&gt;
-         *                     &lt;/simpleType&gt;
+         *                   &lt;element name="vPag" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                   &lt;element name="card" minOccurs="0"&gt;
+         *                     &lt;complexType&gt;
+         *                       &lt;complexContent&gt;
+         *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *                           &lt;sequence&gt;
+         *                             &lt;element name="tpIntegra"&gt;
+         *                               &lt;simpleType&gt;
+         *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                                   &lt;whiteSpace value="preserve"/&gt;
+         *                                   &lt;enumeration value="1"/&gt;
+         *                                   &lt;enumeration value="2"/&gt;
+         *                                 &lt;/restriction&gt;
+         *                               &lt;/simpleType&gt;
+         *                             &lt;/element&gt;
+         *                             &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+         *                             &lt;element name="tBand" minOccurs="0"&gt;
+         *                               &lt;simpleType&gt;
+         *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *                                   &lt;whiteSpace value="preserve"/&gt;
+         *                                   &lt;enumeration value="01"/&gt;
+         *                                   &lt;enumeration value="02"/&gt;
+         *                                   &lt;enumeration value="03"/&gt;
+         *                                   &lt;enumeration value="04"/&gt;
+         *                                   &lt;enumeration value="05"/&gt;
+         *                                   &lt;enumeration value="06"/&gt;
+         *                                   &lt;enumeration value="07"/&gt;
+         *                                   &lt;enumeration value="08"/&gt;
+         *                                   &lt;enumeration value="09"/&gt;
+         *                                   &lt;enumeration value="99"/&gt;
+         *                                 &lt;/restriction&gt;
+         *                               &lt;/simpleType&gt;
+         *                             &lt;/element&gt;
+         *                             &lt;element name="cAut" minOccurs="0"&gt;
+         *                               &lt;simpleType&gt;
+         *                                 &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
+         *                                   &lt;minLength value="1"/&gt;
+         *                                   &lt;maxLength value="20"/&gt;
+         *                                 &lt;/restriction&gt;
+         *                               &lt;/simpleType&gt;
+         *                             &lt;/element&gt;
+         *                           &lt;/sequence&gt;
+         *                         &lt;/restriction&gt;
+         *                       &lt;/complexContent&gt;
+         *                     &lt;/complexType&gt;
          *                   &lt;/element&gt;
          *                 &lt;/sequence&gt;
          *               &lt;/restriction&gt;
          *             &lt;/complexContent&gt;
          *           &lt;/complexType&gt;
          *         &lt;/element&gt;
+         *         &lt;element name="vTroco" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
          *       &lt;/sequence&gt;
          *     &lt;/restriction&gt;
          *   &lt;/complexContent&gt;
@@ -27953,88 +30571,66 @@ public class TNFe {
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
-            "tPag",
-            "vPag",
-            "card"
+            "detPag",
+            "vTroco"
         })
         public static class Pag {
 
             @XmlElement(required = true)
-            protected String tPag;
-            @XmlElement(required = true)
-            protected String vPag;
-            protected TNFe.InfNFe.Pag.Card card;
+            protected List<TNFe.InfNFe.Pag.DetPag> detPag;
+            protected String vTroco;
 
             /**
-             * Obtém o valor da propriedade tPag.
+             * Gets the value of the detPag property.
+             * 
+             * <p>
+             * This accessor method returns a reference to the live list,
+             * not a snapshot. Therefore any modification you make to the
+             * returned list will be present inside the JAXB object.
+             * This is why there is not a <CODE>set</CODE> method for the detPag property.
+             * 
+             * <p>
+             * For example, to add a new item, do as follows:
+             * <pre>
+             *    getDetPag().add(newItem);
+             * </pre>
+             * 
+             * 
+             * <p>
+             * Objects of the following type(s) are allowed in the list
+             * {@link TNFe.InfNFe.Pag.DetPag }
+             * 
+             * 
+             */
+            public List<TNFe.InfNFe.Pag.DetPag> getDetPag() {
+                if (detPag == null) {
+                    detPag = new ArrayList<TNFe.InfNFe.Pag.DetPag>();
+                }
+                return this.detPag;
+            }
+
+            /**
+             * Obtém o valor da propriedade vTroco.
              * 
              * @return
              *     possible object is
              *     {@link String }
              *     
              */
-            public String getTPag() {
-                return tPag;
+            public String getVTroco() {
+                return vTroco;
             }
 
             /**
-             * Define o valor da propriedade tPag.
+             * Define o valor da propriedade vTroco.
              * 
              * @param value
              *     allowed object is
              *     {@link String }
              *     
              */
-            public void setTPag(String value) {
-                this.tPag = value;
-            }
-
-            /**
-             * Obtém o valor da propriedade vPag.
-             * 
-             * @return
-             *     possible object is
-             *     {@link String }
-             *     
-             */
-            public String getVPag() {
-                return vPag;
-            }
-
-            /**
-             * Define o valor da propriedade vPag.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link String }
-             *     
-             */
-            public void setVPag(String value) {
-                this.vPag = value;
-            }
-
-            /**
-             * Obtém o valor da propriedade card.
-             * 
-             * @return
-             *     possible object is
-             *     {@link TNFe.InfNFe.Pag.Card }
-             *     
-             */
-            public TNFe.InfNFe.Pag.Card getCard() {
-                return card;
-            }
-
-            /**
-             * Define o valor da propriedade card.
-             * 
-             * @param value
-             *     allowed object is
-             *     {@link TNFe.InfNFe.Pag.Card }
-             *     
-             */
-            public void setCard(TNFe.InfNFe.Pag.Card value) {
-                this.card = value;
+            public void setVTroco(String value) {
+                this.vTroco = value;
             }
 
 
@@ -28048,17 +30644,16 @@ public class TNFe {
              *   &lt;complexContent&gt;
              *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
              *       &lt;sequence&gt;
-             *         &lt;element name="tpIntegra" minOccurs="0"&gt;
+             *         &lt;element name="indPag" minOccurs="0"&gt;
              *           &lt;simpleType&gt;
              *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
              *               &lt;whiteSpace value="preserve"/&gt;
+             *               &lt;enumeration value="0"/&gt;
              *               &lt;enumeration value="1"/&gt;
-             *               &lt;enumeration value="2"/&gt;
              *             &lt;/restriction&gt;
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
-             *         &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
-             *         &lt;element name="tBand" minOccurs="0"&gt;
+             *         &lt;element name="tPag"&gt;
              *           &lt;simpleType&gt;
              *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
              *               &lt;whiteSpace value="preserve"/&gt;
@@ -28066,17 +30661,63 @@ public class TNFe {
              *               &lt;enumeration value="02"/&gt;
              *               &lt;enumeration value="03"/&gt;
              *               &lt;enumeration value="04"/&gt;
+             *               &lt;enumeration value="05"/&gt;
+             *               &lt;enumeration value="10"/&gt;
+             *               &lt;enumeration value="11"/&gt;
+             *               &lt;enumeration value="12"/&gt;
+             *               &lt;enumeration value="13"/&gt;
+             *               &lt;enumeration value="14"/&gt;
+             *               &lt;enumeration value="15"/&gt;
+             *               &lt;enumeration value="90"/&gt;
              *               &lt;enumeration value="99"/&gt;
              *             &lt;/restriction&gt;
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
-             *         &lt;element name="cAut" minOccurs="0"&gt;
-             *           &lt;simpleType&gt;
-             *             &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
-             *               &lt;minLength value="1"/&gt;
-             *               &lt;maxLength value="20"/&gt;
-             *             &lt;/restriction&gt;
-             *           &lt;/simpleType&gt;
+             *         &lt;element name="vPag" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *         &lt;element name="card" minOccurs="0"&gt;
+             *           &lt;complexType&gt;
+             *             &lt;complexContent&gt;
+             *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+             *                 &lt;sequence&gt;
+             *                   &lt;element name="tpIntegra"&gt;
+             *                     &lt;simpleType&gt;
+             *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *                         &lt;whiteSpace value="preserve"/&gt;
+             *                         &lt;enumeration value="1"/&gt;
+             *                         &lt;enumeration value="2"/&gt;
+             *                       &lt;/restriction&gt;
+             *                     &lt;/simpleType&gt;
+             *                   &lt;/element&gt;
+             *                   &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+             *                   &lt;element name="tBand" minOccurs="0"&gt;
+             *                     &lt;simpleType&gt;
+             *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+             *                         &lt;whiteSpace value="preserve"/&gt;
+             *                         &lt;enumeration value="01"/&gt;
+             *                         &lt;enumeration value="02"/&gt;
+             *                         &lt;enumeration value="03"/&gt;
+             *                         &lt;enumeration value="04"/&gt;
+             *                         &lt;enumeration value="05"/&gt;
+             *                         &lt;enumeration value="06"/&gt;
+             *                         &lt;enumeration value="07"/&gt;
+             *                         &lt;enumeration value="08"/&gt;
+             *                         &lt;enumeration value="09"/&gt;
+             *                         &lt;enumeration value="99"/&gt;
+             *                       &lt;/restriction&gt;
+             *                     &lt;/simpleType&gt;
+             *                   &lt;/element&gt;
+             *                   &lt;element name="cAut" minOccurs="0"&gt;
+             *                     &lt;simpleType&gt;
+             *                       &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
+             *                         &lt;minLength value="1"/&gt;
+             *                         &lt;maxLength value="20"/&gt;
+             *                       &lt;/restriction&gt;
+             *                     &lt;/simpleType&gt;
+             *                   &lt;/element&gt;
+             *                 &lt;/sequence&gt;
+             *               &lt;/restriction&gt;
+             *             &lt;/complexContent&gt;
+             *           &lt;/complexType&gt;
              *         &lt;/element&gt;
              *       &lt;/sequence&gt;
              *     &lt;/restriction&gt;
@@ -28088,113 +30729,282 @@ public class TNFe {
              */
             @XmlAccessorType(XmlAccessType.FIELD)
             @XmlType(name = "", propOrder = {
-                "tpIntegra",
-                "cnpj",
-                "tBand",
-                "cAut"
+                "indPag",
+                "tPag",
+                "vPag",
+                "card"
             })
-            public static class Card {
+            public static class DetPag {
 
-                protected String tpIntegra;
-                @XmlElement(name = "CNPJ")
-                protected String cnpj;
-                protected String tBand;
-                protected String cAut;
+                protected String indPag;
+                @XmlElement(required = true)
+                protected String tPag;
+                @XmlElement(required = true)
+                protected String vPag;
+                protected TNFe.InfNFe.Pag.DetPag.Card card;
 
                 /**
-                 * Obtém o valor da propriedade tpIntegra.
+                 * Obtém o valor da propriedade indPag.
                  * 
                  * @return
                  *     possible object is
                  *     {@link String }
                  *     
                  */
-                public String getTpIntegra() {
-                    return tpIntegra;
+                public String getIndPag() {
+                    return indPag;
                 }
 
                 /**
-                 * Define o valor da propriedade tpIntegra.
+                 * Define o valor da propriedade indPag.
                  * 
                  * @param value
                  *     allowed object is
                  *     {@link String }
                  *     
                  */
-                public void setTpIntegra(String value) {
-                    this.tpIntegra = value;
+                public void setIndPag(String value) {
+                    this.indPag = value;
                 }
 
                 /**
-                 * Obtém o valor da propriedade cnpj.
+                 * Obtém o valor da propriedade tPag.
                  * 
                  * @return
                  *     possible object is
                  *     {@link String }
                  *     
                  */
-                public String getCNPJ() {
-                    return cnpj;
+                public String getTPag() {
+                    return tPag;
                 }
 
                 /**
-                 * Define o valor da propriedade cnpj.
+                 * Define o valor da propriedade tPag.
                  * 
                  * @param value
                  *     allowed object is
                  *     {@link String }
                  *     
                  */
-                public void setCNPJ(String value) {
-                    this.cnpj = value;
+                public void setTPag(String value) {
+                    this.tPag = value;
                 }
 
                 /**
-                 * Obtém o valor da propriedade tBand.
+                 * Obtém o valor da propriedade vPag.
                  * 
                  * @return
                  *     possible object is
                  *     {@link String }
                  *     
                  */
-                public String getTBand() {
-                    return tBand;
+                public String getVPag() {
+                    return vPag;
                 }
 
                 /**
-                 * Define o valor da propriedade tBand.
+                 * Define o valor da propriedade vPag.
                  * 
                  * @param value
                  *     allowed object is
                  *     {@link String }
                  *     
                  */
-                public void setTBand(String value) {
-                    this.tBand = value;
+                public void setVPag(String value) {
+                    this.vPag = value;
                 }
 
                 /**
-                 * Obtém o valor da propriedade cAut.
+                 * Obtém o valor da propriedade card.
                  * 
                  * @return
                  *     possible object is
-                 *     {@link String }
+                 *     {@link TNFe.InfNFe.Pag.DetPag.Card }
                  *     
                  */
-                public String getCAut() {
-                    return cAut;
+                public TNFe.InfNFe.Pag.DetPag.Card getCard() {
+                    return card;
                 }
 
                 /**
-                 * Define o valor da propriedade cAut.
+                 * Define o valor da propriedade card.
                  * 
                  * @param value
                  *     allowed object is
-                 *     {@link String }
+                 *     {@link TNFe.InfNFe.Pag.DetPag.Card }
                  *     
                  */
-                public void setCAut(String value) {
-                    this.cAut = value;
+                public void setCard(TNFe.InfNFe.Pag.DetPag.Card value) {
+                    this.card = value;
+                }
+
+
+                /**
+                 * <p>Classe Java de anonymous complex type.
+                 * 
+                 * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+                 * 
+                 * <pre>
+                 * &lt;complexType&gt;
+                 *   &lt;complexContent&gt;
+                 *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+                 *       &lt;sequence&gt;
+                 *         &lt;element name="tpIntegra"&gt;
+                 *           &lt;simpleType&gt;
+                 *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+                 *               &lt;whiteSpace value="preserve"/&gt;
+                 *               &lt;enumeration value="1"/&gt;
+                 *               &lt;enumeration value="2"/&gt;
+                 *             &lt;/restriction&gt;
+                 *           &lt;/simpleType&gt;
+                 *         &lt;/element&gt;
+                 *         &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/nfe}TCnpj" minOccurs="0"/&gt;
+                 *         &lt;element name="tBand" minOccurs="0"&gt;
+                 *           &lt;simpleType&gt;
+                 *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+                 *               &lt;whiteSpace value="preserve"/&gt;
+                 *               &lt;enumeration value="01"/&gt;
+                 *               &lt;enumeration value="02"/&gt;
+                 *               &lt;enumeration value="03"/&gt;
+                 *               &lt;enumeration value="04"/&gt;
+                 *               &lt;enumeration value="05"/&gt;
+                 *               &lt;enumeration value="06"/&gt;
+                 *               &lt;enumeration value="07"/&gt;
+                 *               &lt;enumeration value="08"/&gt;
+                 *               &lt;enumeration value="09"/&gt;
+                 *               &lt;enumeration value="99"/&gt;
+                 *             &lt;/restriction&gt;
+                 *           &lt;/simpleType&gt;
+                 *         &lt;/element&gt;
+                 *         &lt;element name="cAut" minOccurs="0"&gt;
+                 *           &lt;simpleType&gt;
+                 *             &lt;restriction base="{http://www.portalfiscal.inf.br/nfe}TString"&gt;
+                 *               &lt;minLength value="1"/&gt;
+                 *               &lt;maxLength value="20"/&gt;
+                 *             &lt;/restriction&gt;
+                 *           &lt;/simpleType&gt;
+                 *         &lt;/element&gt;
+                 *       &lt;/sequence&gt;
+                 *     &lt;/restriction&gt;
+                 *   &lt;/complexContent&gt;
+                 * &lt;/complexType&gt;
+                 * </pre>
+                 * 
+                 * 
+                 */
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "", propOrder = {
+                    "tpIntegra",
+                    "cnpj",
+                    "tBand",
+                    "cAut"
+                })
+                public static class Card {
+
+                    @XmlElement(required = true)
+                    protected String tpIntegra;
+                    @XmlElement(name = "CNPJ")
+                    protected String cnpj;
+                    protected String tBand;
+                    protected String cAut;
+
+                    /**
+                     * Obtém o valor da propriedade tpIntegra.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getTpIntegra() {
+                        return tpIntegra;
+                    }
+
+                    /**
+                     * Define o valor da propriedade tpIntegra.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setTpIntegra(String value) {
+                        this.tpIntegra = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade cnpj.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getCNPJ() {
+                        return cnpj;
+                    }
+
+                    /**
+                     * Define o valor da propriedade cnpj.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setCNPJ(String value) {
+                        this.cnpj = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade tBand.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getTBand() {
+                        return tBand;
+                    }
+
+                    /**
+                     * Define o valor da propriedade tBand.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setTBand(String value) {
+                        this.tBand = value;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade cAut.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link String }
+                     *     
+                     */
+                    public String getCAut() {
+                        return cAut;
+                    }
+
+                    /**
+                     * Define o valor da propriedade cAut.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link String }
+                     *     
+                     */
+                    public void setCAut(String value) {
+                        this.cAut = value;
+                    }
+
                 }
 
             }
@@ -28223,14 +31033,18 @@ public class TNFe {
          *                   &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
          *                   &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
          *                   &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+         *                   &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                   &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                   &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vProd" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vFrete" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vSeg" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vDesc" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vII" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vIPI" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+         *                   &lt;element name="vIPIDevol" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vPIS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vCOFINS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
          *                   &lt;element name="vOutro" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -28403,14 +31217,18 @@ public class TNFe {
              *         &lt;element name="vFCPUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
              *         &lt;element name="vICMSUFDest" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
              *         &lt;element name="vICMSUFRemet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302" minOccurs="0"/&gt;
+             *         &lt;element name="vFCP" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vBCST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *         &lt;element name="vFCPST" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *         &lt;element name="vFCPSTRet" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vProd" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vFrete" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vSeg" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vDesc" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vII" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vIPI" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
+             *         &lt;element name="vIPIDevol" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vPIS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vCOFINS" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
              *         &lt;element name="vOutro" type="{http://www.portalfiscal.inf.br/nfe}TDec_1302"/&gt;
@@ -28432,14 +31250,18 @@ public class TNFe {
                 "vfcpufDest",
                 "vicmsufDest",
                 "vicmsufRemet",
+                "vfcp",
                 "vbcst",
                 "vst",
+                "vfcpst",
+                "vfcpstRet",
                 "vProd",
                 "vFrete",
                 "vSeg",
                 "vDesc",
                 "vii",
                 "vipi",
+                "vipiDevol",
                 "vpis",
                 "vcofins",
                 "vOutro",
@@ -28460,10 +31282,16 @@ public class TNFe {
                 protected String vicmsufDest;
                 @XmlElement(name = "vICMSUFRemet")
                 protected String vicmsufRemet;
+                @XmlElement(name = "vFCP", required = true)
+                protected String vfcp;
                 @XmlElement(name = "vBCST", required = true)
                 protected String vbcst;
                 @XmlElement(name = "vST", required = true)
                 protected String vst;
+                @XmlElement(name = "vFCPST", required = true)
+                protected String vfcpst;
+                @XmlElement(name = "vFCPSTRet", required = true)
+                protected String vfcpstRet;
                 @XmlElement(required = true)
                 protected String vProd;
                 @XmlElement(required = true)
@@ -28476,6 +31304,8 @@ public class TNFe {
                 protected String vii;
                 @XmlElement(name = "vIPI", required = true)
                 protected String vipi;
+                @XmlElement(name = "vIPIDevol", required = true)
+                protected String vipiDevol;
                 @XmlElement(name = "vPIS", required = true)
                 protected String vpis;
                 @XmlElement(name = "vCOFINS", required = true)
@@ -28631,6 +31461,30 @@ public class TNFe {
                 }
 
                 /**
+                 * Obtém o valor da propriedade vfcp.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getVFCP() {
+                    return vfcp;
+                }
+
+                /**
+                 * Define o valor da propriedade vfcp.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setVFCP(String value) {
+                    this.vfcp = value;
+                }
+
+                /**
                  * Obtém o valor da propriedade vbcst.
                  * 
                  * @return
@@ -28676,6 +31530,54 @@ public class TNFe {
                  */
                 public void setVST(String value) {
                     this.vst = value;
+                }
+
+                /**
+                 * Obtém o valor da propriedade vfcpst.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getVFCPST() {
+                    return vfcpst;
+                }
+
+                /**
+                 * Define o valor da propriedade vfcpst.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setVFCPST(String value) {
+                    this.vfcpst = value;
+                }
+
+                /**
+                 * Obtém o valor da propriedade vfcpstRet.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getVFCPSTRet() {
+                    return vfcpstRet;
+                }
+
+                /**
+                 * Define o valor da propriedade vfcpstRet.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setVFCPSTRet(String value) {
+                    this.vfcpstRet = value;
                 }
 
                 /**
@@ -28820,6 +31722,30 @@ public class TNFe {
                  */
                 public void setVIPI(String value) {
                     this.vipi = value;
+                }
+
+                /**
+                 * Obtém o valor da propriedade vipiDevol.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getVIPIDevol() {
+                    return vipiDevol;
+                }
+
+                /**
+                 * Define o valor da propriedade vipiDevol.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setVIPIDevol(String value) {
+                    this.vipiDevol = value;
                 }
 
                 /**
@@ -29552,6 +32478,8 @@ public class TNFe {
          *               &lt;enumeration value="0"/&gt;
          *               &lt;enumeration value="1"/&gt;
          *               &lt;enumeration value="2"/&gt;
+         *               &lt;enumeration value="3"/&gt;
+         *               &lt;enumeration value="4"/&gt;
          *               &lt;enumeration value="9"/&gt;
          *             &lt;/restriction&gt;
          *           &lt;/simpleType&gt;
@@ -30731,7 +33659,15 @@ public class TNFe {
      *               &lt;whiteSpace value="preserve"/&gt;
      *               &lt;minLength value="100"/&gt;
      *               &lt;maxLength value="600"/&gt;
-     *               &lt;pattern value="((HTTPS?|https?)://.*\?chNFe=[0-9]{44}&amp;nVersao=[0-9]{3}&amp;tpAmb=[1-2](&amp;cDest=([A-Za-z0-9.:+-/)(]{0}|[A-Za-z0-9.:+-/)(]{5,20})?)?&amp;dhEmi=[A-Fa-f0-9]{50}&amp;vNF=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;vICMS=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;digVal=[A-Fa-f0-9]{56}&amp;cIdToken=[0-9]{6}&amp;cHashQRCode=[A-Fa-f0-9]{40})"/&gt;
+     *               &lt;pattern value="(((HTTPS?|https?)://.*\?chNFe=[0-9]{44}&amp;nVersao=[0-9]{3}&amp;tpAmb=[1-2](&amp;cDest=([A-Za-z0-9.:+-/)(]{0}|[A-Za-z0-9.:+-/)(]{5,20})?)?&amp;dhEmi=[A-Fa-f0-9]{50}&amp;vNF=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;vICMS=(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)&amp;digVal=[A-Fa-f0-9]{56}&amp;cIdToken=[0-9]{6}&amp;cHashQRCode=[A-Fa-f0-9]{40})|((HTTPS?|https?)://.*\?p=([0-9]{34}1[0-9]{9})\|[2]\|[1-2]\|(0|[1-9]{1}([0-9]{1,5})?)\|[A-Fa-f0-9]{40})|((HTTPS?|https?)://.*\?p=([0-9]{34}9[0-9]{9})\|[2]\|[1-2]\|([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-1]{1})\|(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?)\|[A-Fa-f0-9]{56}\|(0|[1-9]{1}([0-9]{1,5})?)\|[A-Fa-f0-9]{40}))"/&gt;
+     *             &lt;/restriction&gt;
+     *           &lt;/simpleType&gt;
+     *         &lt;/element&gt;
+     *         &lt;element name="urlChave"&gt;
+     *           &lt;simpleType&gt;
+     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *               &lt;minLength value="21"/&gt;
+     *               &lt;maxLength value="85"/&gt;
      *             &lt;/restriction&gt;
      *           &lt;/simpleType&gt;
      *         &lt;/element&gt;
@@ -30745,13 +33681,16 @@ public class TNFe {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "qrCode"
+        "qrCode",
+        "urlChave"
     })
     public static class InfNFeSupl {
 
         @XmlElement(required = true)
         @XmlJavaTypeAdapter(value = AdaptorCDATA.class)
         protected String qrCode;
+        @XmlElement(required = true)
+        protected String urlChave;
 
         /**
          * Obtém o valor da propriedade qrCode.
@@ -30775,6 +33714,30 @@ public class TNFe {
          */
         public void setQrCode(String value) {
             this.qrCode = value;
+        }
+
+        /**
+         * Obtém o valor da propriedade urlChave.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getUrlChave() {
+            return urlChave;
+        }
+
+        /**
+         * Define o valor da propriedade urlChave.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setUrlChave(String value) {
+            this.urlChave = value;
         }
 
     }

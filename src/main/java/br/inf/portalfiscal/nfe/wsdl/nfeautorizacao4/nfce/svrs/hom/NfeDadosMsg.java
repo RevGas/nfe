@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.hom;
 
 import java.util.ArrayList;
 import java.util.List;

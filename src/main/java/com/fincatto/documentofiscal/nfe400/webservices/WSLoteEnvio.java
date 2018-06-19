@@ -1,6 +1,7 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
+import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
@@ -33,14 +34,14 @@ class WSLoteEnvio {
         this.config = config;
     }
 
-    TRetEnviNFe enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo) throws Exception {
-        return this.comunicaLote(loteAssinadoXml, modelo);
+    TRetEnviNFe enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo, final DFAmbiente ambiente) throws Exception {
+        return this.comunicaLote(loteAssinadoXml, modelo, ambiente);
     }
 
     TRetEnviNFe enviaLote(final NFLoteEnvio lote) throws Exception {
         final NFLoteEnvio loteAssinado = this.getLoteAssinado(lote);
         // comunica o lote
-        final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(loteAssinado.toString(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getModelo());
+        final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(loteAssinado.toString(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getModelo(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getAmbiente());
         return loteEnvioRetorno;
     }
 
@@ -87,18 +88,18 @@ class WSLoteEnvio {
         return loteAssinado;
     }
 
-    private TRetEnviNFe comunicaLote(final String loteAssinadoXml, final DFModelo modelo) throws Exception {
+    private TRetEnviNFe comunicaLote(final String loteAssinadoXml, final DFModelo modelo, final DFAmbiente ambiente) throws Exception {
         //valida o lote assinado, para verificar se o xsd foi satisfeito, antes de comunicar com a sefaz
         XMLValidador.validaLote400(loteAssinadoXml);
 
-        return getTRetEnviNFe(modelo, this.config.getCUF(), loteAssinadoXml);
+        return getTRetEnviNFe(modelo, this.config.getCUF(), loteAssinadoXml, ambiente);
     }
 
-    private TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final DFUnidadeFederativa uf, String loteAssinadoXml) throws MalformedURLException, JAXBException, Exception {
+    private TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final DFUnidadeFederativa uf, String loteAssinadoXml, DFAmbiente ambiente) throws MalformedURLException, JAXBException, Exception {
 
         switch (uf) {
             case MA :
-                return com.fincatto.documentofiscal.nfe400.classes.NFLoteEnvio.valueOfCodigoUF(DFUnidadeFederativa.MA).getTRetEnviNFe(modelo, loteAssinadoXml);
+                return com.fincatto.documentofiscal.nfe400.classes.NFLoteEnvio.valueOfCodigoUF(DFUnidadeFederativa.MA).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
 //            case PR :
 //                //envia o lote para a sefaz
 //                Holder<NfeCabecMsg> nfeCabecMsgPR = new Holder<>();

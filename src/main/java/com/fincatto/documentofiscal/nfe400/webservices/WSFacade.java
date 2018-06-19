@@ -8,6 +8,7 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
+import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFProtocoloEventoCartaCorrecao;
 
 import com.fincatto.documentofiscal.DFModelo;
@@ -75,8 +76,8 @@ public class WSFacade {
      * @return dados do lote retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public TRetEnviNFe enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo) throws Exception {
-        return this.wsLoteEnvio.enviaLoteAssinado(loteAssinadoXml, modelo);
+    public TRetEnviNFe enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo, final DFAmbiente ambiente) throws Exception {
+        return this.wsLoteEnvio.enviaLoteAssinado(loteAssinadoXml, modelo, ambiente);
     }
 
     /**

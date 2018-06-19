@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.pro;
 
 import java.net.MalformedURLException;
 import java.net.URL;
