@@ -1,21 +1,32 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import com.fincatto.documentofiscal.DFModelo;
+import br.inf.portalfiscal.nfe.ObjectFactory;
+import br.inf.portalfiscal.nfe.TEnvEvento;
+import br.inf.portalfiscal.nfe.TEvento;
+import br.inf.portalfiscal.nfe.TRetEnvEvento;
+import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4;
+import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4Soap;
+import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeDadosMsg;
+import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeResultMsg;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe400.classes.NFAutorizador400;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cancelamento.NFEnviaEventoCancelamento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cancelamento.NFEventoCancelamento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cancelamento.NFInfoCancelamento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cancelamento.NFInfoEventoCancelamento;
 import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.persister.DFPersister;
+import java.io.StringReader;
+import java.io.StringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Collections;
+import java.time.format.DateTimeFormatter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 class WSCancelamento {
     private static final String DESCRICAO_EVENTO = "Cancelamento";
@@ -34,63 +45,66 @@ class WSCancelamento {
         return null;
     }
 
-    NFEnviaEventoRetorno cancelaNota(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
+    TRetEnvEvento cancelaNota(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
         final String cancelamentoNotaXML = this.gerarDadosCancelamento(chaveAcesso, numeroProtocolo, motivo).toString();
         final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(cancelamentoNotaXML);
-//        final OMElement omElementResult = this.efetuaCancelamento(xmlAssinado, chaveAcesso);
-//        return new DFPersister().read(NFEnviaEventoRetorno.class, omElementResult.toString());
-        return null;
+        return new DFPersister().read(TRetEnvEvento.class, efetuaCancelamento(xmlAssinado, chaveAcesso).toString());
     }
 
-    private String efetuaCancelamento(final String xmlAssinado, final String chaveAcesso) throws Exception {
-//        final NFeRecepcaoEvento4Stub.NfeDadosMsg dados = new NFeRecepcaoEvento4Stub.NfeDadosMsg();
-//        final OMElement omElementXML = AXIOMUtil.stringToOM(xmlAssinado);
-//        WSCancelamento.LOGGER.debug(omElementXML.toString());
-//        dados.setExtraElement(omElementXML);
+    private TRetEnvEvento efetuaCancelamento(final String xml, final String chaveAcesso) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
 
-        final NotaFiscalChaveParser parser = new NotaFiscalChaveParser(chaveAcesso);
-        final NFAutorizador400 autorizador = NFAutorizador400.valueOfChaveAcesso(chaveAcesso);
-        final String urlWebService = DFModelo.NFCE.equals(parser.getModelo()) ? autorizador.getNfceRecepcaoEvento(this.config.getAmbiente()) : autorizador.getRecepcaoEvento(this.config.getAmbiente());
-        if (urlWebService == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para RecepcaoEvento " + parser.getModelo().name() + ", autorizador " + autorizador.name());
-        }
+        Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
+        StringReader reader = new StringReader(xml);
+        JAXBElement<TEnvEvento> tEnvEvento = (JAXBElement<TEnvEvento>) jaxbUnmarshaller.unmarshal(reader);
+        
+        final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
+        nfeDadosMsg.getContent().add(tEnvEvento);
 
-//        final NfeResultMsg nfeRecepcaoEvento = new NFeRecepcaoEvento4Stub(urlWebService).nfeRecepcaoEvento(dados);
-//        final OMElement omElementResult = nfeRecepcaoEvento.getExtraElement();
-//        WSCancelamento.LOGGER.debug(omElementResult.toString());
-//        return omElementResult;
-        return "";
+        NFeRecepcaoEvento4Soap port = new NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+        NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+        return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
     }
 
-    private NFEnviaEventoCancelamento gerarDadosCancelamento(final String chaveAcesso, final String numeroProtocolo, final String motivo) {
+    private String gerarDadosCancelamento(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws JAXBException {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
 
-        final NFInfoCancelamento cancelamento = new NFInfoCancelamento();
-        cancelamento.setDescricaoEvento(WSCancelamento.DESCRICAO_EVENTO);
-        cancelamento.setVersao(WSCancelamento.VERSAO_LEIAUTE);
-        cancelamento.setJustificativa(motivo);
-        cancelamento.setProtocoloAutorizacao(numeroProtocolo);
-
-        final NFInfoEventoCancelamento infoEvento = new NFInfoEventoCancelamento();
-        infoEvento.setAmbiente(this.config.getAmbiente());
-        infoEvento.setChave(chaveAcesso);
-        infoEvento.setCnpj(chaveParser.getCnpjEmitente());
-        infoEvento.setDataHoraEvento(ZonedDateTime.now(this.config.getTimeZone().toZoneId()));
+        TEvento.InfEvento.DetEvento detEvento = new TEvento.InfEvento.DetEvento();
+        detEvento.setDescEvento(DESCRICAO_EVENTO);
+        detEvento.setNProt(numeroProtocolo);
+        detEvento.setXJust(motivo);
+        detEvento.setVersao(WSCancelamento.VERSAO_LEIAUTE.toString());
+        
+        final TEvento.InfEvento infoEvento = new TEvento.InfEvento();
+        infoEvento.setTpAmb(this.config.getAmbiente().getCodigo());
+        infoEvento.setChNFe(chaveAcesso);
+        infoEvento.setCNPJ(chaveParser.getCnpjEmitente());
+        infoEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").format(LocalDateTime.now()));
+        infoEvento.setDhEvento(infoEvento.getDhEvento() + "-03:00");
         infoEvento.setId(String.format("ID%s%s0%s", WSCancelamento.EVENTO_CANCELAMENTO, chaveAcesso, "1"));
-        infoEvento.setNumeroSequencialEvento(1);
-        infoEvento.setOrgao(chaveParser.getNFUnidadeFederativa());
-        infoEvento.setCodigoEvento(WSCancelamento.EVENTO_CANCELAMENTO);
-        infoEvento.setVersaoEvento(WSCancelamento.VERSAO_LEIAUTE);
-        infoEvento.setCancelamento(cancelamento);
+        infoEvento.setNSeqEvento("1");
+        infoEvento.setCOrgao(chaveParser.getNFUnidadeFederativa().getCodigoIbge());
+        infoEvento.setTpEvento(WSCancelamento.EVENTO_CANCELAMENTO);
+        infoEvento.setVerEvento(WSCancelamento.VERSAO_LEIAUTE.toString());
+        infoEvento.setDetEvento(detEvento);
 
-        final NFEventoCancelamento evento = new NFEventoCancelamento();
-        evento.setInfoEvento(infoEvento);
-        evento.setVersao(WSCancelamento.VERSAO_LEIAUTE);
+        final TEvento evento = new TEvento();
+        evento.setInfEvento(infoEvento);
+        evento.setVersao(WSCancelamento.VERSAO_LEIAUTE.toString());
 
-        final NFEnviaEventoCancelamento enviaEvento = new NFEnviaEventoCancelamento();
-        enviaEvento.setEvento(Collections.singletonList(evento));
+        final TEnvEvento enviaEvento = new TEnvEvento();
+        enviaEvento.getEvento().add(evento);
         enviaEvento.setIdLote(Long.toString(ZonedDateTime.now(this.config.getTimeZone().toZoneId()).toInstant().toEpochMilli()));
-        enviaEvento.setVersao(WSCancelamento.VERSAO_LEIAUTE);
-        return enviaEvento;
+        enviaEvento.setVersao(WSCancelamento.VERSAO_LEIAUTE.toString());
+        
+        JAXBContext context = JAXBContext.newInstance(TEnvEvento.class);
+        Marshaller marshaller = context.createMarshaller();
+
+        JAXBElement<TEnvEvento> tEnvEvento = new ObjectFactory().createEnvEvento(enviaEvento);
+        
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(tEnvEvento, stringWriter);
+        return stringWriter.toString();
     }
 }

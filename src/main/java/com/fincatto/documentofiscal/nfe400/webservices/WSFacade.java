@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.TRetEnvEvento;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -167,7 +168,7 @@ public class WSFacade {
      * @return dados do cancelamento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFEnviaEventoRetorno cancelaNota(final String chave, final String numeroProtocolo, final String motivo) throws Exception {
+    public TRetEnvEvento cancelaNota(final String chave, final String numeroProtocolo, final String motivo) throws Exception {
         return this.wsCancelamento.cancelaNota(chave, numeroProtocolo, motivo);
     }
 

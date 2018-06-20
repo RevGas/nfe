@@ -2,29 +2,21 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2018.06.18 às 05:41:25 PM BRT 
+// Gerado em: 2018.06.20 às 03:24:13 PM BRT 
 //
 
 
 package br.inf.portalfiscal.nfe;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyAttribute;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import javax.xml.namespace.QName;
 import org.w3._2000._09.xmldsig_.SignatureType;
-import org.w3c.dom.Element;
 
 
 /**
@@ -57,6 +49,7 @@ import org.w3c.dom.Element;
  *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                         &lt;whiteSpace value="preserve"/&gt;
  *                         &lt;pattern value="[0-9]{6}"/&gt;
+ *                         &lt;enumeration value="110111"/&gt;
  *                       &lt;/restriction&gt;
  *                     &lt;/simpleType&gt;
  *                   &lt;/element&gt;
@@ -64,7 +57,7 @@ import org.w3c.dom.Element;
  *                     &lt;simpleType&gt;
  *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                         &lt;whiteSpace value="preserve"/&gt;
- *                         &lt;pattern value="[1-9][0-9]{0,1}"/&gt;
+ *                         &lt;pattern value="[1-9]|[1][0-9]{0,1}|20"/&gt;
  *                       &lt;/restriction&gt;
  *                     &lt;/simpleType&gt;
  *                   &lt;/element&gt;
@@ -72,6 +65,7 @@ import org.w3c.dom.Element;
  *                     &lt;simpleType&gt;
  *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *                         &lt;whiteSpace value="preserve"/&gt;
+ *                         &lt;enumeration value="1.00"/&gt;
  *                       &lt;/restriction&gt;
  *                     &lt;/simpleType&gt;
  *                   &lt;/element&gt;
@@ -80,9 +74,25 @@ import org.w3c.dom.Element;
  *                       &lt;complexContent&gt;
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                           &lt;sequence&gt;
- *                             &lt;any processContents='skip' maxOccurs="unbounded"/&gt;
+ *                             &lt;element name="descEvento"&gt;
+ *                               &lt;simpleType&gt;
+ *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                   &lt;whiteSpace value="preserve"/&gt;
+ *                                   &lt;enumeration value="Cancelamento"/&gt;
+ *                                 &lt;/restriction&gt;
+ *                               &lt;/simpleType&gt;
+ *                             &lt;/element&gt;
+ *                             &lt;element name="nProt" type="{http://www.portalfiscal.inf.br/nfe}TProt"/&gt;
+ *                             &lt;element name="xJust" type="{http://www.portalfiscal.inf.br/nfe}TJust"/&gt;
  *                           &lt;/sequence&gt;
- *                           &lt;anyAttribute processContents='skip'/&gt;
+ *                           &lt;attribute name="versao" use="required"&gt;
+ *                             &lt;simpleType&gt;
+ *                               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                 &lt;whiteSpace value="preserve"/&gt;
+ *                                 &lt;enumeration value="1.00"/&gt;
+ *                               &lt;/restriction&gt;
+ *                             &lt;/simpleType&gt;
+ *                           &lt;/attribute&gt;
  *                         &lt;/restriction&gt;
  *                       &lt;/complexContent&gt;
  *                     &lt;/complexType&gt;
@@ -219,6 +229,7 @@ public class TEvento {
      *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *               &lt;whiteSpace value="preserve"/&gt;
      *               &lt;pattern value="[0-9]{6}"/&gt;
+     *               &lt;enumeration value="110111"/&gt;
      *             &lt;/restriction&gt;
      *           &lt;/simpleType&gt;
      *         &lt;/element&gt;
@@ -226,7 +237,7 @@ public class TEvento {
      *           &lt;simpleType&gt;
      *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *               &lt;whiteSpace value="preserve"/&gt;
-     *               &lt;pattern value="[1-9][0-9]{0,1}"/&gt;
+     *               &lt;pattern value="[1-9]|[1][0-9]{0,1}|20"/&gt;
      *             &lt;/restriction&gt;
      *           &lt;/simpleType&gt;
      *         &lt;/element&gt;
@@ -234,6 +245,7 @@ public class TEvento {
      *           &lt;simpleType&gt;
      *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
      *               &lt;whiteSpace value="preserve"/&gt;
+     *               &lt;enumeration value="1.00"/&gt;
      *             &lt;/restriction&gt;
      *           &lt;/simpleType&gt;
      *         &lt;/element&gt;
@@ -242,9 +254,25 @@ public class TEvento {
      *             &lt;complexContent&gt;
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *                 &lt;sequence&gt;
-     *                   &lt;any processContents='skip' maxOccurs="unbounded"/&gt;
+     *                   &lt;element name="descEvento"&gt;
+     *                     &lt;simpleType&gt;
+     *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                         &lt;whiteSpace value="preserve"/&gt;
+     *                         &lt;enumeration value="Cancelamento"/&gt;
+     *                       &lt;/restriction&gt;
+     *                     &lt;/simpleType&gt;
+     *                   &lt;/element&gt;
+     *                   &lt;element name="nProt" type="{http://www.portalfiscal.inf.br/nfe}TProt"/&gt;
+     *                   &lt;element name="xJust" type="{http://www.portalfiscal.inf.br/nfe}TJust"/&gt;
      *                 &lt;/sequence&gt;
-     *                 &lt;anyAttribute processContents='skip'/&gt;
+     *                 &lt;attribute name="versao" use="required"&gt;
+     *                   &lt;simpleType&gt;
+     *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                       &lt;whiteSpace value="preserve"/&gt;
+     *                       &lt;enumeration value="1.00"/&gt;
+     *                     &lt;/restriction&gt;
+     *                   &lt;/simpleType&gt;
+     *                 &lt;/attribute&gt;
      *               &lt;/restriction&gt;
      *             &lt;/complexContent&gt;
      *           &lt;/complexType&gt;
@@ -579,9 +607,25 @@ public class TEvento {
          *   &lt;complexContent&gt;
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
          *       &lt;sequence&gt;
-         *         &lt;any processContents='skip' maxOccurs="unbounded"/&gt;
+         *         &lt;element name="descEvento"&gt;
+         *           &lt;simpleType&gt;
+         *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *               &lt;whiteSpace value="preserve"/&gt;
+         *               &lt;enumeration value="Cancelamento"/&gt;
+         *             &lt;/restriction&gt;
+         *           &lt;/simpleType&gt;
+         *         &lt;/element&gt;
+         *         &lt;element name="nProt" type="{http://www.portalfiscal.inf.br/nfe}TProt"/&gt;
+         *         &lt;element name="xJust" type="{http://www.portalfiscal.inf.br/nfe}TJust"/&gt;
          *       &lt;/sequence&gt;
-         *       &lt;anyAttribute processContents='skip'/&gt;
+         *       &lt;attribute name="versao" use="required"&gt;
+         *         &lt;simpleType&gt;
+         *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *             &lt;whiteSpace value="preserve"/&gt;
+         *             &lt;enumeration value="1.00"/&gt;
+         *           &lt;/restriction&gt;
+         *         &lt;/simpleType&gt;
+         *       &lt;/attribute&gt;
          *     &lt;/restriction&gt;
          *   &lt;/complexContent&gt;
          * &lt;/complexType&gt;
@@ -591,60 +635,115 @@ public class TEvento {
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
-            "any"
+            "descEvento",
+            "nProt",
+            "xJust"
         })
         public static class DetEvento {
 
-            @XmlAnyElement
-            protected List<Element> any;
-            @XmlAnyAttribute
-            private Map<QName, String> otherAttributes = new HashMap<QName, String>();
+            @XmlElement(required = true)
+            protected String descEvento;
+            @XmlElement(required = true)
+            protected String nProt;
+            @XmlElement(required = true)
+            protected String xJust;
+            @XmlAttribute(name = "versao", required = true)
+            protected String versao;
 
             /**
-             * Gets the value of the any property.
+             * Obtém o valor da propriedade descEvento.
              * 
-             * <p>
-             * This accessor method returns a reference to the live list,
-             * not a snapshot. Therefore any modification you make to the
-             * returned list will be present inside the JAXB object.
-             * This is why there is not a <CODE>set</CODE> method for the any property.
-             * 
-             * <p>
-             * For example, to add a new item, do as follows:
-             * <pre>
-             *    getAny().add(newItem);
-             * </pre>
-             * 
-             * 
-             * <p>
-             * Objects of the following type(s) are allowed in the list
-             * {@link Element }
-             * 
-             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
              */
-            public List<Element> getAny() {
-                if (any == null) {
-                    any = new ArrayList<Element>();
-                }
-                return this.any;
+            public String getDescEvento() {
+                return descEvento;
             }
 
             /**
-             * Gets a map that contains attributes that aren't bound to any typed property on this class.
+             * Define o valor da propriedade descEvento.
              * 
-             * <p>
-             * the map is keyed by the name of the attribute and 
-             * the value is the string value of the attribute.
-             * 
-             * the map returned by this method is live, and you can add new attribute
-             * by updating the map directly. Because of this design, there's no setter.
-             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setDescEvento(String value) {
+                this.descEvento = value;
+            }
+
+            /**
+             * Obtém o valor da propriedade nProt.
              * 
              * @return
-             *     always non-null
+             *     possible object is
+             *     {@link String }
+             *     
              */
-            public Map<QName, String> getOtherAttributes() {
-                return otherAttributes;
+            public String getNProt() {
+                return nProt;
+            }
+
+            /**
+             * Define o valor da propriedade nProt.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setNProt(String value) {
+                this.nProt = value;
+            }
+
+            /**
+             * Obtém o valor da propriedade xJust.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getXJust() {
+                return xJust;
+            }
+
+            /**
+             * Define o valor da propriedade xJust.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setXJust(String value) {
+                this.xJust = value;
+            }
+
+            /**
+             * Obtém o valor da propriedade versao.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getVersao() {
+                return versao;
+            }
+
+            /**
+             * Define o valor da propriedade versao.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setVersao(String value) {
+                this.versao = value;
             }
 
         }

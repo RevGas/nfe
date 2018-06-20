@@ -54,7 +54,10 @@ public class ObjectFactory {
     private final static QName _TNFeInfNFeDetImpostoCOFINS_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "COFINS");
     private final static QName _TNFeInfNFeDetImpostoCOFINSST_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "COFINSST");
     private final static QName _TNFeInfNFeDetImpostoICMSUFDest_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "ICMSUFDest");
-
+    private final static QName _EnvEvento_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "envEvento");
+    private final static QName _ProcEventoNFe_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "procEventoNFe");
+    private final static QName _RetEnvEvento_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "retEnvEvento");
+    
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: br.inf.portalfiscal.nfe
      * 
@@ -999,6 +1002,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TEnvEvento }
+     *
+     */
+    public TEnvEvento createTEnvEvento() {
+        return new TEnvEvento();
+    }
+
+    /**
+     * Create an instance of {@link TRetEnvEvento }
+     *
+     */
+    public TRetEnvEvento createTRetEnvEvento() {
+        return new TRetEnvEvento();
+    }
+    
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TConsReciNFe }{@code >}}
      * 
      */
@@ -1203,6 +1222,33 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe", name = "ICMSUFDest", scope = TNFe.InfNFe.Det.Imposto.class)
     public JAXBElement<TNFe.InfNFe.Det.Imposto.ICMSUFDest> createTNFeInfNFeDetImpostoICMSUFDest(TNFe.InfNFe.Det.Imposto.ICMSUFDest value) {
         return new JAXBElement<TNFe.InfNFe.Det.Imposto.ICMSUFDest>(_TNFeInfNFeDetImpostoICMSUFDest_QNAME, TNFe.InfNFe.Det.Imposto.ICMSUFDest.class, TNFe.InfNFe.Det.Imposto.class, value);
+    }
+    
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TEnvEvento }{@code >}}
+     *
+     */
+    @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe", name = "envEvento")
+    public JAXBElement<TEnvEvento> createEnvEvento(TEnvEvento value) {
+        return new JAXBElement<TEnvEvento>(_EnvEvento_QNAME, TEnvEvento.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TProcEvento }{@code >}}
+     *
+     */
+    @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe", name = "procEventoNFe")
+    public JAXBElement<TProcEvento> createProcEventoNFe(TProcEvento value) {
+        return new JAXBElement<TProcEvento>(_ProcEventoNFe_QNAME, TProcEvento.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TRetEnvEvento }{@code >}}
+     *
+     */
+    @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe", name = "retEnvEvento")
+    public JAXBElement<TRetEnvEvento> createRetEnvEvento(TRetEnvEvento value) {
+        return new JAXBElement<TRetEnvEvento>(_RetEnvEvento_QNAME, TRetEnvEvento.class, null, value);
     }
 
 }
