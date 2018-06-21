@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan;
+package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -27,11 +27,11 @@ public interface NFeRecepcaoEvento4Soap {
      * 
      * @param nfeDadosMsg
      * @return
-     *     returns br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.NfeRecepcaoEventoResult
+     *     returns br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.NfeRecepcaoEventoNFResult
      */
-    @WebMethod(action = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4/nfeRecepcaoEvento")
-    @WebResult(name = "nfeRecepcaoEventoResult", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", partName = "nfeRecepcaoEventoResult")
-    public NfeRecepcaoEventoResult nfeRecepcaoEvento(
+    @WebMethod(action = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4/nfeRecepcaoEventoNF")
+    @WebResult(name = "nfeRecepcaoEventoNFResult", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", partName = "nfeRecepcaoEventoNFResult")
+    public NfeRecepcaoEventoNFResult nfeRecepcaoEventoNF(
         @WebParam(name = "nfeDadosMsg", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", partName = "nfeDadosMsg")
         NfeDadosMsg nfeDadosMsg);
 

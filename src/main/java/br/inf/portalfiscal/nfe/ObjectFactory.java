@@ -66,6 +66,54 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DistDFeInt }
+     *
+     */
+    public DistDFeInt createDistDFeInt() {
+        return new DistDFeInt();
+    }
+
+    /**
+     * Create an instance of {@link RetDistDFeInt }
+     *
+     */
+    public RetDistDFeInt createRetDistDFeInt() {
+        return new RetDistDFeInt();
+    }
+
+    /**
+     * Create an instance of {@link RetDistDFeInt.LoteDistDFeInt }
+     *
+     */
+    public RetDistDFeInt.LoteDistDFeInt createRetDistDFeIntLoteDistDFeInt() {
+        return new RetDistDFeInt.LoteDistDFeInt();
+    }
+
+    /**
+     * Create an instance of {@link DistDFeInt.DistNSU }
+     *
+     */
+    public DistDFeInt.DistNSU createDistDFeIntDistNSU() {
+        return new DistDFeInt.DistNSU();
+    }
+
+    /**
+     * Create an instance of {@link DistDFeInt.ConsNSU }
+     *
+     */
+    public DistDFeInt.ConsNSU createDistDFeIntConsNSU() {
+        return new DistDFeInt.ConsNSU();
+    }
+
+    /**
+     * Create an instance of {@link DistDFeInt.ConsChNFe }
+     *
+     */
+    public DistDFeInt.ConsChNFe createDistDFeIntConsChNFe() {
+        return new DistDFeInt.ConsChNFe();
+    }
+    
+    /**
      * Create an instance of {@link TRetEvento }
      * 
      */
@@ -1001,6 +1049,14 @@ public class ObjectFactory {
         return new TInutNFe.InfInut();
     }
 
+    /**
+     * Create an instance of {@link RetDistDFeInt.LoteDistDFeInt.DocZip }
+     *
+     */
+    public RetDistDFeInt.LoteDistDFeInt.DocZip createRetDistDFeIntLoteDistDFeIntDocZip() {
+        return new RetDistDFeInt.LoteDistDFeInt.DocZip();
+    }
+    
     /**
      * Create an instance of {@link TEnvEvento }
      *

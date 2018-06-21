@@ -34,7 +34,7 @@ public class WSFacade {
     private final WSStatusConsulta wsStatusConsulta;
     private final WSNotaConsulta wsNotaConsulta;
     private final WSCartaCorrecao wsCartaCorrecao;
-    private final WSCancelamento wsCancelamento;
+    private final WSEvento wsEvento;
     private final WSConsultaCadastro wsConsultaCadastro;
     private final WSInutilizacao wsInutilizacao;
     private final WSManifestacaoDestinatario wSManifestacaoDestinatario;
@@ -49,7 +49,7 @@ public class WSFacade {
         this.wsStatusConsulta = new WSStatusConsulta(config);
         this.wsNotaConsulta = new WSNotaConsulta(config);
         this.wsCartaCorrecao = new WSCartaCorrecao(config);
-        this.wsCancelamento = new WSCancelamento(config);
+        this.wsEvento = new WSEvento(config);
         this.wsConsultaCadastro = new WSConsultaCadastro(config);
         this.wsInutilizacao = new WSInutilizacao(config);
         this.wSManifestacaoDestinatario = new WSManifestacaoDestinatario(config);
@@ -158,18 +158,18 @@ public class WSFacade {
         return this.wsCartaCorrecao.getXmlAssinado(chaveDeAcesso, textoCorrecao, numeroSequencialEvento);
     }
 
-
-
     /**
-     * Faz o cancelamento da nota
+     * Faz o envio de eventos da nota
+     * @param descEvento
+     * @param tpEvento
      * @param chave chave de acesso da nota
      * @param numeroProtocolo numero do protocolo da nota
      * @param motivo motivo do cancelamento
      * @return dados do cancelamento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public TRetEnvEvento cancelaNota(final String chave, final String numeroProtocolo, final String motivo) throws Exception {
-        return this.wsCancelamento.cancelaNota(chave, numeroProtocolo, motivo);
+    public TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chave, final String numeroProtocolo, final String motivo) throws Exception {
+        return this.wsEvento.enviaEvento(descEvento, tpEvento, chave, numeroProtocolo, motivo);
     }
 
     /**
@@ -180,7 +180,7 @@ public class WSFacade {
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
     public NFEnviaEventoRetorno cancelaNotaAssinada(final String chave, final String eventoAssinadoXml) throws Exception {
-        return this.wsCancelamento.cancelaNotaAssinada(chave, eventoAssinadoXml);
+        return this.wsEvento.cancelaNotaAssinada(chave, eventoAssinadoXml);
     }
 
     /**
