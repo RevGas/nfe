@@ -99,7 +99,7 @@ class WSLoteEnvio {
 
         switch (uf) {
             case MA :
-                return com.fincatto.documentofiscal.nfe400.classes.NFLoteEnvio.valueOfCodigoUF(DFUnidadeFederativa.MA).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
+                return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfCodigoUF(DFUnidadeFederativa.MA).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
 //            case PR :
 //                //envia o lote para a sefaz
 //                Holder<NfeCabecMsg> nfeCabecMsgPR = new Holder<>();

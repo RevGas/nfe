@@ -4,15 +4,10 @@ import br.inf.portalfiscal.nfe.ObjectFactory;
 import br.inf.portalfiscal.nfe.TEnvEvento;
 import br.inf.portalfiscal.nfe.TEvento;
 import br.inf.portalfiscal.nfe.TRetEnvEvento;
-import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4;
-import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4Soap;
-import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeDadosMsg;
-import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeResultMsg;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
-import java.io.StringReader;
 import java.io.StringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +20,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 class WSCancelamento {
     private static final String DESCRICAO_EVENTO = "Cancelamento";
@@ -52,19 +46,8 @@ class WSCancelamento {
     }
 
     private TRetEnvEvento efetuaCancelamento(final String xml, final String chaveAcesso) throws Exception {
-        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
-
-        Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
-        StringReader reader = new StringReader(xml);
-        JAXBElement<TEnvEvento> tEnvEvento = (JAXBElement<TEnvEvento>) jaxbUnmarshaller.unmarshal(reader);
-        
-        final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
-        nfeDadosMsg.getContent().add(tEnvEvento);
-
-        NFeRecepcaoEvento4Soap port = new NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
-        NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
-
-        return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayEvento.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
     }
 
     private String gerarDadosCancelamento(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws JAXBException {

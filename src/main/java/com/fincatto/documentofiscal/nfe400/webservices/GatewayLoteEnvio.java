@@ -1,4 +1,4 @@
-package com.fincatto.documentofiscal.nfe400.classes;
+package com.fincatto.documentofiscal.nfe400.webservices;
 
 import br.inf.portalfiscal.nfe.TEnviNFe;
 import br.inf.portalfiscal.nfe.TProtNFe;
@@ -18,7 +18,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import org.w3c.dom.Element;
 
-public enum NFLoteEnvio {
+public enum GatewayLoteEnvio {
 
     MA {
         @Override
@@ -58,8 +58,8 @@ public enum NFLoteEnvio {
 
     public abstract DFUnidadeFederativa[] getUFs();
 
-    public static NFLoteEnvio valueOfCodigoUF(final DFUnidadeFederativa uf) {
-        for (final NFLoteEnvio autorizador : NFLoteEnvio.values()) {
+    public static GatewayLoteEnvio valueOfCodigoUF(final DFUnidadeFederativa uf) {
+        for (final GatewayLoteEnvio autorizador : GatewayLoteEnvio.values()) {
             if (Arrays.asList(autorizador.getUFs()).contains(uf)) {
                 return autorizador;
             }
