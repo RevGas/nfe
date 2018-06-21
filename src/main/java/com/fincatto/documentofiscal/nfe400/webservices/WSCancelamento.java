@@ -4,15 +4,14 @@ import br.inf.portalfiscal.nfe.ObjectFactory;
 import br.inf.portalfiscal.nfe.TEnvEvento;
 import br.inf.portalfiscal.nfe.TEvento;
 import br.inf.portalfiscal.nfe.TRetEnvEvento;
-import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4;
-import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4Soap;
-import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeDadosMsg;
-import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeResultMsg;
+import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4;
+import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4Soap;
+import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeDadosMsg;
+import br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeResultMsg;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
-import com.fincatto.documentofiscal.persister.DFPersister;
 import java.io.StringReader;
 import java.io.StringWriter;
 import org.slf4j.Logger;
@@ -46,9 +45,10 @@ class WSCancelamento {
     }
 
     TRetEnvEvento cancelaNota(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
-        final String cancelamentoNotaXML = this.gerarDadosCancelamento(chaveAcesso, numeroProtocolo, motivo).toString();
+        String cancelamentoNotaXML = this.gerarDadosCancelamento(chaveAcesso, numeroProtocolo, motivo);
+        cancelamentoNotaXML = cancelamentoNotaXML.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
         final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(cancelamentoNotaXML);
-        return new DFPersister().read(TRetEnvEvento.class, efetuaCancelamento(xmlAssinado, chaveAcesso).toString());
+        return efetuaCancelamento(xmlAssinado, chaveAcesso);
     }
 
     private TRetEnvEvento efetuaCancelamento(final String xml, final String chaveAcesso) throws Exception {

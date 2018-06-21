@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom;
+package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

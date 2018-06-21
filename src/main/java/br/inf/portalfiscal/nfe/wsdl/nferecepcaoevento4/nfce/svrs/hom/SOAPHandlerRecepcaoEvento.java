@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom;
+package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom;
 
 import com.fincatto.nfe310.utils.SOAPHandlerUtil;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom;
+package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,8 +16,8 @@ import javax.xml.ws.WebServiceFeature;
  * JAX-WS RI 2.2.10
  * Generated source version: 2.2
  * 
- */ 
-@WebServiceClient(name = "NFeRecepcaoEvento4", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", wsdlLocation = "https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx?WSDL")
+ */
+@WebServiceClient(name = "NFeRecepcaoEvento4", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", wsdlLocation = "https://nfce-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx?WSDL")
 @HandlerChain(file="handler.xml")
 public class NFeRecepcaoEvento4
     extends Service
@@ -31,7 +31,7 @@ public class NFeRecepcaoEvento4
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx?WSDL");
+            url = new URL("https://nfce-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx?WSDL");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
