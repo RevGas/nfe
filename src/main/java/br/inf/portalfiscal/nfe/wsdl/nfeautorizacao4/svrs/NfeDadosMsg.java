@@ -1,4 +1,5 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.pro;
+
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svrs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +59,8 @@ public class NfeDadosMsg {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Object }
      * {@link String }
+     * {@link Object }
      * 
      * 
      */
