@@ -25,6 +25,18 @@ public enum GatewayEvento {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.MA};
         }
     },
+    BA {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String loteAssinado, DFAmbiente ambiente) throws JAXBException, Exception {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    },
     MA {
         @Override
         public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
@@ -35,6 +47,42 @@ public enum GatewayEvento {
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.MA};
         }
+    },
+    PR {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String loteAssinado, DFAmbiente ambiente) throws JAXBException, Exception {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    },
+    RS {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String loteAssinado, DFAmbiente ambiente) throws JAXBException, Exception {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    },
+    SP {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String loteAssinado, DFAmbiente ambiente) throws JAXBException, Exception {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     },
     SVAN {
         @Override
