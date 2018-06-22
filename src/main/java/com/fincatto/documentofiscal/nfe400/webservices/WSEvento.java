@@ -39,13 +39,13 @@ class WSEvento {
     }
 
     TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
-        String cancelamentoNotaXML = this.gerarDados(descEvento, tpEvento, chaveAcesso, numeroProtocolo, motivo);
-        cancelamentoNotaXML = cancelamentoNotaXML.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
-        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(cancelamentoNotaXML);
-        return efetuaCancelamento(tpEvento, xmlAssinado, chaveAcesso);
+        String xml = this.gerarDados(descEvento, tpEvento, chaveAcesso, numeroProtocolo, motivo);
+        xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
+        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
+        return efetua(tpEvento, xmlAssinado, chaveAcesso);
     }
 
-    private TRetEnvEvento efetuaCancelamento(final String tpEvento, final String xml, final String chaveAcesso) throws Exception {
+    private TRetEnvEvento efetua(final String tpEvento, final String xml, final String chaveAcesso) throws Exception {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
         if (tpEvento.equals(EVENTO_CANCELAMENTO)) {
             return com.fincatto.documentofiscal.nfe400.webservices.GatewayEvento.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());

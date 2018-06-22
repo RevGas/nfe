@@ -22,7 +22,7 @@ public enum GatewayEvento {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            return new DFUnidadeFederativa[]{DFUnidadeFederativa.MA};
+            return new DFUnidadeFederativa[]{};
         }
     },
     BA {
@@ -33,7 +33,7 @@ public enum GatewayEvento {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.BA};
         }
         
     },
@@ -56,7 +56,7 @@ public enum GatewayEvento {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PR};
         }
         
     },
@@ -68,7 +68,7 @@ public enum GatewayEvento {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.RS};
         }
         
     },
@@ -80,7 +80,7 @@ public enum GatewayEvento {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.SP};
         }
         
     },
