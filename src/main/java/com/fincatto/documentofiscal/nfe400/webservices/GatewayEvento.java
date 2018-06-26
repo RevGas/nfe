@@ -35,7 +35,7 @@ public enum GatewayEvento {
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.BA};
         }
-        
+
     },
     MA {
         @Override
@@ -58,7 +58,7 @@ public enum GatewayEvento {
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.PR};
         }
-        
+
     },
     RS {
         @Override
@@ -70,7 +70,7 @@ public enum GatewayEvento {
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.RS};
         }
-        
+
     },
     SP {
         @Override
@@ -82,7 +82,7 @@ public enum GatewayEvento {
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.SP};
         }
-        
+
     },
     SVAN {
         @Override
@@ -133,7 +133,7 @@ public enum GatewayEvento {
             return null;
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoANNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             return null;
@@ -141,7 +141,7 @@ public enum GatewayEvento {
             return null;
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoSVANNFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.NfeDadosMsg();
@@ -161,10 +161,10 @@ public enum GatewayEvento {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
-     public TRetEnvEvento getTRetEnvEventoSVANNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+
+    public TRetEnvEvento getTRetEnvEventoSVANNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
-           return null;
+            return null;
         } else {
            return null;
         }

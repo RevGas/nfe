@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
+import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao.ba.NfeInutilizacaoNFResult;
 import java.math.BigDecimal;
 import java.net.URL;
 
@@ -15,12 +16,8 @@ import com.fincatto.documentofiscal.nfe310.classes.evento.inutilizacao.NFRetorno
 import com.fincatto.nfe310.converters.ElementStringConverter;
 import com.fincatto.documentofiscal.persister.DFPersister;
 
-import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeCabecMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeDadosMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeInutilizacao2;
-import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeInutilizacao2Soap;
-import br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao2.svan.NfeInutilizacaoNF2Result;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
+import javax.xml.ws.Holder;
 
 class WSInutilizacao {
 
@@ -66,11 +63,12 @@ class WSInutilizacao {
     }
 
     private String efetuaInutilizacao(final String xml, final DFModelo modelo) throws Exception {
-        final NfeCabecMsg nfeCabecMsg = new NfeCabecMsg();
-        nfeCabecMsg.setCUF(this.config.getCUF().getCodigoIbge());
-        nfeCabecMsg.setVersaoDados(WSInutilizacao.VERSAO_SERVICO);
-
-        final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
+        Holder<br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao.ba.NfeCabecMsg> nfeCabecMsg = new Holder<>();
+        nfeCabecMsg.value = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao.ba.NfeCabecMsg();
+        nfeCabecMsg.value.setCUF(this.config.getCUF().getCodigoIbge());
+        nfeCabecMsg.value.setVersaoDados(WSInutilizacao.VERSAO_SERVICO);
+        
+        final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao.ba.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao.ba.NfeDadosMsg();
         nfeDadosMsg.getContent().add(ElementStringConverter.read(xml));
 
         final NFAutorizador31 autorizador = NFAutorizador31.valueOfCodigoUF(this.config.getCUF());
@@ -79,8 +77,8 @@ class WSInutilizacao {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para Inutilizacao, autorizador " + autorizador.name());
         }
 
-        NfeInutilizacao2Soap port = new NfeInutilizacao2(new URL(endpoint)).getNfeInutilizacao2Soap12();
-        NfeInutilizacaoNF2Result result = port.nfeInutilizacaoNF2(nfeDadosMsg, nfeCabecMsg);
+        br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao.ba.NfeInutilizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao.ba.NfeInutilizacao(new URL(endpoint)).getNfeInutilizacaoSoap();
+        NfeInutilizacaoNFResult result = port.nfeInutilizacaoNF(nfeDadosMsg, nfeCabecMsg);
 
         return ElementStringConverter.write((Element) result.getContent().get(0));
     }
