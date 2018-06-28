@@ -130,7 +130,13 @@ public enum GatewayEvento {
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         } else {
-            return null;
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NfeRecepcaoEventoNFResult result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
