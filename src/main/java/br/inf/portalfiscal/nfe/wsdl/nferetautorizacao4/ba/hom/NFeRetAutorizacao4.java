@@ -2,6 +2,7 @@ package br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.ba.hom;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.jws.HandlerChain;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
@@ -17,6 +18,7 @@ import javax.xml.ws.WebServiceFeature;
  * 
  */
 @WebServiceClient(name = "NFeRetAutorizacao4", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRetAutorizacao4", wsdlLocation = "https://hnfe.sefaz.ba.gov.br/webservices/NFeRetAutorizacao4/NFeRetAutorizacao4.asmx?WSDL")
+@HandlerChain(file="handler.xml")
 public class NFeRetAutorizacao4
     extends Service
 {

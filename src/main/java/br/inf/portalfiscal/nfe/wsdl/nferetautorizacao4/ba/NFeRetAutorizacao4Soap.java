@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @WebService(name = "NFeRetAutorizacao4Soap", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRetAutorizacao4")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
-    ObjectFactory.class
+    ObjectFactory.class, br.inf.portalfiscal.nfe.ObjectFactory.class
 })
 public interface NFeRetAutorizacao4Soap {
 

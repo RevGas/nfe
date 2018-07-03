@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.TRetConsReciNFe;
 import br.inf.portalfiscal.nfe.TRetEnvEvento;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -21,7 +22,6 @@ import com.fincatto.documentofiscal.nfe400.classes.cadastro.NFRetornoConsultaCad
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
 import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFTipoEventoManifestacaoDestinatario;
-import com.fincatto.documentofiscal.nfe400.classes.lote.consulta.NFLoteConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
@@ -88,7 +88,7 @@ public class WSFacade {
      * @return dados de consulta de lote retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFLoteConsultaRetorno consultaLote(final String numeroRecibo, final DFModelo modelo) throws Exception {
+    public TRetConsReciNFe consultaLote(final String numeroRecibo, final DFModelo modelo) throws Exception {
         return this.wsLoteConsulta.consultaLote(numeroRecibo, modelo);
     }
 
