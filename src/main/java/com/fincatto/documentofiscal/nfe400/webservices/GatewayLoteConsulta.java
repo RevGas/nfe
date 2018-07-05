@@ -3,7 +3,6 @@ package com.fincatto.documentofiscal.nfe400.webservices;
 import br.inf.portalfiscal.nfe.ObjectFactory;
 import br.inf.portalfiscal.nfe.TConsReciNFe;
 import br.inf.portalfiscal.nfe.TRetConsReciNFe;
-import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import java.util.Arrays;
@@ -31,7 +30,7 @@ public enum GatewayLoteConsulta {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            return new DFUnidadeFederativa[]{DFUnidadeFederativa.BA};
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.SP};
         }
     };
 
