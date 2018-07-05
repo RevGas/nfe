@@ -19,7 +19,7 @@ public enum GatewayLoteEnvio {
     BA {
         @Override
         public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String loteAssinado, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFeBANFE(loteAssinado, ambiente) : SVRS.getTRetEnviNFe(modelo, loteAssinado, ambiente);
+            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFeBANFE(loteAssinado, ambiente) : SVRS.getTRetEnviNFeSVRSNFCE(loteAssinado, ambiente);
         }
 
         @Override
@@ -30,7 +30,7 @@ public enum GatewayLoteEnvio {
     MA {
         @Override
         public TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final String loteAssinado, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? SVAN.getTRetEnviNFe(modelo, loteAssinado, ambiente) : SVRS.getTRetEnviNFe(modelo, loteAssinado, ambiente);
+            return DFModelo.NFE.equals(modelo) ? SVAN.getTRetEnviNFe(modelo, loteAssinado, ambiente) : SVRS.getTRetEnviNFeSVRSNFCE(loteAssinado, ambiente);
         }
 
         @Override
@@ -52,7 +52,7 @@ public enum GatewayLoteEnvio {
     RS {
         @Override
         public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String loteAssinado, DFAmbiente ambiente) throws JAXBException, Exception {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFeRSNFE(loteAssinado, ambiente) : getTRetEnviNFeRSNFCE(loteAssinado, ambiente);
         }
 
         @Override
@@ -74,7 +74,7 @@ public enum GatewayLoteEnvio {
     SVAN {
         @Override
         public TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final String loteAssinado, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return getTRetEnviNFeSVANNFE(loteAssinado, ambiente);
+            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFeSVANNFE(loteAssinado, ambiente) : getTRetEnviNFeSVANNFCE(loteAssinado, ambiente);
         }
 
         @Override
@@ -125,6 +125,32 @@ public enum GatewayLoteEnvio {
         }
     }
 
+    public TRetEnviNFe getTRetEnviNFeRSNFE(final String loteAssinado, final DFAmbiente ambiente) throws JAXBException, Exception {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(loteAssinado));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.NFeAutorizacao4().getNFeAutorizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(loteAssinado));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.hom.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.hom.NFeAutorizacao4().getNFeAutorizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.rs.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnviNFe getTRetEnviNFeRSNFCE(final String loteAssinado, final DFAmbiente ambiente) throws JAXBException, Exception {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            return null;
+        } else {
+            return null;
+        }
+    }
+    
     public TRetEnviNFe getTRetEnviNFeSVANNFE(final String loteAssinado, final DFAmbiente ambiente) throws JAXBException, Exception {
         NFLoteEnvio loteEnvio = new DFParser().loteParaObjeto(loteAssinado);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
@@ -145,6 +171,15 @@ public enum GatewayLoteEnvio {
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.hom.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.hom.NFeAutorizacao4().getNFeAutorizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.hom.NfeAutorizacaoLoteResult result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnviNFe getTRetEnviNFeSVANNFCE(final String loteAssinado, final DFAmbiente ambiente) throws JAXBException, Exception {
+        NFLoteEnvio loteEnvio = new DFParser().loteParaObjeto(loteAssinado);
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            return null;
+        } else {
+            return null;
         }
     }
 
