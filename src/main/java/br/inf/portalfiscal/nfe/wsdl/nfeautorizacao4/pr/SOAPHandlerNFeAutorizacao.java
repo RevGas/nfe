@@ -29,6 +29,7 @@ public class SOAPHandlerNFeAutorizacao implements SOAPHandler<SOAPMessageContext
                 SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/nfe");
                 SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.w3.org/2000/09/xmldsig#");
                 SOAPHandlerUtil.addListNamespacetoAddAttribute("Signature", "http://www.w3.org/2000/09/xmldsig#");
+                SOAPHandlerUtil.addListNamespacetoAddAttribute("NFe", "http://www.portalfiscal.inf.br/nfe");
 
                 SOAPHandlerUtil.getNamespaces(body);
                 SOAPHandlerUtil.forEachNode(body.getFirstChild());
