@@ -41,7 +41,7 @@ public enum GatewayLoteEnvio {
     PR {
         @Override
         public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFePRNFE(xml, ambiente) : getTRetEnviNFePRNFCE(xml, ambiente);
         }
 
         @Override
@@ -121,6 +121,42 @@ public enum GatewayLoteEnvio {
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.hom.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.hom.NFeAutorizacao4().getNFeAutorizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnviNFe getTRetEnviNFePRNFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NFeAutorizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NFeAutorizacao4().getNFeAutorizacao4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.hom.NFeAutorizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.hom.NFeAutorizacao4().getNFeAutorizacao4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+
+    public TRetEnviNFe getTRetEnviNFePRNFCE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.NFeAutorizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.NFeAutorizacao4().getNFeAutorizacao4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.hom.NFeAutorizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.hom.NFeAutorizacao4().getNFeAutorizacao4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         }
     }

@@ -51,7 +51,7 @@ public enum GatewayEvento {
     PR {
         @Override
         public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoPRNFE(xml, ambiente) : getTRetEnvEventoPRNFCE(xml, ambiente);
         }
 
         @Override
@@ -163,6 +163,46 @@ public enum GatewayEvento {
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnvEvento getTRetEnvEventoPRNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.hom.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnvEvento getTRetEnvEventoPRNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.hom.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
