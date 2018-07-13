@@ -637,7 +637,9 @@ public class TEvento {
         @XmlType(name = "", propOrder = {
             "descEvento",
             "nProt",
-            "xJust"
+            "xJust",
+            "xCorrecao",
+            "xCondUso"
         })
         public static class DetEvento {
 
@@ -647,6 +649,10 @@ public class TEvento {
             protected String nProt;
             @XmlElement(required = true)
             protected String xJust;
+            @XmlElement(required = true)
+            protected String xCorrecao;
+            @XmlElement(required = true)
+            protected String xCondUso;
             @XmlAttribute(name = "versao", required = true)
             protected String versao;
 
@@ -722,6 +728,54 @@ public class TEvento {
                 this.xJust = value;
             }
 
+            /**
+             * Obtém o valor da propriedade xCorrecao.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getXCorrecao() {
+                return xCorrecao;
+            }
+
+            /**
+             * Define o valor da propriedade xCorrecao.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setXCorrecao(String value) {
+                this.xCorrecao = value;
+            }
+
+            /**
+             * Obtém o valor da propriedade xCondUso.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getXCondUso() {
+                return xCondUso;
+            }
+
+            /**
+             * Define o valor da propriedade xCondUso.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setXCondUso(String value) {
+                this.xCondUso = value;
+            }
+            
             /**
              * Obtém o valor da propriedade versao.
              * 
