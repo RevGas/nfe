@@ -1,10 +1,9 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeStatusServicoNF2Result;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.svrs.NFeStatusServico4;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.svrs.NFeStatusServico4Soap;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.svrs.NfeDadosMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.svrs.NfeResultMsg;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.hom.NFeStatusServico4;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.hom.NFeStatusServico4Service;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.hom.NfeDadosMsg;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.hom.NfeResultMsg;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
@@ -57,7 +56,7 @@ class WSStatusConsulta {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para StatusServico " + modelo.name() + ", autorizador " + autorizador.name() + ", UF " + unidadeFederativa.name());
         }
 
-        NFeStatusServico4Soap port = new NFeStatusServico4(new URL(endpoint)).getNFeStatusServico4Soap();
+        NFeStatusServico4Service port = new NFeStatusServico4(new URL(endpoint)).getNFeStatusServico4ServicePort();
         NfeResultMsg result = port.nfeStatusServicoNF(dadosMsg);
 
         return ElementStringConverter.write((Element) result.getContent().get(0));
