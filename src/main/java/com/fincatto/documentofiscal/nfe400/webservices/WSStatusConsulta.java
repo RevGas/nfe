@@ -1,9 +1,9 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.hom.NFeStatusServico4;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.hom.NFeStatusServico4Service;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.hom.NfeDadosMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.hom.NfeResultMsg;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.NFeStatusServico4;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.NFeStatusServico4Service;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.NfeDadosMsg;
+import br.inf.portalfiscal.nfe.wsdl.nfestatusservico4.go.NfeResultMsg;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
@@ -13,11 +13,11 @@ import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStat
 import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
 import com.fincatto.nfe310.converters.ElementStringConverter;
 import java.net.MalformedURLException;
-import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
+import javax.xml.ws.BindingProvider;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.stream.Format;
 import org.w3c.dom.Element;
@@ -55,8 +55,11 @@ class WSStatusConsulta {
         if (endpoint == null) {
             throw new IllegalArgumentException("Nao foi possivel encontrar URL para StatusServico " + modelo.name() + ", autorizador " + autorizador.name() + ", UF " + unidadeFederativa.name());
         }
-
-        NFeStatusServico4Service port = new NFeStatusServico4(new URL(endpoint)).getNFeStatusServico4ServicePort();
+        
+        NFeStatusServico4Service port = new NFeStatusServico4().getNFeStatusServico4ServicePort();
+        
+        ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpoint);
+        
         NfeResultMsg result = port.nfeStatusServicoNF(dadosMsg);
 
         return ElementStringConverter.write((Element) result.getContent().get(0));

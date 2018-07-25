@@ -76,7 +76,7 @@ public abstract class DFConfig {
      * @return Protocolo SSL da SEFAZ de origem.
      */
     public String[] getSSLProtocolos() {
-        return new String[] { "TLSv1.2" };
+        return new String[] { "TLS" };
     }
 
     /**
