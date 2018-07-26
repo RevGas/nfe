@@ -44,8 +44,8 @@ class WSEvento {
         return null;
     }
 
-    TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
-        String xml = this.gerarDados(descEvento, tpEvento, chaveAcesso, numeroProtocolo, motivo);
+    TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo, final String nSeqEvento) throws Exception {
+        String xml = this.gerarDados(descEvento, tpEvento, chaveAcesso, numeroProtocolo, motivo, nSeqEvento);
         xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
         final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
         return efetua(tpEvento, xmlAssinado, chaveAcesso);
@@ -62,7 +62,7 @@ class WSEvento {
         }
     }
 
-    private String gerarDados(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo) throws JAXBException, ParserConfigurationException {
+    private String gerarDados(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo, final String nSeqEvento) throws JAXBException, ParserConfigurationException {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
 
         TEvento.InfEvento.DetEvento detEvento = new TEvento.InfEvento.DetEvento();
@@ -86,8 +86,8 @@ class WSEvento {
         infoEvento.setCNPJ(chaveParser.getCnpjEmitente());
         infoEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").format(LocalDateTime.now())); //TODO
         infoEvento.setDhEvento(infoEvento.getDhEvento() + "-03:00");
-        infoEvento.setId(String.format("ID%s%s0%s", tpEvento, chaveAcesso, "1"));
-        infoEvento.setNSeqEvento("1");
+        infoEvento.setId(String.format("ID%s%s0%s", tpEvento, chaveAcesso, nSeqEvento));
+        infoEvento.setNSeqEvento(nSeqEvento);
         if (EVENTO_MANIFESTACAO.contains(tpEvento)) {
             infoEvento.setCOrgao(DFUnidadeFederativa.RFB.getCodigoIbge());
         } else {

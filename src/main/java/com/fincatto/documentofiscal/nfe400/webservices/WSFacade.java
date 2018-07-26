@@ -168,8 +168,8 @@ public class WSFacade {
      * @return dados do cancelamento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chave, final String numeroProtocolo, final String motivo) throws Exception {
-        return this.wsEvento.enviaEvento(descEvento, tpEvento, chave, numeroProtocolo, motivo);
+    public TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chave, final String numeroProtocolo, final String motivo, final String nSeqEvento) throws Exception {
+        return this.wsEvento.enviaEvento(descEvento, tpEvento, chave, numeroProtocolo, motivo, nSeqEvento);
     }
 
     /**
