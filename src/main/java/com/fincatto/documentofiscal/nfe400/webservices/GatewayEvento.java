@@ -116,7 +116,7 @@ public enum GatewayEvento {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PI};
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PI, DFUnidadeFederativa.AP, DFUnidadeFederativa.SE, DFUnidadeFederativa.ES};
         }
     };
 
