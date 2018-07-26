@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.ws.BindingProvider;
 
 public enum GatewayEvento {
 
@@ -34,6 +35,18 @@ public enum GatewayEvento {
         @Override
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.BA};
+        }
+
+    },
+    GO {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : null;
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.GO};
         }
 
     },
@@ -163,6 +176,28 @@ public enum GatewayEvento {
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnvEvento getTRetEnvEventoGONFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NFeRecepcaoEvento4Service port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NFeRecepcaoEvento4Service port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }

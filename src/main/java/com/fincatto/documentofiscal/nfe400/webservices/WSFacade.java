@@ -43,6 +43,8 @@ public class WSFacade {
     public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
         HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
 
+        HttpsURLConnection.setFollowRedirects(true);
+        
         // inicia os servicos disponiveis da nfe
         this.wsLoteEnvio = new WSLoteEnvio(config);
         this.wsLoteConsulta = new WSLoteConsulta(config);
