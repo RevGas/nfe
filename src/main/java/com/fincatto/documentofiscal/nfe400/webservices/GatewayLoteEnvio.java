@@ -256,17 +256,12 @@ public enum GatewayLoteEnvio {
     }
 
     public TRetEnviNFe getTRetEnviNFeSVANNFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-        NFLoteEnvio loteEnvio = new DFParser().loteParaObjeto(xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
-            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NfeCabecMsg nfeCabecMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NfeCabecMsg();
-            nfeCabecMsg.setCUF(loteEnvio.getNotas().get(0).getInfo().getIdentificacao().getUf().getCodigoIbge());
-            nfeCabecMsg.setVersaoDados(loteEnvio.getVersao());
-
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
-            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NfeAutorizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NfeAutorizacao().getNfeAutorizacaoSoap();
-            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NfeAutorizacaoLoteResult result = port.nfeAutorizacaoLote(nfeDadosMsg, nfeCabecMsg);
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NFeAutorizacao4().getNFeAutorizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.NfeAutorizacaoLoteResult result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan.hom.NfeDadosMsg();
