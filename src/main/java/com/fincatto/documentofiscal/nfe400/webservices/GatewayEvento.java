@@ -29,7 +29,7 @@ public enum GatewayEvento {
     BA {
         @Override
         public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoBANFE(xml, ambiente) : null;
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoBANFE(xml, ambiente) : SVRS.getTRetEnvEventoSVRSNFCE(xml, ambiente);
         }
 
         @Override
@@ -41,7 +41,7 @@ public enum GatewayEvento {
     GO {
         @Override
         public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : null;
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : getTRetEnvEventoGONFE(xml, ambiente);
         }
 
         @Override
