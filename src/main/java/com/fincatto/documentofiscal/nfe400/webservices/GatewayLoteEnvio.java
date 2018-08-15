@@ -50,6 +50,17 @@ public enum GatewayLoteEnvio {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.MA};
         }
     },
+    PE {
+        @Override
+        public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? null : SVRS.getTRetEnviNFeSVRSNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PE};
+        }
+    },
     PR {
         @Override
         public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {

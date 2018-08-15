@@ -61,6 +61,18 @@ public enum GatewayEvento {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.MA};
         }
     },
+    PE {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? null : SVRS.getTRetEnvEvento(modelo, xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PE};
+        }
+
+    },
     PR {
         @Override
         public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
