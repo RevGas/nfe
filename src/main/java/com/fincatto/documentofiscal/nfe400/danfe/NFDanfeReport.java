@@ -58,8 +58,8 @@ public class NFDanfeReport {
 		return toPDF(createJasperPrintNFe(logoEmpresa, marcaDagua));
 	}
 
-	public byte[] gerarDanfeNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, NFCePagamento... pags) throws Exception {
-		return toPDF(createJasperPrintNFCe(informacoesComplementares, mostrarMsgFinalizacao, pags));
+	public byte[] gerarDanfeNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, List<NFCePagamento> pgtos) throws Exception {
+		return toPDF(createJasperPrintNFCe(informacoesComplementares, mostrarMsgFinalizacao, pgtos));
 	}
 
     private static byte[] toPDF(JasperPrint print) throws JRException {
@@ -93,7 +93,7 @@ public class NFDanfeReport {
         }
     }
     
-    public JasperPrint createJasperPrintNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, NFCePagamento... pags) 
+    public JasperPrint createJasperPrintNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, List<NFCePagamento> pgtos)
     		throws IOException, WriterException, JRException {
     	if (!DFModelo.NFCE.equals(nota.getNota().getInfo().getIdentificacao().getModelo())) {
 			throw new IllegalStateException("Nao e possivel gerar DANFe NFCe de uma NFe");
@@ -104,7 +104,7 @@ public class NFDanfeReport {
     		 InputStream subPagamentos = NFDanfeReport.class.getClassLoader().getResourceAsStream("danfe/DANFE_NFCE_PAGAMENTOS.jasper")) {
     		
     		boolean homologacao = nota.getNota().getInfo().getIdentificacao().getAmbiente().equals(DFAmbiente.HOMOLOGACAO);
-    		List<NFCePagamento> pgtos = Arrays.asList(pags);
+
     		
     		Map<String, Object> parameters = new HashMap<>();
     		parameters.put("SUBREL", subItens);
