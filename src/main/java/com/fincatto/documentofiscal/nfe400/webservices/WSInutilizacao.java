@@ -1,18 +1,24 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import java.math.BigDecimal;
+import br.inf.portalfiscal.nfe.ObjectFactory;
+import br.inf.portalfiscal.nfe.TInutNFe;
+import br.inf.portalfiscal.nfe.TRetInutNFe;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe400.classes.NFAutorizador400;
-import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFEnviaEventoInutilizacao;
-import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFEventoInutilizacaoDados;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
+import java.io.StringReader;
+import java.io.StringWriter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import org.apache.commons.lang3.StringUtils;
 
 class WSInutilizacao {
 
@@ -31,48 +37,65 @@ class WSInutilizacao {
         return null;
     }
 
-    NFRetornoEventoInutilizacao inutilizaNota(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) throws Exception {
-        final String inutilizacaoXML = this.geraDadosInutilizacao(anoInutilizacaoNumeracao, cnpjEmitente, serie, numeroInicial, numeroFinal, justificativa, modelo).toString();
-        final String inutilizacaoXMLAssinado = new AssinaturaDigital(this.config).assinarDocumento(inutilizacaoXML);
-//        final OMElement omElementResult = this.efetuaInutilizacao(inutilizacaoXMLAssinado, modelo);
-//        return new DFPersister().read(NFRetornoEventoInutilizacao.class, omElementResult.toString());
-        return null;
+    TRetInutNFe inutilizaNota(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) throws Exception {
+        final TInutNFe inutNFe = this.geraDadosInutilizacao(anoInutilizacaoNumeracao, cnpjEmitente, serie, numeroInicial, numeroFinal, justificativa, modelo);
+        final String inutilizacaoXMLAssinado = new AssinaturaDigital(this.config).assinarDocumento(getXML(inutNFe));
+        final TRetInutNFe retorno = this.efetuaInutilizacao(inutilizacaoXMLAssinado, modelo);
+        return retorno;
     }
 
-    private String efetuaInutilizacao(final String inutilizacaoXMLAssinado, final DFModelo modelo) throws Exception {
-//        final NFeInutilizacao4Stub.NfeDadosMsg dados = new NFeInutilizacao4Stub.NfeDadosMsg();
-//        final OMElement omElement = AXIOMUtil.stringToOM(inutilizacaoXMLAssinado);
-//        WSInutilizacao.LOGGER.debug(omElement.toString());
-//        dados.setExtraElement(omElement);
+    private TRetInutNFe efetuaInutilizacao(final String xml, final DFModelo modelo) throws Exception {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
 
-        final NFAutorizador400 autorizador = NFAutorizador400.valueOfCodigoUF(this.config.getCUF());
-        final String urlWebService = DFModelo.NFE.equals(modelo) ? autorizador.getNfeInutilizacao(this.config.getAmbiente()) : autorizador.getNfceInutilizacao(this.config.getAmbiente());
-//        final NfeResultMsg nf4Result = new NFeInutilizacao4Stub(urlWebService).nfeInutilizacaoNF(dados);
-//        final OMElement dadosRetorno = nf4Result.getExtraElement();
-//        WSInutilizacao.LOGGER.debug(dadosRetorno.toString());
-//        return dadosRetorno;
-        return null;
+        Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
+        StringReader reader = new StringReader(xml);
+        JAXBElement<TInutNFe> tInutNFe = (JAXBElement<TInutNFe>) jaxbUnmarshaller.unmarshal(reader);
+        
+        final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeDadosMsg();
+        dadosMsg.getContent().add(tInutNFe);
+
+        br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NFeInutilizacao4().getNFeInutilizacao4Soap();
+        br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+        return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
     }
 
-    private NFEnviaEventoInutilizacao geraDadosInutilizacao(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) {
-        final NFEnviaEventoInutilizacao inutilizacao = new NFEnviaEventoInutilizacao();
-        final NFEventoInutilizacaoDados dados = new NFEventoInutilizacaoDados();
-        dados.setAmbiente(this.config.getAmbiente());
-        dados.setAno(anoInutilizacaoNumeracao);
-        dados.setCnpj(cnpjEmitente);
-        dados.setJustificativa(justificativa);
-        dados.setModeloDocumentoFiscal(modelo.getCodigo());
-        dados.setNomeServico(WSInutilizacao.NOME_SERVICO);
-        dados.setNumeroNFInicial(numeroInicial);
-        dados.setNumeroNFFinal(numeroFinal);
-        dados.setSerie(serie);
-        dados.setUf(this.config.getCUF());
+    private TInutNFe geraDadosInutilizacao(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) {
+        TInutNFe.InfInut infInut = new TInutNFe.InfInut();
+        infInut.setAno(String.valueOf(anoInutilizacaoNumeracao));
+        infInut.setCNPJ(cnpjEmitente);
+        infInut.setCUF(this.config.getCUF().getCodigoIbge());
         final String numeroInicialTamanhoMaximo = StringUtils.leftPad(numeroInicial, 9, "0");
         final String numeroFinalTamanhoMaximo = StringUtils.leftPad(numeroFinal, 9, "0");
         final String serieTamanhoMaximo = StringUtils.leftPad(serie, 3, "0");
-        dados.setIdentificador("ID" + this.config.getCUF().getCodigoIbge() + String.valueOf(anoInutilizacaoNumeracao) + cnpjEmitente + modelo.getCodigo() + serieTamanhoMaximo + numeroInicialTamanhoMaximo + numeroFinalTamanhoMaximo);
-        inutilizacao.setVersao(new BigDecimal(WSInutilizacao.VERSAO_SERVICO));
-        inutilizacao.setDados(dados);
-        return inutilizacao;
+        infInut.setId("ID" + this.config.getCUF().getCodigoIbge() + String.valueOf(anoInutilizacaoNumeracao) + cnpjEmitente + modelo.getCodigo() + serieTamanhoMaximo + numeroInicialTamanhoMaximo + numeroFinalTamanhoMaximo);
+        infInut.setMod(modelo.getCodigo());
+        infInut.setNNFFin(numeroFinal);
+        infInut.setNNFIni(numeroInicial);
+        infInut.setSerie(serie);
+        infInut.setTpAmb(this.config.getAmbiente().getCodigo());
+        infInut.setXJust(justificativa);
+        infInut.setXServ(WSInutilizacao.NOME_SERVICO);
+        TInutNFe inutNFe = new TInutNFe();
+        inutNFe.setInfInut(infInut);
+        inutNFe.setVersao(WSInutilizacao.VERSAO_SERVICO);
+        return inutNFe;
     }
+    
+    private String getXML(TInutNFe tInutNFe) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(TInutNFe.class);
+        Marshaller marshaller = context.createMarshaller();
+
+        JAXBElement<TInutNFe> element = new ObjectFactory().createInutNFe(tInutNFe);
+        
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(element, stringWriter);
+        
+        String xml = stringWriter.toString();
+        
+        xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
+                
+        return xml;
+    }
+    
 }
