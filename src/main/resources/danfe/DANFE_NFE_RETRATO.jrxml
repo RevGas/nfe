@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-07-07T15:24:12 -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nfe_danfe_retrato" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="25" bottomMargin="20" uuid="e21b08e1-6159-4fbb-98e9-6837ade5c1f3">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
@@ -424,6 +423,12 @@
 	</field>
 	<field name="NFETpAmb" class="java.lang.String">
 		<fieldDescription><![CDATA[/nfeProc/NFe/infNFe/ide/tpAmb]]></fieldDescription>
+	</field>
+	<field name="ProdCSTST" class="java.lang.String">
+		<fieldDescription><![CDATA[imposto/ICMS/ICMSST/CST]]></fieldDescription>
+	</field>
+	<field name="ProdOrigST" class="java.lang.String">
+		<fieldDescription><![CDATA[imposto/ICMS/ICMSST/orig]]></fieldDescription>
 	</field>
 	<group name="destinatario">
 		<groupExpression><![CDATA[$F{Destinatario}]]></groupExpression>
@@ -1775,6 +1780,7 @@ $F{ChaveNFe}.substring(3, $F{ChaveNFe}.length()).substring(40, 44)]]></textField
 ($F{ProdCST60} != null) ? $F{ProdOrig60}+$F{ProdCST60} :
 ($F{ProdCST70} != null) ? $F{ProdOrig70}+$F{ProdCST70} :
 ($F{ProdCST90} != null) ? $F{ProdOrig90}+$F{ProdCST90} :
+($F{ProdCSTST} != null) ? $F{ProdOrigST}+$F{ProdCSTST} :
 ($F{ProdCSOSN101} != null) ? $F{ProdOrig101}+$F{ProdCSOSN101} :
 ($F{ProdCSOSN102} != null) ? $F{ProdOrig102}+$F{ProdCSOSN102} :
 ($F{ProdCSOSN201} != null) ? $F{ProdOrig201}+$F{ProdCSOSN201} :

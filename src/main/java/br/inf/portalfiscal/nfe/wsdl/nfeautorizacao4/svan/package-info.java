@@ -1,2 +1,2 @@
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NfeAutorizacao", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeAutorizacao4")
 package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.svan;
