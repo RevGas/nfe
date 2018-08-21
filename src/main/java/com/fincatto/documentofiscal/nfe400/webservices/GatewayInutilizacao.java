@@ -70,7 +70,13 @@ public enum GatewayInutilizacao {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             return null;
         } else {
-            return null;
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NFeInutilizacao4().getNFeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
         }
     }
 
