@@ -4,6 +4,7 @@ import br.inf.portalfiscal.nfe.ObjectFactory;
 import br.inf.portalfiscal.nfe.TInutNFe;
 import br.inf.portalfiscal.nfe.TRetInutNFe;
 
+import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,19 +46,7 @@ class WSInutilizacao {
     }
 
     private TRetInutNFe efetuaInutilizacao(final String xml, final DFModelo modelo) throws Exception {
-        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
-
-        Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
-        StringReader reader = new StringReader(xml);
-        JAXBElement<TInutNFe> tInutNFe = (JAXBElement<TInutNFe>) jaxbUnmarshaller.unmarshal(reader);
-        
-        final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeDadosMsg();
-        dadosMsg.getContent().add(tInutNFe);
-
-        br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NFeInutilizacao4().getNFeInutilizacao4Soap();
-        br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
-
-        return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayInutilizacao.valueOfCodigoUF(this.config.getCUF()).getTRetInutNFe(modelo, xml, this.config.getAmbiente());
     }
 
     private TInutNFe geraDadosInutilizacao(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) {
