@@ -1,4 +1,3 @@
-
 package br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom;
 
 import javax.xml.bind.JAXBElement;
