@@ -1,6 +1,7 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
 import br.inf.portalfiscal.nfe.TInutNFe;
+import br.inf.portalfiscal.nfe.TRetEnvEvento;
 import br.inf.portalfiscal.nfe.TRetInutNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
@@ -15,6 +16,18 @@ import java.util.Arrays;
 
 public enum GatewayInutilizacao {
 
+    BA {
+        @Override
+        public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetInutNFeBANFE(xml, ambiente) : null;
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.BA};
+        }
+
+    },
     SVRS {
         @Override
         public TRetInutNFe getTRetInutNFe(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
@@ -81,6 +94,20 @@ public enum GatewayInutilizacao {
 
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NFeInutilizacao4().getNFeInutilizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+
+    public TRetInutNFe getTRetInutNFeBANFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            return null;
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.hom.NFeInutilizacao4().getNFeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
             return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
         }
