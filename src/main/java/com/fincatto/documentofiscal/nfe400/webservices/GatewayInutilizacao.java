@@ -101,7 +101,13 @@ public enum GatewayInutilizacao {
 
     public TRetInutNFe getTRetInutNFeBANFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
-            return null;
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.NFeInutilizacao4().getNFeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.hom.NfeDadosMsg();
             dadosMsg.getContent().add(getTInutNFe(xml));
