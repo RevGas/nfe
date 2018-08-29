@@ -1,9 +1,6 @@
 package br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.ba.hom;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -23,7 +20,6 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _NfeResultMsg_QNAME = new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeInutilizacao4", "nfeResultMsg");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4
@@ -46,15 +42,6 @@ public class ObjectFactory {
      */
     public NfeResultMsg createNfeResultMsg() {
         return new NfeResultMsg();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link NfeResultMsg }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeInutilizacao4", name = "nfeResultMsg")
-    public JAXBElement<NfeResultMsg> createNfeResultMsg(NfeResultMsg value) {
-        return new JAXBElement<NfeResultMsg>(_NfeResultMsg_QNAME, NfeResultMsg.class, null, value);
     }
 
 }
