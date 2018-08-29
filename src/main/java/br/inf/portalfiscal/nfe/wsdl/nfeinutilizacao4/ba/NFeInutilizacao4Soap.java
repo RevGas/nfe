@@ -23,6 +23,7 @@ public interface NFeInutilizacao4Soap {
 
 
     /**
+     * Serviço destinado à inutilização de números de NF-e.
      * 
      * @param nfeDadosMsg
      * @return

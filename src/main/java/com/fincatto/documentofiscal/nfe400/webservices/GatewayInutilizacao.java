@@ -19,7 +19,7 @@ public enum GatewayInutilizacao {
     BA {
         @Override
         public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetInutNFeBANFE(xml, ambiente) : null;
+            return DFModelo.NFE.equals(modelo) ? getTRetInutNFeBANFE(xml, ambiente) : SVRS.getTRetInutNFeSVRSNFCE(xml, ambiente);
         }
 
         @Override
