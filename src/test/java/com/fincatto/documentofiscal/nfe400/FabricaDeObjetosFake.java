@@ -1,5 +1,17 @@
 package com.fincatto.documentofiscal.nfe400;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFPais;
@@ -28,17 +40,6 @@ import com.fincatto.documentofiscal.nfe400.classes.nota.assinatura.NFSignature;
 import com.fincatto.documentofiscal.nfe400.classes.nota.assinatura.NFSignedInfo;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsulta;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
-import org.apache.commons.lang3.StringUtils;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class FabricaDeObjetosFake {
 
@@ -241,7 +242,7 @@ public class FabricaDeObjetosFake {
         formaPagamento.setIndicadorFormaPagamento(NFIndicadorFormaPagamento.A_PRAZO);
         formaPagamento.setCartao(FabricaDeObjetosFake.getNFNotaInfoCartao());
         formaPagamento.setValorPagamento(new BigDecimal("999999999999.99"));
-        formaPagamento.setFormaPagamentoMoeda(NFFormaPagamentoMoeda.CARTAO_CREDITO);
+        formaPagamento.setMeioPagamento(NFMeioPagamento.CARTAO_CREDITO);
         return formaPagamento;
     }
 
@@ -520,6 +521,41 @@ public class FabricaDeObjetosFake {
         return nota;
     }
 
+    public static NFNota getNotaQRCodeEmissaoNormal20() {
+        // CAMPOS CONTIDOS NO EXEMPLO DO MANUAL DA RECEITA PARA GERAÇÃO DO QRCODE
+        final NFNota nota = new NFNota();
+        nota.setInfo(new NFNotaInfo());
+        nota.getInfo().setIdentificador("28170800156225000131650110000151341562040824");
+
+        nota.getInfo().setIdentificacao(new NFNotaInfoIdentificacao());
+        nota.getInfo().getIdentificacao().setUf(DFUnidadeFederativa.GO);
+
+        return nota;
+    }
+
+    public static NFNota getNotaQRCodeContingenciaOffline20() {
+        // CAMPOS CONTIDOS NO EXEMPLO DO MANUAL DA RECEITA PARA GERAÇÃO DO QRCODE
+        final NFNota nota = new NFNota();
+        nota.setInfo(new NFNotaInfo());
+        nota.getInfo().setIdentificador("28170800156225000131650110000151349562040824");
+
+        nota.getInfo().setIdentificacao(new NFNotaInfoIdentificacao());
+        nota.getInfo().getIdentificacao().setDataHoraEmissao(ZonedDateTime.parse("2014-03-02T10:55:33-03:00"));
+        nota.getInfo().getIdentificacao().setUf(DFUnidadeFederativa.GO);
+
+        nota.getInfo().setTotal(new NFNotaInfoTotal());
+        nota.getInfo().getTotal().setIcmsTotal(new NFNotaInfoICMSTotal());
+        nota.getInfo().getTotal().getIcmsTotal().getValorTotalNFe();
+        nota.getInfo().getTotal().getIcmsTotal().setValorTotalNFe(new BigDecimal("60.90"));
+
+        nota.setAssinatura(new NFSignature());
+        nota.getAssinatura().setSignedInfo(new NFSignedInfo());
+        nota.getAssinatura().getSignedInfo().setReference(new NFReference());
+        nota.getAssinatura().getSignedInfo().getReference().setDigestValue("yzGYhUx1/XYYzksWB+fPR3Qc50c=");
+
+        return nota;
+    }
+
     public static NFNotaInfoTransporte getNFNotaInfoTransporte() {
         final NFNotaInfoTransporte transporte = new NFNotaInfoTransporte();
         transporte.setIcmsTransporte(FabricaDeObjetosFake.getNFNotaInfoRetencaoICMSTransporte());
@@ -654,7 +690,7 @@ public class FabricaDeObjetosFake {
     public static NFNotaInfoCobranca getNFNotaInfoCobranca() {
         final NFNotaInfoCobranca cobranca = new NFNotaInfoCobranca();
         cobranca.setFatura(FabricaDeObjetosFake.getNFNotaInfoFatura());
-        cobranca.setDuplicatas(Collections.singletonList(FabricaDeObjetosFake.getNFNotaInfoDuplicata()));
+        cobranca.setParcelas(Collections.singletonList(FabricaDeObjetosFake.getNFNotaInfoDuplicata()));
         return cobranca;
     }
 
@@ -1197,11 +1233,11 @@ public class FabricaDeObjetosFake {
         return fatura;
     }
 
-    public static NFNotaInfoDuplicata getNFNotaInfoDuplicata() {
-        final NFNotaInfoDuplicata duplicata = new NFNotaInfoDuplicata();
+    public static NFNotaInfoParcela getNFNotaInfoDuplicata() {
+        final NFNotaInfoParcela duplicata = new NFNotaInfoParcela();
         duplicata.setDataVencimento(LocalDate.of(2014, 7, 10));
-        duplicata.setNumeroDuplicata("TQ49cyOL5KtBAUTF0LShhThpUbtCK1fQH1PH4AMcKzMNLxyDbV957IRhWK8Z");
-        duplicata.setValorDuplicata(new BigDecimal("999999.99"));
+        duplicata.setNumeroParcela("TQ49cyOL5KtBAUTF0LShhThpUbtCK1fQH1PH4AMcKzMNLxyDbV957IRhWK8Z");
+        duplicata.setValorParcela(new BigDecimal("999999.99"));
         return duplicata;
     }
 
