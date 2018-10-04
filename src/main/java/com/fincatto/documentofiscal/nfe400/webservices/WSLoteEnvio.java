@@ -5,13 +5,16 @@ import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
+import com.fincatto.documentofiscal.nfe.NFTipoEmissao;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe400.classes.nota.NFNota;
 import com.fincatto.documentofiscal.nfe400.classes.nota.NFNotaInfoSuplementar;
 import com.fincatto.documentofiscal.nfe400.parsers.DFParser;
 import com.fincatto.documentofiscal.nfe400.utils.NFGeraChave;
-import com.fincatto.documentofiscal.nfe400.utils.NFGeraQRCode;
+import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCode20;
+import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeContingenciaOffline20;
+import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeEmissaoNormal20;
 import com.fincatto.documentofiscal.validadores.xsd.XMLValidador;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -67,7 +70,8 @@ class WSLoteEnvio {
                     qtdNF++;
                     break;
                 case NFCE:
-                    final NFGeraQRCode geraQRCode = new NFGeraQRCode(nota, this.config);
+                    NFGeraQRCode20 geraQRCode = getNfGeraQRCode20(nota);
+
                     nota.setInfoSuplementar(new NFNotaInfoSuplementar());
                     nota.getInfoSuplementar().setUrlConsultaChaveAcesso(geraQRCode.urlConsultaChaveAcesso());
                     nota.getInfoSuplementar().setQrCode(geraQRCode.getQRCode());
@@ -86,6 +90,7 @@ class WSLoteEnvio {
 
     private TRetEnviNFe comunicaLote(final String loteAssinadoXml, final DFModelo modelo, final DFAmbiente ambiente) throws Exception {
         //valida o lote assinado, para verificar se o xsd foi satisfeito, antes de comunicar com a sefaz
+
         XMLValidador.validaLote400(loteAssinadoXml);
 
         return getTRetEnviNFe(modelo, this.config.getCUF(), loteAssinadoXml, ambiente);
@@ -94,4 +99,19 @@ class WSLoteEnvio {
     private TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final DFUnidadeFederativa uf, String loteAssinadoXml, DFAmbiente ambiente) throws MalformedURLException, JAXBException, Exception {
         return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfCodigoUF(uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
     }
+    
+    private NFGeraQRCode20 getNfGeraQRCode20(NFNota nota) {
+
+        NFGeraQRCode20 geraQRCode;
+
+        if (NFTipoEmissao.EMISSAO_NORMAL.equals(nota.getInfo().getIdentificacao().getTipoEmissao())) {
+            geraQRCode = new NFGeraQRCodeEmissaoNormal20(nota, this.config);
+        } else if (NFTipoEmissao.CONTIGENCIA_OFFLINE.equals(nota.getInfo().getIdentificacao().getTipoEmissao())){
+            geraQRCode = new NFGeraQRCodeContingenciaOffline20(nota, this.config);
+        }else {
+            throw new IllegalArgumentException("QRCode 2.0 Tipo Emissao não implementado: " + nota.getInfo().getIdentificacao().getTipoEmissao().getDescricao() );
+        }
+        return geraQRCode;
+    }
+    
 }

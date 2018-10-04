@@ -1,6 +1,6 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import java.rmi.RemoteException;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ class WSConsultaCadastro {
         return null;
     }
 
-    private String efetuaConsulta(final DFUnidadeFederativa uf, final String omElementConsulta) throws RemoteException {
+    private String efetuaConsulta(final DFUnidadeFederativa uf, final String omElementConsulta) throws Exception {
 
         final NFAutorizador400 autorizador = NFAutorizador400.valueOfCodigoUF(uf);
         if (autorizador == null) {
@@ -45,11 +45,26 @@ class WSConsultaCadastro {
         final String url = autorizador.getConsultaCadastro(this.config.getAmbiente());
         WSConsultaCadastro.LOG.debug(String.format("Endpoint: %s", url));
 
-//        final NfeDadosMsg nfeDadosMsg0 = new NfeDadosMsg();
-//        nfeDadosMsg0.setExtraElement(omElementConsulta);
+        // estados que ainda nao possuem versao 4
+        if (Arrays.asList(DFUnidadeFederativa.AM, DFUnidadeFederativa.MG, DFUnidadeFederativa.PE).contains(uf)) {
+//            final CadConsultaCadastro2Stub.NfeCabecMsg cabec = new NfeCabecMsg();
+//            cabec.setCUF(uf.getCodigoIbge());
+//            cabec.setVersaoDados(WSConsultaCadastro.VERSAO_SERVICO);
 
-//        return new CadConsultaCadastro4Stub(url).consultaCadastro(nfeDadosMsg0).getExtraElement();
-        return null;
+//            final NfeCabecMsgE cabecE = new NfeCabecMsgE();
+//            cabecE.setNfeCabecMsg(cabec);
+
+//            final com.fincatto.documentofiscal.nfe310.webservices.gerado.CadConsultaCadastro2Stub.NfeDadosMsg nfeDadosMsg = new com.fincatto.documentofiscal.nfe310.webservices.gerado.CadConsultaCadastro2Stub.NfeDadosMsg();
+//            nfeDadosMsg.setExtraElement(omElementConsulta);
+//            return new CadConsultaCadastro2Stub(url).consultaCadastro2(nfeDadosMsg, cabecE).getExtraElement();
+            return null;
+        } else {
+//            final NfeDadosMsg nfeDadosMsg_type0 = new NfeDadosMsg();
+//            nfeDadosMsg_type0.setExtraElement(omElementConsulta);
+//            return new CadConsultaCadastro4Stub(url).consultaCadastro(nfeDadosMsg_type0).getExtraElement();
+            return null;
+        }
+
     }
 
     private NFConsultaCadastro getDadosConsulta(final String cnpj, final DFUnidadeFederativa uf) {
