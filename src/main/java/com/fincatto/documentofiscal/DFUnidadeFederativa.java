@@ -24,7 +24,7 @@ public enum DFUnidadeFederativa {
             , "www.sefaz.go.gov.br/nfce/consulta", "www.sefaz.go.gov.br/nfce/consulta"),
     ES("ES", "Esp\u00EDrito Santo", "32", "http://homologacao.sefaz.es.gov.br/ConsultaNFCe/qrcode.aspx", "http://app.sefaz.es.gov.br/ConsultaNFCe/qrcode.aspx"
             , "www.sefaz.es.gov.br/nfce/consulta", "www.sefaz.es.gov.br/nfce/consulta"),
-    MA("MA", "Maranh\u00E3o", "21", "http://www.hom.nfce.sefaz.ma.gov.br/portal/consultarNFCe.jsp", "http://www.nfce.sefaz.ma.gov.br/portal/consultaNFe.do?method=preFilterCupom&"
+    MA("MA", "Maranh\u00E3o", "21", "http://homologacao.sefaz.ma.gov.br/portal/consultarNFCe.jsp", "http://nfce.sefaz.ma.gov.br/portal/consultarNFCe.jsp"
             , "www.sefaz.ma.gov.br/nfce/consulta", "www.sefaz.ma.gov.br/nfce/consulta"),
     MT("MT", "Mato Grosso", "51", "http://homologacao.sefaz.mt.gov.br/nfce/consultanfce", "http://www.sefaz.mt.gov.br/nfce/consultanfce"
             , "http://homologacao.sefaz.mt.gov.br/nfce/consultanfce", "www.sefaz.mt.gov.br/nfce/consultanfce"),
