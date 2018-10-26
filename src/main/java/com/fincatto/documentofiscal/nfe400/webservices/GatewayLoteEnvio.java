@@ -113,7 +113,12 @@ public enum GatewayLoteEnvio {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PI, DFUnidadeFederativa.AP, DFUnidadeFederativa.SE, DFUnidadeFederativa.ES};
+            return new DFUnidadeFederativa[]{
+                DFUnidadeFederativa.AC, DFUnidadeFederativa.AL, DFUnidadeFederativa.AP, DFUnidadeFederativa.DF,
+                DFUnidadeFederativa.ES, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI, DFUnidadeFederativa.RJ,
+                DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR, DFUnidadeFederativa.SC,
+                DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
+            };
         }
     };
 
@@ -147,7 +152,7 @@ public enum GatewayLoteEnvio {
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         }
     }
-    
+
     public TRetEnviNFe getTRetEnviNFeGONFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.NfeDadosMsg();
@@ -167,7 +172,7 @@ public enum GatewayLoteEnvio {
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         }
     }
-    
+
     public TRetEnviNFe getTRetEnviNFePRNFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NfeDadosMsg();

@@ -47,7 +47,7 @@ public enum GatewayLoteConsulta {
         }
         throw new IllegalStateException(String.format("N\u00e3o existe metodo de envio para a UF %s", uf.getCodigo()));
     }
-    
+
     public TRetConsReciNFe getTRetConsReciNFeBANFE(final String versao, final String numeroRecibo, final DFAmbiente ambiente) throws JAXBException, Exception {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.ba.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.ba.NfeDadosMsg();
@@ -65,7 +65,7 @@ public enum GatewayLoteConsulta {
             return ((JAXBElement<TRetConsReciNFe>) result.getContent().get(0)).getValue();
         }
     }
-    
+
     public TRetConsReciNFe getTRetConsReciNFeSPNFE(final String versao, final String numeroRecibo, final DFAmbiente ambiente) throws JAXBException, Exception {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.sp.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.sp.NfeDadosMsg();
@@ -89,9 +89,9 @@ public enum GatewayLoteConsulta {
         tConsReciNFe.setNRec(numeroRecibo);
         tConsReciNFe.setTpAmb(ambiente.getCodigo());
         tConsReciNFe.setVersao(versao);
-        
+
         JAXBElement<TConsReciNFe> element = (JAXBElement<TConsReciNFe>) new ObjectFactory().createConsReciNFe(tConsReciNFe);
-        
+
         return element;
     }
 
