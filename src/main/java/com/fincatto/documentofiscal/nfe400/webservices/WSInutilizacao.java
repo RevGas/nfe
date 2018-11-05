@@ -4,7 +4,6 @@ import br.inf.portalfiscal.nfe.ObjectFactory;
 import br.inf.portalfiscal.nfe.TInutNFe;
 import br.inf.portalfiscal.nfe.TRetInutNFe;
 
-import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,13 +11,11 @@ import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
-import java.io.StringReader;
 import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import org.apache.commons.lang3.StringUtils;
 
 class WSInutilizacao {
@@ -70,21 +67,21 @@ class WSInutilizacao {
         inutNFe.setVersao(WSInutilizacao.VERSAO_SERVICO);
         return inutNFe;
     }
-    
+
     private String getXML(TInutNFe tInutNFe) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(TInutNFe.class);
         Marshaller marshaller = context.createMarshaller();
 
         JAXBElement<TInutNFe> element = new ObjectFactory().createInutNFe(tInutNFe);
-        
+
         StringWriter stringWriter = new StringWriter();
         marshaller.marshal(element, stringWriter);
-        
+
         String xml = stringWriter.toString();
-        
+
         xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
-                
+
         return xml;
     }
-    
+
 }

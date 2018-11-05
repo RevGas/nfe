@@ -26,6 +26,7 @@ import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatar
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
+import java.security.GeneralSecurityException;
 import javax.net.ssl.HttpsURLConnection;
 
 public class WSFacade {
@@ -41,7 +42,7 @@ public class WSFacade {
     private final WSManifestacaoDestinatario wSManifestacaoDestinatario;
 //    private final WSDistribuicaoNFe wSDistribuicaoNFe;
 
-    public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
+    public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
         HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
 
         HttpsURLConnection.setFollowRedirects(true);

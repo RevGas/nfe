@@ -12,6 +12,7 @@ import com.fincatto.documentofiscal.mdfe3.classes.nota.consulta.MDFeNotaConsulta
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeRetorno;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -31,7 +32,7 @@ public class WSFacade {
     private final WSConsultaNaoEncerrados wsConsultaNaoEncerrados;
 
 //	private final WSRecepcaoLoteRetorno wsRecepcaoLoteRetorno;
-    public WSFacade(final MDFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
+    public WSFacade(final MDFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
         HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
         this.wsStatusConsulta = new WSStatusConsulta(config);
         this.wsRecepcaoLote = new WSRecepcaoLote(config);

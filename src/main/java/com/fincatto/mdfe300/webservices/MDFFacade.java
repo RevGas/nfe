@@ -20,6 +20,7 @@ import javax.net.ssl.HttpsURLConnection;
 import com.fincatto.mdfe300.MDFeConfig;
 import com.fincatto.mdfe300.classes.RetornoEnvioMDFe;
 import java.net.MalformedURLException;
+import java.security.GeneralSecurityException;
 
 public class MDFFacade {
 
@@ -30,7 +31,7 @@ public class MDFFacade {
     private final WSConsultaNaoEncerrados wsConsultaNaoEncerradosMDF;
     private final WSRecepcaoEvento wsRecepcaoEventoMDF;
 
-    public MDFFacade(final MDFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
+    public MDFFacade(final MDFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
     	HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
 
         // inicia os servicos disponíveis

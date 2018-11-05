@@ -28,6 +28,7 @@ import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
+import java.security.GeneralSecurityException;
 
 public class WSFacade {
 
@@ -43,7 +44,7 @@ public class WSFacade {
     private final WSNotaDownload wsNotaDownload;
     private final WSDistribuicaoDocumentoFiscal wsDistribuicaoDocumentoFiscal;
 
-    public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
+    public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
         HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
 
         // inicia os servicos disponíveis

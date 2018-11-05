@@ -28,6 +28,13 @@ public abstract class GeraCadeiaCertificados {
         keyStore.load(null, senha.toCharArray());
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
+            //Para Manifestacao do destinatario
+            final String urlMD = "https://www.nfe.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx?WSDL";
+            if (StringUtils.isNotBlank(urlMD)) {
+                final String host = new URI(urlMD).getHost();
+                GeraCadeiaCertificados.get(keyStore, host);
+            }
+            
             for (final NFAutorizador31 aut : NFAutorizador31.values()) {
                 // Para NFe...
                 final String urlNF = aut.getNfeStatusServico(ambiente);
@@ -43,7 +50,7 @@ public abstract class GeraCadeiaCertificados {
                     GeraCadeiaCertificados.get(keyStore, host);
                 }
             }
-
+            
             for (final NFAutorizador400 aut : NFAutorizador400.values()) {
                 // Para NFe...
                 final String urlNF = aut.getNfeStatusServico(ambiente);
