@@ -44,8 +44,8 @@ class WSEvento {
         return null;
     }
 
-    TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo, final String nSeqEvento) throws Exception {
-        String xml = this.gerarDados(descEvento, tpEvento, chaveAcesso, numeroProtocolo, motivo, nSeqEvento);
+    TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo, final String nSeqEvento, final String cnpj) throws Exception {
+        String xml = this.gerarDados(descEvento, tpEvento, chaveAcesso, numeroProtocolo, motivo, nSeqEvento, cnpj);
         xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
         final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
         return efetua(tpEvento, xmlAssinado, chaveAcesso);
@@ -62,7 +62,7 @@ class WSEvento {
         }
     }
 
-    private String gerarDados(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo, final String nSeqEvento) throws JAXBException, ParserConfigurationException {
+    private String gerarDados(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo, final String nSeqEvento, final String cnpj) throws JAXBException, ParserConfigurationException {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
 
         TEvento.InfEvento.DetEvento detEvento = new TEvento.InfEvento.DetEvento();
@@ -83,7 +83,7 @@ class WSEvento {
         final TEvento.InfEvento infoEvento = new TEvento.InfEvento();
         infoEvento.setTpAmb(this.config.getAmbiente().getCodigo());
         infoEvento.setChNFe(chaveAcesso);
-        infoEvento.setCNPJ(chaveParser.getCnpjEmitente());
+        infoEvento.setCNPJ(cnpj);
         infoEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").format(LocalDateTime.now())); //TODO
         infoEvento.setDhEvento(infoEvento.getDhEvento() + "-03:00");
         infoEvento.setId(String.format("ID%s%s0%s", tpEvento, chaveAcesso, nSeqEvento));
@@ -115,4 +115,5 @@ class WSEvento {
         marshaller.marshal(tEnvEvento, stringWriter);
         return stringWriter.toString();
     }    
+
 }
