@@ -12,7 +12,6 @@ import java.security.cert.CertificateException;
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import br.inf.portalfiscal.nfe.TRetInutNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFProtocoloEventoCartaCorrecao;
 
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFSocketFactory;
@@ -21,7 +20,9 @@ import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.cadastro.NFRetornoConsultaCadastro;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
+import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFProtocoloEventoCartaCorrecao;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
+import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFProtocoloEventoManifestacaoDestinatario;
 import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFTipoEventoManifestacaoDestinatario;
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
@@ -237,6 +238,10 @@ public class WSFacade {
      */
     public NFEnviaEventoRetorno manifestaDestinatarioNota(final String chave, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) throws Exception {
         return this.wSManifestacaoDestinatario.manifestaDestinatarioNota(chave, tipoEvento, motivo, cnpj);
+    }
+    
+    public NFProtocoloEventoManifestacaoDestinatario manifestaDestinatarioNotaProtocolo(final String chave, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) throws Exception {
+        return this.wSManifestacaoDestinatario.manifestaDestinatarioNotaProtocolo(chave, tipoEvento, motivo, cnpj);
     }
 
     /**

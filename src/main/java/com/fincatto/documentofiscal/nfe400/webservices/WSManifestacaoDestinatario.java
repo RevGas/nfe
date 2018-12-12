@@ -5,8 +5,15 @@ import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.NFAutorizador400;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.*;
+import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFEnviaEventoManifestacaoDestinatario;
+import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFEventoManifestacaoDestinatario;
+import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFInfoEventoManifestacaoDestinatario;
+import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFInfoManifestacaoDestinatario;
+import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFProtocoloEventoManifestacaoDestinatario;
+import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFTipoEventoManifestacaoDestinatario;
 import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.persister.DFPersister;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +50,6 @@ public class WSManifestacaoDestinatario {
 //        final OMElement omElementXML = AXIOMUtil.stringToOM(xmlAssinado);
 //        WSManifestacaoDestinatario.LOGGER.debug(omElementXML.toString());
 //        dados.setExtraElement(omElementXML);
-
         final NotaFiscalChaveParser parser = new NotaFiscalChaveParser(chaveAcesso);
         final NFAutorizador400 autorizador = NFAutorizador400.valueOfChaveAcesso(chaveAcesso);
         final String urlWebService = autorizador.getRecepcaoEventoAN(this.config.getAmbiente());
@@ -56,6 +62,28 @@ public class WSManifestacaoDestinatario {
 //        WSManifestacaoDestinatario.LOGGER.debug(omElementResult.toString());
 //        return omElementResult;
         return null;
+    }
+
+    NFProtocoloEventoManifestacaoDestinatario manifestaDestinatarioNotaProtocolo(final String chaveAcesso, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) throws Exception {
+    	String manifestacaoDestinatarioNotaXML = this.gerarDadosManifestacaoDestinatario(chaveAcesso, tipoEvento, motivo, cnpj).toString();
+    	
+    	final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(manifestacaoDestinatarioNotaXML);
+//    	final OMElement omElementResult = this.efetuaManifestacaoDestinatario(xmlAssinado, chaveAcesso);
+    	
+    	NFEnviaEventoManifestacaoDestinatario evento = new DFPersister().read(NFEnviaEventoManifestacaoDestinatario.class, xmlAssinado);
+//    	NFEnviaEventoRetorno retorno = new DFPersister().read(NFEnviaEventoRetorno.class, omElementResult.toString());
+    	
+    	// Excessao se o codigo status do retorno diferente de 128 - Lote de Evento Processado 
+//		if (retorno.getCodigoStatusReposta() != 128) {
+//			throw new RuntimeException("Status: " + retorno.getCodigoStatusReposta() + " - Motivo: " + retorno.getMotivo());
+//		}
+
+    	NFProtocoloEventoManifestacaoDestinatario nfProtocoloEventoManifestacaoDestinatario = new NFProtocoloEventoManifestacaoDestinatario();
+    	nfProtocoloEventoManifestacaoDestinatario.setVersao(evento.getVersao());
+    	nfProtocoloEventoManifestacaoDestinatario.setEvento(evento.getEvento().get(0));
+//    	nfProtocoloEventoManifestacaoDestinatario.setEventoRetorno(retorno.getEventoRetorno().get(0));
+    	
+    	return nfProtocoloEventoManifestacaoDestinatario;
     }
 
     private NFEnviaEventoManifestacaoDestinatario gerarDadosManifestacaoDestinatario(final String chaveAcesso, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) {

@@ -4,7 +4,7 @@ import com.fincatto.documentofiscal.mdfe3.MDFeConfig;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeDetalhamentoEvento;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeEvento;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeInfoEvento;
-import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeRetornoCancelamento;
+import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.MDFeRetorno;
 import com.fincatto.documentofiscal.mdfe3.classes.nota.evento.cancelamento.MDFeEnviaEventoCancelamento;
 import com.fincatto.documentofiscal.mdfe3.classes.parsers.MDFChaveParser;
 
@@ -28,11 +28,11 @@ class WSCancelamento {
         this.config = config;
     }
 
-    MDFeRetornoCancelamento cancelaNotaAssinada(final String chaveAcesso, final String eventoAssinadoXml) throws Exception {
+    MDFeRetorno cancelaNotaAssinada(final String chaveAcesso, final String eventoAssinadoXml) throws Exception {
         throw new UnsupportedOperationException("Nao suportado ainda");
     }
 
-    MDFeRetornoCancelamento cancelaNota(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
+    MDFeRetorno cancelaNota(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
         throw new UnsupportedOperationException("Nao suportado ainda");
     }
 

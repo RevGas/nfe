@@ -39,7 +39,7 @@ public enum DFUnidadeFederativa {
     PR("PR", "Paran\u00E1", "41", "http://www.fazenda.pr.gov.br/nfce/qrcode", "http://www.fazenda.pr.gov.br/nfce/qrcode"
             , "http://www.fazenda.pr.gov.br/nfce/consulta", "http://www.fazenda.pr.gov.br/nfce/consulta"),
     PE("PE", "Pernambuco", "26", "http://nfcehomolog.sefaz.pe.gov.br/nfce-web/consultarNFCe", "http://nfce.sefaz.pe.gov.br/nfce-web/consultarNFCe"
-            , "nfce.sefaz.pe.gov.br/nfce/consultaa", "nfce.sefaz.pe.gov.br/nfce/consulta"),
+            , "http://nfcehomolog.sefaz.pe.gov.br/nfce/consulta", "http://nfce.sefaz.pe.gov.br/nfce/consulta"),
     PI("PI", "Piau\u00ED", "22", "http://webas.sefaz.pi.gov.br/nfceweb-homologacao/consultarNFCe.jsf", "http://webas.sefaz.pi.gov.br/nfceweb/consultarNFCe.jsf"
             , "www.sefaz.pi.gov.br/nfce/consulta", "www.sefaz.pi.gov.br/nfce/consulta"),
     RJ("RJ", "Rio de Janeiro", "33", "http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode", "http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode"
@@ -58,7 +58,7 @@ public enum DFUnidadeFederativa {
     SE("SE", "Sergipe", "28", "http://www.hom.nfe.se.gov.br/portal/consultarNFCe.jsp", "http://www.nfce.se.gov.br/portal/consultarNFCe.jsp"
             , "http://www.hom.nfe.se.gov.br/nfce/consulta", "http://www.nfce.se.gov.br/nfce/consulta"),
     TO("TO", "Tocantins", "17", null, null
-            , "www.sefaz.to.gov.br/nfce/consulta", "www.sefaz.to.gov.br/nfce/consulta"),
+            , "http://homologacao.sefaz.to.gov.br/nfce/consulta.jsf", "http://www.sefaz.to.gov.br/nfce/consulta.jsf"),
     NACIONAL("NC", "Nacional", "90"),
     RFB("RFB", "RFB", "91"),
     EX("EX", "Exterior", "99");
