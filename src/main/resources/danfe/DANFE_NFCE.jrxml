@@ -27,6 +27,13 @@
 	<field name="nota.info.emitente.endereco.complemento" class="java.lang.String"/>
 	<field name="nota.info.emitente.endereco.uf" class="java.lang.String"/>
 	<field name="nota.info.emitente.endereco.telefone" class="java.lang.String"/>
+	<field name="nota.info.destinatario.endereco.uf" class="java.lang.String"/>
+	<field name="nota.info.destinatario.endereco.complemento" class="java.lang.String"/>
+	<field name="nota.info.destinatario.endereco.numero" class="java.lang.String"/>
+	<field name="nota.info.destinatario.endereco.bairro" class="java.lang.String"/>
+	<field name="nota.info.destinatario.endereco.telefone" class="java.lang.String"/>
+	<field name="nota.info.destinatario.endereco.logradouro" class="java.lang.String"/>
+	<field name="nota.info.destinatario.endereco.descricaoMunicipio" class="java.lang.String"/>
 	<field name="nota.info.itens" class="java.util.List"/>
 	<field name="nota.info.total.icmsTotal.valorTotalDesconto" class="java.lang.String"/>
 	<field name="nota.info.total.icmsTotal.valorTotalNFe" class="java.lang.String"/>
@@ -293,10 +300,18 @@ $V{ACRESCIMOS}.signum() < 0 ? "DESCONTOS R$" : "ACRÉSCIMOS R$"]]></textFieldExp
 				</textElement>
 				<textFieldExpression><![CDATA[(($F{nota.info.destinatario.cpf} != null && !$F{nota.info.destinatario.cpf}.isEmpty()) ||
 ($F{nota.info.destinatario.cnpj} != null && !$F{nota.info.destinatario.cnpj}.isEmpty())) ?
-($F{nota.info.emitente.endereco.logradouro} + ", " + $F{nota.info.emitente.endereco.numero} + ", " + $F{nota.info.emitente.endereco.bairro} + ", " +
-$F{nota.info.emitente.endereco.descricaoMunicipio} + " - " + $F{nota.info.emitente.endereco.uf})
+($F{nota.info.destinatario.endereco.logradouro} + ", " + $F{nota.info.destinatario.endereco.numero} + ", " + $F{nota.info.destinatario.endereco.bairro} + ", " +
+$F{nota.info.destinatario.endereco.descricaoMunicipio} + " - " + $F{nota.info.destinatario.endereco.uf})
 : ""]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="50" height="30" uuid="a7655910-303b-4a00-b70f-2160ef0cbf84"/>
+				<textFieldExpression><![CDATA[$F{nota.info.destinatario.endereco.logradouro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-50" y="0" width="50" height="30" uuid="c7a9e923-659f-4d68-ad98-d83b9c5d12e3"/>
+				<text><![CDATA[Field_1]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>
