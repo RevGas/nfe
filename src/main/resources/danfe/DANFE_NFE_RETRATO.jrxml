@@ -1355,7 +1355,7 @@ $P{REPORT_DATA_SOURCE}).dataSource("/nfeProc/NFe/infNFe/cobr/dup")]]></dataSourc
 		<band height="728" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" mode="Transparent" x="0" y="600" width="554" height="120" forecolor="rgba(0, 0, 0, 0.19607843)" uuid="e2e73fec-2a9f-4d7e-8b60-5809348c948c"/>
+				<reportElement positionType="Float" mode="Transparent" x="0" y="560" width="554" height="120" forecolor="rgba(0, 0, 0, 0.19607843)" uuid="e2e73fec-2a9f-4d7e-8b60-5809348c948c"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="50"/>
 				</textElement>
@@ -1888,7 +1888,7 @@ $F{ChaveNFe}.substring(3, $F{ChaveNFe}.length()).substring(40, 44)]]></textField
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="90">
+		<band height="119">
 			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 			<rectangle>
 				<reportElement x="0" y="9" width="555" height="20" uuid="4d323bc7-97c8-466b-bfb4-9ef776c19dc8"/>
@@ -1938,7 +1938,7 @@ $F{ChaveNFe}.substring(3, $F{ChaveNFe}.length()).substring(40, 44)]]></textField
 				<text><![CDATA[CÁLCULO DO ISSQN]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="39" width="555" height="50" uuid="e4ec807d-fa8e-466b-b6fb-9824026916a6"/>
+				<reportElement x="0" y="39" width="555" height="79" uuid="e4ec807d-fa8e-466b-b6fb-9824026916a6"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="0" y="30" width="108" height="9" uuid="a5ecc077-d230-4b31-a222-fc23e632d9da"/>
@@ -1948,7 +1948,7 @@ $F{ChaveNFe}.substring(3, $F{ChaveNFe}.length()).substring(40, 44)]]></textField
 				<text><![CDATA[DADOS ADICIONAIS]]></text>
 			</staticText>
 			<line>
-				<reportElement x="399" y="40" width="1" height="50" uuid="c187a10c-660e-48f0-94d9-6d791ad49993"/>
+				<reportElement x="395" y="39" width="1" height="79" uuid="c187a10c-660e-48f0-94d9-6d791ad49993"/>
 			</line>
 			<staticText>
 				<reportElement x="403" y="41" width="89" height="7" uuid="0b1dc43c-6a23-4da4-9454-fd504662f628"/>
@@ -1958,7 +1958,7 @@ $F{ChaveNFe}.substring(3, $F{ChaveNFe}.length()).substring(40, 44)]]></textField
 				<text><![CDATA[RESERVADO AO FISCO]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="2" y="41" width="393" height="44" uuid="d790d68b-1342-481f-bb5d-87fa2cb3c287"/>
+				<reportElement x="2" y="41" width="393" height="78" uuid="d790d68b-1342-481f-bb5d-87fa2cb3c287"/>
 				<textElement>
 					<font fontName="Times New Roman" size="7"/>
 				</textElement>
