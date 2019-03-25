@@ -1,0 +1,182 @@
+Adicionando o webservice de Consulta cadastro
+
+1 - Criando classes wsdl (Comunicação):
+  1.1 - Utilizar o projeto stubs para gerar as classes de comunicação.
+    1.1.1 - Colocar a URL do webservice no pom:
+      <wsdlUrl>
+        https://cad.svrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro4.asmx?WSDL
+      </wsdlUrl>
+    1.1.2 Fazer o build para gerar as classes
+    1.1.3 Levar classes geradas para o projeto nfe (Fincatto) com o seguinte padrão:
+      br.inf.portalfiscal.nfe.wsdl.cadconsultacadastro4.svrs
+  1.2 - Utilizar o projeto model_nfe para gerar as classes de modelo
+    1.2.1 - Baixar o esquema XML
+      http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=YaiBe2csOmA=
+    1.2.2 - Adicionar path da pasta do esquema XML no pom do projeto
+      <sources>
+        <source>/Users/rafael/Downloads/PL_006v</source>
+      </sources>
+    1.2.3 - Fazer o build para gerar as classes
+    1.2.4 - Levar as classes geradas do modelo para o projeto nfe (Fincatto), utilizando o mesmo pacote
+      br.inf.portalfiscal.nfe.TConsCad
+      br.inf.portalfiscal.nfe.TRetConsCad
+      br.inf.portalfiscal.nfe.TUfCons
+    1.2.5 - Levas as constantes QName da classe br.inf.portalfiscal.nfe.ObjectFactory para a mesma classe no projeto nfe (Fincatto)
+      private final static QName _ConsCad_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "ConsCad");
+      private final static QName _RetConsCad_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "retConsCad");
+    1.2.6 - Levar os métodos da classe br.inf.portalfiscal.nfe.ObjectFactory para a mesma classe no projeto nfe (Fincatto)
+      /**
+       * Create an instance of {@link TRetConsCad }
+       *
+       */
+      public TRetConsCad createTRetConsCad() {
+          return new TRetConsCad();
+      }
+      /**
+       * Create an instance of {@link TRetConsCad.InfCons }
+       *
+       */
+      public TRetConsCad.InfCons createTRetConsCadInfCons() {
+          return new TRetConsCad.InfCons();
+      }
+      /**
+       * Create an instance of {@link TConsCad }
+       *
+       */
+      public TConsCad createTConsCad() {
+          return new TConsCad();
+      }
+      /**
+       * Create an instance of {@link TRetConsCad.InfCons.InfCad }
+       *
+       */
+      public TRetConsCad.InfCons.InfCad createTRetConsCadInfConsInfCad() {
+          return new TRetConsCad.InfCons.InfCad();
+      }
+      /**
+       * Create an instance of {@link TConsCad.InfCons }
+       *
+       */
+      public TConsCad.InfCons createTConsCadInfCons() {
+          return new TConsCad.InfCons();
+      }
+      /**
+       * Create an instance of {@link JAXBElement }{@code <}{@link TConsCad }{@code >}}
+       *
+       */
+      @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe", name = "ConsCad")
+      public JAXBElement<TConsCad> createConsCad(TConsCad value) {
+          return new JAXBElement<TConsCad>(_ConsCad_QNAME, TConsCad.class, null, value);
+      }
+      /**
+       * Create an instance of {@link JAXBElement }{@code <}{@link TRetConsCad }{@code >}}
+       *
+       */
+      @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe", name = "retConsCad")
+      public JAXBElement<TRetConsCad> createRetConsCad(TRetConsCad value) {
+          return new JAXBElement<TRetConsCad>(_RetConsCad_QNAME, TRetConsCad.class, null, value);
+      }
+  1.2.7 - Levar as declarações abaixo do arquivo sun-jaxb.episode para o mesmo arquivo no projeto nfe (Fincatto)
+    <bindings scd="~tns:TRetConsCad">
+      <class ref="br.inf.portalfiscal.nfe.TRetConsCad"/>
+    </bindings>
+    <bindings scd="~tns:TConsCad">
+      <class ref="br.inf.portalfiscal.nfe.TConsCad"/>
+    </bindings>
+    <bindings scd="~tns:TUfCons">
+      <typesafeEnumClass ref="br.inf.portalfiscal.nfe.TUfCons"/>
+    </bindings>
+  1.3 - Ajustes no projeto nfe (Fincatto)
+    1.3.1 - Alterar a classe br.inf.portalfiscal.nfe.wsdl.cadconsultacadastro4.svrs.CadConsultaCadastro4Soap
+      Adicionando essa outra anotação: br.inf.portalfiscal.nfe.ObjectFactory.class
+    1.3.2 - Adicionar handler no pacote de consumo do webservice
+      1.3.2.1 - Adicionar o arquivo: handler-nfeconsultacadastro.xml no pacote do webservice (br.inf.portalfiscal.nfe.wsdl.cadconsultacadastro4.svrs)
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <javaee:handler-chains
+         xmlns:javaee="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <javaee:handler-chain>
+        <javaee:handler>
+          <javaee:handler-class>br.inf.portalfiscal.nfe.wsdl.cadconsultacadastro4.svrs.SOAPHandlerNFeConsultaCadastro</javaee:handler-class>
+        </javaee:handler>
+        </javaee:handler-chain>
+        </javaee:handler-chains>
+      1.3.2.2 - Adicionar classe br.inf.portalfiscal.nfe.wsdl.cadconsultacadastro4.svrs.SOAPHandlerNFeConsultaCadastro ao pacote
+        public class SOAPHandlerNFeConsultaCadastro implements SOAPHandler<SOAPMessageContext> {
+          @Override
+          public Set<QName> getHeaders() {
+              return null;
+          }
+
+          @Override
+          public boolean handleMessage(SOAPMessageContext context) {
+              if ((boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)) {
+                  try {
+                      SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
+                      SOAPBody body = msg.getBody();
+
+                      SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/nfe");
+                      SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.w3.org/2000/09/xmldsig#");
+
+                      SOAPHandlerUtil.getNamespaces(body);
+                      SOAPHandlerUtil.forEachNode(body.getFirstChild());
+                  } catch (SOAPException ex) {
+                      Logger.getLogger(SOAPHandler.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+              }
+              return true;
+          }
+
+          @Override
+          public boolean handleFault(SOAPMessageContext context) {
+              return true;
+          }
+
+          @Override
+          public void close(MessageContext context) {
+
+          }
+
+        }
+
+      1.3.2.3 - Alterar classe br.inf.portalfiscal.nfe.wsdl.cadconsultacadastro4.svrs.CadConsultaCadastro4
+        Adicionar anotação: @HandlerChain(file="handler-nfeconsultacadastro.xml")
+
+    1.3.3 - Alterar classe (webservice) que disponibilizar a consulta cadastro:
+      com.fincatto.documentofiscal.nfe400.webservices.WSConsultaCadastro
+
+      private static final Logger LOG = LoggerFactory.getLogger(WSConsultaCadastro.class);
+      private static final String NOME_SERVICO = "CONS-CAD";
+      private static final String VERSAO_SERVICO = "2.00";
+      private final NFeConfig config;
+
+      WSConsultaCadastro(final NFeConfig config) {
+          this.config = config;
+      }
+
+      TRetConsCad consultaCadastro(final String cnpj, final DFUnidadeFederativa uf) throws Exception {
+          return efetuaConsulta(getDadosConsulta(cnpj, uf));
+      }
+
+      private TRetConsCad efetuaConsulta(final JAXBElement<TConsCad> tConsCad) throws JAXBException {
+          final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
+          nfeDadosMsg.getContent().add(tConsCad);
+
+          CadConsultaCadastro4Soap port = new CadConsultaCadastro4().getCadConsultaCadastro4Soap();
+          NfeResultMsg result = port.consultaCadastro(nfeDadosMsg);
+
+          return ((JAXBElement<TRetConsCad>) result.getContent().get(0)).getValue();
+      }
+
+      private JAXBElement<TConsCad> getDadosConsulta(final String cnpj, final DFUnidadeFederativa uf) {
+          final TConsCad consulta = new TConsCad();
+          consulta.setVersao(WSConsultaCadastro.VERSAO_SERVICO);
+          consulta.setInfCons(new TConsCad.InfCons());
+          consulta.getInfCons().setCNPJ(cnpj);
+          consulta.getInfCons().setXServ(WSConsultaCadastro.NOME_SERVICO);
+          consulta.getInfCons().setUF(TUfCons.fromValue(uf.getCodigo()));
+
+          JAXBElement<TConsCad> element = (JAXBElement<TConsCad>) new ObjectFactory().createConsCad(consulta);
+
+          return element;
+      }

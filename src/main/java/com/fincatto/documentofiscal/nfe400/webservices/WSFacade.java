@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.TRetConsCad;
 import br.inf.portalfiscal.nfe.TRetConsReciNFe;
 import br.inf.portalfiscal.nfe.TRetEnvEvento;
 import java.io.IOException;
@@ -18,7 +19,6 @@ import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
-import com.fincatto.documentofiscal.nfe400.classes.cadastro.NFRetornoConsultaCadastro;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFProtocoloEventoCartaCorrecao;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
@@ -223,7 +223,7 @@ public class WSFacade {
      * @return dados da consulta da pessoa juridica retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFRetornoConsultaCadastro consultaCadastro(final String cnpj, final DFUnidadeFederativa uf) throws Exception {
+    public TRetConsCad consultaCadastro(final String cnpj, final DFUnidadeFederativa uf) throws Exception {
         return this.wsConsultaCadastro.consultaCadastro(cnpj, uf);
     }
 

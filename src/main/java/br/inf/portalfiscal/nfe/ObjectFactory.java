@@ -57,6 +57,8 @@ public class ObjectFactory {
     private final static QName _EnvEvento_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "envEvento");
     private final static QName _ProcEventoNFe_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "procEventoNFe");
     private final static QName _RetEnvEvento_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "retEnvEvento");
+    private final static QName _ConsCad_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "ConsCad");
+    private final static QName _RetConsCad_QNAME = new QName("http://www.portalfiscal.inf.br/nfe", "retConsCad");
     
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: br.inf.portalfiscal.nfe
@@ -1074,6 +1076,42 @@ public class ObjectFactory {
     }
     
     /**
+    * Create an instance of {@link TRetConsCad }
+    *
+    */
+    public TRetConsCad createTRetConsCad() {
+        return new TRetConsCad();
+    }
+    /**
+     * Create an instance of {@link TRetConsCad.InfCons }
+     *
+     */
+    public TRetConsCad.InfCons createTRetConsCadInfCons() {
+        return new TRetConsCad.InfCons();
+    }
+    /**
+     * Create an instance of {@link TConsCad }
+     *
+     */
+    public TConsCad createTConsCad() {
+        return new TConsCad();
+    }
+    /**
+     * Create an instance of {@link TRetConsCad.InfCons.InfCad }
+     *
+     */
+    public TRetConsCad.InfCons.InfCad createTRetConsCadInfConsInfCad() {
+        return new TRetConsCad.InfCons.InfCad();
+    }
+    /**
+     * Create an instance of {@link TConsCad.InfCons }
+     *
+     */
+    public TConsCad.InfCons createTConsCadInfCons() {
+        return new TConsCad.InfCons();
+    }
+    
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link TConsReciNFe }{@code >}}
      * 
      */
@@ -1307,4 +1345,21 @@ public class ObjectFactory {
         return new JAXBElement<TRetEnvEvento>(_RetEnvEvento_QNAME, TRetEnvEvento.class, null, value);
     }
 
+    /**
+    * Create an instance of {@link JAXBElement }{@code <}{@link TConsCad }{@code >}}
+    *
+    */
+    @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe", name = "ConsCad")
+    public JAXBElement<TConsCad> createConsCad(TConsCad value) {
+        return new JAXBElement<TConsCad>(_ConsCad_QNAME, TConsCad.class, null, value);
+    }
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TRetConsCad }{@code >}}
+     *
+     */
+    @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/nfe", name = "retConsCad")
+    public JAXBElement<TRetConsCad> createRetConsCad(TRetConsCad value) {
+        return new JAXBElement<TRetConsCad>(_RetConsCad_QNAME, TRetConsCad.class, null, value);
+    }
+    
 }

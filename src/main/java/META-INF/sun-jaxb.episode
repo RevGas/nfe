@@ -134,6 +134,15 @@ Gerado em: 2017.01.19 às 09:08:27 PM BRT
     <bindings scd="~tns:TUfEmi">
       <typesafeEnumClass ref="br.inf.portalfiscal.nfe.TUfEmi"/>
     </bindings>
+    <bindings scd="~tns:TRetConsCad">
+      <class ref="br.inf.portalfiscal.nfe.TRetConsCad"/>
+    </bindings>
+    <bindings scd="~tns:TConsCad">
+      <class ref="br.inf.portalfiscal.nfe.TConsCad"/>
+    </bindings>
+    <bindings scd="~tns:TUfCons">
+      <typesafeEnumClass ref="br.inf.portalfiscal.nfe.TUfCons"/>
+    </bindings>
   </bindings>
   <bindings scd="x-schema::tns" xmlns:tns="http://www.portalfiscal.inf.br/mdfe">
     <schemaBindings map="false">
