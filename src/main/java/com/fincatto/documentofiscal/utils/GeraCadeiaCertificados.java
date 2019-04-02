@@ -35,6 +35,13 @@ public abstract class GeraCadeiaCertificados {
                 GeraCadeiaCertificados.get(keyStore, host);
             }
             
+            //Para Distribuicao
+            final String urlDistribuicao = "https://www1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx?WSDL";
+            if (StringUtils.isNotBlank(urlDistribuicao)) {
+                final String host = new URI(urlDistribuicao).getHost();
+                GeraCadeiaCertificados.get(keyStore, host);
+            }
+            
             for (final NFAutorizador31 aut : NFAutorizador31.values()) {
                 // Para NFe...
                 final String urlNF = aut.getNfeStatusServico(ambiente);
