@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce;
 
 import com.fincatto.nfe310.utils.SOAPHandlerUtil;
 import java.util.Set;
