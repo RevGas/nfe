@@ -28,6 +28,17 @@ public enum GatewayLoteEnvio {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.BA};
         }
     },
+    CE {
+        @Override
+        public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFeCENFE(xml, ambiente) : getTRetEnviNFeCENFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.CE};
+        }
+    },
     GO {
         @Override
         public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
@@ -149,6 +160,42 @@ public enum GatewayLoteEnvio {
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.hom.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.hom.NFeAutorizacao4().getNFeAutorizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnviNFe getTRetEnviNFeCENFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.NFeAutorizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.NFeAutorizacao4().getNFeAutorizacaoSoap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.hom.NFeAutorizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.hom.NFeAutorizacao4().getNFeAutorizacaoSoap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ce.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnviNFe getTRetEnviNFeCENFCE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.NFeAutorizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.NFeAutorizacao4().getNFeAutorizacaoSoap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.hom.NFeAutorizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.hom.NFeAutorizacao4().getNFeAutorizacaoSoap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ce.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         }
     }

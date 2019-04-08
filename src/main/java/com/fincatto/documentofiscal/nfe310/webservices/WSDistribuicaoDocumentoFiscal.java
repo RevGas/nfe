@@ -3,7 +3,6 @@ package com.fincatto.documentofiscal.nfe310.webservices;
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.rmi.RemoteException;
 
 import javax.xml.bind.JAXBContext;
@@ -27,7 +26,6 @@ import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NfeDistDFeInteresse;
 import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NfeDistDFeInteresseResponse;
 import com.fincatto.documentofiscal.DFConfig;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 
 class WSDistribuicaoDocumentoFiscal {
 
@@ -78,12 +76,6 @@ class WSDistribuicaoDocumentoFiscal {
     }
 
     private RetDistDFeInt efetuaConsultaDocumentoFiscal(final DistDFeInt distDFeInt, final DFUnidadeFederativa unidadeFederativa) throws RemoteException, JAXBException, MalformedURLException {
-        final NFAutorizador31 autorizador = NFAutorizador31.valueOfCodigoUF(unidadeFederativa);
-        final String endpoint = autorizador.getNFeDistribuicaoDFe(this.config.getAmbiente());
-        if (endpoint == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para DistribuicaoDocumentoFiscal NF-e, autorizador " + autorizador.name() + ", UF " + unidadeFederativa.name());
-        }
-
         JAXBContext jaxbContext = JAXBContext.newInstance(DistDFeInt.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         JAXBElement<DistDFeInt> jaxbElement = new JAXBElement<>(new QName("http://www.portalfiscal.inf.br/nfe", "distDFeInt"), DistDFeInt.class, distDFeInt);
@@ -94,7 +86,7 @@ class WSDistribuicaoDocumentoFiscal {
         NfeDistDFeInteresse.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.ObjectFactory().createNfeDistDFeInteresseNfeDadosMsg();
         nfeDadosMsg.getContent().add(((Document) dOMResult.getNode()).getDocumentElement());
 
-        NFeDistribuicaoDFeSoap port = new NFeDistribuicaoDFe(new URL(endpoint)).getNFeDistribuicaoDFeSoap12();
+        NFeDistribuicaoDFeSoap port = new NFeDistribuicaoDFe().getNFeDistribuicaoDFeSoap12();
         NfeDistDFeInteresseResponse.NfeDistDFeInteresseResult result = port.nfeDistDFeInteresse(nfeDadosMsg);
 
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
