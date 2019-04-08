@@ -306,7 +306,7 @@ $F{nota.info.destinatario.endereco.descricaoMunicipio} + " - " + $F{nota.info.de
 : ""]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="textField" positionType="Float" x="8" y="54" width="110" height="10" uuid="48388237-7389-43ca-b343-cf17f3157ce7">
+				<reportElement key="textField" positionType="Float" x="8" y="54" width="110" height="10" isRemoveLineWhenBlank="true" uuid="48388237-7389-43ca-b343-cf17f3157ce7">
 					<printWhenExpression><![CDATA[new BigDecimal($F{nota.info.pagamentos[0].valorTroco}).compareTo(new BigDecimal(0))== 1]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="none">
@@ -315,7 +315,7 @@ $F{nota.info.destinatario.endereco.descricaoMunicipio} + " - " + $F{nota.info.de
 				<text><![CDATA[TROCO R$]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" positionType="Float" x="142" y="54" width="63" height="10" uuid="ebc326e3-39ca-4ddc-bbde-588b0fd22b6c">
+				<reportElement key="textField" positionType="Float" x="142" y="54" width="63" height="10" isRemoveLineWhenBlank="true" uuid="ebc326e3-39ca-4ddc-bbde-588b0fd22b6c">
 					<printWhenExpression><![CDATA[new BigDecimal($F{nota.info.pagamentos[0].valorTroco}).compareTo(new BigDecimal(0))== 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="4"/>
