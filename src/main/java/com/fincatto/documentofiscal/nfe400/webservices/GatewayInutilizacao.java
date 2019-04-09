@@ -51,6 +51,18 @@ public enum GatewayInutilizacao {
         }
 
     },
+    PR {
+        @Override
+        public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetInutNFePRNFE(xml, ambiente) : getTRetInutNFePRNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PR};
+        }
+
+    },
     SVRS {
         @Override
         public TRetInutNFe getTRetInutNFe(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
@@ -161,7 +173,47 @@ public enum GatewayInutilizacao {
             return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
         }
     }
+    
+    public TRetInutNFe getTRetInutNFePRNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
 
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.NFeInutilizacao4().getNFeInutilizacao4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.hom.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.hom.NFeInutilizacao4().getNFeInutilizacao4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.pr.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+
+    public TRetInutNFe getTRetInutNFePRNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.NFeInutilizacao4().getNFeInutilizacao4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.hom.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.hom.NFeInutilizacao4().getNFeInutilizacao4ServicePort();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
     public TRetInutNFe getTRetInutNFeSVRSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.NfeDadosMsg();
