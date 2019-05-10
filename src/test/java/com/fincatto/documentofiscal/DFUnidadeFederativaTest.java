@@ -57,12 +57,14 @@ public class DFUnidadeFederativaTest {
         Assert.assertEquals("MA", DFUnidadeFederativa.MA.getCodigo());
         Assert.assertEquals("21", DFUnidadeFederativa.MA.getCodigoIbge());
         Assert.assertEquals("http://www.hom.nfce.sefaz.ma.gov.br/portal/consultarNFCe.jsp", DFUnidadeFederativa.MA.getQrCodeHomologacao());
-        Assert.assertEquals("http://www.nfce.sefaz.ma.gov.br/portal/consultaNFe.do?method=preFilterCupom&", DFUnidadeFederativa.MA.getQrCodeProducao());
+        Assert.assertEquals("http://www.nfce.sefaz.ma.gov.br/portal/consultarNFCe.jsp", DFUnidadeFederativa.MA.getQrCodeProducao());
 
         Assert.assertEquals("MG", DFUnidadeFederativa.MG.getCodigo());
         Assert.assertEquals("31", DFUnidadeFederativa.MG.getCodigoIbge());
-        Assert.assertEquals(null, DFUnidadeFederativa.MG.getQrCodeHomologacao());
-        Assert.assertEquals(null, DFUnidadeFederativa.MG.getQrCodeProducao());
+        Assert.assertEquals("http://hnfce.fazenda.mg.gov.br/portalnfce", DFUnidadeFederativa.MG.getConsultaChaveAcessoHomologacao());
+        Assert.assertEquals("http://nfce.fazenda.mg.gov.br/portalnfce", DFUnidadeFederativa.MG.getConsultaChaveAcessoProducao());
+        Assert.assertEquals("https://nfce.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml", DFUnidadeFederativa.MG.getQrCodeHomologacao());
+        Assert.assertEquals("https://nfce.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml", DFUnidadeFederativa.MG.getQrCodeProducao());
 
         Assert.assertEquals("MS", DFUnidadeFederativa.MS.getCodigo());
         Assert.assertEquals("50", DFUnidadeFederativa.MS.getCodigoIbge());

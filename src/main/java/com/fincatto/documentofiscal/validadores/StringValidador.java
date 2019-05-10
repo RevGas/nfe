@@ -2,6 +2,7 @@ package com.fincatto.documentofiscal.validadores;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.codec.binary.Base64;
 
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
@@ -579,14 +580,18 @@ public abstract class StringValidador {
 
     /**
      * Método para validação de Strings.
+     *
      * @param paraValidar String a ser validada
      * @param info Informação de retorno caso haja erro.
-     * @param tamanho tamanho para validação da {@code String} , pode ser {@code null} :
+     * @param tamanho tamanho para validação da {@code String} , pode ser
+     * {@code null} :
      * @param exatamente <pre>
      * se false {@code null} a {@code String}
      *                   não precisa ter o tamanho exato do parametro anterior.
      * </pre>
-     * @param numerico se true {@code null} a {@code String} precisa ser numérica[0-9].
+     *
+     * @param numerico se true {@code null} a {@code String} precisa ser
+     * numérica[0-9].
      * @param paraValidar}.
      * @return retorna a própria {@code String} {
      */
@@ -685,12 +690,14 @@ public abstract class StringValidador {
      *  StringValidador.capacidadeNDigitos("10000", "info" , 5)   = "10000"
      *  StringValidador.capacidadeNDigitos("5", "info" , 2)   = "5"
      * </pre>
+     *
      * @param capacidade
      * @param info
      * @param digitos
      * @return
      * @throws IllegalStateException se<br>
-     * {@code capacidade = "10000" } & {@code digitos = 3}, ou seja , {@code capacidade.length()-1 > digitos }
+     * {@code capacidade = "10000" } & {@code digitos = 3}, ou seja , {@code capacidade.length()-1 > digitos
+     * }
      */
     public static String capacidadeNDigitos(final String capacidade, final String info, final int digitos) {
         if (capacidade != null) {
@@ -752,4 +759,11 @@ public abstract class StringValidador {
             throw new IllegalStateException(String.format("Valor('%s') nao corresponde com o padrao('%s')", tested, test));
         }
     }
+
+    public static void isBase64(final String string, final String info) {
+        if (!Base64.isBase64(string.getBytes())) {
+            throw new IllegalStateException(String.format("A string %s com o valor = '%s' precisa ser codificada em Base64. ", info, string));
+        }
+    }
+
 }

@@ -29,9 +29,9 @@ public enum DFUnidadeFederativa {
     MT("MT", "Mato Grosso", "51", "http://homologacao.sefaz.mt.gov.br/nfce/consultanfce", "http://www.sefaz.mt.gov.br/nfce/consultanfce"
             , "http://homologacao.sefaz.mt.gov.br/nfce/consultanfce", "www.sefaz.mt.gov.br/nfce/consultanfce"),
     MS("MS", "Mato Grosso do Sul", "50", "http://www.dfe.ms.gov.br/nfce/qrcode", "http://www.dfe.ms.gov.br/nfce/qrcode"
-            , "www.dfe.ms.gov.br/nfce/consulta", "www.dfe.ms.gov.br/nfce/consulta"),
-    MG("MG", "Minas Gerais", "31", null, null
-            ,"www.fazenda.mg.gov.br/nfce/consulta", "www.fazenda.mg.gov.br/nfce/consulta"),
+            , "http://www.dfe.ms.gov.br/nfce", "http://www.dfe.ms.gov.br/nfce"),
+    MG("MG", "Minas Gerais", "31", "https://nfce.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml"
+            , "https://nfce.fazenda.mg.gov.br/portalnfce/sistema/qrcode.xhtml", "http://hnfce.fazenda.mg.gov.br/portalnfce", "http://nfce.fazenda.mg.gov.br/portalnfce"),
     PA("PA", "Par\u00E1", "15", "https://appnfc.sefa.pa.gov.br/portal-homologacao/view/consultas/nfce/nfceForm.seam", "https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/nfceForm.seam"
             , "www.sefa.pa.gov.br/nfce/consulta", "www.sefa.pa.gov.br/nfce/consulta"),
     PB("PB", "Paraiba", "25", "http://www.receita.pb.gov.br/nfcehom", "http://www.receita.pb.gov.br/nfce"

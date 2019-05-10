@@ -3,12 +3,6 @@ package com.fincatto.documentofiscal.nfe400.webservices;
 import br.inf.portalfiscal.nfe.TRetConsCad;
 import br.inf.portalfiscal.nfe.TRetConsReciNFe;
 import br.inf.portalfiscal.nfe.TRetEnvEvento;
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import br.inf.portalfiscal.nfe.TRetInutNFe;
@@ -27,8 +21,17 @@ import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatar
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
+import java.io.IOException;
+
 import java.security.GeneralSecurityException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import javax.net.ssl.HttpsURLConnection;
+
+
 
 public class WSFacade {
 
@@ -257,7 +260,7 @@ public class WSFacade {
 
     /**
      * Faz consulta de distribuicao das notas fiscais. Pode ser feita pela chave de acesso ou utilizando o NSU (numero sequencial unico) da receita.
-     * @param cnpj CNPJ da pessoa juridica a consultar
+     * @param cpfOuCnpj CPF ou CNPJ da pessoa fisica ou juridica a consultar
      * @param uf Unidade federativa da pessoa juridica a consultar
      * @param nsu Número Sequencial Único. Geralmente esta consulta será utilizada quando identificado pelo interessado um NSU faltante.
      *            O Web Service retornará o documento ou informará que o NSU não existe no Ambiente Nacional. Assim, esta

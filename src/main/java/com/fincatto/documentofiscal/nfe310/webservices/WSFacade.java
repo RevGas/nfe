@@ -1,13 +1,5 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import com.fincatto.documentofiscal.nfe310.classes.cadastro.NFRetornoConsultaCadastro;
 import com.fincatto.documentofiscal.nfe310.classes.evento.NFEnviaEventoRetorno;
@@ -22,13 +14,23 @@ import com.fincatto.documentofiscal.nfe310.classes.lote.envio.NFLoteIndicadorPro
 import com.fincatto.documentofiscal.nfe310.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe310.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+
 import br.inf.portalfiscal.nfe.RetDistDFeInt;
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
+import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
+import com.fincatto.documentofiscal.nfe.webservices.distribuicao.WSDistribuicaoNFe;
 import java.security.GeneralSecurityException;
+import javax.net.ssl.HttpsURLConnection;
 
 public class WSFacade {
 
@@ -43,6 +45,7 @@ public class WSFacade {
     private final WSManifestacaoDestinatario wSManifestacaoDestinatario;
     private final WSNotaDownload wsNotaDownload;
     private final WSDistribuicaoDocumentoFiscal wsDistribuicaoDocumentoFiscal;
+    private final WSDistribuicaoNFe wSDistribuicaoNFe;
 
     public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
         HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
@@ -59,7 +62,7 @@ public class WSFacade {
         this.wSManifestacaoDestinatario = new WSManifestacaoDestinatario(config);
         this.wsNotaDownload = new WSNotaDownload(config);
         this.wsDistribuicaoDocumentoFiscal = new WSDistribuicaoDocumentoFiscal(config);
-
+        this.wSDistribuicaoNFe = new WSDistribuicaoNFe(config);
     }
 
     /**
@@ -267,6 +270,7 @@ public class WSFacade {
     }
 
     /**
+<<<<<<< HEAD
      * a) distNSU – Distribuição de Conjunto de DF-e a Partir do NSU Informado
      *
      * Disponibiliza para os atores da NF-e informações e documentos fiscais eletrônicos de seu interesse.
@@ -325,6 +329,24 @@ public class WSFacade {
      */
     public RetDistDFeInt pedidoDistribuicaoChave(final String cnpj, final String chave, final DFUnidadeFederativa unidadeFederativaAutorizador) throws Exception {
         return this.wsDistribuicaoDocumentoFiscal.pedidoDistribuicaoChave(cnpj, chave, unidadeFederativaAutorizador);
+    }
+    
+    /**
+     * Faz consulta de distribuicao das notas fiscais. Pode ser feita pela chave de acesso ou utilizando o NSU (numero sequencial unico) da receita.
+     * @param cpfOuCnpj CPF ou CNPJ da pessoa fisica ou juridica a consultar
+     * @param uf Unidade federativa da pessoa juridica a consultar
+     * @param chaveAcesso
+     * @param nsu Número Sequencial Único. Geralmente esta consulta será utilizada quando identificado pelo interessado um NSU faltante.
+     *            O Web Service retornará o documento ou informará que o NSU não existe no Ambiente Nacional. Assim, esta
+     *            consulta fechará a lacuna do NSU identificado como faltante.
+     * @param ultNsu Último NSU recebido pelo ator. Caso seja informado com zero, ou com um NSU muito antigo, a consulta retornará unicamente as
+     *               informações resumidas e documentos fiscais eletrônicos que tenham sido recepcionados pelo
+     *               Ambiente Nacional nos últimos 3 meses.
+     * @return dados da consulta retornado pelo webservice limitando um total de 50 registros
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+     */
+    public NFDistribuicaoIntRetorno consultarDistribuicaoDFe(final String cpfOuCnpj, final DFUnidadeFederativa uf, final String chaveAcesso, final String nsu, final String ultNsu) throws Exception {
+        return this.wSDistribuicaoNFe.consultar(cpfOuCnpj, uf, chaveAcesso, nsu, ultNsu);
     }
 
 }
