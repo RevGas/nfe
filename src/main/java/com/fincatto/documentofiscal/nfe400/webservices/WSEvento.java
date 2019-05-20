@@ -1,9 +1,9 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.ObjectFactory;
-import br.inf.portalfiscal.nfe.TEnvEvento;
-import br.inf.portalfiscal.nfe.TEvento;
-import br.inf.portalfiscal.nfe.TRetEnvEvento;
+import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.ObjectFactory;
+import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TEnvEvento;
+import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TEvento;
+import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
@@ -51,7 +51,7 @@ class WSEvento {
         return efetua(tpEvento, xmlAssinado, chaveAcesso);
     }
 
-    private TRetEnvEvento efetua(final String tpEvento, final String xml, final String chaveAcesso) throws Exception {
+    private br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento efetua(final String tpEvento, final String xml, final String chaveAcesso) throws Exception {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
         switch (tpEvento) {
             case EVENTO_CANCELAMENTO :
@@ -59,26 +59,13 @@ class WSEvento {
                 return com.fincatto.documentofiscal.nfe400.webservices.GatewayEvento.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
             default :
                 return com.fincatto.documentofiscal.nfe400.webservices.GatewayEvento.AN.getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
-        }
+        } 
     }
 
     private String gerarDados(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo, final String nSeqEvento, final String cnpj) throws JAXBException, ParserConfigurationException {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
 
         TEvento.InfEvento.DetEvento detEvento = new TEvento.InfEvento.DetEvento();
-        detEvento.setVersao(WSEvento.VERSAO_LEIAUTE.toString());
-        switch (tpEvento) {
-            case EVENTO_CARTA_CORRECAO :
-                detEvento.setDescEvento(descEvento);
-                detEvento.setXCondUso(EVENTO_CONDICAO_USO);
-                detEvento.setXCorrecao(motivo);
-                break;
-            default : 
-                detEvento.setDescEvento(descEvento);
-                detEvento.setNProt(numeroProtocolo);
-                detEvento.setXJust(motivo);
-                
-        }
                 
         final TEvento.InfEvento infoEvento = new TEvento.InfEvento();
         infoEvento.setTpAmb(this.config.getAmbiente().getCodigo());

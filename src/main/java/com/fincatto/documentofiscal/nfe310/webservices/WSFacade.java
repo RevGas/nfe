@@ -21,8 +21,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
-import br.inf.portalfiscal.nfe.RetDistDFeInt;
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
+import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.RetDistDFeInt;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.DFSocketFactory;

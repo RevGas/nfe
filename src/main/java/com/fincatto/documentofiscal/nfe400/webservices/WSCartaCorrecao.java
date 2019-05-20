@@ -1,25 +1,25 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import com.fincatto.documentofiscal.DFModelo;
+import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.ObjectFactory;
+import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TEnvEvento;
+import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TEvento;
+import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe400.classes.NFAutorizador400;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
-import com.fincatto.documentofiscal.nfe400.classes.evento.NFEvento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.NFInfoEvento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.NFTipoEvento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFEnviaEventoCartaCorrecao;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFProtocoloEventoCartaCorrecao;
-import com.fincatto.documentofiscal.nfe400.parsers.DFParser;
 import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
+import java.io.StringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.stream.XMLStreamException;
 import java.math.BigDecimal;
-import java.rmi.RemoteException;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Collections;
+import java.time.format.DateTimeFormatter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 class WSCartaCorrecao {
     private static final BigDecimal VERSAO_LEIAUTE = new BigDecimal("1.00");
@@ -33,13 +33,6 @@ class WSCartaCorrecao {
         this.config = config;
     }
 
-    NFEnviaEventoRetorno corrigeNota(final String chaveAcesso, final String textoCorrecao, final int numeroSequencialEvento) throws Exception {
-        final String xmlAssinado = getXmlAssinado(chaveAcesso, textoCorrecao, numeroSequencialEvento);
-//        final OMElement omElementResult = this.efetuaCorrecao(xmlAssinado, chaveAcesso);
-//        return new Persister(new DFRegistryMatcher(), new Format(0)).read(NFEnviaEventoRetorno.class, omElementResult.toString());
-        return null;
-    }
-
     NFEnviaEventoRetorno corrigeNotaAssinada(final String xmlAssinado) throws Exception {
 //        final OMElement omElementResult = this.efetuaCorrecao(xmlAssinado, new DFParser()
 //                .enviaEventoCartaCorrecaoParaObjeto(xmlAssinado).getEvento().get(0).getInfoEvento().getChave());
@@ -47,90 +40,56 @@ class WSCartaCorrecao {
         return null;
     }
 
-    NFProtocoloEventoCartaCorrecao corrigeNotaAssinadaProtocolo(final String xmlAssinado) throws Exception {
-        NFEnviaEventoCartaCorrecao evento = new DFParser()
-                .enviaEventoCartaCorrecaoParaObjeto(xmlAssinado);
-//        final OMElement omElementResult = this.efetuaCorrecao(xmlAssinado, evento.getEvento().get(0).getInfoEvento().getChave());
-//        NFEnviaEventoRetorno retorno = new Persister(new DFRegistryMatcher(), new Format(0)).read(NFEnviaEventoRetorno.class, omElementResult.toString());
-        NFProtocoloEventoCartaCorrecao nfProtocoloEventoCartaCorrecao = new NFProtocoloEventoCartaCorrecao();
-        nfProtocoloEventoCartaCorrecao.setEvento(evento.getEvento().get(0));
-//        nfProtocoloEventoCartaCorrecao.setEventoRetorno(retorno.getEventoRetorno().get(0));
-        return nfProtocoloEventoCartaCorrecao;
+    TRetEnvEvento corrigeNota(final String chNFe, final String xCorrecao, final int nSeqEvento) throws Exception {
+        String xml = this.gerarDados(chNFe, xCorrecao);
+        xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
+        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
+        return efetua(xmlAssinado, chNFe);
     }
 
-    NFEnviaEventoRetorno corrigeNotaAssinada(final String chaveAcesso, final String eventoAssinadoXml) throws Exception {
-//        final OMElement omElementResult = this.efetuaCorrecao(eventoAssinadoXml, chaveAcesso);
-//        return new DFPersister().read(NFEnviaEventoRetorno.class, omElementResult.toString());
-        return null;
+    private TRetEnvEvento efetua(final String xml, final String chaveAcesso) throws Exception {
+        final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayCartaCorrecao.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
     }
 
-    private String efetuaCorrecao(final String xmlAssinado, final String chaveAcesso) throws XMLStreamException, RemoteException {
-//        final NFeRecepcaoEvento4Stub.NfeDadosMsg dados = new NFeRecepcaoEvento4Stub.NfeDadosMsg();
-//        final OMElement omElementXML = AXIOMUtil.stringToOM(xmlAssinado);
-//        WSCartaCorrecao.LOGGER.debug(omElementXML.toString());
-//        dados.setExtraElement(omElementXML);
-
-        final NotaFiscalChaveParser parser = new NotaFiscalChaveParser(chaveAcesso);
-
-        final NFAutorizador400 autorizacao = NFAutorizador400.valueOfCodigoUF(this.config.getCUF());
-        final String urlWebService = DFModelo.NFCE.equals(parser.getModelo()) ? autorizacao.getNfceRecepcaoEvento(this.config.getAmbiente()) : autorizacao.getRecepcaoEvento(this.config.getAmbiente());
-        if (urlWebService == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para RecepcaoEvento " + parser.getModelo().name() + ", autorizador " + autorizacao.name());
-        }
-
-//        final NfeResultMsg nfeRecepcaoEvento = new NFeRecepcaoEvento4Stub(urlWebService).nfeRecepcaoEvento(dados);
-//        final OMElement omElementResult = nfeRecepcaoEvento.getExtraElement();
-//        WSCartaCorrecao.LOGGER.debug(omElementResult.toString());
-//        return omElementResult;
-        return "";
-    }
-
-    /**
-     * Retorna XML assinado para uso externo.
-     * @param chaveAcesso
-     * @param textoCorrecao
-     * @param numeroSequencialEvento
-     * @return
-     * @throws Exception
-     */
-    public String getXmlAssinado(final String chaveAcesso, final String textoCorrecao, final int numeroSequencialEvento) throws Exception {
-        final String cartaCorrecaoXML = this.gerarDadosCartaCorrecao(chaveAcesso, textoCorrecao, numeroSequencialEvento).toString();
-        return new AssinaturaDigital(this.config).assinarDocumento(cartaCorrecaoXML);
-    }
-
-    public NFEnviaEventoCartaCorrecao gerarDadosCartaCorrecao(final String chaveAcesso, final String textoCorrecao, final int numeroSequencialEvento) {
+    private String gerarDados(final String chaveAcesso, final String motivo) throws JAXBException {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
 
-        final NFTipoEvento cartaCorrecao = new NFTipoEvento();
-        cartaCorrecao.setVersao(WSCartaCorrecao.VERSAO_LEIAUTE);
-        cartaCorrecao.setDescricaoEvento(WSCartaCorrecao.EVENTO_DESCRICAO);
-        cartaCorrecao.setCondicaoUso(WSCartaCorrecao.EVENTO_CONDICAO_USO);
-        cartaCorrecao.setTextoCorrecao(textoCorrecao);
+        TEvento.InfEvento.DetEvento detEvento = new TEvento.InfEvento.DetEvento();
+        detEvento.setVersao(WSCartaCorrecao.VERSAO_LEIAUTE.toString());
+        detEvento.setDescEvento(WSCartaCorrecao.EVENTO_DESCRICAO);
+        detEvento.setXCondUso(EVENTO_CONDICAO_USO);
+        detEvento.setXCorrecao(motivo);
+                
+        final TEvento.InfEvento infoEvento = new TEvento.InfEvento();
+        infoEvento.setTpAmb(this.config.getAmbiente().getCodigo());
+        infoEvento.setChNFe(chaveAcesso);
+        infoEvento.setCNPJ(chaveParser.getCnpjEmitente());
+        infoEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").format(LocalDateTime.now())); //TODO
+        infoEvento.setDhEvento(infoEvento.getDhEvento() + "-03:00");
+        infoEvento.setId(String.format("ID%s%s0%s", WSCartaCorrecao.EVENTO_CODIGO, chaveAcesso, "1"));
+        infoEvento.setNSeqEvento("1");
+        infoEvento.setCOrgao(chaveParser.getNFUnidadeFederativa().getCodigoIbge());
+        infoEvento.setTpEvento(WSCartaCorrecao.EVENTO_CODIGO);
+        infoEvento.setVerEvento(WSCartaCorrecao.VERSAO_LEIAUTE.toString());
+        infoEvento.setDetEvento(detEvento);
 
-        final NFInfoEvento infoEvento = new NFInfoEvento();
-        infoEvento.setAmbiente(this.config.getAmbiente());
-        infoEvento.setDadosEvento(cartaCorrecao);
-        infoEvento.setChave(chaveAcesso);
-        if (Integer.parseInt(chaveParser.getSerie()) >= 920 && Integer.parseInt(chaveParser.getSerie()) <= 969) {//destinado a emissão de pessoa física com IE
-        	infoEvento.setCpf(chaveParser.getCnpjEmitente().substring(3));
-        } else {
-            infoEvento.setCnpj(chaveParser.getCnpjEmitente());
-        }
-        infoEvento.setDataHoraEvento(ZonedDateTime.now(this.config.getTimeZone().toZoneId()));
-        infoEvento.setId(String.format("ID%s%s%02d", WSCartaCorrecao.EVENTO_CODIGO, chaveAcesso, numeroSequencialEvento));
-        infoEvento.setNumeroSequencialEvento(numeroSequencialEvento);
-        infoEvento.setOrgao(chaveParser.getNFUnidadeFederativa());
-        infoEvento.setTipoEvento(WSCartaCorrecao.EVENTO_CODIGO);
-        infoEvento.setVersaoEvento(WSCartaCorrecao.VERSAO_LEIAUTE);
+        final TEvento evento = new TEvento();
+        evento.setInfEvento(infoEvento);
+        evento.setVersao(WSCartaCorrecao.VERSAO_LEIAUTE.toString());
 
-        final NFEvento evento = new NFEvento();
-        evento.setInfoEvento(infoEvento);
-        evento.setVersao(WSCartaCorrecao.VERSAO_LEIAUTE);
-
-        final NFEnviaEventoCartaCorrecao enviaEvento = new NFEnviaEventoCartaCorrecao();
-        enviaEvento.setEvento(Collections.singletonList(evento));
+        final TEnvEvento enviaEvento = new TEnvEvento();
+        enviaEvento.getEvento().add(evento);
         enviaEvento.setIdLote(Long.toString(ZonedDateTime.now(this.config.getTimeZone().toZoneId()).toInstant().toEpochMilli()));
-        enviaEvento.setVersao(WSCartaCorrecao.VERSAO_LEIAUTE);
-        return enviaEvento;
-    }
+        enviaEvento.setVersao(WSCartaCorrecao.VERSAO_LEIAUTE.toString());
+        
+        JAXBContext context = JAXBContext.newInstance(TEnvEvento.class);
+        Marshaller marshaller = context.createMarshaller();
+
+        JAXBElement<TEnvEvento> tEnvEvento = new ObjectFactory().createEnvEvento(enviaEvento);
+        
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(tEnvEvento, stringWriter);
+        return stringWriter.toString();
+    }    
 }

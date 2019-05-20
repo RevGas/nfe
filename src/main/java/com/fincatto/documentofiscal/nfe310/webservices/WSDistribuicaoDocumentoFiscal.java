@@ -1,5 +1,7 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
+import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.DistDFeInt;
+import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.RetDistDFeInt;
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -18,8 +20,6 @@ import org.w3c.dom.Element;
 
 import com.fincatto.nfe310.converters.ElementStringConverter;
 
-import br.inf.portalfiscal.nfe.DistDFeInt;
-import br.inf.portalfiscal.nfe.RetDistDFeInt;
 import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NFeDistribuicaoDFe;
 import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NFeDistribuicaoDFeSoap;
 import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NfeDistDFeInteresse;

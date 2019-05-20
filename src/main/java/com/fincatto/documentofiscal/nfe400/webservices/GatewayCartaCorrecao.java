@@ -1,7 +1,7 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TEnvEvento;
-import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
+import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TEnvEvento;
+import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
@@ -13,7 +13,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.ws.BindingProvider;
 
-public enum GatewayEvento {
+public enum GatewayCartaCorrecao {
 
     AN {
         @Override
@@ -153,8 +153,8 @@ public enum GatewayEvento {
 
     public abstract DFUnidadeFederativa[] getUFs();
 
-    public static GatewayEvento valueOfCodigoUF(final DFUnidadeFederativa uf) {
-        for (final GatewayEvento autorizador : GatewayEvento.values()) {
+    public static GatewayCartaCorrecao valueOfCodigoUF(final DFUnidadeFederativa uf) {
+        for (final GatewayCartaCorrecao autorizador : GatewayCartaCorrecao.values()) {
             if (Arrays.asList(autorizador.getUFs()).contains(uf)) {
                 return autorizador;
             }
@@ -453,7 +453,7 @@ public enum GatewayEvento {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
-            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4SoapCartaCorrecao port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCartaCorrecao();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -481,7 +481,7 @@ public enum GatewayEvento {
     }
 
     private JAXBElement<TEnvEvento> getTEnvEvento(String xml) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101");
 
         Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
         StringReader reader = new StringReader(xml);

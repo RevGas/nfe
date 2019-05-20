@@ -1,19 +1,27 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.ObjectFactory;
+import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TEnvEvento;
+import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TEvento;
+import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento;
+import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cancelamento.NFEnviaEventoCancelamento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cancelamento.NFEventoCancelamento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cancelamento.NFInfoCancelamento;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cancelamento.NFInfoEventoCancelamento;
 import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
+import java.io.StringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Collections;
+import java.time.format.DateTimeFormatter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 class WSCancelamento {
+
     private static final String DESCRICAO_EVENTO = "Cancelamento";
     private static final BigDecimal VERSAO_LEIAUTE = new BigDecimal("1.00");
     private static final String EVENTO_CANCELAMENTO = "110111";
@@ -30,67 +38,56 @@ class WSCancelamento {
         return null;
     }
 
-    String cancelaNota(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
-//        final String cancelamentoNotaXML = this.gerarDadosCancelamento(chaveAcesso, numeroProtocolo, motivo).toString();
-//        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(cancelamentoNotaXML);
-//        final OMElement omElementResult = this.efetuaCancelamento(xmlAssinado, chaveAcesso);
-//        return new DFPersister().read(NFEnviaEventoRetorno.class, omElementResult.toString());
-        return null;
+    TRetEnvEvento cancelaNota(final String chNFe, final String nProt, final String xJust) throws Exception {
+        String xml = this.gerarDados(chNFe, nProt, xJust);
+        xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
+        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
+        return efetuaCancelamento(xmlAssinado, chNFe);
     }
 
-    private String efetuaCancelamento(final String xmlAssinado, final String chaveAcesso) throws Exception {
-//        final NFeRecepcaoEvento4Stub.NfeDadosMsg dados = new NFeRecepcaoEvento4Stub.NfeDadosMsg();
-//        final OMElement omElementXML = AXIOMUtil.stringToOM(xmlAssinado);
-//        WSCancelamento.LOGGER.debug(omElementXML.toString());
-//        dados.setExtraElement(omElementXML);
-//
-//        final NotaFiscalChaveParser parser = new NotaFiscalChaveParser(chaveAcesso);
-//        final NFAutorizador400 autorizador = NFAutorizador400.valueOfChaveAcesso(chaveAcesso);
-//        final String urlWebService = DFModelo.NFCE.equals(parser.getModelo()) ? autorizador.getNfceRecepcaoEvento(this.config.getAmbiente()) : autorizador.getRecepcaoEvento(this.config.getAmbiente());
-//        if (urlWebService == null) {
-//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para RecepcaoEvento " + parser.getModelo().name() + ", autorizador " + autorizador.name());
-//        }
-//
-//        final NfeResultMsg nfeRecepcaoEvento = new NFeRecepcaoEvento4Stub(urlWebService).nfeRecepcaoEvento(dados);
-//        final OMElement omElementResult = nfeRecepcaoEvento.getExtraElement();
-//        WSCancelamento.LOGGER.debug(omElementResult.toString());
-//        return omElementResult;
-        return null;
+    private TRetEnvEvento efetuaCancelamento(final String xmlAssinado, final String chaveAcesso) throws Exception {
+        final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayCancelamento.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xmlAssinado, this.config.getAmbiente());
     }
 
-    private NFEnviaEventoCancelamento gerarDadosCancelamento(final String chaveAcesso, final String numeroProtocolo, final String motivo) {
+    private String gerarDados(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws JAXBException {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
 
-        final NFInfoCancelamento cancelamento = new NFInfoCancelamento();
-        cancelamento.setDescricaoEvento(WSCancelamento.DESCRICAO_EVENTO);
-        cancelamento.setVersao(WSCancelamento.VERSAO_LEIAUTE);
-        cancelamento.setJustificativa(motivo);
-        cancelamento.setProtocoloAutorizacao(numeroProtocolo);
+        TEvento.InfEvento.DetEvento detEvento = new TEvento.InfEvento.DetEvento();
+        detEvento.setVersao(WSCancelamento.VERSAO_LEIAUTE.toString());
+        detEvento.setDescEvento(WSCancelamento.DESCRICAO_EVENTO);
+        detEvento.setNProt(numeroProtocolo);
+        detEvento.setXJust(motivo);
 
-        final NFInfoEventoCancelamento infoEvento = new NFInfoEventoCancelamento();
-        infoEvento.setAmbiente(this.config.getAmbiente());
-        infoEvento.setChave(chaveAcesso);
-        if (Integer.parseInt(chaveParser.getSerie()) >= 920 && Integer.parseInt(chaveParser.getSerie()) <= 969) {//destinado a emissão de pessoa física com IE
-        	infoEvento.setCpf(chaveParser.getCnpjEmitente().substring(3));
-        } else {
-            infoEvento.setCnpj(chaveParser.getCnpjEmitente());
-        }
-        infoEvento.setDataHoraEvento(ZonedDateTime.now(this.config.getTimeZone().toZoneId()));
+        final TEvento.InfEvento infoEvento = new TEvento.InfEvento();
+        infoEvento.setTpAmb(this.config.getAmbiente().getCodigo());
+        infoEvento.setChNFe(chaveAcesso);
+        infoEvento.setCNPJ(chaveParser.getCnpjEmitente());
+        infoEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").format(LocalDateTime.now())); //TODO
+        infoEvento.setDhEvento(infoEvento.getDhEvento() + "-03:00");
         infoEvento.setId(String.format("ID%s%s0%s", WSCancelamento.EVENTO_CANCELAMENTO, chaveAcesso, "1"));
-        infoEvento.setNumeroSequencialEvento(1);
-        infoEvento.setOrgao(chaveParser.getNFUnidadeFederativa());
-        infoEvento.setCodigoEvento(WSCancelamento.EVENTO_CANCELAMENTO);
-        infoEvento.setVersaoEvento(WSCancelamento.VERSAO_LEIAUTE);
-        infoEvento.setCancelamento(cancelamento);
+        infoEvento.setNSeqEvento("1");
+        infoEvento.setCOrgao(chaveParser.getNFUnidadeFederativa().getCodigoIbge());
+        infoEvento.setTpEvento(WSCancelamento.EVENTO_CANCELAMENTO);
+        infoEvento.setVerEvento(WSCancelamento.VERSAO_LEIAUTE.toString());
+        infoEvento.setDetEvento(detEvento);
 
-        final NFEventoCancelamento evento = new NFEventoCancelamento();
-        evento.setInfoEvento(infoEvento);
-        evento.setVersao(WSCancelamento.VERSAO_LEIAUTE);
+        final TEvento evento = new TEvento();
+        evento.setInfEvento(infoEvento);
+        evento.setVersao(WSCancelamento.VERSAO_LEIAUTE.toString());
 
-        final NFEnviaEventoCancelamento enviaEvento = new NFEnviaEventoCancelamento();
-        enviaEvento.setEvento(Collections.singletonList(evento));
+        final TEnvEvento enviaEvento = new TEnvEvento();
+        enviaEvento.getEvento().add(evento);
         enviaEvento.setIdLote(Long.toString(ZonedDateTime.now(this.config.getTimeZone().toZoneId()).toInstant().toEpochMilli()));
-        enviaEvento.setVersao(WSCancelamento.VERSAO_LEIAUTE);
-        return enviaEvento;
+        enviaEvento.setVersao(WSCancelamento.VERSAO_LEIAUTE.toString());
+
+        JAXBContext context = JAXBContext.newInstance(TEnvEvento.class);
+        Marshaller marshaller = context.createMarshaller();
+
+        JAXBElement<TEnvEvento> tEnvEvento = new ObjectFactory().createEnvEvento(enviaEvento);
+
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(tEnvEvento, stringWriter);
+        return stringWriter.toString();
     }
 }

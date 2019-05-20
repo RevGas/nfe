@@ -1,10 +1,9 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.ObjectFactory;
-import br.inf.portalfiscal.nfe.TConsCad;
-import br.inf.portalfiscal.nfe.TRetConsCad;
-import br.inf.portalfiscal.nfe.TUfCons;
-
+import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.ObjectFactory;
+import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TConsCad;
+import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TRetConsCad;
+import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TUfCons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,7 @@ class WSConsultaCadastro {
         this.config = config;
     }
 
-    TRetConsCad consultaCadastro(final String cnpj, final DFUnidadeFederativa UF) throws Exception {
+    br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TRetConsCad consultaCadastro(final String cnpj, final DFUnidadeFederativa UF) throws Exception {
         return efetuaConsulta(getDadosConsulta(cnpj, UF), UF);
     }
 

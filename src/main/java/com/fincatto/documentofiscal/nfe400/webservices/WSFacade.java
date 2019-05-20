@@ -1,8 +1,6 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.TRetConsCad;
 import br.inf.portalfiscal.nfe.TRetConsReciNFe;
-import br.inf.portalfiscal.nfe.TRetEnvEvento;
 
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import br.inf.portalfiscal.nfe.TRetInutNFe;
@@ -14,7 +12,6 @@ import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
-import com.fincatto.documentofiscal.nfe400.classes.evento.cartacorrecao.NFProtocoloEventoCartaCorrecao;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
 import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFProtocoloEventoManifestacaoDestinatario;
 import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFTipoEventoManifestacaoDestinatario;
@@ -45,6 +42,7 @@ public class WSFacade {
     private final WSInutilizacao wsInutilizacao;
     private final WSManifestacaoDestinatario wSManifestacaoDestinatario;
 //    private final WSDistribuicaoNFe wSDistribuicaoNFe;
+    private final WSCancelamento wSCancelamento;
 
     public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
         HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
@@ -62,6 +60,7 @@ public class WSFacade {
         this.wsInutilizacao = new WSInutilizacao(config);
         this.wSManifestacaoDestinatario = new WSManifestacaoDestinatario(config);
 //        this.wSDistribuicaoNFe = new WSDistribuicaoNFe(config);
+        this.wSCancelamento = new WSCancelamento(config);
     }
 
     /**
@@ -123,47 +122,24 @@ public class WSFacade {
 
     /**
      * Faz a correcao da nota
-     * @param chaveDeAcesso chave de acesso da nota
-     * @param textoCorrecao texto de correcao
-     * @param numeroSequencialEvento numero sequencial de evento, esse numero nao pode ser repetido!
+     * @param chNFe chave de acesso da nota
+     * @param xCorrecao texto de correcao
+     * @param nSeqEvento numero sequencial de evento, esse numero nao pode ser repetido!
      * @return dados da correcao da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFEnviaEventoRetorno corrigeNota(final String chaveDeAcesso, final String textoCorrecao, final int numeroSequencialEvento) throws Exception {
-        return this.wsCartaCorrecao.corrigeNota(chaveDeAcesso, textoCorrecao, numeroSequencialEvento);
+    public br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TRetEnvEvento corrigeNota(final String chNFe, final String xCorrecao, final int nSeqEvento) throws Exception {
+        return this.wsCartaCorrecao.corrigeNota(chNFe, xCorrecao, nSeqEvento);
     }
 
     /**
      * Faz a correcao da nota com o evento ja assinado ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
-     * @param chave chave de acesso da nota
-     * @param eventoAssinadoXml evento ja assinado em formato XML
-     * @return dados da correcao da nota retornado pelo webservice
-     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
-     */
-    public NFEnviaEventoRetorno corrigeNotaAssinada(final String chave, final String eventoAssinadoXml) throws Exception {
-        return this.wsCartaCorrecao.corrigeNotaAssinada(chave, eventoAssinadoXml);
-    }
-
-    /**
-     * Faz a correcao da nota com o evento ja assinado.
      * @param eventoAssinadoXml evento ja assinado em formato XML
      * @return dados da correcao da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
     public NFEnviaEventoRetorno corrigeNotaAssinada(final String eventoAssinadoXml) throws Exception {
         return this.wsCartaCorrecao.corrigeNotaAssinada(eventoAssinadoXml);
-    }
-
-    public NFProtocoloEventoCartaCorrecao corrigeNotaAssinadaProtocolo(final String eventoAssinadoXml) throws Exception {
-        return this.wsCartaCorrecao.corrigeNotaAssinadaProtocolo(eventoAssinadoXml);
-    }
-
-    public NFProtocoloEventoCartaCorrecao corrigeNotaAssinadaProtocolo(final String chaveDeAcesso, final String textoCorrecao, final int numeroSequencialEvento) throws Exception {
-        return this.wsCartaCorrecao.corrigeNotaAssinadaProtocolo(getXmlAssinado(chaveDeAcesso, textoCorrecao, numeroSequencialEvento));
-    }
-
-    public String getXmlAssinado(final String chaveDeAcesso, final String textoCorrecao, final int numeroSequencialEvento) throws Exception {
-        return this.wsCartaCorrecao.getXmlAssinado(chaveDeAcesso, textoCorrecao, numeroSequencialEvento);
     }
 
     /**
@@ -174,13 +150,25 @@ public class WSFacade {
      * @param numeroProtocolo numero do protocolo da nota
      * @param motivo motivo do cancelamento
      * @param nSeqEvento
-     * @return dados do cancelamento da nota retornado pelo webservice
+     * @return dados do evento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chave, final String numeroProtocolo, final String motivo, final String nSeqEvento, final String cnpj) throws Exception {
+    public br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chave, final String numeroProtocolo, final String motivo, final String nSeqEvento, final String cnpj) throws Exception {
         return this.wsEvento.enviaEvento(descEvento, tpEvento, chave, numeroProtocolo, motivo, nSeqEvento, cnpj);
     }
 
+    /**
+     * Faz o envio do cancelamento da nota
+     * @param chNFe de Acesso da NF-e vinculada ao Evento
+     * @param nProt Informar o número do Protocolo de Autorização da NF-e a ser Cancelada.
+     * @param xJust Informar a justificativa do cancelamento
+     * @return dados do cancelamento da nota retornado pelo webservice
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+     */
+    public br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento cancelaNota(final String chNFe, final String nProt, final String xJust) throws Exception {
+        return this.wSCancelamento.cancelaNota(chNFe, nProt, xJust);
+    }
+    
     /**
      * Faz o cancelamento da nota com evento ja assinado ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
      * @param chave chave de acesso da nota
@@ -226,7 +214,7 @@ public class WSFacade {
      * @return dados da consulta da pessoa juridica retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public TRetConsCad consultaCadastro(final String cnpj, final DFUnidadeFederativa uf) throws Exception {
+    public br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TRetConsCad consultaCadastro(final String cnpj, final DFUnidadeFederativa uf) throws Exception {
         return this.wsConsultaCadastro.consultaCadastro(cnpj, uf);
     }
 

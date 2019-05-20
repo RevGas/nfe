@@ -1,7 +1,7 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.TConsCad;
-import br.inf.portalfiscal.nfe.TRetConsCad;
+import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TConsCad;
+import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TRetConsCad;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import java.util.Arrays;
 import javax.xml.bind.JAXBElement;

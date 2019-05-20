@@ -4,7 +4,7 @@
     <groupId>com.tartigrado</groupId>
     <artifactId>nfe</artifactId>
     <packaging>jar</packaging>
-    <version>4.0.33</version>
+    <version>4.0.37</version>
     <name>nfe</name>
     <description>Biblioteca de comunicacao de nota fiscal eletronica brasileira</description>
     <url>https://github.com/wmixvideo/nfe</url>
@@ -23,6 +23,14 @@
         <developerConnection>scm:git:git@github.com:wmixvideo/nfe.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+    
+    <repositories>
+        <repository>
+            <id>tartigrado</id>
+            <name>Tartigrado Repository</name>
+            <url>http://maven2.tartigrado.com/</url>
+        </repository>
+    </repositories>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -93,7 +101,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        
+
         <!-- Jasperreports -->
         <!-- http://mvnrepository.com/artifact/jasperreports/jasperreports -->
         <!-- http://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
@@ -112,14 +120,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
-         <!-- https://mvnrepository.com/artifact/net.sourceforge.barbecue/barbecue -->
+
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.barbecue/barbecue -->
         <dependency>
             <groupId>net.sourceforge.barbecue</groupId>
             <artifactId>barbecue</artifactId>
             <version>1.5-beta1</version>
         </dependency>
-        
+
         <dependency>
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
@@ -130,10 +138,40 @@
             <artifactId>commons-codec</artifactId>
             <version>1.11</version>
         </dependency>
+        <dependency>
+            <groupId>com.tartigrado</groupId>
+            <artifactId>model_nfe</artifactId>
+            <version>PL_009_V4_00_NT_2018_005_v1.20</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tartigrado</groupId>
+            <artifactId>model_consulta_cadastro</artifactId>
+            <version>PL_006v</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tartigrado</groupId>
+            <artifactId>model_evento_generico</artifactId>
+            <version>Evento_Generico_PL_v1.01</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tartigrado</groupId>
+            <artifactId>model_distribuicao</artifactId>
+            <version>PL_NFeDistDFe_102</version>
+        </dependency>
+         <dependency>
+            <groupId>com.tartigrado</groupId>
+            <artifactId>model_evento_cancelamento</artifactId>
+            <version>Evento_Canc_PL_v1.01</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tartigrado</groupId>
+            <artifactId>model_evento_carta_correcao</artifactId>
+            <version>Evento_CCe_PL_v1.01</version>
+        </dependency>
     </dependencies>
 
     <distributionManagement>
-         <repository>
+        <repository>
             <id>tartigrado-ftp</id>
             <url>ftp://ftp.tartigrado.com/www/maven2</url>
         </repository>
@@ -207,7 +245,7 @@
                     <debug>true</debug>
                 </configuration>
             </plugin>
-<!--            <plugin>
+            <!--            <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>1.6.8</version>
