@@ -301,9 +301,12 @@ $V{ACRESCIMOS}.signum() < 0 ? "DESCONTOS R$" : "ACRÉSCIMOS R$"]]></textFieldExp
 				</textElement>
 				<textFieldExpression><![CDATA[(($F{nota.info.destinatario.cpf} != null && !$F{nota.info.destinatario.cpf}.isEmpty()) ||
 ($F{nota.info.destinatario.cnpj} != null && !$F{nota.info.destinatario.cnpj}.isEmpty())) ?
-($F{nota.info.destinatario.endereco.logradouro} + ", " + $F{nota.info.destinatario.endereco.numero} + ", " + $F{nota.info.destinatario.endereco.bairro} + ", " +
-$F{nota.info.destinatario.endereco.descricaoMunicipio} + " - " + $F{nota.info.destinatario.endereco.uf})
-: ""]]></textFieldExpression>
+($F{nota.info.destinatario.endereco.uf}!=null?( $F{nota.info.destinatario.endereco.logradouro} + ", " +
+ $F{nota.info.destinatario.endereco.numero} + ", " +
+ $F{nota.info.destinatario.endereco.bairro} + ", " +
+ $F{nota.info.destinatario.endereco.descricaoMunicipio} + " - " +
+ $F{nota.info.destinatario.endereco.uf}):"")
+:""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="textField" positionType="Float" x="8" y="54" width="110" height="10" isRemoveLineWhenBlank="true" uuid="48388237-7389-43ca-b343-cf17f3157ce7">

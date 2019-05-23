@@ -916,13 +916,13 @@ $P{REPORT_DATA_SOURCE}).dataSource("/nfeProc/NFe/infNFe/cobr/dup")]]></dataSourc
 					<reportElement x="234" y="31" width="1" height="19" uuid="617c164d-b4ec-414c-8c00-2949c0a8d78e"/>
 				</line>
 				<line>
-					<reportElement x="216" y="10" width="1" height="20" uuid="2351fd5d-fb1f-442f-8ffc-8962cef7d244"/>
+					<reportElement x="195" y="10" width="1" height="20" uuid="2351fd5d-fb1f-442f-8ffc-8962cef7d244"/>
 				</line>
 				<line>
-					<reportElement x="279" y="10" width="1" height="20" uuid="4d703e17-e563-4f1c-838f-0dc9a5714cc7"/>
+					<reportElement x="322" y="10" width="1" height="20" uuid="4d703e17-e563-4f1c-838f-0dc9a5714cc7"/>
 				</line>
 				<line>
-					<reportElement x="359" y="10" width="1" height="20" uuid="0e643a5b-2fde-4c99-83b6-e69e6dbf3f66"/>
+					<reportElement x="367" y="10" width="1" height="20" uuid="0e643a5b-2fde-4c99-83b6-e69e6dbf3f66"/>
 				</line>
 				<line>
 					<reportElement x="421" y="10" width="1" height="40" uuid="146c71a2-4a0c-45fb-8fa3-0ec6019a6276"/>
@@ -935,21 +935,21 @@ $P{REPORT_DATA_SOURCE}).dataSource("/nfeProc/NFe/infNFe/cobr/dup")]]></dataSourc
 					<text><![CDATA[RAZÃO SOCIAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="219" y="12" width="55" height="7" uuid="0bd2d055-66b6-44f5-a0de-30367dcf68d7"/>
+					<reportElement x="197" y="12" width="123" height="7" uuid="0bd2d055-66b6-44f5-a0de-30367dcf68d7"/>
 					<textElement>
 						<font fontName="Times New Roman" size="5" isBold="false"/>
 					</textElement>
-					<text><![CDATA[FRETE POR CONTA]]></text>
+					<text><![CDATA[MODALIDADE DO FRETE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="282" y="12" width="55" height="7" uuid="bd8653e6-e51a-492a-88bc-b80e2ced7111"/>
+					<reportElement x="325" y="12" width="38" height="7" uuid="bd8653e6-e51a-492a-88bc-b80e2ced7111"/>
 					<textElement>
 						<font fontName="Times New Roman" size="5" isBold="false"/>
 					</textElement>
 					<text><![CDATA[CODIGO ANTT]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="362" y="12" width="59" height="7" uuid="2c3f5add-3e54-467e-a5b8-501fa9291e6e"/>
+					<reportElement x="370" y="12" width="49" height="7" uuid="2c3f5add-3e54-467e-a5b8-501fa9291e6e"/>
 					<textElement>
 						<font fontName="Times New Roman" size="5" isBold="false"/>
 					</textElement>
@@ -1040,7 +1040,7 @@ $P{REPORT_DATA_SOURCE}).dataSource("/nfeProc/NFe/infNFe/cobr/dup")]]></dataSourc
 					<text><![CDATA[INSCRIÇÃO ESTADUAL]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="2" y="19" width="210" height="10" uuid="583f8213-aeaf-4de2-a421-d47f31a79c06"/>
+					<reportElement x="2" y="19" width="178" height="10" uuid="583f8213-aeaf-4de2-a421-d47f31a79c06"/>
 					<textElement>
 						<font fontName="Times New Roman" size="8"/>
 					</textElement>
@@ -1118,17 +1118,19 @@ $P{REPORT_DATA_SOURCE}).dataSource("/nfeProc/NFe/infNFe/cobr/dup")]]></dataSourc
 					<textFieldExpression><![CDATA[Double.parseDouble($F{TranspPesoLiq})]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="219" y="19" width="55" height="10" uuid="9d0a1a41-31b3-4d62-aed2-f3a91c897f1d"/>
+					<reportElement x="196" y="19" width="126" height="10" uuid="9d0a1a41-31b3-4d62-aed2-f3a91c897f1d"/>
 					<textElement>
-						<font fontName="Times New Roman" size="8"/>
+						<font fontName="Times New Roman" size="5"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{TranspModFrete}.equals("0")) ? "0 - Emitente" :
-($F{TranspModFrete}.equals("1")) ? "1 - Destinatário" :
-($F{TranspModFrete}.equals("2")) ? "2 - Terceiros" :
-($F{TranspModFrete}.equals("9")) ? "9 - Sem frete" : ""]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{TranspModFrete}.equals("0")) ? "0-Contratação do Frete por conta do Remetente(CIF)" :
+($F{TranspModFrete}.equals("1")) ? "1-Contratação do Frete por conta do Destinatário(FOB)" :
+($F{TranspModFrete}.equals("2")) ? "2-Contratação do Frete por conta de Terceiros" :
+($F{TranspModFrete}.equals("3")) ? "3-Transporte Próprio por conta do Remetente" :
+($F{TranspModFrete}.equals("4")) ? "4-Transporte Próprio por conta do Destinatário" :
+($F{TranspModFrete}.equals("9")) ? "9-Sem Ocorrência de Transporte" : ""]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="362" y="19" width="59" height="10" uuid="6d12bbac-1a4d-4c89-b1a7-b17ddf0417ab"/>
+					<reportElement x="374" y="19" width="42" height="10" uuid="6d12bbac-1a4d-4c89-b1a7-b17ddf0417ab"/>
 					<textElement>
 						<font fontName="Times New Roman" size="8"/>
 					</textElement>
@@ -1142,7 +1144,7 @@ $P{REPORT_DATA_SOURCE}).dataSource("/nfeProc/NFe/infNFe/cobr/dup")]]></dataSourc
 					<textFieldExpression><![CDATA[$F{TranspVeicUF}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="281" y="19" width="59" height="10" uuid="319fca85-b5fc-4210-a859-935ea15c43db"/>
+					<reportElement x="324" y="19" width="41" height="10" uuid="319fca85-b5fc-4210-a859-935ea15c43db"/>
 					<textElement>
 						<font fontName="Times New Roman" size="8"/>
 					</textElement>
