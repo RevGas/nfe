@@ -70,6 +70,26 @@ public class NFeRecepcaoEvento4
     public NFeRecepcaoEventoSoap getNFeRecepcaoEventoSoap12() {
         return super.getPort(new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", "NFeRecepcaoEventoSoap12"), NFeRecepcaoEventoSoap.class);
     }
+    
+    /**
+     * 
+     * @return
+     *     returns NFeRecepcaoEventoSoap
+     */
+    @WebEndpoint(name = "NFeRecepcaoEventoSoap12")
+    public NFeRecepcaoEventoSoapCancelamento getNFeRecepcaoEventoSoapCancelamento() {
+        return super.getPort(new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", "NFeRecepcaoEventoSoap12"), NFeRecepcaoEventoSoapCancelamento.class);
+    }
+    
+    /**
+     * 
+     * @return
+     *     returns NFeRecepcaoEventoSoap
+     */
+    @WebEndpoint(name = "NFeRecepcaoEventoSoap12")
+    public NFeRecepcaoEventoSoapCartaCorrecao getNFeRecepcaoEventoSoapCartaCorrecao() {
+        return super.getPort(new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", "NFeRecepcaoEventoSoap12"), NFeRecepcaoEventoSoapCartaCorrecao.class);
+    }
 
     /**
      * 

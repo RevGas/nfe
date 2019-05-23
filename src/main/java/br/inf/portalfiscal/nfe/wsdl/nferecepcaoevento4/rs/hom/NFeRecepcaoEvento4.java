@@ -75,6 +75,26 @@ public class NFeRecepcaoEvento4
 
     /**
      * 
+     * @return
+     *     returns NFeRecepcaoEvento4Soap
+     */
+    @WebEndpoint(name = "NFeRecepcaoEvento4Soap")
+    public NFeRecepcaoEvento4SoapCancelamento getNFeRecepcaoEvento4SoapCancelamento() {
+        return super.getPort(new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", "NFeRecepcaoEvento4Soap"), NFeRecepcaoEvento4SoapCancelamento.class);
+    }
+
+    /**
+     * 
+     * @return
+     *     returns NFeRecepcaoEvento4Soap
+     */
+    @WebEndpoint(name = "NFeRecepcaoEvento4Soap")
+    public NFeRecepcaoEvento4SoapCartaCorrecao getNFeRecepcaoEvento4SoapCartaCorrecao() {
+        return super.getPort(new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", "NFeRecepcaoEvento4Soap"), NFeRecepcaoEvento4SoapCartaCorrecao.class);
+    }
+
+    /**
+     * 
      * @param features
      *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return

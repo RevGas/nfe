@@ -1,117 +1,82 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.ObjectFactory;
+import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TEnvEvento;
+import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TEvento;
+import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe400.classes.NFAutorizador400;
-import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFEnviaEventoManifestacaoDestinatario;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFEventoManifestacaoDestinatario;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFInfoEventoManifestacaoDestinatario;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFInfoManifestacaoDestinatario;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFProtocoloEventoManifestacaoDestinatario;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFTipoEventoManifestacaoDestinatario;
 import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
-import com.fincatto.documentofiscal.persister.DFPersister;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.StringWriter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Collections;
+import java.time.format.DateTimeFormatter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 public class WSManifestacaoDestinatario {
 
     private static final BigDecimal VERSAO_LEIAUTE = new BigDecimal("1.00");
-    private static final Logger LOGGER = LoggerFactory.getLogger(WSManifestacaoDestinatario.class);
     private final NFeConfig config;
 
     public WSManifestacaoDestinatario(final NFeConfig config) {
         this.config = config;
     }
 
-    NFEnviaEventoRetorno manifestaDestinatarioNotaAssinada(final String chaveAcesso, final String eventoAssinadoXml) throws Exception {
-//        final OMElement omElementResult = this.efetuaManifestacaoDestinatario(eventoAssinadoXml, chaveAcesso);
-//        return new DFPersister().read(NFEnviaEventoRetorno.class, omElementResult.toString());
-        return null;
+    TRetEnvEvento manifestaDestinatarioNota(final String chNFe, final String descEvento, final String tpEvento, final String xJust, final String CNPJ) throws Exception {
+        String xml = this.gerarDadosManifestacaoDestinatario(chNFe, descEvento, tpEvento, xJust, CNPJ);
+        xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
+        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
+        return efetuaManifestacaoDestinatario(xmlAssinado, chNFe);
     }
 
-    NFEnviaEventoRetorno manifestaDestinatarioNota(final String chaveAcesso, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) throws Exception {
-        final String manifestacaoDestinatarioNotaXML = this.gerarDadosManifestacaoDestinatario(chaveAcesso, tipoEvento, motivo, cnpj).toString();
-        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(manifestacaoDestinatarioNotaXML);
-//        final OMElement omElementResult = this.efetuaManifestacaoDestinatario(xmlAssinado, chaveAcesso);
-//        return new DFPersister().read(NFEnviaEventoRetorno.class, omElementResult.toString());
-        return null;
+    private br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento efetuaManifestacaoDestinatario(final String xml, final String chaveAcesso) throws Exception {
+        final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayManifestaDestinatario.AN.getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
     }
 
-    private String efetuaManifestacaoDestinatario(final String xmlAssinado, final String chaveAcesso) throws Exception {
-//        final NFeRecepcaoEvento4Stub.NfeDadosMsg dados = new NFeRecepcaoEvento4Stub.NfeDadosMsg();
-//        final OMElement omElementXML = AXIOMUtil.stringToOM(xmlAssinado);
-//        WSManifestacaoDestinatario.LOGGER.debug(omElementXML.toString());
-//        dados.setExtraElement(omElementXML);
-        final NotaFiscalChaveParser parser = new NotaFiscalChaveParser(chaveAcesso);
-        final NFAutorizador400 autorizador = NFAutorizador400.valueOfChaveAcesso(chaveAcesso);
-        final String urlWebService = autorizador.getRecepcaoEventoAN(this.config.getAmbiente());
-        if (urlWebService == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para RecepcaoEvento " + parser.getModelo().name() + ", autorizador " + autorizador.name());
-        }
+    private String gerarDadosManifestacaoDestinatario(final String chNFe, final String descEvento, final String tpEvento, final String xJust, final String CNPJ) throws JAXBException {
+        TEvento.InfEvento.DetEvento detEvento = new TEvento.InfEvento.DetEvento();
+        detEvento.setVersao(WSManifestacaoDestinatario.VERSAO_LEIAUTE.toString());
+        detEvento.setDescEvento(descEvento);
+        detEvento.setXJust(xJust);
+        
+        
+        final TEvento.InfEvento infoEvento = new TEvento.InfEvento();
+        infoEvento.setTpAmb(this.config.getAmbiente().getCodigo());
+        infoEvento.setChNFe(chNFe);
+        infoEvento.setCNPJ(CNPJ);
+        infoEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").format(LocalDateTime.now())); //TODO
+        infoEvento.setDhEvento(infoEvento.getDhEvento() + "-03:00");
+        infoEvento.setId(String.format("ID%s%s0%s", tpEvento, chNFe, "1"));
+        infoEvento.setNSeqEvento("1");
+        infoEvento.setCOrgao(DFUnidadeFederativa.RFB.getCodigoIbge());
+        infoEvento.setTpEvento(tpEvento);
+        infoEvento.setVerEvento(WSManifestacaoDestinatario.VERSAO_LEIAUTE.toString());
+        infoEvento.setDetEvento(detEvento);
 
-//        final NfeResultMsg nfeRecepcaoEvento = new NFeRecepcaoEvento4Stub(urlWebService).nfeRecepcaoEvento(dados);
-//        final OMElement omElementResult = nfeRecepcaoEvento.getExtraElement();
-//        WSManifestacaoDestinatario.LOGGER.debug(omElementResult.toString());
-//        return omElementResult;
-        return null;
-    }
+        final TEvento evento = new TEvento();
+        evento.setInfEvento(infoEvento);
+        evento.setVersao(WSManifestacaoDestinatario.VERSAO_LEIAUTE.toString());
 
-    NFProtocoloEventoManifestacaoDestinatario manifestaDestinatarioNotaProtocolo(final String chaveAcesso, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) throws Exception {
-    	String manifestacaoDestinatarioNotaXML = this.gerarDadosManifestacaoDestinatario(chaveAcesso, tipoEvento, motivo, cnpj).toString();
-    	
-    	final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(manifestacaoDestinatarioNotaXML);
-//    	final OMElement omElementResult = this.efetuaManifestacaoDestinatario(xmlAssinado, chaveAcesso);
-    	
-    	NFEnviaEventoManifestacaoDestinatario evento = new DFPersister().read(NFEnviaEventoManifestacaoDestinatario.class, xmlAssinado);
-//    	NFEnviaEventoRetorno retorno = new DFPersister().read(NFEnviaEventoRetorno.class, omElementResult.toString());
-    	
-    	// Excessao se o codigo status do retorno diferente de 128 - Lote de Evento Processado 
-//		if (retorno.getCodigoStatusReposta() != 128) {
-//			throw new RuntimeException("Status: " + retorno.getCodigoStatusReposta() + " - Motivo: " + retorno.getMotivo());
-//		}
-
-    	NFProtocoloEventoManifestacaoDestinatario nfProtocoloEventoManifestacaoDestinatario = new NFProtocoloEventoManifestacaoDestinatario();
-    	nfProtocoloEventoManifestacaoDestinatario.setVersao(evento.getVersao());
-    	nfProtocoloEventoManifestacaoDestinatario.setEvento(evento.getEvento().get(0));
-//    	nfProtocoloEventoManifestacaoDestinatario.setEventoRetorno(retorno.getEventoRetorno().get(0));
-    	
-    	return nfProtocoloEventoManifestacaoDestinatario;
-    }
-
-    private NFEnviaEventoManifestacaoDestinatario gerarDadosManifestacaoDestinatario(final String chaveAcesso, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) {
-        final NFInfoManifestacaoDestinatario manifestacaoDestinatario = new NFInfoManifestacaoDestinatario();
-        manifestacaoDestinatario.setDescricaoEvento(tipoEvento.getDescricao());
-        manifestacaoDestinatario.setVersao(WSManifestacaoDestinatario.VERSAO_LEIAUTE);
-        manifestacaoDestinatario.setJustificativa(motivo);
-
-        final NFInfoEventoManifestacaoDestinatario infoEvento = new NFInfoEventoManifestacaoDestinatario();
-        infoEvento.setAmbiente(this.config.getAmbiente());
-        infoEvento.setChave(chaveAcesso);
-        infoEvento.setCnpj(cnpj);
-        infoEvento.setDataHoraEvento(ZonedDateTime.now(this.config.getTimeZone().toZoneId()));
-        infoEvento.setId(String.format("ID%s%s0%s", tipoEvento.getCodigo(), chaveAcesso, "1"));
-        infoEvento.setNumeroSequencialEvento(1);
-        infoEvento.setOrgao(DFUnidadeFederativa.RFB);
-        infoEvento.setCodigoEvento(tipoEvento.getCodigo());
-        infoEvento.setVersaoEvento(WSManifestacaoDestinatario.VERSAO_LEIAUTE);
-        infoEvento.setManifestacaoDestinatario(manifestacaoDestinatario);
-
-        final NFEventoManifestacaoDestinatario evento = new NFEventoManifestacaoDestinatario();
-        evento.setInfoEvento(infoEvento);
-        evento.setVersao(WSManifestacaoDestinatario.VERSAO_LEIAUTE);
-
-        final NFEnviaEventoManifestacaoDestinatario enviaEvento = new NFEnviaEventoManifestacaoDestinatario();
-        enviaEvento.setEvento(Collections.singletonList(evento));
+        final TEnvEvento enviaEvento = new TEnvEvento();
+        enviaEvento.getEvento().add(evento);
         enviaEvento.setIdLote(Long.toString(ZonedDateTime.now(this.config.getTimeZone().toZoneId()).toInstant().toEpochMilli()));
-        enviaEvento.setVersao(WSManifestacaoDestinatario.VERSAO_LEIAUTE);
-        return enviaEvento;
+        enviaEvento.setVersao(WSManifestacaoDestinatario.VERSAO_LEIAUTE.toString());
+
+        JAXBContext context = JAXBContext.newInstance(TEnvEvento.class);
+        Marshaller marshaller = context.createMarshaller();
+
+        JAXBElement<TEnvEvento> tEnvEvento = new ObjectFactory().createEnvEvento(enviaEvento);
+
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(tEnvEvento, stringWriter);
+        return stringWriter.toString();
     }
+
 }

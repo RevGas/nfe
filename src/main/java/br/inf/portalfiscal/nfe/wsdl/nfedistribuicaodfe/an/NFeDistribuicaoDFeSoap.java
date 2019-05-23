@@ -18,7 +18,8 @@ import javax.xml.ws.ResponseWrapper;
  */
 @WebService(name = "NFeDistribuicaoDFeSoap", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeDistribuicaoDFe")
 @XmlSeeAlso({
-    ObjectFactory.class
+    ObjectFactory.class,
+    br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.ObjectFactory.class
 })
 public interface NFeDistribuicaoDFeSoap {
 

@@ -92,7 +92,7 @@ public class NFeRecepcaoEvento4
     public NFeRecepcaoEvento4SoapCartaCorrecao getNFeRecepcaoEvento4SoapCartaCorrecao() {
         return super.getPort(new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", "NFeRecepcaoEvento4Soap"), NFeRecepcaoEvento4SoapCartaCorrecao.class);
     }
-
+    
     private static URL __getWsdlLocation() {
         if (NFERECEPCAOEVENTO4_EXCEPTION!= null) {
             throw NFERECEPCAOEVENTO4_EXCEPTION;

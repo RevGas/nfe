@@ -13,8 +13,6 @@ import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFProtocoloEventoManifestacaoDestinatario;
-import com.fincatto.documentofiscal.nfe400.classes.evento.manifestacaodestinatario.NFTipoEventoManifestacaoDestinatario;
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
@@ -220,36 +218,23 @@ public class WSFacade {
 
     /**
      * Faz a manifestação do destinatário da nota
-     * @param chave chave de acesso da nota
-     * @param tipoEvento tipo do evento da manifestacao do destinatario
-     * @param motivo motivo do cancelamento
-     * @param cnpj cnpj do autor do evento
+     * @param chNFe chave de acesso da nota
+     * @param descEvento Informar a descrição do evento: Confirmacao da Operacao, Ciencia da Operacao, Desconhecimento da Operacao, Operacao nao Realizada
+     * @param tpEvento tipo do evento da manifestacao do destinatario
+     * @param xJust motivo do cancelamento
+     * @param CNPJ cnpj do autor do evento
      * @return dados da manifestacao do destinatario da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFEnviaEventoRetorno manifestaDestinatarioNota(final String chave, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) throws Exception {
-        return this.wSManifestacaoDestinatario.manifestaDestinatarioNota(chave, tipoEvento, motivo, cnpj);
-    }
-    
-    public NFProtocoloEventoManifestacaoDestinatario manifestaDestinatarioNotaProtocolo(final String chave, final NFTipoEventoManifestacaoDestinatario tipoEvento, final String motivo, final String cnpj) throws Exception {
-        return this.wSManifestacaoDestinatario.manifestaDestinatarioNotaProtocolo(chave, tipoEvento, motivo, cnpj);
-    }
-
-    /**
-     * Faz a manifestação do destinatário da nota com evento ja assinado ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
-     * @param chave chave de acesso da nota
-     * @param eventoAssinadoXml evento ja assinado em formato XML
-     * @return dados da manifestacao do destinatario da nota retornado pelo webservice
-     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
-     */
-    public NFEnviaEventoRetorno manifestaDestinatarioNotaAssinada(final String chave, final String eventoAssinadoXml) throws Exception {
-        return this.wSManifestacaoDestinatario.manifestaDestinatarioNotaAssinada(chave, eventoAssinadoXml);
+    public br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento manifestaDestinatarioNota(final String chNFe, final String descEvento, final String tpEvento, final String xJust, final String CNPJ) throws Exception {
+        return this.wSManifestacaoDestinatario.manifestaDestinatarioNota(chNFe, descEvento, tpEvento, xJust, CNPJ);
     }
 
     /**
      * Faz consulta de distribuicao das notas fiscais. Pode ser feita pela chave de acesso ou utilizando o NSU (numero sequencial unico) da receita.
-     * @param cpfOuCnpj CPF ou CNPJ da pessoa fisica ou juridica a consultar
+     * @param cnpj CPF ou CNPJ da pessoa fisica ou juridica a consultar
      * @param uf Unidade federativa da pessoa juridica a consultar
+     * @param chaveAcesso
      * @param nsu Número Sequencial Único. Geralmente esta consulta será utilizada quando identificado pelo interessado um NSU faltante.
      *            O Web Service retornará o documento ou informará que o NSU não existe no Ambiente Nacional. Assim, esta
      *            consulta fechará a lacuna do NSU identificado como faltante.

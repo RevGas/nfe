@@ -2,7 +2,6 @@ package com.fincatto.documentofiscal.nfe310.webservices;
 
 import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.DistDFeInt;
 import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.RetDistDFeInt;
-import java.io.StringReader;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
@@ -16,9 +15,7 @@ import javax.xml.namespace.QName;
 import javax.xml.transform.dom.DOMResult;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import com.fincatto.nfe310.converters.ElementStringConverter;
 
 import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NFeDistribuicaoDFe;
 import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NFeDistribuicaoDFeSoap;
@@ -89,10 +86,7 @@ class WSDistribuicaoDocumentoFiscal {
         NFeDistribuicaoDFeSoap port = new NFeDistribuicaoDFe().getNFeDistribuicaoDFeSoap12();
         NfeDistDFeInteresseResponse.NfeDistDFeInteresseResult result = port.nfeDistDFeInteresse(nfeDadosMsg);
 
-        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-
-        return (RetDistDFeInt) unmarshaller.unmarshal(new StringReader(ElementStringConverter.write((Element) result.getContent().get(0))));
+        return (RetDistDFeInt) result.getContent().get(0);
     }
 
 }
