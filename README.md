@@ -27,29 +27,11 @@ Caso não possua conhecimento técnico para criar notas fiscais, um profissional
   <version>3.0.5</version>
 </dependency>
 ```
-### Fazendo o clone do projeto (última versão em desenvolvimento)
-1. Faça o clone do projeto com o comando:
+### Diretamente pelo código fonte (última versão em desenvolvimento)
  ```console
     git clone https://github.com/wmixvideo/nfe
+    mvn clean install
   ```
-2. Faça uma instalação local do projeto:
-- Rodando os testes:
-  ```console
-       mvn clean install -Dgpg.skip=true
-  ```
-- Sem rodar os testes:
-  ```console
-       mvn clean install -DskipTests=true -Dgpg.skip=true
-  ```
-3. Inclua no POM de seu projeto a dependência gerada pelo comando acima:
-```xml
-<dependency>
-  <groupId>com.github.wmixvideo</groupId>
-  <artifactId>nfe</artifactId>
-  <version>3.0.5</version>
-</dependency>
-```
- - Onde ```<version>3.0.5</version>``` é a versão atual do projeto definido no arquivo [pom.xml](https://github.com/wmixvideo/nfe/blob/master/pom.xml)
 
 ## Como usar
 Basicamente você precisará de uma implementação de **NFeConfig** (exemplificado abaixo), com informações de tipo de emissão, certificados
@@ -182,11 +164,13 @@ String xmlGerado = lote.toString();
 ### Convertendo nota XML em Java
 Existe uma classe que pode receber um File/String e converter para um objeto NFNota, faça da seguinte forma:
 ```java
-final NFNota nota = new NotaParser().notaParaObjeto(xmlNota);
+final NFNota nota = new DFPersister().read(NFNota.class, xmlNota);
+final NFNotaProcessada notaProcessada = new DFPersister().read(NFNotaProcessada.class, xmlNotaProcessada);
 ```
-Ou para uma nota já processada:
+
+Ou desabilitando o modo estrito (habilitado por padrão):
 ```java
-final NFNotaProcessada notaProcessada = new NotaParser().notaProcessadaParaObjeto(xmlNota);
+final NFNota nota = new DFPersister(false).read(NFNota.class, xmlNota);
 ```
 
 ### Armazenando notas autorizadas
@@ -203,7 +187,7 @@ final String xmlNotaRecuperada;
 // Assine a nota
 final String xmlNotaRecuperadaAssinada = new AssinaturaDigital(config).assinarDocumento(xmlNotaRecuperada);
 // Converta para objeto java
-final NFNota notaRecuperadaAssinada = new NotaParser().notaParaObjeto(xmlNotaRecuperadaAssinada);
+final NFNota notaRecuperadaAssinada = new DFPersister().read(NFNota.class, xmlNotaRecuperadaAssinada);
 // Crie o objeto NFNotaProcessada
 final NFNotaProcessada notaProcessada = new NFNotaProcessada();
 notaProcessada.setVersao(new BigDecimal(NFeConfig.VERSAO_NFE));
