@@ -236,14 +236,14 @@ public enum GatewayLoteEnvio {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
-            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeAutorizacao4().getNfeAutorizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeAutorizacao4().getNfeAutorizacao4Soap12();
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
-            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.hom.NfeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.hom.NfeAutorizacao4().getNfeAutorizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.hom.NfeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.hom.NfeAutorizacao4().getNfeAutorizacao4Soap12();
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         }
