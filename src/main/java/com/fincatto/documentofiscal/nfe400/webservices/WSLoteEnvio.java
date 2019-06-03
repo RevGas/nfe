@@ -15,6 +15,7 @@ import com.fincatto.documentofiscal.nfe400.utils.NFGeraChave;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCode20;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeContingenciaOffline20;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeEmissaoNormal20;
+import com.fincatto.documentofiscal.utils.Util;
 import com.fincatto.documentofiscal.validadores.xsd.XMLValidador;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -58,8 +59,13 @@ class WSLoteEnvio {
             nota.getInfo().getIdentificacao().setDigitoVerificador(geraChave.getDV());
             nota.getInfo().setIdentificador(geraChave.getChaveAcesso());
         }
+        //Remover caracteres especiais do xml para o autorizador MT
+        String _lote = lote.toString();
+        if (lote.getNotas().get(0).getInfo().getEmitente().getEndereco().getUf().equals(DFUnidadeFederativa.MT.getCodigo())) {
+             _lote = Util.convertToASCII2(_lote);
+        }
         // assina o lote
-        final String documentoAssinado = new AssinaturaDigital(this.config).assinarDocumento(lote.toString());
+        final String documentoAssinado = new AssinaturaDigital(this.config).assinarDocumento(_lote);
         final NFLoteEnvio loteAssinado = new DFParser().loteParaObjeto(documentoAssinado);
 
         // verifica se nao tem NFCe junto com NFe no lote e gera qrcode (apos assinar mesmo, eh assim)
