@@ -15,6 +15,7 @@ import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCode20;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeContingenciaOffline20;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeEmissaoNormal20;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+import com.fincatto.documentofiscal.utils.Util;
 import com.fincatto.documentofiscal.validadores.XMLValidador;
 import org.apache.commons.lang3.StringUtils;
 
@@ -55,7 +56,7 @@ class WSLoteEnvio implements DFLog {
         //Remover caracteres especiais do xml para o autorizador MT
         String _lote = lote.toString();
         if (lote.getNotas().get(0).getInfo().getEmitente().getEndereco().getUf().equals(DFUnidadeFederativa.MT.getCodigo())) {
-             _lote = Util.convertToASCII2(_lote);
+            _lote = Util.convertToASCII2(_lote);
         }
         // assina o lote
         final String documentoAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(_lote);
