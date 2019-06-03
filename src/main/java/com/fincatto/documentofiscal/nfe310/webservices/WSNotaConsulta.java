@@ -1,43 +1,95 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
-import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
-
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.Format;
-import org.w3c.dom.Element;
-
-import com.fincatto.nfe310.converters.ElementStringConverter;
-
-import br.inf.portalfiscal.nfe.wsdl.nfeconsulta2.svan.NfeCabecMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfeconsulta2.svan.NfeConsulta2;
-import br.inf.portalfiscal.nfe.wsdl.nfeconsulta2.svan.NfeConsulta2Soap;
-import br.inf.portalfiscal.nfe.wsdl.nfeconsulta2.svan.NfeConsultaNF2Result;
-import br.inf.portalfiscal.nfe.wsdl.nfeconsulta2.svan.NfeDadosMsg;
-import com.fincatto.documentofiscal.DFConfig;
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
+import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.nota.consulta.NFNotaConsulta;
 import com.fincatto.documentofiscal.nfe310.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe310.parsers.NotaFiscalChaveParser;
-import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
 
-class WSNotaConsulta {
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+
+class WSNotaConsulta implements DFLog {
+    
     private static final String NOME_SERVICO = "CONSULTAR";
     private static final String VERSAO_SERVICO = "3.10";
-    private final DFConfig config;
-
-    WSNotaConsulta(final DFConfig config) {
+    private final NFeConfig config;
+    
+    WSNotaConsulta(final NFeConfig config) {
         this.config = config;
     }
-
+    
     NFNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
-        return new Persister(new DFRegistryMatcher(), new Format(0)).read(NFNotaConsultaRetorno.class, efetuaConsulta(gerarDadosConsulta(chaveDeAcesso).toString(), chaveDeAcesso));
+//        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosConsulta(chaveDeAcesso).toString());
+//        this.getLogger().debug(omElementConsulta.toString());
+//        
+//        final OMElement omElementRetorno = this.efetuaConsulta(omElementConsulta, chaveDeAcesso);
+//        this.getLogger().debug(omElementRetorno.toString());
+//        
+//        return this.config.getPersister().read(NFNotaConsultaRetorno.class, omElementRetorno.toString());
+        return null;
     }
-
+    
+    private String efetuaConsulta(final String omElementConsulta, final String chaveDeAcesso) throws Exception {
+        final NotaFiscalChaveParser notaFiscalChaveParser = new NotaFiscalChaveParser(chaveDeAcesso);
+        
+        final boolean consultaNFeBahia = DFUnidadeFederativa.BA.equals(notaFiscalChaveParser.getNFUnidadeFederativa()) && DFModelo.NFE.equals(notaFiscalChaveParser.getModelo());
+        if (consultaNFeBahia) {
+            return this.efetuaConsultaBA(omElementConsulta, chaveDeAcesso);
+        } else {
+            return this.efetuaConsultaSVRS(omElementConsulta, chaveDeAcesso);
+        }
+    }
+    
+    private String efetuaConsultaSVRS(final String omElementConsulta, final String chaveDeAcesso) throws RemoteException {
+//        final NotaFiscalChaveParser notaFiscalChaveParser = new NotaFiscalChaveParser(chaveDeAcesso);
+//        final NfeConsulta2Stub.NfeCabecMsg cabec = new NfeConsulta2Stub.NfeCabecMsg();
+//        cabec.setCUF(notaFiscalChaveParser.getNFUnidadeFederativa().getCodigoIbge());
+//        cabec.setVersaoDados(WSNotaConsulta.VERSAO_SERVICO);
+//        
+//        final NfeConsulta2Stub.NfeCabecMsgE cabecE = new NfeConsulta2Stub.NfeCabecMsgE();
+//        cabecE.setNfeCabecMsg(cabec);
+//        
+//        final NfeConsulta2Stub.NfeDadosMsg dados = new NfeConsulta2Stub.NfeDadosMsg();
+//        dados.setExtraElement(omElementConsulta);
+//        
+//        final NFAutorizador31 autorizador = NFAutorizador31.valueOfChaveAcesso(chaveDeAcesso);
+//        final String endpoint = DFModelo.NFCE.equals(notaFiscalChaveParser.getModelo()) ? autorizador.getNfceConsultaProtocolo(this.config.getAmbiente()) : autorizador.getNfeConsultaProtocolo(this.config.getAmbiente());
+//        if (endpoint == null) {
+//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para ConsultaProtocolo " + notaFiscalChaveParser.getModelo().name() + ", autorizador " + autorizador.name());
+//        }
+//        
+//        final NfeConsultaNF2Result consultaNF2Result = new NfeConsulta2Stub(endpoint).nfeConsultaNF2(dados, cabecE);
+//        return consultaNF2Result.getExtraElement();
+        return null;
+    }
+    
+    private String efetuaConsultaBA(final String omElementConsulta, final String chaveDeAcesso) throws RemoteException {
+//        final NotaFiscalChaveParser notaFiscalChaveParser = new NotaFiscalChaveParser(chaveDeAcesso);
+//        final NfeConsultaStub.NfeCabecMsg cabec = new NfeConsultaStub.NfeCabecMsg();
+//        cabec.setCUF(notaFiscalChaveParser.getNFUnidadeFederativa().getCodigoIbge());
+//        cabec.setVersaoDados(WSNotaConsulta.VERSAO_SERVICO);
+//        
+//        final NfeConsultaStub.NfeCabecMsgE cabecE = new NfeConsultaStub.NfeCabecMsgE();
+//        cabecE.setNfeCabecMsg(cabec);
+//        
+//        final NfeConsultaStub.NfeDadosMsg dados = new NfeConsultaStub.NfeDadosMsg();
+//        dados.setExtraElement(omElementConsulta);
+//        
+//        final NFAutorizador31 autorizador = NFAutorizador31.valueOfChaveAcesso(chaveDeAcesso);
+//        final String endpoint = DFModelo.NFCE.equals(notaFiscalChaveParser.getModelo()) ? autorizador.getNfceConsultaProtocolo(this.config.getAmbiente()) : autorizador.getNfeConsultaProtocolo(this.config.getAmbiente());
+//        if (endpoint == null) {
+//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para ConsultaProtocolo " + notaFiscalChaveParser.getModelo().name() + ", autorizador " + autorizador.name());
+//        }
+//        
+//        final NfeConsultaNFResult consultaNFResult = new NfeConsultaStub(endpoint).nfeConsultaNF(dados, cabecE);
+//        return consultaNFResult.getExtraElement();
+        return null;
+    }
+    
     private NFNotaConsulta gerarDadosConsulta(final String chaveDeAcesso) {
         final NFNotaConsulta notaConsulta = new NFNotaConsulta();
         notaConsulta.setAmbiente(this.config.getAmbiente());
@@ -45,29 +97,6 @@ class WSNotaConsulta {
         notaConsulta.setServico(WSNotaConsulta.NOME_SERVICO);
         notaConsulta.setVersao(new BigDecimal(WSNotaConsulta.VERSAO_SERVICO));
         return notaConsulta;
-    }
-
-    private String efetuaConsulta(final String xml, final String chaveDeAcesso) throws RemoteException, MalformedURLException {
-        final NotaFiscalChaveParser notaFiscalChaveParser = new NotaFiscalChaveParser(chaveDeAcesso);
-
-        final NfeCabecMsg nfeCabecMsg = new NfeCabecMsg();
-
-        nfeCabecMsg.setCUF(notaFiscalChaveParser.getNFUnidadeFederativa().getCodigoIbge());
-        nfeCabecMsg.setVersaoDados(WSNotaConsulta.VERSAO_SERVICO);
-
-        final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
-        nfeDadosMsg.getContent().add(ElementStringConverter.read(xml));
-
-        NFAutorizador31 autorizador = NFAutorizador31.valueOfChaveAcesso(chaveDeAcesso);
-        final String endpoint = DFModelo.NFCE.equals(notaFiscalChaveParser.getModelo()) ? autorizador.getNfceConsultaProtocolo(config.getAmbiente()) : autorizador.getNfeConsultaProtocolo(config.getAmbiente());
-        if (endpoint == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para ConsultaProtocolo " + notaFiscalChaveParser.getModelo().name() + ", autorizador " + autorizador.name());
-        }
-
-        NfeConsulta2Soap port = new NfeConsulta2(new URL(endpoint)).getNfeConsulta2Soap12();
-        NfeConsultaNF2Result result = port.nfeConsultaNF2(nfeDadosMsg, nfeCabecMsg);
-
-        return ElementStringConverter.write((Element) result.getContent().get(0));
     }
 
 }

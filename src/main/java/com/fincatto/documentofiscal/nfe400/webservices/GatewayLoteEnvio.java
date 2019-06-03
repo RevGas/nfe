@@ -5,8 +5,6 @@ import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
-import com.fincatto.documentofiscal.nfe400.parsers.DFParser;
 import java.io.StringReader;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
@@ -365,7 +363,6 @@ public enum GatewayLoteEnvio {
     }
 
     public TRetEnviNFe getTRetEnviNFeSVANNFCE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-        NFLoteEnvio loteEnvio = new DFParser().loteParaObjeto(xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             return null;
         } else {

@@ -27,9 +27,8 @@ import java.security.cert.CertificateException;
 import javax.net.ssl.HttpsURLConnection;
 
 
-
 public class WSFacade {
-
+    
     private final WSLoteEnvio wsLoteEnvio;
     private final WSLoteConsulta wsLoteConsulta;
     private final WSStatusConsulta wsStatusConsulta;
@@ -60,9 +59,10 @@ public class WSFacade {
 //        this.wSDistribuicaoNFe = new WSDistribuicaoNFe(config);
         this.wSCancelamento = new WSCancelamento(config);
     }
-
+    
     /**
-     * Faz o envio de lote para a Sefaz
+     * Faz o envio de lote para a Sefaz.
+     *
      * @param lote o lote a ser enviado para a Sefaz
      * @return dados do lote retornado pelo webservice, alem do lote assinado
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
@@ -70,13 +70,14 @@ public class WSFacade {
     public TRetEnviNFe enviaLote(final NFLoteEnvio lote) throws Exception {
         return this.wsLoteEnvio.enviaLote(lote);
     }
-
+    
     public NFLoteEnvio getLoteAssinado(final NFLoteEnvio lote) throws Exception {
         return this.wsLoteEnvio.getLoteAssinado(lote);
     }
-
+    
     /**
-     * Faz o envio assinado para a Sefaz de NF-e e NFC-e ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
+     * Faz o envio assinado para a Sefaz de NF-e e NFC-e ATENCAO: Esse metodo deve ser utilizado para assinaturas A3.
+     *
      * @param loteAssinadoXml lote assinado no formato XML
      * @param modelo modelo da nota (NF-e ou NFC-e)
      * @return dados do lote retornado pelo webservice
@@ -85,9 +86,10 @@ public class WSFacade {
     public TRetEnviNFe enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo, final DFAmbiente ambiente) throws Exception {
         return this.wsLoteEnvio.enviaLoteAssinado(loteAssinadoXml, modelo, ambiente);
     }
-
+    
     /**
-     * Faz a consulta do lote na Sefaz (NF-e e NFC-e)
+     * Faz a consulta do lote na Sefaz (NF-e e NFC-e).
+     *
      * @param numeroRecibo numero do recibo do processamento
      * @param modelo modelo da nota (NF-e ou NFC-e)
      * @return dados de consulta de lote retornado pelo webservice
@@ -96,9 +98,10 @@ public class WSFacade {
     public TRetConsReciNFe consultaLote(final String numeroRecibo, final DFModelo modelo) throws Exception {
         return this.wsLoteConsulta.consultaLote(numeroRecibo, modelo);
     }
-
+    
     /**
-     * Faz a consulta de status responsavel pela UF
+     * Faz a consulta de status responsavel pela UF.
+     *
      * @param uf uf UF que deseja consultar o status do sefaz responsavel
      * @param modelo modelo da nota (NF-e ou NFC-e)
      * @return dados da consulta de status retornado pelo webservice
@@ -107,9 +110,10 @@ public class WSFacade {
     public NFStatusServicoConsultaRetorno consultaStatus(final DFUnidadeFederativa uf, final DFModelo modelo) throws Exception {
         return this.wsStatusConsulta.consultaStatus(uf, modelo);
     }
-
+    
     /**
-     * Faz a consulta da nota
+     * Faz a consulta da nota.
+     *
      * @param chaveDeAcesso chave de acesso da nota
      * @return dados da consulta da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
@@ -117,7 +121,7 @@ public class WSFacade {
     public NFNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
         return this.wsNotaConsulta.consultaNota(chaveDeAcesso);
     }
-
+    
     /**
      * Faz a correcao da nota
      * @param chNFe chave de acesso da nota
@@ -129,7 +133,7 @@ public class WSFacade {
     public br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TRetEnvEvento corrigeNota(final String chNFe, final String xCorrecao, final int nSeqEvento) throws Exception {
         return this.wsCartaCorrecao.corrigeNota(chNFe, xCorrecao, nSeqEvento);
     }
-
+    
     /**
      * Faz a correcao da nota com o evento ja assinado ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
      * @param eventoAssinadoXml evento ja assinado em formato XML
@@ -154,7 +158,7 @@ public class WSFacade {
     public br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chave, final String numeroProtocolo, final String motivo, final String nSeqEvento, final String cnpj) throws Exception {
         return this.wsEvento.enviaEvento(descEvento, tpEvento, chave, numeroProtocolo, motivo, nSeqEvento, cnpj);
     }
-
+    
     /**
      * Faz o envio do cancelamento da nota
      * @param chNFe de Acesso da NF-e vinculada ao Evento
@@ -177,9 +181,10 @@ public class WSFacade {
     public NFEnviaEventoRetorno cancelaNotaAssinada(final String chave, final String eventoAssinadoXml) throws Exception {
         return this.wsEvento.cancelaNotaAssinada(chave, eventoAssinadoXml);
     }
-
+    
     /**
-     * Inutiliza a nota com o evento assinado ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
+     * Inutiliza a nota com o evento assinado ATENCAO: Esse metodo deve ser utilizado para assinaturas A3.
+     *
      * @param eventoAssinadoXml evento assinado em XML
      * @param modelo modelo da nota (NF-e ou NFC-e)
      * @return dados da inutilizacao da nota retornado pelo webservice
@@ -188,9 +193,10 @@ public class WSFacade {
     public NFRetornoEventoInutilizacao inutilizaNotaAssinada(final String eventoAssinadoXml, final DFModelo modelo) throws Exception {
         return this.wsInutilizacao.inutilizaNotaAssinada(eventoAssinadoXml, modelo);
     }
-
+    
     /**
-     * Inutiliza a nota
+     * Inutiliza a nota.
+     *
      * @param anoInutilizacaoNumeracao ano de inutilizacao
      * @param cnpjEmitente CNPJ emitente da nota
      * @param serie serie da nota
@@ -204,9 +210,10 @@ public class WSFacade {
     public TRetInutNFe inutilizaNota(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) throws Exception {
         return this.wsInutilizacao.inutilizaNota(anoInutilizacaoNumeracao, cnpjEmitente, serie, numeroInicial, numeroFinal, justificativa, modelo);
     }
-
+    
     /**
-     * Realiza a consulta de cadastro de pessoa juridica com inscricao estadual
+     * Realiza a consulta de cadastro de pessoa juridica com inscricao estadual.
+     *
      * @param cnpj CNPJ da pessoa juridica
      * @param uf UF da pessoa juridica
      * @return dados da consulta da pessoa juridica retornado pelo webservice
@@ -215,7 +222,7 @@ public class WSFacade {
     public br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TRetConsCad consultaCadastro(final String cnpj, final DFUnidadeFederativa uf) throws Exception {
         return this.wsConsultaCadastro.consultaCadastro(cnpj, uf);
     }
-
+    
     /**
      * Faz a manifestação do destinatário da nota
      * @param chNFe chave de acesso da nota
@@ -229,7 +236,7 @@ public class WSFacade {
     public br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento manifestaDestinatarioNota(final String chNFe, final String descEvento, final String tpEvento, final String xJust, final String CNPJ) throws Exception {
         return this.wSManifestacaoDestinatario.manifestaDestinatarioNota(chNFe, descEvento, tpEvento, xJust, CNPJ);
     }
-
+    
     /**
      * Faz consulta de distribuicao das notas fiscais. Pode ser feita pela chave de acesso ou utilizando o NSU (numero sequencial unico) da receita.
      * @param cnpj CPF ou CNPJ da pessoa fisica ou juridica a consultar
@@ -248,5 +255,4 @@ public class WSFacade {
 //        return this.wSDistribuicaoNFe.consultar(cnpj, uf, chaveAcesso, nsu, ultNsu);
         return null;
     }
-
 }

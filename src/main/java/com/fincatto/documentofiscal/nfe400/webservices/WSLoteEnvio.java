@@ -4,31 +4,28 @@ import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.nfe.NFTipoEmissao;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
 import com.fincatto.documentofiscal.nfe400.classes.nota.NFNota;
 import com.fincatto.documentofiscal.nfe400.classes.nota.NFNotaInfoSuplementar;
-import com.fincatto.documentofiscal.nfe400.parsers.DFParser;
 import com.fincatto.documentofiscal.nfe400.utils.NFGeraChave;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCode20;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeContingenciaOffline20;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeEmissaoNormal20;
-import com.fincatto.documentofiscal.validadores.xsd.XMLValidador;
+import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+import com.fincatto.documentofiscal.validadores.XMLValidador;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBException;
 import java.net.MalformedURLException;
 
-class WSLoteEnvio {
-
+class WSLoteEnvio implements DFLog {
+    
     private static final String NFE_ELEMENTO = "NFe";
-    private static final Logger LOGGER = LoggerFactory.getLogger(WSLoteEnvio.class);
     private final NFeConfig config;
-
+    
     WSLoteEnvio(final NFeConfig config) {
         this.config = config;
     }
@@ -43,12 +40,9 @@ class WSLoteEnvio {
         final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(loteAssinado.toString(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getModelo(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getAmbiente());
         return loteEnvioRetorno;
     }
-
+    
     /**
      * Retorna o Lote assinado.
-     * @param lote
-     * @return
-     * @throws Exception
      */
     NFLoteEnvio getLoteAssinado(final NFLoteEnvio lote) throws Exception {
         // adiciona a chave e o dv antes de assinar
@@ -59,9 +53,9 @@ class WSLoteEnvio {
             nota.getInfo().setIdentificador(geraChave.getChaveAcesso());
         }
         // assina o lote
-        final String documentoAssinado = new AssinaturaDigital(this.config).assinarDocumento(lote.toString());
-        final NFLoteEnvio loteAssinado = new DFParser().loteParaObjeto(documentoAssinado);
-
+        final String documentoAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(lote.toString());
+        final NFLoteEnvio loteAssinado = this.config.getPersister().read(NFLoteEnvio.class, documentoAssinado);
+        
         // verifica se nao tem NFCe junto com NFe no lote e gera qrcode (apos assinar mesmo, eh assim)
         int qtdNF = 0, qtdNFC = 0;
         for (final NFNota nota : loteAssinado.getNotas()) {
@@ -71,7 +65,7 @@ class WSLoteEnvio {
                     break;
                 case NFCE:
                     NFGeraQRCode20 geraQRCode = getNfGeraQRCode20(nota);
-
+    
                     nota.setInfoSuplementar(new NFNotaInfoSuplementar());
                     nota.getInfoSuplementar().setUrlConsultaChaveAcesso(geraQRCode.urlConsultaChaveAcesso());
                     nota.getInfoSuplementar().setQrCode(geraQRCode.getQRCode());
@@ -101,17 +95,13 @@ class WSLoteEnvio {
     }
     
     private NFGeraQRCode20 getNfGeraQRCode20(NFNota nota) {
-
-        NFGeraQRCode20 geraQRCode;
-
         if (NFTipoEmissao.EMISSAO_NORMAL.equals(nota.getInfo().getIdentificacao().getTipoEmissao())) {
-            geraQRCode = new NFGeraQRCodeEmissaoNormal20(nota, this.config);
-        } else if (NFTipoEmissao.CONTIGENCIA_OFFLINE.equals(nota.getInfo().getIdentificacao().getTipoEmissao())){
-            geraQRCode = new NFGeraQRCodeContingenciaOffline20(nota, this.config);
-        }else {
-            throw new IllegalArgumentException("QRCode 2.0 Tipo Emissao não implementado: " + nota.getInfo().getIdentificacao().getTipoEmissao().getDescricao() );
+            return new NFGeraQRCodeEmissaoNormal20(nota, this.config);
+        } else if (NFTipoEmissao.CONTIGENCIA_OFFLINE.equals(nota.getInfo().getIdentificacao().getTipoEmissao())) {
+            return new NFGeraQRCodeContingenciaOffline20(nota, this.config);
+        } else {
+            throw new IllegalArgumentException("QRCode 2.0 Tipo Emissao nao implementado: " + nota.getInfo().getIdentificacao().getTipoEmissao().getDescricao());
         }
-        return geraQRCode;
     }
     
 }

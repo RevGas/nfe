@@ -1,34 +1,31 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-
-import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsultaRetorno;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 import com.fincatto.documentofiscal.cte300.classes.consultastatusservico.CTeConsStatServRet;
 import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLote;
 import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLoteRetornoDados;
 import com.fincatto.documentofiscal.cte300.classes.enviolote.consulta.CTeConsultaRecLoteRet;
 import com.fincatto.documentofiscal.cte300.classes.evento.cancelamento.CTeRetornoCancelamento;
-import java.security.GeneralSecurityException;
-import javax.net.ssl.HttpsURLConnection;
+
+import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsultaRetorno;
+
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 
 public class WSFacade {
 
     private final WSStatusConsulta wsStatusConsulta;
     private final WSRecepcaoLote wsRecepcaoLote;
     private final WSNotaConsulta wsNotaConsulta;
-    private final WSRecepcaoLoteRetorno wsRecepcaoLoteRetorno;
     private final WSCancelamento wsCancelamento;
 
-    public WSFacade(final CTeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
-        HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
+    private final WSRecepcaoLoteRetorno wsRecepcaoLoteRetorno;
+
+    public WSFacade(final CTeConfig config) throws KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
+//        Protocol.registerProtocol("https", new Protocol("https", new DFSocketFactory(config), 443));
         this.wsStatusConsulta = new WSStatusConsulta(config);
         this.wsRecepcaoLote = new WSRecepcaoLote(config);
         this.wsRecepcaoLoteRetorno = new WSRecepcaoLoteRetorno(config);
@@ -50,12 +47,16 @@ public class WSFacade {
 
     /**
      * Faz o envio do lote para a SEFAZ
-     * 
+     *
      * @param cteRecepcao a ser eviado para a SEFAZ
      * @return dados do retorno do envio do lote e o xml assinado
+<<<<<<< HEAD
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com
      * o sefaz
      *
+=======
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+>>>>>>> master
      */
     public CTeEnvioLoteRetornoDados envioRecepcaoLote(CTeEnvioLote cteRecepcao) throws Exception {
         return this.wsRecepcaoLote.envioRecepcao(cteRecepcao);
@@ -66,9 +67,13 @@ public class WSFacade {
      *
      * @param numRecibo do recebimento do lote
      * @return dados da consulta do processamento do lote
+<<<<<<< HEAD
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com
      * o sefaz
      *
+=======
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+>>>>>>> master
      */
     public CTeConsultaRecLoteRet consultaEnvioRecepcaoLote(String numRecibo) throws Exception {
         return this.wsRecepcaoLoteRetorno.consultaLote(numRecibo);
@@ -88,9 +93,9 @@ public class WSFacade {
     /**
      * Faz o cancelamento do CTe
      *
-     * @param chave     chave de acesso da nota
+     * @param chave chave de acesso da nota
      * @param numeroProtocolo numero do protocolo da nota
-     * @param motivo          motivo do cancelamento
+     * @param motivo motivo do cancelamento
      * @return dados do cancelamento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
@@ -102,7 +107,7 @@ public class WSFacade {
      * Faz o cancelamento da nota com evento ja assinado
      * ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
      *
-     * @param chave       chave de acesso da nota
+     * @param chave chave de acesso da nota
      * @param eventoAssinadoXml evento ja assinado em formato XML
      * @return dados do cancelamento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz

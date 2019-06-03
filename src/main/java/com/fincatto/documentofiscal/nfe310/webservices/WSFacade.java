@@ -1,6 +1,5 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
-
 import com.fincatto.documentofiscal.nfe310.classes.cadastro.NFRetornoConsultaCadastro;
 import com.fincatto.documentofiscal.nfe310.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.nfe310.classes.evento.downloadnf.NFDownloadNFeRetorno;
@@ -13,6 +12,7 @@ import com.fincatto.documentofiscal.nfe310.classes.lote.envio.NFLoteEnvioRetorno
 import com.fincatto.documentofiscal.nfe310.classes.lote.envio.NFLoteIndicadorProcessamento;
 import com.fincatto.documentofiscal.nfe310.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe310.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
+
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -91,7 +91,8 @@ public class WSFacade {
 //        if (lote.getIndicadorProcessamento().equals(NFLoteIndicadorProcessamento.PROCESSAMENTO_ASSINCRONO)) {
 //            throw new IllegalStateException("Utilize o método enviaLote");
 //        }
-        return this.wsLoteEnvio.enviaLoteSincrono(lote);
+//        return this.wsLoteEnvio.enviaLoteSincrono(lote);
+        return null;
     }
 
     /**
@@ -102,7 +103,8 @@ public class WSFacade {
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
     public NFLoteEnvioRetorno enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo) throws Exception {
-        return this.wsLoteEnvio.enviaLoteAssinado(loteAssinadoXml, modelo);
+//        return this.wsLoteEnvio.enviaLoteAssinado(loteAssinadoXml, modelo);
+        return null;
     }
 
     /**
@@ -115,7 +117,8 @@ public class WSFacade {
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
     public TRetEnviNFe enviaLoteAssinadoSincrono(final String loteAssinadoXml, final DFModelo modelo) throws Exception {
-        return this.wsLoteEnvio.enviaLoteAssinadoSincrono(loteAssinadoXml, modelo);
+//        return this.wsLoteEnvio.enviaLoteAssinadoSincrono(loteAssinadoXml, modelo);
+        return null;
     }
 
     /**

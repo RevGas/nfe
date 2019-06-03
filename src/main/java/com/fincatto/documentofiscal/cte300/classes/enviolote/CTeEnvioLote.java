@@ -1,13 +1,12 @@
 package com.fincatto.documentofiscal.cte300.classes.enviolote;
 
-import java.util.List;
-
-import org.simpleframework.xml.*;
-
 import com.fincatto.documentofiscal.DFBase;
 import com.fincatto.documentofiscal.cte300.classes.nota.CTeNota;
 import com.fincatto.documentofiscal.validadores.ListValidador;
 import com.fincatto.documentofiscal.validadores.StringValidador;
+import org.simpleframework.xml.*;
+
+import java.util.List;
 
 /**
  * @author Caio
@@ -19,13 +18,13 @@ import com.fincatto.documentofiscal.validadores.StringValidador;
 public class CTeEnvioLote extends DFBase {
     private static final long serialVersionUID = -6451397314955370262L;
 
-    @Attribute(name = "versao", required = true)
+    @Attribute(name = "versao")
     private String versao;
 
-    @Element(name = "idLote", required = true)
+    @Element(name = "idLote")
     private String idLote;
 
-    @ElementList(name = "CTe", inline = true, required = true)
+    @ElementList(name = "CTe", inline = true)
     private List<CTeNota> nota;
 
     public CTeEnvioLote() {

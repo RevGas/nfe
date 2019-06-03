@@ -1,40 +1,35 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
-
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.Format;
-import org.w3c.dom.Element;
-
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeCabecMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeDadosMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeStatusServico2;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeStatusServico2Soap;
-import br.inf.portalfiscal.nfe.wsdl.nfestatusservico2.svan.NfeStatusServicoNF2Result;
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
 import com.fincatto.documentofiscal.nfe310.classes.statusservico.consulta.NFStatusServicoConsulta;
 import com.fincatto.documentofiscal.nfe310.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
-import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
-import com.fincatto.nfe310.converters.ElementStringConverter;
 
-class WSStatusConsulta {
+import java.rmi.RemoteException;
 
+class WSStatusConsulta implements DFLog {
+    
     private static final String NOME_SERVICO = "STATUS";
     private final NFeConfig config;
-
+    
     WSStatusConsulta(final NFeConfig config) {
         this.config = config;
     }
-
+    
     NFStatusServicoConsultaRetorno consultaStatus(final DFUnidadeFederativa uf, final DFModelo modelo) throws Exception {
-        return new Persister(new DFRegistryMatcher(), new Format(0)).read(NFStatusServicoConsultaRetorno.class, efetuaConsultaStatus(gerarDadosConsulta(uf).toString(), uf, modelo));
+//        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosConsulta(uf).toString());
+//        this.getLogger().debug(omElementConsulta.toString());
+//        
+//        final boolean consultaNotaBahiaWorkaround = DFUnidadeFederativa.BA.equals(uf) && DFModelo.NFE.equals(modelo);
+//        final OMElement omElementResult = consultaNotaBahiaWorkaround ? this.efetuaConsultaStatusBahia(omElementConsulta) : this.efetuaConsultaStatus(omElementConsulta, uf, modelo);
+//        this.getLogger().debug(omElementResult.toString());
+//        
+//        return this.config.getPersister().read(NFStatusServicoConsultaRetorno.class, omElementResult.toString());
+        return null;
     }
-
+    
     private NFStatusServicoConsulta gerarDadosConsulta(final DFUnidadeFederativa unidadeFederativa) {
         final NFStatusServicoConsulta consStatServ = new NFStatusServicoConsulta();
         consStatServ.setUf(unidadeFederativa);
@@ -43,26 +38,46 @@ class WSStatusConsulta {
         consStatServ.setServico(WSStatusConsulta.NOME_SERVICO);
         return consStatServ;
     }
-
-    private String efetuaConsultaStatus(final String xml, final DFUnidadeFederativa unidadeFederativa, final DFModelo modelo) throws RemoteException, MalformedURLException, Exception {
-        NfeDadosMsg dadosMsg = new NfeDadosMsg();
-        NfeCabecMsg cabecMsg = new NfeCabecMsg();
-
-        cabecMsg.setCUF(unidadeFederativa.getCodigoIbge());
-        cabecMsg.setVersaoDados(this.config.getVersao());
-
-        dadosMsg.getContent().add(ElementStringConverter.read(xml));
-
-        final NFAutorizador31 autorizador = NFAutorizador31.valueOfCodigoUF(unidadeFederativa);
-        final String endpoint = DFModelo.NFCE.equals(modelo) ? autorizador.getNfceStatusServico(this.config.getAmbiente()) : autorizador.getNfeStatusServico(this.config.getAmbiente());
-        if (endpoint == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para StatusServico " + modelo.name() + ", autorizador " + autorizador.name() + ", UF " + unidadeFederativa.name());
-        }
-
-        NfeStatusServico2Soap port = new NfeStatusServico2(new URL(endpoint)).getNfeStatusServico2Soap12();
-        NfeStatusServicoNF2Result result = port.nfeStatusServicoNF2(dadosMsg, cabecMsg);
-
-        return ElementStringConverter.write((Element) result.getContent().get(0));
+    
+    private String efetuaConsultaStatus(final String omElement, final DFUnidadeFederativa unidadeFederativa, final DFModelo modelo) throws RemoteException {
+//        final NfeStatusServico2Stub.NfeCabecMsg cabec = new NfeStatusServico2Stub.NfeCabecMsg();
+//        cabec.setCUF(unidadeFederativa.getCodigoIbge());
+//        cabec.setVersaoDados(this.config.getVersao());
+//        
+//        final NfeStatusServico2Stub.NfeCabecMsgE cabecEnv = new NfeStatusServico2Stub.NfeCabecMsgE();
+//        cabecEnv.setNfeCabecMsg(cabec);
+//        
+//        final NfeStatusServico2Stub.NfeDadosMsg dados = new NfeStatusServico2Stub.NfeDadosMsg();
+//        dados.setExtraElement(omElement);
+//        
+//        final NFAutorizador31 autorizador = NFAutorizador31.valueOfCodigoUF(unidadeFederativa);
+//        final String endpoint = DFModelo.NFCE.equals(modelo) ? autorizador.getNfceStatusServico(this.config.getAmbiente()) : autorizador.getNfeStatusServico(this.config.getAmbiente());
+//        if (endpoint == null) {
+//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para StatusServico " + modelo.name() + ", autorizador " + autorizador.name() + ", UF " + unidadeFederativa.name());
+//        }
+//        return new NfeStatusServico2Stub(endpoint).nfeStatusServicoNF2(dados, cabecEnv).getExtraElement();
+        return null;
+    }
+    
+    // este metodo teve que ser implementado pois a Bahia trata de forma diferente
+    private String efetuaConsultaStatusBahia(final String omElement) throws RemoteException {
+//        final NfeStatusServicoStub.NfeCabecMsg cabec = new NfeStatusServicoStub.NfeCabecMsg();
+//        cabec.setCUF(DFUnidadeFederativa.BA.getCodigoIbge());
+//        cabec.setVersaoDados(this.config.getVersao());
+//    
+//        final NfeStatusServicoStub.NfeCabecMsgE cabecEnv = new NfeStatusServicoStub.NfeCabecMsgE();
+//        cabecEnv.setNfeCabecMsg(cabec);
+//    
+//        final NfeStatusServicoStub.NfeDadosMsg dados = new NfeStatusServicoStub.NfeDadosMsg();
+//        dados.setExtraElement(omElement);
+//    
+//        final NFAutorizador31 autorizador = NFAutorizador31.valueOfCodigoUF(DFUnidadeFederativa.BA);
+//        final String endpoint = autorizador.getNfeStatusServico(this.config.getAmbiente());
+//        if (endpoint == null) {
+//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para StatusServico " + DFModelo.NFE.name() + ", autorizador " + autorizador.name() + ", UF " + DFUnidadeFederativa.BA.name());
+//        }
+//        return new NfeStatusServicoStub(endpoint).nfeStatusServicoNF(dados, cabecEnv).getExtraElement();
+        return null;
     }
 
 }

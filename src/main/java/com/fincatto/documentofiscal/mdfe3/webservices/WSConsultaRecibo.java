@@ -1,32 +1,35 @@
 package com.fincatto.documentofiscal.mdfe3.webservices;
 
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.mdfe3.MDFeConfig;
 import com.fincatto.documentofiscal.mdfe3.classes.consultaRecibo.MDFeConsultaRecibo;
 import com.fincatto.documentofiscal.mdfe3.classes.consultaRecibo.MDFeConsultaReciboRetorno;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 
 /**
  * Created by Eldevan Nery Junior on 30/11/17.
- *
  * Classe para envio do pedido de Consulta do recibo MDF-e.
- *
  */
-class WSConsultaRecibo {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(WSConsultaRecibo.class);
+class WSConsultaRecibo implements DFLog {
+    
     private final MDFeConfig config;
-
+    
     WSConsultaRecibo(final MDFeConfig config) {
         this.config = config;
     }
-
+    
     MDFeConsultaReciboRetorno consultaRecibo(final String numeroRecibo) throws Exception {
-        throw new UnsupportedOperationException("Nao suportado ainda");
+//        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosConsulta(numeroRecibo).toString());
+//        this.getLogger().debug(omElementConsulta.toString());
+//        
+//        final OMElement omElementResult = this.efetuaConsultaRecibo(omElementConsulta);
+//        this.getLogger().debug(omElementResult.toString());
+//        
+//        return this.config.getPersister().read(MDFeConsultaReciboRetorno.class, omElementResult.toString());
+        return null;
     }
-
+    
     private MDFeConsultaRecibo gerarDadosConsulta(final String numeroRecibo) {
         final MDFeConsultaRecibo consultaRecibo = new MDFeConsultaRecibo();
         consultaRecibo.setNumeroRecibo(numeroRecibo);
@@ -34,8 +37,24 @@ class WSConsultaRecibo {
         consultaRecibo.setVersao(MDFeConfig.VERSAO);
         return consultaRecibo;
     }
-
+    
     private String efetuaConsultaRecibo(final String omElement) throws RemoteException {
-        throw new UnsupportedOperationException("Nao suportado ainda");
+//        final MDFeRetRecepcaoStub.MdfeCabecMsg cabec = new MDFeRetRecepcaoStub.MdfeCabecMsg();
+//        cabec.setCUF(this.config.getCUF().getCodigoIbge());
+//        cabec.setVersaoDados(MDFeConfig.VERSAO);
+        
+//        final MDFeRetRecepcaoStub.MdfeCabecMsgE cabecEnv = new MDFeRetRecepcaoStub.MdfeCabecMsgE();
+//        cabecEnv.setMdfeCabecMsg(cabec);
+        
+//        final MDFeRetRecepcaoStub.MdfeDadosMsg dados = new MDFeRetRecepcaoStub.MdfeDadosMsg();
+//        dados.setExtraElement(omElement);
+        
+//        final MDFAutorizador3 autorizador = MDFAutorizador3.valueOfCodigoUF(this.config.getCUF());
+//        final String endpoint = autorizador.getMDFeRetornoRecepcao(this.config.getAmbiente());
+//        if (endpoint == null) {
+//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para Consulta Recibo, autorizador " + autorizador.name() + ", UF " + this.config.getCUF().name());
+//        }
+//        return new MDFeRetRecepcaoStub(endpoint).mdfeRetRecepcao(dados, cabecEnv).getExtraElement();
+        return null;
     }
 }

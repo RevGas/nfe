@@ -4,12 +4,11 @@ import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.Obj
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TEnvEvento;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TEvento;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento;
-import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import java.io.StringWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,14 +19,13 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-class WSCancelamento {
-
+class WSCancelamento implements DFLog {
+    
     private static final String DESCRICAO_EVENTO = "Cancelamento";
     private static final BigDecimal VERSAO_LEIAUTE = new BigDecimal("1.00");
     private static final String EVENTO_CANCELAMENTO = "110111";
-    private static final Logger LOGGER = LoggerFactory.getLogger(WSCancelamento.class);
     private final NFeConfig config;
-
+    
     WSCancelamento(final NFeConfig config) {
         this.config = config;
     }
@@ -41,7 +39,7 @@ class WSCancelamento {
     TRetEnvEvento cancelaNota(final String chNFe, final String nProt, final String xJust) throws Exception {
         String xml = this.gerarDados(chNFe, nProt, xJust);
         xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
-        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
+        final String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(xml);
         return efetuaCancelamento(xmlAssinado, chNFe);
     }
 

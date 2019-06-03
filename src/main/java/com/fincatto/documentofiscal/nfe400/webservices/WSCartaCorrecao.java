@@ -4,13 +4,12 @@ import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.Ob
 import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TEnvEvento;
 import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TEvento;
 import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TRetEnvEvento;
-import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
+import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
-import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import java.io.StringWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,14 +20,14 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-class WSCartaCorrecao {
+class WSCartaCorrecao implements DFLog {
+    
     private static final BigDecimal VERSAO_LEIAUTE = new BigDecimal("1.00");
     private static final String EVENTO_CODIGO = "110110";
     private static final String EVENTO_DESCRICAO = "Carta de Correcao";
     private static final String EVENTO_CONDICAO_USO = "A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com: I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao; II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario; III - a data de emissao ou de saida.";
-    private final static Logger LOGGER = LoggerFactory.getLogger(WSCartaCorrecao.class);
     private final NFeConfig config;
-
+    
     WSCartaCorrecao(final NFeConfig config) {
         this.config = config;
     }
@@ -43,7 +42,7 @@ class WSCartaCorrecao {
     TRetEnvEvento corrigeNota(final String chNFe, final String xCorrecao, final int nSeqEvento) throws Exception {
         String xml = this.gerarDados(chNFe, xCorrecao);
         xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
-        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
+        final String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(xml);
         return efetua(xmlAssinado, chNFe);
     }
 

@@ -1,27 +1,24 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import java.math.BigDecimal;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
+import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.nfe400.classes.NFAutorizador400;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsulta;
 import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
-import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
 
-class WSNotaConsulta {
+import java.math.BigDecimal;
+
+class WSNotaConsulta implements DFLog {
     private static final String NOME_SERVICO = "CONSULTAR";
     private static final String VERSAO_SERVICO = "4.00";
-    private final static Logger LOGGER = LoggerFactory.getLogger(WSNotaConsulta.class);
     private final NFeConfig config;
-
+    
     WSNotaConsulta(final NFeConfig config) {
         this.config = config;
     }
-
+    
     NFNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
 //        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosConsulta(chaveDeAcesso).toString());
 //        WSNotaConsulta.LOGGER.debug(omElementConsulta.toString());
@@ -47,7 +44,7 @@ class WSNotaConsulta {
 //        return consultaNFResult.getExtraElement();
         return null;
     }
-
+    
     private NFNotaConsulta gerarDadosConsulta(final String chaveDeAcesso) {
         final NFNotaConsulta notaConsulta = new NFNotaConsulta();
         notaConsulta.setAmbiente(this.config.getAmbiente());

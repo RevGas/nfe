@@ -4,26 +4,28 @@ import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_Manife
 import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TEnvEvento;
 import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TEvento;
 import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento;
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import java.io.StringWriter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-public class WSManifestacaoDestinatario {
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
+public class WSManifestacaoDestinatario implements DFLog {
+    
     private static final BigDecimal VERSAO_LEIAUTE = new BigDecimal("1.00");
     private final NFeConfig config;
-
+    
     public WSManifestacaoDestinatario(final NFeConfig config) {
         this.config = config;
     }
@@ -31,7 +33,7 @@ public class WSManifestacaoDestinatario {
     TRetEnvEvento manifestaDestinatarioNota(final String chNFe, final String descEvento, final String tpEvento, final String xJust, final String CNPJ) throws Exception {
         String xml = this.gerarDadosManifestacaoDestinatario(chNFe, descEvento, tpEvento, xJust, CNPJ);
         xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
-        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
+        final String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(xml);
         return efetuaManifestacaoDestinatario(xmlAssinado, chNFe);
     }
 

@@ -4,13 +4,12 @@ import br.inf.portalfiscal.nfe.ObjectFactory;
 import br.inf.portalfiscal.nfe.TInutNFe;
 import br.inf.portalfiscal.nfe.TRetInutNFe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
+import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+
 import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -18,17 +17,17 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import org.apache.commons.lang3.StringUtils;
 
-class WSInutilizacao {
 
+class WSInutilizacao implements DFLog {
+    
     private static final String VERSAO_SERVICO = "4.00";
     private static final String NOME_SERVICO = "INUTILIZAR";
-    private static final Logger LOGGER = LoggerFactory.getLogger(WSInutilizacao.class);
     private final NFeConfig config;
-
+    
     WSInutilizacao(final NFeConfig config) {
         this.config = config;
     }
-
+    
     NFRetornoEventoInutilizacao inutilizaNotaAssinada(final String eventoAssinadoXml, final DFModelo modelo) throws Exception {
 //        final OMElement omElementResult = this.efetuaInutilizacao(eventoAssinadoXml, modelo);
 //        return new DFPersister().read(NFRetornoEventoInutilizacao.class, omElementResult.toString());
@@ -37,7 +36,7 @@ class WSInutilizacao {
 
     TRetInutNFe inutilizaNota(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) throws Exception {
         final TInutNFe inutNFe = this.geraDadosInutilizacao(anoInutilizacaoNumeracao, cnpjEmitente, serie, numeroInicial, numeroFinal, justificativa, modelo);
-        final String inutilizacaoXMLAssinado = new AssinaturaDigital(this.config).assinarDocumento(getXML(inutNFe));
+        final String inutilizacaoXMLAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(getXML(inutNFe));
         final TRetInutNFe retorno = this.efetuaInutilizacao(inutilizacaoXMLAssinado, modelo);
         return retorno;
     }

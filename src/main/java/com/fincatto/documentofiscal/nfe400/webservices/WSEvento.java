@@ -5,10 +5,10 @@ import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TEn
 import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TEvento;
 import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
+import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
-import com.fincatto.documentofiscal.nfe400.parsers.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import java.io.StringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ class WSEvento {
     TRetEnvEvento enviaEvento(final String descEvento, final String tpEvento, final String chaveAcesso, final String numeroProtocolo, final String motivo, final String nSeqEvento, final String cnpj) throws Exception {
         String xml = this.gerarDados(descEvento, tpEvento, chaveAcesso, numeroProtocolo, motivo, nSeqEvento, cnpj);
         xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
-        final String xmlAssinado = new AssinaturaDigital(this.config).assinarDocumento(xml);
+        final String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(xml);
         return efetua(tpEvento, xmlAssinado, chaveAcesso);
     }
 

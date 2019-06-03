@@ -1,20 +1,20 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
+import com.fincatto.documentofiscal.DFLog;
+
 import com.fincatto.documentofiscal.cte300.CTeConfig;
-import com.fincatto.documentofiscal.cte300.classes.CTAutorizador31;
 import com.fincatto.documentofiscal.cte300.classes.evento.cancelamento.*;
 import com.fincatto.documentofiscal.cte300.parsers.CTChaveParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
-class WSCancelamento {
+class WSCancelamento implements DFLog {
+
     private static final String DESCRICAO_EVENTO = "Cancelamento";
     private static final BigDecimal VERSAO_LEIAUTE = new BigDecimal("3.00");
     private static final String EVENTO_CANCELAMENTO = "110111";
-    private static final Logger LOGGER = LoggerFactory.getLogger(WSCancelamento.class);
     private final CTeConfig config;
 
     WSCancelamento(final CTeConfig config) {
@@ -22,39 +22,43 @@ class WSCancelamento {
     }
 
     CTeRetornoCancelamento cancelaNotaAssinada(final String chaveAcesso, final String eventoAssinadoXml) throws Exception {
-        throw new UnsupportedOperationException("Nao suportado ainda");
+
+    final String omElementResult = this.efetuaCancelamento(eventoAssinadoXml, chaveAcesso);
+        return this.config.getPersister().read(CTeRetornoCancelamento.class, omElementResult.toString());
     }
 
     CTeRetornoCancelamento cancelaNota(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws Exception {
-        throw new UnsupportedOperationException("Nao suportado ainda");
+//        final String cancelamentoNotaXML = this.gerarDadosCancelamento(chaveAcesso, numeroProtocolo, motivo).toString();
+//        final String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(cancelamentoNotaXML);
+//        final OMElement omElementResult = this.efetuaCancelamento(xmlAssinado, chaveAcesso);
+//        return this.config.getPersister().read(CTeRetornoCancelamento.class, omElementResult.toString());
+        return null;
     }
 
     private String efetuaCancelamento(final String xmlAssinado, final String chaveAcesso) throws Exception {
-        final CTChaveParser ctChaveParser = new CTChaveParser(chaveAcesso);
+//        final CTChaveParser ctChaveParser = new CTChaveParser(chaveAcesso);
 //        final RecepcaoEventoStub.CteCabecMsg cabec = new RecepcaoEventoStub.CteCabecMsg();
 //        cabec.setCUF(ctChaveParser.getNFUnidadeFederativa().getCodigoIbge());
-//        cabec.setVersaoDados(BigDecimalParser.tamanho5Com2CasasDecimais(VERSAO_LEIAUTE, "Versao do Evento"));
-
+//        cabec.setVersaoDados(BigDecimalValidador.tamanho5Com2CasasDecimais(VERSAO_LEIAUTE, "Versao do Evento"));
+//
 //        final RecepcaoEventoStub.CteCabecMsgE cabecE = new RecepcaoEventoStub.CteCabecMsgE();
 //        cabecE.setCteCabecMsg(cabec);
-
+//
 //        final RecepcaoEventoStub.CteDadosMsg dados = new RecepcaoEventoStub.CteDadosMsg();
 //        final OMElement omElementXML = AXIOMUtil.stringToOM(xmlAssinado);
-//        WSCancelamento.LOGGER.debug(omElementXML.toString());
+//        this.getLogger().debug(omElementXML.toString());
 //        dados.setExtraElement(omElementXML);
-
-//        WSCancelamento.LOGGER.info(cabec.toString());
-
-        final CTAutorizador31 autorizador = CTAutorizador31.valueOfChaveAcesso(chaveAcesso);
-        final String urlWebService = autorizador.getRecepcaoEvento(this.config.getAmbiente());
-        if (urlWebService == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para RecepcaoEvento " + ctChaveParser.getModelo().name() + ", autorizador " + autorizador.name());
-        }
-
+//
+//        final CTAutorizador31 autorizador = CTAutorizador31.valueOfChaveAcesso(chaveAcesso);
+//        final String urlWebService = autorizador.getRecepcaoEvento(this.config.getAmbiente());
+//        if (urlWebService == null) {
+//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para RecepcaoEvento " + ctChaveParser.getModelo().name() + ", autorizador " + autorizador.name());
+//        }
 //        RecepcaoEventoStub.CteRecepcaoEventoResult cteRecepcaoEventoResult = new RecepcaoEventoStub(urlWebService).cteRecepcaoEvento(dados, cabecE);
 //        final OMElement omElementResult = cteRecepcaoEventoResult.getExtraElement();
-//        WSCancelamento.LOGGER.debug(omElementResult.toString());
-        return "";
+//        this.getLogger().debug(omElementResult.toString());
+//        return omElementResult;
+        return null;
     }
 
     private CTeProtocoloEventoCancelamento gerarDadosCancelamento(final String chaveAcesso, final String numeroProtocolo, final String motivo) {

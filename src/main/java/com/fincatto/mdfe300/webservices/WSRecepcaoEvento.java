@@ -21,7 +21,7 @@ import br.inf.portalfiscal.mdfe.wsdl.mdferecepcaoevento.MdfeCabecMsg;
 import br.inf.portalfiscal.mdfe.wsdl.mdferecepcaoevento.MdfeDadosMsg;
 import br.inf.portalfiscal.mdfe.wsdl.mdferecepcaoevento.MdfeRecepcaoEventoResult;
 import br.inf.portalfiscal.mdfe.wsdl.mdferecepcaoevento.ObjectFactory;
-import com.fincatto.documentofiscal.assinatura.AssinaturaDigital;
+import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import com.fincatto.mdfe300.MDFeConfig;
 
 class WSRecepcaoEvento {
@@ -44,7 +44,7 @@ class WSRecepcaoEvento {
         marshaller.marshal(tEvento, stringWriter);
 
         //Verificar a melhor forma de remover o namespace da assinatura
-        String documentoAssinado = new AssinaturaDigital(this.config).assinarDocumento(stringWriter.toString().replace(" xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", ""));
+        String documentoAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(stringWriter.toString().replace(" xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", ""));
         StringReader reader = new StringReader(documentoAssinado);
 
         Unmarshaller unmarshaller = context.createUnmarshaller();

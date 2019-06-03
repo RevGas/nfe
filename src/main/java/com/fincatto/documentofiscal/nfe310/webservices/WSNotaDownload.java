@@ -1,43 +1,56 @@
 package com.fincatto.documentofiscal.nfe310.webservices;
 
-import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
-
-import org.w3c.dom.Element;
-
-import com.fincatto.documentofiscal.nfe310.classes.NFAutorizador31;
+import com.fincatto.documentofiscal.DFLog;
+import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe310.classes.evento.downloadnf.NFDownloadNFe;
 import com.fincatto.documentofiscal.nfe310.classes.evento.downloadnf.NFDownloadNFeRetorno;
-import com.fincatto.nfe310.converters.ElementStringConverter;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 
-import br.inf.portalfiscal.nfe.wsdl.nfedownloadnf.svan.NfeCabecMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfedownloadnf.svan.NfeDadosMsg;
-import br.inf.portalfiscal.nfe.wsdl.nfedownloadnf.svan.NfeDownloadNF;
-import br.inf.portalfiscal.nfe.wsdl.nfedownloadnf.svan.NfeDownloadNFResult;
-import br.inf.portalfiscal.nfe.wsdl.nfedownloadnf.svan.NfeDownloadNFSoap;
-import com.fincatto.documentofiscal.DFConfig;
-import com.fincatto.documentofiscal.transformers.DFRegistryMatcher;
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.stream.Format;
-
-
-class WSNotaDownload {
-
+class WSNotaDownload implements DFLog {
+    
     private static final BigDecimal VERSAO_LEIAUTE = new BigDecimal("1.00");
     private static final String NOME_SERVICO = "DOWNLOAD NFE";
-    private final DFConfig config;
-
-    WSNotaDownload(final DFConfig config) {
+    private final NFeConfig config;
+    
+    WSNotaDownload(final NFeConfig config) {
         this.config = config;
     }
-
+    
     NFDownloadNFeRetorno downloadNota(final String cnpj, final String chave) throws Exception {
-        return new Persister(new DFRegistryMatcher(), new Format(0)).read(NFDownloadNFeRetorno.class, efetuaDownloadNF(gerarDadosDownloadNF(cnpj, chave).toString()));
+//        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosDownloadNF(cnpj, chave).toString());
+//        this.getLogger().debug(omElementConsulta.toString());
+//        
+//        final OMElement omElementRetorno = this.efetuaDownloadNF(omElementConsulta);
+//        this.getLogger().debug(omElementRetorno.toString());
+//        
+//        return this.config.getPersister().read(NFDownloadNFeRetorno.class, omElementRetorno.toString());
+        return null;
     }
-
-    private NFDownloadNFe gerarDadosDownloadNF(final String cnpj, final String chave) throws Exception {
+    
+    private String efetuaDownloadNF(final String omElementConsulta) throws RemoteException {
+//        final NfeCabecMsg cabec = new NfeCabecMsg();
+//        cabec.setCUF(this.config.getCUF().getCodigoIbge());
+//        cabec.setVersaoDados(WSNotaDownload.VERSAO_LEIAUTE.toPlainString());
+//        
+//        final NfeDownloadNFStub.NfeCabecMsgE cabecE = new NfeCabecMsgE();
+//        cabecE.setNfeCabecMsg(cabec);
+//        
+//        final NfeDownloadNFStub.NfeDadosMsg dados = new NfeDadosMsg();
+//        dados.setExtraElement(omElementConsulta);
+//        
+//        final NFAutorizador31 autorizador = NFAutorizador31.valueOfCodigoUF(this.config.getCUF());
+//        final String endpoint = autorizador.getNfeDownloadNF(this.config.getAmbiente());
+//        if (endpoint == null) {
+//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para DownloadNF, autorizador " + autorizador.name());
+//        }
+//        
+//        final NfeDownloadNFResult nfeDownloadNFResult = new NfeDownloadNFStub(endpoint).nfeDownloadNF(dados, cabecE);
+//        return nfeDownloadNFResult.getExtraElement();
+        return null;
+    }
+    
+    private NFDownloadNFe gerarDadosDownloadNF(final String cnpj, final String chave) {
         final NFDownloadNFe nfDownloadNFe = new NFDownloadNFe();
         nfDownloadNFe.setVersao(WSNotaDownload.VERSAO_LEIAUTE.toPlainString());
         nfDownloadNFe.setAmbiente(this.config.getAmbiente());
@@ -45,26 +58,6 @@ class WSNotaDownload {
         nfDownloadNFe.setCnpj(cnpj);
         nfDownloadNFe.setChave(chave);
         return nfDownloadNFe;
-    }
-
-    private String efetuaDownloadNF(final String xml) throws RemoteException, MalformedURLException {
-        final NfeCabecMsg nfeCabecMsg = new NfeCabecMsg();
-        nfeCabecMsg.setCUF(this.config.getCUF().getCodigoIbge());
-        nfeCabecMsg.setVersaoDados(WSNotaDownload.VERSAO_LEIAUTE.toPlainString());
-
-        final NfeDadosMsg nfeDadosMsg = new NfeDadosMsg();
-        nfeDadosMsg.getContent().add(ElementStringConverter.read(xml));
-
-        NFAutorizador31 autorizador = NFAutorizador31.valueOfCodigoUF(this.config.getCUF());
-        final String endpoint = autorizador.getNfeDownloadNF(this.config.getAmbiente());
-        if (endpoint == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para DownloadNF, autorizador " + autorizador.name());
-        }
-
-        NfeDownloadNFSoap port = new NfeDownloadNF(new URL(endpoint)).getNfeDownloadNFSoap12();
-        NfeDownloadNFResult result = port.nfeDownloadNF(nfeDadosMsg, nfeCabecMsg);
-
-        return ElementStringConverter.write((Element) result.getContent().get(0));
     }
 
 }

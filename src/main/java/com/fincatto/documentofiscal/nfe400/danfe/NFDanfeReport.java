@@ -3,7 +3,7 @@ package com.fincatto.documentofiscal.nfe400.danfe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.nfe400.classes.nota.NFNotaProcessada;
-import com.fincatto.documentofiscal.nfe400.parsers.DFParser;
+import com.fincatto.documentofiscal.persister.DFPersister;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -46,8 +45,8 @@ public class NFDanfeReport {
 	
 	private final NFNotaProcessada nota;
 	
-	public NFDanfeReport(String xml) {
-            this(new DFParser().notaProcessadaParaObjeto(xml));
+	public NFDanfeReport(String xml) throws Exception {
+            this(new DFPersister().read(NFNotaProcessada.class, xml));
 	}
 	
 	public NFDanfeReport(NFNotaProcessada nota) {

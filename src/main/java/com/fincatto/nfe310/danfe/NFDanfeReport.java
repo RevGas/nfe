@@ -3,7 +3,7 @@ package com.fincatto.nfe310.danfe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.nfe310.classes.nota.NFNotaProcessada;
-import com.fincatto.documentofiscal.parsers.DFParser;
+import com.fincatto.documentofiscal.persister.DFPersister;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -46,8 +46,8 @@ public class NFDanfeReport {
 	
 	private final NFNotaProcessada nota;
 	
-	public NFDanfeReport(String xml) {
-		this(new DFParser().notaProcessadaParaObjeto(xml));
+	public NFDanfeReport(String xml) throws Exception {
+		this(new DFPersister().read(NFNotaProcessada.class, xml));
 	}
 	
 	public NFDanfeReport(NFNotaProcessada nota) {

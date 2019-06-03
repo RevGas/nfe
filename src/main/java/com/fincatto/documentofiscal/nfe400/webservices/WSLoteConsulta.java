@@ -4,10 +4,12 @@ import br.inf.portalfiscal.nfe.TRetConsReciNFe;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 
-class WSLoteConsulta {
+import com.fincatto.documentofiscal.DFLog;
 
+class WSLoteConsulta implements DFLog {
+    
     private final NFeConfig config;
-
+    
     WSLoteConsulta(final NFeConfig config) {
         this.config = config;
     }

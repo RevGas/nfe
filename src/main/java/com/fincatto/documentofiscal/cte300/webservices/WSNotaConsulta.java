@@ -1,17 +1,15 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
+import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsulta;
 import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsultaRetorno;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
-class WSNotaConsulta {
+class WSNotaConsulta implements DFLog {
     private static final String NOME_SERVICO = "CONSULTAR";
     private static final String VERSAO_SERVICO = "3.00";
-    private final static Logger LOGGER = LoggerFactory.getLogger(WSNotaConsulta.class);
     private final CTeConfig config;
 
     WSNotaConsulta(final CTeConfig config) {
@@ -19,11 +17,41 @@ class WSNotaConsulta {
     }
 
     public CTeNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
-        throw new UnsupportedOperationException("Nao suportado ainda");
+//        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosConsulta(chaveDeAcesso).toString());
+//        this.getLogger().debug(omElementConsulta.toString());
+//
+//        final OMElement omElementRetorno = this.efetuaConsulta(omElementConsulta, chaveDeAcesso);
+//        this.getLogger().debug(omElementRetorno.toString());
+//
+//        final CTeNotaConsultaRetorno retorno = this.config.getPersister().read(CTeNotaConsultaRetorno.class, omElementRetorno.toString());
+//        this.getLogger().debug(retorno.toString());
+//        return retorno;
+        return null;
     }
 
     private String efetuaConsulta(final String omElementConsulta, final String chaveDeAcesso) throws Exception {
-        throw new UnsupportedOperationException("Nao suportado ainda");
+//        final CTChaveParser ctChaveParser = new CTChaveParser(chaveDeAcesso);
+//        final CteConsultaStub.CteCabecMsg cabec = new CteConsultaStub.CteCabecMsg();
+//        cabec.setCUF(ctChaveParser.getNFUnidadeFederativa().getCodigoIbge());
+//        cabec.setVersaoDados(WSNotaConsulta.VERSAO_SERVICO);
+//
+//        final CteConsultaStub.CteCabecMsgE cabecE = new CteConsultaStub.CteCabecMsgE();
+//        cabecE.setCteCabecMsg(cabec);
+//
+//        final CteConsultaStub.CteDadosMsg dados = new CteConsultaStub.CteDadosMsg();
+//        dados.setExtraElement(omElementConsulta);
+//
+//        this.getLogger().debug(cabec.toString());
+//
+//        final CTAutorizador31 autorizador = CTAutorizador31.valueOfTipoEmissao(this.config.getTipoEmissao(), this.config.getCUF());
+//        final String endpoint = autorizador.getCteConsultaProtocolo(this.config.getAmbiente());
+//        if (endpoint == null) {
+//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para Consulta, autorizador " + autorizador.name() + ", UF " + this.config.getCUF().name());
+//        }
+//        this.getLogger().debug(endpoint);
+//        final CteConsultaStub.CteConsultaCTResult cteConsultaCTResult = new CteConsultaStub(endpoint).cteConsultaCT(dados, cabecE);
+//        return cteConsultaCTResult.getExtraElement();
+        return null;
     }
 
     private CTeNotaConsulta gerarDadosConsulta(final String chaveDeAcesso) {
