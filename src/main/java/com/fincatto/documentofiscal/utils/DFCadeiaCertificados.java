@@ -42,7 +42,7 @@ public abstract class DFCadeiaCertificados implements DFLog {
             
             for (final NFAutorizador31 aut : NFAutorizador31.values()) {
                 // Para NFe...
-                final String urlNF = aut.getNfeStatusServico(ambiente);
+                final String urlNF = aut.getNfeAutorizacao(ambiente);
                 if (StringUtils.isNotBlank(urlNF)) {
                     final String host = new URI(urlNF).getHost();
                     DFCadeiaCertificados.get(keyStore, host);
@@ -58,7 +58,7 @@ public abstract class DFCadeiaCertificados implements DFLog {
 
             for (final NFAutorizador400 aut : NFAutorizador400.values()) {
                 // Para NFe...
-                final String urlNF = aut.getNfeStatusServico(ambiente);
+                final String urlNF = aut.getNfeAutorizacao(ambiente);
                 if (StringUtils.isNotBlank(urlNF)) {
                     final String host = new URI(urlNF).getHost();
                     DFCadeiaCertificados.get(keyStore, host);

@@ -39,6 +39,18 @@ public enum GatewayInutilizacao {
         }
 
     },
+    MT {
+        @Override
+        public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetInutNFeMTNFE(xml, ambiente) : getTRetInutNFeMTNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.MT};
+        }
+
+    },
     PE {
         @Override
         public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
@@ -149,6 +161,46 @@ public enum GatewayInutilizacao {
 
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ce.hom.NFeInutilizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ce.hom.NFeInutilizacao4().getNFeInutilizacaoSoap12();
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ce.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetInutNFe getTRetInutNFeMTNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.NfeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.NfeInutilizacao4().getNfeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.hom.NfeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.hom.NfeInutilizacao4().getNfeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetInutNFe getTRetInutNFeMTNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.NfeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.NfeInutilizacao4().getNfeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.hom.NfeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.hom.NfeInutilizacao4().getNfeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
             return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
         }

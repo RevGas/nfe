@@ -52,8 +52,13 @@ class WSLoteEnvio implements DFLog {
             nota.getInfo().getIdentificacao().setDigitoVerificador(geraChave.getDV());
             nota.getInfo().setIdentificador(geraChave.getChaveAcesso());
         }
+        //Remover caracteres especiais do xml para o autorizador MT
+        String _lote = lote.toString();
+        if (lote.getNotas().get(0).getInfo().getEmitente().getEndereco().getUf().equals(DFUnidadeFederativa.MT.getCodigo())) {
+             _lote = Util.convertToASCII2(_lote);
+        }
         // assina o lote
-        final String documentoAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(lote.toString());
+        final String documentoAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(_lote);
         final NFLoteEnvio loteAssinado = this.config.getPersister().read(NFLoteEnvio.class, documentoAssinado);
         
         // verifica se nao tem NFCe junto com NFe no lote e gera qrcode (apos assinar mesmo, eh assim)
