@@ -75,6 +75,18 @@ public enum GatewayInutilizacao {
         }
 
     },
+    SP {
+        @Override
+        public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetInutNFeSPNFE(xml, ambiente) : getTRetInutNFeSPNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.SP};
+        }
+
+    },
     SVRS {
         @Override
         public TRetInutNFe getTRetInutNFe(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
@@ -261,6 +273,46 @@ public enum GatewayInutilizacao {
 
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.hom.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.hom.NFeInutilizacao4().getNFeInutilizacao4ServicePort();
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.pr.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetInutNFe getTRetInutNFeSPNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.NFeInutilizacao4().getNFeInutilizacao4Soap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.hom.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.hom.NFeInutilizacao4().getNFeInutilizacao4Soap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.sp.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+
+    public TRetInutNFe getTRetInutNFeSPNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.NFeInutilizacao4().getNFeInutilizacao4Soap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.hom.NFeInutilizacao4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.hom.NFeInutilizacao4().getNFeInutilizacao4Soap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.sp.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
             return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
         }
