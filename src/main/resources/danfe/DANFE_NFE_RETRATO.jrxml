@@ -1444,7 +1444,7 @@ $P{REPORT_DATA_SOURCE}).dataSource("/nfeProc/NFe/infNFe/cobr/dup")]]></dataSourc
 			<textField>
 				<reportElement x="57" y="60" width="131" height="46" uuid="d8a357f1-c744-44d7-8e9f-1d44f0b18b33"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="12" isBold="true"/>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{EmitenteNFe}]]></textFieldExpression>
 			</textField>
