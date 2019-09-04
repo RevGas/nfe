@@ -32,13 +32,13 @@ class WSLoteEnvio implements DFLog {
     }
 
     TRetEnviNFe enviaLoteAssinado(final String loteAssinadoXml, final DFModelo modelo, final DFAmbiente ambiente) throws Exception {
-        return this.comunicaLote(loteAssinadoXml, modelo, ambiente);
+        return null;
     }
 
     TRetEnviNFe enviaLote(final NFLoteEnvio lote) throws Exception {
         final NFLoteEnvio loteAssinado = this.getLoteAssinado(lote);
         // comunica o lote
-        final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(loteAssinado.toString(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getModelo(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getAmbiente());
+        final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(loteAssinado.toString(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getModelo(), loteAssinado.getNotas().get(0).getInfo().getIdentificacao().getAmbiente(),  loteAssinado.getNotas().get(0));
         return loteEnvioRetorno;
     }
     
@@ -88,16 +88,16 @@ class WSLoteEnvio implements DFLog {
         return loteAssinado;
     }
 
-    private TRetEnviNFe comunicaLote(final String loteAssinadoXml, final DFModelo modelo, final DFAmbiente ambiente) throws Exception {
+    private TRetEnviNFe comunicaLote(final String loteAssinadoXml, final DFModelo modelo, final DFAmbiente ambiente, final NFNota nota) throws Exception {
         //valida o lote assinado, para verificar se o xsd foi satisfeito, antes de comunicar com a sefaz
 
         XMLValidador.validaLote400(loteAssinadoXml);
 
-        return getTRetEnviNFe(modelo, this.config.getCUF(), loteAssinadoXml, ambiente);
+        return getTRetEnviNFe(modelo, this.config.getCUF(), loteAssinadoXml, ambiente, nota);
     }
 
-    private TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final DFUnidadeFederativa uf, String loteAssinadoXml, DFAmbiente ambiente) throws MalformedURLException, JAXBException, Exception {
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfCodigoUF(uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
+    private TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final DFUnidadeFederativa uf, String loteAssinadoXml, DFAmbiente ambiente, NFNota nota) throws MalformedURLException, JAXBException, Exception {
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfTipoEmissao(nota.getInfo().getIdentificacao().getTipoEmissao(), uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
     }
     
     private NFGeraQRCode20 getNfGeraQRCode20(NFNota nota) {
