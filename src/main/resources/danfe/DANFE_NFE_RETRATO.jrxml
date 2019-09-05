@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nfe_danfe_retrato" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="25" bottomMargin="20" uuid="e21b08e1-6159-4fbb-98e9-6837ade5c1f3">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
@@ -429,6 +429,12 @@
 	</field>
 	<field name="ProdOrigST" class="java.lang.String">
 		<fieldDescription><![CDATA[imposto/ICMS/ICMSST/orig]]></fieldDescription>
+	</field>
+	<field name="dhCont" class="java.lang.String">
+		<fieldDescription><![CDATA[/nfeProc/NFe/infNFe/ide/dhCont]]></fieldDescription>
+	</field>
+	<field name="xJust" class="java.lang.String">
+		<fieldDescription><![CDATA[/nfeProc/NFe/infNFe/ide/xJust]]></fieldDescription>
 	</field>
 	<group name="destinatario">
 		<groupExpression><![CDATA[$F{Destinatario}]]></groupExpression>
@@ -2022,7 +2028,9 @@ $F{ChaveNFe}.substring(3, $F{ChaveNFe}.length()).substring(40, 44)]]></textField
 				</textElement>
 				<textFieldExpression><![CDATA[($F{NFeInfAdicionais} == null ? "" : $F{NFeInfAdicionais}) + "\n" +
 ($F{NFeInfAdFisco} == null ? "" : $F{NFeInfAdFisco}) + "\n" +
-($F{ImpTotalTrib} == null ? "" : ("Valor Aproximado dos Tributos: R$ " + new DecimalFormat ("#,##0.00").format(Double.parseDouble($F{ImpTotalTrib}))))]]></textFieldExpression>
+($F{ImpTotalTrib} == null ? "" : ("Valor Aproximado dos Tributos: R$ " + new DecimalFormat ("#,##0.00").format(Double.parseDouble($F{ImpTotalTrib})))) + "\n" +
+($F{dhCont} == null ? "" : "Data e hora de entrada em contingência: " + java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(java.time.ZonedDateTime.parse($F{dhCont}))) + "\n" +
+($F{xJust} == null ? "" : "Justificativa de entrada em contingência: " + $F{xJust})]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
