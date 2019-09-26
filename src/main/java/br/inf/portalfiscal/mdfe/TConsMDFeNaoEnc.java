@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2017.01.19 às 11:37:18 PM BRT 
+// Gerado em: 2019.09.25 às 09:50:28 AM BRT 
 //
 
 
@@ -29,7 +29,10 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="tpAmb" type="{http://www.portalfiscal.inf.br/mdfe}TAmb"/&gt;
  *         &lt;element name="xServ" type="{http://www.portalfiscal.inf.br/mdfe}TServ"/&gt;
- *         &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+ *         &lt;choice&gt;
+ *           &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+ *           &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
+ *         &lt;/choice&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="versao" use="required"&gt;
  *         &lt;simpleType&gt;
@@ -48,7 +51,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TConsMDFeNaoEnc", propOrder = {
     "tpAmb",
     "xServ",
-    "cnpj"
+    "cnpj",
+    "cpf"
 })
 public class TConsMDFeNaoEnc {
 
@@ -56,8 +60,10 @@ public class TConsMDFeNaoEnc {
     protected String tpAmb;
     @XmlElement(required = true)
     protected String xServ;
-    @XmlElement(name = "CNPJ", required = true)
+    @XmlElement(name = "CNPJ")
     protected String cnpj;
+    @XmlElement(name = "CPF")
+    protected String cpf;
     @XmlAttribute(name = "versao", required = true)
     protected String versao;
 
@@ -131,6 +137,30 @@ public class TConsMDFeNaoEnc {
      */
     public void setCNPJ(String value) {
         this.cnpj = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade cpf.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCPF() {
+        return cpf;
+    }
+
+    /**
+     * Define o valor da propriedade cpf.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCPF(String value) {
+        this.cpf = value;
     }
 
     /**

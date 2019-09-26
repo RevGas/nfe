@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2017.01.19 às 11:37:18 PM BRT 
+// Gerado em: 2019.09.25 às 09:50:28 AM BRT 
 //
 
 
@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Tipo Pedido de Concessão de Autorização de MDF-e
+ * Tipo Pedido de Autorização Assíncrona de MDF-e
  * 
  * <p>Classe Java de TEnviMDFe complex type.
  * 

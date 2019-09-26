@@ -16,26 +16,25 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Tipo Retorno do Pedido de  Consulta do Recibo do MDF-e
+ * Tipo Retorno do Pedido de Autorização do MDF-e
  * 
- * <p>Classe Java de TRetConsReciMDFe complex type.
+ * <p>Classe Java de TRetMDFe complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
  * 
  * <pre>
- * &lt;complexType name="TRetConsReciMDFe"&gt;
+ * &lt;complexType name="TRetMDFe"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="tpAmb" type="{http://www.portalfiscal.inf.br/mdfe}TAmb"/&gt;
+ *         &lt;element name="tpAmb" type="{http://www.w3.org/2001/XMLSchema}anyType"/&gt;
+ *         &lt;element name="cUF" type="{http://www.portalfiscal.inf.br/mdfe}TCodUfIBGE"/&gt;
  *         &lt;element name="verAplic" type="{http://www.portalfiscal.inf.br/mdfe}TVerAplic"/&gt;
- *         &lt;element name="nRec" type="{http://www.portalfiscal.inf.br/mdfe}TRec"/&gt;
  *         &lt;element name="cStat" type="{http://www.portalfiscal.inf.br/mdfe}TStat"/&gt;
  *         &lt;element name="xMotivo" type="{http://www.portalfiscal.inf.br/mdfe}TMotivo"/&gt;
- *         &lt;element name="cUF" type="{http://www.portalfiscal.inf.br/mdfe}TCodUfIBGE"/&gt;
  *         &lt;element name="protMDFe" type="{http://www.portalfiscal.inf.br/mdfe}TProtMDFe" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="versao" use="required" type="{http://www.portalfiscal.inf.br/mdfe}TVerConsReciMDFe" /&gt;
+ *       &lt;attribute name="versao" use="required" type="{http://www.portalfiscal.inf.br/mdfe}TVerMDe" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -44,29 +43,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TRetConsReciMDFe", propOrder = {
+@XmlType(name = "TRetMDFe", propOrder = {
     "tpAmb",
+    "cuf",
     "verAplic",
-    "nRec",
     "cStat",
     "xMotivo",
-    "cuf",
     "protMDFe"
 })
-public class TRetConsReciMDFe {
+public class TRetMDFe {
 
     @XmlElement(required = true)
-    protected String tpAmb;
+    protected Object tpAmb;
+    @XmlElement(name = "cUF", required = true)
+    protected String cuf;
     @XmlElement(required = true)
     protected String verAplic;
-    @XmlElement(required = true)
-    protected String nRec;
     @XmlElement(required = true)
     protected String cStat;
     @XmlElement(required = true)
     protected String xMotivo;
-    @XmlElement(name = "cUF", required = true)
-    protected String cuf;
     protected TProtMDFe protMDFe;
     @XmlAttribute(name = "versao", required = true)
     protected String versao;
@@ -76,10 +72,10 @@ public class TRetConsReciMDFe {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Object }
      *     
      */
-    public String getTpAmb() {
+    public Object getTpAmb() {
         return tpAmb;
     }
 
@@ -88,11 +84,35 @@ public class TRetConsReciMDFe {
      * 
      * @param value
      *     allowed object is
+     *     {@link Object }
+     *     
+     */
+    public void setTpAmb(Object value) {
+        this.tpAmb = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade cuf.
+     * 
+     * @return
+     *     possible object is
      *     {@link String }
      *     
      */
-    public void setTpAmb(String value) {
-        this.tpAmb = value;
+    public String getCUF() {
+        return cuf;
+    }
+
+    /**
+     * Define o valor da propriedade cuf.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCUF(String value) {
+        this.cuf = value;
     }
 
     /**
@@ -117,30 +137,6 @@ public class TRetConsReciMDFe {
      */
     public void setVerAplic(String value) {
         this.verAplic = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade nRec.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getNRec() {
-        return nRec;
-    }
-
-    /**
-     * Define o valor da propriedade nRec.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setNRec(String value) {
-        this.nRec = value;
     }
 
     /**
@@ -189,30 +185,6 @@ public class TRetConsReciMDFe {
      */
     public void setXMotivo(String value) {
         this.xMotivo = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade cuf.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCUF() {
-        return cuf;
-    }
-
-    /**
-     * Define o valor da propriedade cuf.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCUF(String value) {
-        this.cuf = value;
     }
 
     /**

@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2017.01.19 às 11:37:18 PM BRT 
+// Gerado em: 2019.09.25 às 09:50:28 AM BRT 
 //
 
 
@@ -61,6 +61,23 @@ import org.w3._2000._09.xmldsig_.SignatureType;
  *             &lt;/complexContent&gt;
  *           &lt;/complexType&gt;
  *         &lt;/element&gt;
+ *         &lt;element name="infFisco" minOccurs="0"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence&gt;
+ *                   &lt;element name="cMsg"&gt;
+ *                     &lt;simpleType&gt;
+ *                       &lt;restriction base="{http://www.portalfiscal.inf.br/mdfe}TStat"&gt;
+ *                       &lt;/restriction&gt;
+ *                     &lt;/simpleType&gt;
+ *                   &lt;/element&gt;
+ *                   &lt;element name="xMsg" type="{http://www.portalfiscal.inf.br/mdfe}TMotivo"/&gt;
+ *                 &lt;/sequence&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
  *         &lt;element ref="{http://www.w3.org/2000/09/xmldsig#}Signature" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="versao" use="required" type="{http://www.portalfiscal.inf.br/mdfe}TVerConsReciMDFe" /&gt;
@@ -74,12 +91,14 @@ import org.w3._2000._09.xmldsig_.SignatureType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TProtMDFe", propOrder = {
     "infProt",
+    "infFisco",
     "signature"
 })
 public class TProtMDFe {
 
     @XmlElement(required = true)
     protected TProtMDFe.InfProt infProt;
+    protected TProtMDFe.InfFisco infFisco;
     @XmlElement(name = "Signature", namespace = "http://www.w3.org/2000/09/xmldsig#")
     protected SignatureType signature;
     @XmlAttribute(name = "versao", required = true)
@@ -107,6 +126,30 @@ public class TProtMDFe {
      */
     public void setInfProt(TProtMDFe.InfProt value) {
         this.infProt = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade infFisco.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TProtMDFe.InfFisco }
+     *     
+     */
+    public TProtMDFe.InfFisco getInfFisco() {
+        return infFisco;
+    }
+
+    /**
+     * Define o valor da propriedade infFisco.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TProtMDFe.InfFisco }
+     *     
+     */
+    public void setInfFisco(TProtMDFe.InfFisco value) {
+        this.infFisco = value;
     }
 
     /**
@@ -155,6 +198,94 @@ public class TProtMDFe {
      */
     public void setVersao(String value) {
         this.versao = value;
+    }
+
+
+    /**
+     * <p>Classe Java de anonymous complex type.
+     * 
+     * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+     * 
+     * <pre>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="cMsg"&gt;
+     *           &lt;simpleType&gt;
+     *             &lt;restriction base="{http://www.portalfiscal.inf.br/mdfe}TStat"&gt;
+     *             &lt;/restriction&gt;
+     *           &lt;/simpleType&gt;
+     *         &lt;/element&gt;
+     *         &lt;element name="xMsg" type="{http://www.portalfiscal.inf.br/mdfe}TMotivo"/&gt;
+     *       &lt;/sequence&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "cMsg",
+        "xMsg"
+    })
+    public static class InfFisco {
+
+        @XmlElement(required = true)
+        protected String cMsg;
+        @XmlElement(required = true)
+        protected String xMsg;
+
+        /**
+         * Obtém o valor da propriedade cMsg.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getCMsg() {
+            return cMsg;
+        }
+
+        /**
+         * Define o valor da propriedade cMsg.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setCMsg(String value) {
+            this.cMsg = value;
+        }
+
+        /**
+         * Obtém o valor da propriedade xMsg.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getXMsg() {
+            return xMsg;
+        }
+
+        /**
+         * Define o valor da propriedade xMsg.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setXMsg(String value) {
+            this.xMsg = value;
+        }
+
     }
 
 

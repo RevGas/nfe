@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2017.01.19 às 11:37:18 PM BRT 
+// Gerado em: 2019.09.25 às 09:50:28 AM BRT 
 //
 
 
@@ -127,6 +127,20 @@ import org.w3c.dom.Element;
  *                               &lt;/complexType&gt;
  *                             &lt;/element&gt;
  *                             &lt;element name="dhIniViagem" type="{http://www.portalfiscal.inf.br/mdfe}TDateTimeUTC" minOccurs="0"/&gt;
+ *                             &lt;element name="indCanalVerde" minOccurs="0"&gt;
+ *                               &lt;simpleType&gt;
+ *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                   &lt;enumeration value="1"/&gt;
+ *                                 &lt;/restriction&gt;
+ *                               &lt;/simpleType&gt;
+ *                             &lt;/element&gt;
+ *                             &lt;element name="indCarregaPosterior" minOccurs="0"&gt;
+ *                               &lt;simpleType&gt;
+ *                                 &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                                   &lt;enumeration value="1"/&gt;
+ *                                 &lt;/restriction&gt;
+ *                               &lt;/simpleType&gt;
+ *                             &lt;/element&gt;
  *                           &lt;/sequence&gt;
  *                         &lt;/restriction&gt;
  *                       &lt;/complexContent&gt;
@@ -137,7 +151,10 @@ import org.w3c.dom.Element;
  *                       &lt;complexContent&gt;
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                           &lt;sequence&gt;
- *                             &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+ *                             &lt;choice&gt;
+ *                               &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+ *                               &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
+ *                             &lt;/choice&gt;
  *                             &lt;element name="IE"&gt;
  *                               &lt;simpleType&gt;
  *                                 &lt;restriction base="{http://www.portalfiscal.inf.br/mdfe}TIe"&gt;
@@ -204,7 +221,7 @@ import org.w3c.dom.Element;
  *                                           &lt;/restriction&gt;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
- *                                       &lt;element name="infCTe" maxOccurs="4000" minOccurs="0"&gt;
+ *                                       &lt;element name="infCTe" maxOccurs="10000" minOccurs="0"&gt;
  *                                         &lt;complexType&gt;
  *                                           &lt;complexContent&gt;
  *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -277,12 +294,24 @@ import org.w3c.dom.Element;
  *                                                     &lt;/complexContent&gt;
  *                                                   &lt;/complexType&gt;
  *                                                 &lt;/element&gt;
+ *                                                 &lt;element name="infEntregaParcial" minOccurs="0"&gt;
+ *                                                   &lt;complexType&gt;
+ *                                                     &lt;complexContent&gt;
+ *                                                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                                                         &lt;sequence&gt;
+ *                                                           &lt;element name="qtdTotal" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+ *                                                           &lt;element name="qtdParcial" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+ *                                                         &lt;/sequence&gt;
+ *                                                       &lt;/restriction&gt;
+ *                                                     &lt;/complexContent&gt;
+ *                                                   &lt;/complexType&gt;
+ *                                                 &lt;/element&gt;
  *                                               &lt;/sequence&gt;
  *                                             &lt;/restriction&gt;
  *                                           &lt;/complexContent&gt;
  *                                         &lt;/complexType&gt;
  *                                       &lt;/element&gt;
- *                                       &lt;element name="infNFe" maxOccurs="4000" minOccurs="0"&gt;
+ *                                       &lt;element name="infNFe" maxOccurs="10000" minOccurs="0"&gt;
  *                                         &lt;complexType&gt;
  *                                           &lt;complexContent&gt;
  *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -360,7 +389,7 @@ import org.w3c.dom.Element;
  *                                           &lt;/complexContent&gt;
  *                                         &lt;/complexType&gt;
  *                                       &lt;/element&gt;
- *                                       &lt;element name="infMDFeTransp" maxOccurs="4000" minOccurs="0"&gt;
+ *                                       &lt;element name="infMDFeTransp" maxOccurs="10000" minOccurs="0"&gt;
  *                                         &lt;complexType&gt;
  *                                           &lt;complexContent&gt;
  *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -469,7 +498,7 @@ import org.w3c.dom.Element;
  *                                         &lt;/simpleType&gt;
  *                                       &lt;/element&gt;
  *                                       &lt;choice minOccurs="0"&gt;
- *                                         &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpjOpc"/&gt;
+ *                                         &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
  *                                         &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
  *                                       &lt;/choice&gt;
  *                                     &lt;/sequence&gt;
@@ -617,6 +646,7 @@ import org.w3c.dom.Element;
  *                       &lt;/complexContent&gt;
  *                     &lt;/complexType&gt;
  *                   &lt;/element&gt;
+ *                   &lt;element name="infRespTec" type="{http://www.portalfiscal.inf.br/mdfe}TRespTec" minOccurs="0"/&gt;
  *                 &lt;/sequence&gt;
  *                 &lt;attribute name="versao" use="required" type="{http://www.portalfiscal.inf.br/mdfe}TVerMDe" /&gt;
  *                 &lt;attribute name="Id" use="required"&gt;
@@ -626,6 +656,26 @@ import org.w3c.dom.Element;
  *                     &lt;/restriction&gt;
  *                   &lt;/simpleType&gt;
  *                 &lt;/attribute&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="infMDFeSupl" minOccurs="0"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence&gt;
+ *                   &lt;element name="qrCodMDFe"&gt;
+ *                     &lt;simpleType&gt;
+ *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *                         &lt;whiteSpace value="preserve"/&gt;
+ *                         &lt;minLength value="50"/&gt;
+ *                         &lt;maxLength value="1000"/&gt;
+ *                         &lt;pattern value="((HTTPS?|https?)://.*\?chMDFe=[0-9]{44}&amp;tpAmb=[1-2](&amp;sign=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/&gt;
+ *                       &lt;/restriction&gt;
+ *                     &lt;/simpleType&gt;
+ *                   &lt;/element&gt;
+ *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
  *           &lt;/complexType&gt;
@@ -642,12 +692,14 @@ import org.w3c.dom.Element;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TMDFe", propOrder = {
     "infMDFe",
+    "infMDFeSupl",
     "signature"
 })
 public class TMDFe {
 
     @XmlElement(required = true)
     protected TMDFe.InfMDFe infMDFe;
+    protected TMDFe.InfMDFeSupl infMDFeSupl;
     @XmlElement(name = "Signature", namespace = "http://www.w3.org/2000/09/xmldsig#", required = true)
     protected SignatureType signature;
 
@@ -673,6 +725,30 @@ public class TMDFe {
      */
     public void setInfMDFe(TMDFe.InfMDFe value) {
         this.infMDFe = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade infMDFeSupl.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TMDFe.InfMDFeSupl }
+     *     
+     */
+    public TMDFe.InfMDFeSupl getInfMDFeSupl() {
+        return infMDFeSupl;
+    }
+
+    /**
+     * Define o valor da propriedade infMDFeSupl.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TMDFe.InfMDFeSupl }
+     *     
+     */
+    public void setInfMDFeSupl(TMDFe.InfMDFeSupl value) {
+        this.infMDFeSupl = value;
     }
 
     /**
@@ -796,6 +872,20 @@ public class TMDFe {
      *                     &lt;/complexType&gt;
      *                   &lt;/element&gt;
      *                   &lt;element name="dhIniViagem" type="{http://www.portalfiscal.inf.br/mdfe}TDateTimeUTC" minOccurs="0"/&gt;
+     *                   &lt;element name="indCanalVerde" minOccurs="0"&gt;
+     *                     &lt;simpleType&gt;
+     *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                         &lt;enumeration value="1"/&gt;
+     *                       &lt;/restriction&gt;
+     *                     &lt;/simpleType&gt;
+     *                   &lt;/element&gt;
+     *                   &lt;element name="indCarregaPosterior" minOccurs="0"&gt;
+     *                     &lt;simpleType&gt;
+     *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *                         &lt;enumeration value="1"/&gt;
+     *                       &lt;/restriction&gt;
+     *                     &lt;/simpleType&gt;
+     *                   &lt;/element&gt;
      *                 &lt;/sequence&gt;
      *               &lt;/restriction&gt;
      *             &lt;/complexContent&gt;
@@ -806,7 +896,10 @@ public class TMDFe {
      *             &lt;complexContent&gt;
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *                 &lt;sequence&gt;
-     *                   &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+     *                   &lt;choice&gt;
+     *                     &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+     *                     &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
+     *                   &lt;/choice&gt;
      *                   &lt;element name="IE"&gt;
      *                     &lt;simpleType&gt;
      *                       &lt;restriction base="{http://www.portalfiscal.inf.br/mdfe}TIe"&gt;
@@ -873,7 +966,7 @@ public class TMDFe {
      *                                 &lt;/restriction&gt;
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
-     *                             &lt;element name="infCTe" maxOccurs="4000" minOccurs="0"&gt;
+     *                             &lt;element name="infCTe" maxOccurs="10000" minOccurs="0"&gt;
      *                               &lt;complexType&gt;
      *                                 &lt;complexContent&gt;
      *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -946,12 +1039,24 @@ public class TMDFe {
      *                                           &lt;/complexContent&gt;
      *                                         &lt;/complexType&gt;
      *                                       &lt;/element&gt;
+     *                                       &lt;element name="infEntregaParcial" minOccurs="0"&gt;
+     *                                         &lt;complexType&gt;
+     *                                           &lt;complexContent&gt;
+     *                                             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *                                               &lt;sequence&gt;
+     *                                                 &lt;element name="qtdTotal" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+     *                                                 &lt;element name="qtdParcial" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+     *                                               &lt;/sequence&gt;
+     *                                             &lt;/restriction&gt;
+     *                                           &lt;/complexContent&gt;
+     *                                         &lt;/complexType&gt;
+     *                                       &lt;/element&gt;
      *                                     &lt;/sequence&gt;
      *                                   &lt;/restriction&gt;
      *                                 &lt;/complexContent&gt;
      *                               &lt;/complexType&gt;
      *                             &lt;/element&gt;
-     *                             &lt;element name="infNFe" maxOccurs="4000" minOccurs="0"&gt;
+     *                             &lt;element name="infNFe" maxOccurs="10000" minOccurs="0"&gt;
      *                               &lt;complexType&gt;
      *                                 &lt;complexContent&gt;
      *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -1029,7 +1134,7 @@ public class TMDFe {
      *                                 &lt;/complexContent&gt;
      *                               &lt;/complexType&gt;
      *                             &lt;/element&gt;
-     *                             &lt;element name="infMDFeTransp" maxOccurs="4000" minOccurs="0"&gt;
+     *                             &lt;element name="infMDFeTransp" maxOccurs="10000" minOccurs="0"&gt;
      *                               &lt;complexType&gt;
      *                                 &lt;complexContent&gt;
      *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -1138,7 +1243,7 @@ public class TMDFe {
      *                               &lt;/simpleType&gt;
      *                             &lt;/element&gt;
      *                             &lt;choice minOccurs="0"&gt;
-     *                               &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpjOpc"/&gt;
+     *                               &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
      *                               &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
      *                             &lt;/choice&gt;
      *                           &lt;/sequence&gt;
@@ -1286,6 +1391,7 @@ public class TMDFe {
      *             &lt;/complexContent&gt;
      *           &lt;/complexType&gt;
      *         &lt;/element&gt;
+     *         &lt;element name="infRespTec" type="{http://www.portalfiscal.inf.br/mdfe}TRespTec" minOccurs="0"/&gt;
      *       &lt;/sequence&gt;
      *       &lt;attribute name="versao" use="required" type="{http://www.portalfiscal.inf.br/mdfe}TVerMDe" /&gt;
      *       &lt;attribute name="Id" use="required"&gt;
@@ -1312,7 +1418,8 @@ public class TMDFe {
         "tot",
         "lacres",
         "autXML",
-        "infAdic"
+        "infAdic",
+        "infRespTec"
     })
     public static class InfMDFe {
 
@@ -1330,6 +1437,7 @@ public class TMDFe {
         protected List<TMDFe.InfMDFe.Lacres> lacres;
         protected List<TMDFe.InfMDFe.AutXML> autXML;
         protected TMDFe.InfMDFe.InfAdic infAdic;
+        protected TRespTec infRespTec;
         @XmlAttribute(name = "versao", required = true)
         protected String versao;
         @XmlAttribute(name = "Id", required = true)
@@ -1569,6 +1677,30 @@ public class TMDFe {
         }
 
         /**
+         * Obtém o valor da propriedade infRespTec.
+         * 
+         * @return
+         *     possible object is
+         *     {@link TRespTec }
+         *     
+         */
+        public TRespTec getInfRespTec() {
+            return infRespTec;
+        }
+
+        /**
+         * Define o valor da propriedade infRespTec.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link TRespTec }
+         *     
+         */
+        public void setInfRespTec(TRespTec value) {
+            this.infRespTec = value;
+        }
+
+        /**
          * Obtém o valor da propriedade versao.
          * 
          * @return
@@ -1712,7 +1844,10 @@ public class TMDFe {
          *   &lt;complexContent&gt;
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
          *       &lt;sequence&gt;
-         *         &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+         *         &lt;choice&gt;
+         *           &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+         *           &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
+         *         &lt;/choice&gt;
          *         &lt;element name="IE"&gt;
          *           &lt;simpleType&gt;
          *             &lt;restriction base="{http://www.portalfiscal.inf.br/mdfe}TIe"&gt;
@@ -1747,6 +1882,7 @@ public class TMDFe {
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
             "cnpj",
+            "cpf",
             "ie",
             "xNome",
             "xFant",
@@ -1754,8 +1890,10 @@ public class TMDFe {
         })
         public static class Emit {
 
-            @XmlElement(name = "CNPJ", required = true)
+            @XmlElement(name = "CNPJ")
             protected String cnpj;
+            @XmlElement(name = "CPF")
+            protected String cpf;
             @XmlElement(name = "IE", required = true)
             protected String ie;
             @XmlElement(required = true)
@@ -1786,6 +1924,30 @@ public class TMDFe {
              */
             public void setCNPJ(String value) {
                 this.cnpj = value;
+            }
+
+            /**
+             * Obtém o valor da propriedade cpf.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getCPF() {
+                return cpf;
+            }
+
+            /**
+             * Define o valor da propriedade cpf.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setCPF(String value) {
+                this.cpf = value;
             }
 
             /**
@@ -1978,6 +2140,20 @@ public class TMDFe {
          *           &lt;/complexType&gt;
          *         &lt;/element&gt;
          *         &lt;element name="dhIniViagem" type="{http://www.portalfiscal.inf.br/mdfe}TDateTimeUTC" minOccurs="0"/&gt;
+         *         &lt;element name="indCanalVerde" minOccurs="0"&gt;
+         *           &lt;simpleType&gt;
+         *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *               &lt;enumeration value="1"/&gt;
+         *             &lt;/restriction&gt;
+         *           &lt;/simpleType&gt;
+         *         &lt;/element&gt;
+         *         &lt;element name="indCarregaPosterior" minOccurs="0"&gt;
+         *           &lt;simpleType&gt;
+         *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+         *               &lt;enumeration value="1"/&gt;
+         *             &lt;/restriction&gt;
+         *           &lt;/simpleType&gt;
+         *         &lt;/element&gt;
          *       &lt;/sequence&gt;
          *     &lt;/restriction&gt;
          *   &lt;/complexContent&gt;
@@ -2006,7 +2182,9 @@ public class TMDFe {
             "ufFim",
             "infMunCarrega",
             "infPercurso",
-            "dhIniViagem"
+            "dhIniViagem",
+            "indCanalVerde",
+            "indCarregaPosterior"
         })
         public static class Ide {
 
@@ -2047,6 +2225,8 @@ public class TMDFe {
             protected List<TMDFe.InfMDFe.Ide.InfMunCarrega> infMunCarrega;
             protected List<TMDFe.InfMDFe.Ide.InfPercurso> infPercurso;
             protected String dhIniViagem;
+            protected String indCanalVerde;
+            protected String indCarregaPosterior;
 
             /**
              * Obtém o valor da propriedade cuf.
@@ -2514,6 +2694,54 @@ public class TMDFe {
                 this.dhIniViagem = value;
             }
 
+            /**
+             * Obtém o valor da propriedade indCanalVerde.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getIndCanalVerde() {
+                return indCanalVerde;
+            }
+
+            /**
+             * Define o valor da propriedade indCanalVerde.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setIndCanalVerde(String value) {
+                this.indCanalVerde = value;
+            }
+
+            /**
+             * Obtém o valor da propriedade indCarregaPosterior.
+             * 
+             * @return
+             *     possible object is
+             *     {@link String }
+             *     
+             */
+            public String getIndCarregaPosterior() {
+                return indCarregaPosterior;
+            }
+
+            /**
+             * Define o valor da propriedade indCarregaPosterior.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link String }
+             *     
+             */
+            public void setIndCarregaPosterior(String value) {
+                this.indCarregaPosterior = value;
+            }
+
 
             /**
              * <p>Classe Java de anonymous complex type.
@@ -2782,7 +3010,7 @@ public class TMDFe {
          *                       &lt;/restriction&gt;
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
-         *                   &lt;element name="infCTe" maxOccurs="4000" minOccurs="0"&gt;
+         *                   &lt;element name="infCTe" maxOccurs="10000" minOccurs="0"&gt;
          *                     &lt;complexType&gt;
          *                       &lt;complexContent&gt;
          *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -2855,12 +3083,24 @@ public class TMDFe {
          *                                 &lt;/complexContent&gt;
          *                               &lt;/complexType&gt;
          *                             &lt;/element&gt;
+         *                             &lt;element name="infEntregaParcial" minOccurs="0"&gt;
+         *                               &lt;complexType&gt;
+         *                                 &lt;complexContent&gt;
+         *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+         *                                     &lt;sequence&gt;
+         *                                       &lt;element name="qtdTotal" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+         *                                       &lt;element name="qtdParcial" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+         *                                     &lt;/sequence&gt;
+         *                                   &lt;/restriction&gt;
+         *                                 &lt;/complexContent&gt;
+         *                               &lt;/complexType&gt;
+         *                             &lt;/element&gt;
          *                           &lt;/sequence&gt;
          *                         &lt;/restriction&gt;
          *                       &lt;/complexContent&gt;
          *                     &lt;/complexType&gt;
          *                   &lt;/element&gt;
-         *                   &lt;element name="infNFe" maxOccurs="4000" minOccurs="0"&gt;
+         *                   &lt;element name="infNFe" maxOccurs="10000" minOccurs="0"&gt;
          *                     &lt;complexType&gt;
          *                       &lt;complexContent&gt;
          *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -2938,7 +3178,7 @@ public class TMDFe {
          *                       &lt;/complexContent&gt;
          *                     &lt;/complexType&gt;
          *                   &lt;/element&gt;
-         *                   &lt;element name="infMDFeTransp" maxOccurs="4000" minOccurs="0"&gt;
+         *                   &lt;element name="infMDFeTransp" maxOccurs="10000" minOccurs="0"&gt;
          *                     &lt;complexType&gt;
          *                       &lt;complexContent&gt;
          *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -3086,7 +3326,7 @@ public class TMDFe {
              *             &lt;/restriction&gt;
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
-             *         &lt;element name="infCTe" maxOccurs="4000" minOccurs="0"&gt;
+             *         &lt;element name="infCTe" maxOccurs="10000" minOccurs="0"&gt;
              *           &lt;complexType&gt;
              *             &lt;complexContent&gt;
              *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -3159,12 +3399,24 @@ public class TMDFe {
              *                       &lt;/complexContent&gt;
              *                     &lt;/complexType&gt;
              *                   &lt;/element&gt;
+             *                   &lt;element name="infEntregaParcial" minOccurs="0"&gt;
+             *                     &lt;complexType&gt;
+             *                       &lt;complexContent&gt;
+             *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+             *                           &lt;sequence&gt;
+             *                             &lt;element name="qtdTotal" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+             *                             &lt;element name="qtdParcial" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+             *                           &lt;/sequence&gt;
+             *                         &lt;/restriction&gt;
+             *                       &lt;/complexContent&gt;
+             *                     &lt;/complexType&gt;
+             *                   &lt;/element&gt;
              *                 &lt;/sequence&gt;
              *               &lt;/restriction&gt;
              *             &lt;/complexContent&gt;
              *           &lt;/complexType&gt;
              *         &lt;/element&gt;
-             *         &lt;element name="infNFe" maxOccurs="4000" minOccurs="0"&gt;
+             *         &lt;element name="infNFe" maxOccurs="10000" minOccurs="0"&gt;
              *           &lt;complexType&gt;
              *             &lt;complexContent&gt;
              *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -3242,7 +3494,7 @@ public class TMDFe {
              *             &lt;/complexContent&gt;
              *           &lt;/complexType&gt;
              *         &lt;/element&gt;
-             *         &lt;element name="infMDFeTransp" maxOccurs="4000" minOccurs="0"&gt;
+             *         &lt;element name="infMDFeTransp" maxOccurs="10000" minOccurs="0"&gt;
              *           &lt;complexType&gt;
              *             &lt;complexContent&gt;
              *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
@@ -3559,6 +3811,18 @@ public class TMDFe {
                  *             &lt;/complexContent&gt;
                  *           &lt;/complexType&gt;
                  *         &lt;/element&gt;
+                 *         &lt;element name="infEntregaParcial" minOccurs="0"&gt;
+                 *           &lt;complexType&gt;
+                 *             &lt;complexContent&gt;
+                 *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+                 *                 &lt;sequence&gt;
+                 *                   &lt;element name="qtdTotal" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+                 *                   &lt;element name="qtdParcial" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+                 *                 &lt;/sequence&gt;
+                 *               &lt;/restriction&gt;
+                 *             &lt;/complexContent&gt;
+                 *           &lt;/complexType&gt;
+                 *         &lt;/element&gt;
                  *       &lt;/sequence&gt;
                  *     &lt;/restriction&gt;
                  *   &lt;/complexContent&gt;
@@ -3573,7 +3837,8 @@ public class TMDFe {
                     "segCodBarra",
                     "indReentrega",
                     "infUnidTransp",
-                    "peri"
+                    "peri",
+                    "infEntregaParcial"
                 })
                 public static class InfCTe {
 
@@ -3584,6 +3849,7 @@ public class TMDFe {
                     protected String indReentrega;
                     protected List<TUnidadeTransp> infUnidTransp;
                     protected List<TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.Peri> peri;
+                    protected TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.InfEntregaParcial infEntregaParcial;
 
                     /**
                      * Obtém o valor da propriedade chCTe.
@@ -3713,6 +3979,113 @@ public class TMDFe {
                             peri = new ArrayList<TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.Peri>();
                         }
                         return this.peri;
+                    }
+
+                    /**
+                     * Obtém o valor da propriedade infEntregaParcial.
+                     * 
+                     * @return
+                     *     possible object is
+                     *     {@link TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.InfEntregaParcial }
+                     *     
+                     */
+                    public TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.InfEntregaParcial getInfEntregaParcial() {
+                        return infEntregaParcial;
+                    }
+
+                    /**
+                     * Define o valor da propriedade infEntregaParcial.
+                     * 
+                     * @param value
+                     *     allowed object is
+                     *     {@link TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.InfEntregaParcial }
+                     *     
+                     */
+                    public void setInfEntregaParcial(TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.InfEntregaParcial value) {
+                        this.infEntregaParcial = value;
+                    }
+
+
+                    /**
+                     * <p>Classe Java de anonymous complex type.
+                     * 
+                     * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+                     * 
+                     * <pre>
+                     * &lt;complexType&gt;
+                     *   &lt;complexContent&gt;
+                     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+                     *       &lt;sequence&gt;
+                     *         &lt;element name="qtdTotal" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+                     *         &lt;element name="qtdParcial" type="{http://www.portalfiscal.inf.br/mdfe}TDec_1104"/&gt;
+                     *       &lt;/sequence&gt;
+                     *     &lt;/restriction&gt;
+                     *   &lt;/complexContent&gt;
+                     * &lt;/complexType&gt;
+                     * </pre>
+                     * 
+                     * 
+                     */
+                    @XmlAccessorType(XmlAccessType.FIELD)
+                    @XmlType(name = "", propOrder = {
+                        "qtdTotal",
+                        "qtdParcial"
+                    })
+                    public static class InfEntregaParcial {
+
+                        @XmlElement(required = true)
+                        protected String qtdTotal;
+                        @XmlElement(required = true)
+                        protected String qtdParcial;
+
+                        /**
+                         * Obtém o valor da propriedade qtdTotal.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getQtdTotal() {
+                            return qtdTotal;
+                        }
+
+                        /**
+                         * Define o valor da propriedade qtdTotal.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setQtdTotal(String value) {
+                            this.qtdTotal = value;
+                        }
+
+                        /**
+                         * Obtém o valor da propriedade qtdParcial.
+                         * 
+                         * @return
+                         *     possible object is
+                         *     {@link String }
+                         *     
+                         */
+                        public String getQtdParcial() {
+                            return qtdParcial;
+                        }
+
+                        /**
+                         * Define o valor da propriedade qtdParcial.
+                         * 
+                         * @param value
+                         *     allowed object is
+                         *     {@link String }
+                         *     
+                         */
+                        public void setQtdParcial(String value) {
+                            this.qtdParcial = value;
+                        }
+
                     }
 
 
@@ -5045,7 +5418,7 @@ public class TMDFe {
          *                     &lt;/simpleType&gt;
          *                   &lt;/element&gt;
          *                   &lt;choice minOccurs="0"&gt;
-         *                     &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpjOpc"/&gt;
+         *                     &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
          *                     &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
          *                   &lt;/choice&gt;
          *                 &lt;/sequence&gt;
@@ -5235,7 +5608,7 @@ public class TMDFe {
              *           &lt;/simpleType&gt;
              *         &lt;/element&gt;
              *         &lt;choice minOccurs="0"&gt;
-             *           &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpjOpc"/&gt;
+             *           &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
              *           &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
              *         &lt;/choice&gt;
              *       &lt;/sequence&gt;
@@ -5646,6 +6019,70 @@ public class TMDFe {
                 this.qCarga = value;
             }
 
+        }
+
+    }
+
+
+    /**
+     * <p>Classe Java de anonymous complex type.
+     * 
+     * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+     * 
+     * <pre>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence&gt;
+     *         &lt;element name="qrCodMDFe"&gt;
+     *           &lt;simpleType&gt;
+     *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+     *               &lt;whiteSpace value="preserve"/&gt;
+     *               &lt;minLength value="50"/&gt;
+     *               &lt;maxLength value="1000"/&gt;
+     *               &lt;pattern value="((HTTPS?|https?)://.*\?chMDFe=[0-9]{44}&amp;tpAmb=[1-2](&amp;sign=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/&gt;
+     *             &lt;/restriction&gt;
+     *           &lt;/simpleType&gt;
+     *         &lt;/element&gt;
+     *       &lt;/sequence&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "qrCodMDFe"
+    })
+    public static class InfMDFeSupl {
+
+        @XmlElement(required = true)
+        protected String qrCodMDFe;
+
+        /**
+         * Obtém o valor da propriedade qrCodMDFe.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getQrCodMDFe() {
+            return qrCodMDFe;
+        }
+
+        /**
+         * Define o valor da propriedade qrCodMDFe.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setQrCodMDFe(String value) {
+            this.qrCodMDFe = value;
         }
 
     }

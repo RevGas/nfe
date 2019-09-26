@@ -1,15 +1,15 @@
 package com.fincatto.mdfe300.classes;
 
-import br.inf.portalfiscal.mdfe.TRetEnviMDFe;
+import br.inf.portalfiscal.mdfe.TRetMDFe;
 
 public class RetornoEnvioMDFe {
 
     private final String documentoAssinado;
-    private final TRetEnviMDFe tRetEnviMDFe;
+    private final TRetMDFe tRetMDFe;
 
-    public RetornoEnvioMDFe(String documentoAssinado, TRetEnviMDFe tRetEnviMDFe) {
+    public RetornoEnvioMDFe(String documentoAssinado, TRetMDFe tRetMDFe) {
         this.documentoAssinado = documentoAssinado;
-        this.tRetEnviMDFe = tRetEnviMDFe;
+        this.tRetMDFe = tRetMDFe;
     }
 
     /**
@@ -20,8 +20,8 @@ public class RetornoEnvioMDFe {
         return documentoAssinado;
     }
 
-    public TRetEnviMDFe gettRetEnviMDFe() {
-        return tRetEnviMDFe;
+    public TRetMDFe getTRetMDFe() {
+        return tRetMDFe;
     }
 
 }
