@@ -28,7 +28,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 
 public class WSFacade {
-    
+
     private final WSLoteEnvio wsLoteEnvio;
     private final WSLoteConsulta wsLoteConsulta;
     private final WSStatusConsulta wsStatusConsulta;
