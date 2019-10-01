@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2017.01.19 às 11:37:18 PM BRT 
+// Gerado em: 2019.10.01 às 03:41:15 PM BRT 
 //
 
 
@@ -49,6 +49,7 @@ public class ObjectFactory {
     private final static QName _RetEnviMDFe_QNAME = new QName("http://www.portalfiscal.inf.br/mdfe", "retEnviMDFe");
     private final static QName _RetEventoMDFe_QNAME = new QName("http://www.portalfiscal.inf.br/mdfe", "retEventoMDFe");
     private final static QName _RetMDFeConsultaDFe_QNAME = new QName("http://www.portalfiscal.inf.br/mdfe", "retMDFeConsultaDFe");
+    private final static QName _RetMDFe_QNAME = new QName("http://www.portalfiscal.inf.br/mdfe", "retMDFe");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: br.inf.portalfiscal.mdfe
@@ -63,6 +64,14 @@ public class ObjectFactory {
      */
     public EvIncCondutorMDFe createEvIncCondutorMDFe() {
         return new EvIncCondutorMDFe();
+    }
+
+    /**
+     * Create an instance of {@link EvIncDFeMDFe }
+     * 
+     */
+    public EvIncDFeMDFe createEvIncDFeMDFe() {
+        return new EvIncDFeMDFe();
     }
 
     /**
@@ -370,6 +379,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EvIncDFeMDFe.InfDoc }
+     * 
+     */
+    public EvIncDFeMDFe.InfDoc createEvIncDFeMDFeInfDoc() {
+        return new EvIncDFeMDFe.InfDoc();
+    }
+
+    /**
      * Create an instance of {@link TMDFeConsultaDFe }
      * 
      */
@@ -498,6 +515,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TRetMDFe }
+     * 
+     */
+    public TRetMDFe createTRetMDFe() {
+        return new TRetMDFe();
+    }
+
+    /**
      * Create an instance of {@link TEndeEmi }
      * 
      */
@@ -551,6 +576,14 @@ public class ObjectFactory {
      */
     public TEndReEnt createTEndReEnt() {
         return new TEndReEnt();
+    }
+
+    /**
+     * Create an instance of {@link TRespTec }
+     * 
+     */
+    public TRespTec createTRespTec() {
+        return new TRespTec();
     }
 
     /**
@@ -666,6 +699,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TProtMDFe.InfFisco }
+     * 
+     */
+    public TProtMDFe.InfFisco createTProtMDFeInfFisco() {
+        return new TProtMDFe.InfFisco();
+    }
+
+    /**
+     * Create an instance of {@link TMDFe.InfMDFeSupl }
+     * 
+     */
+    public TMDFe.InfMDFeSupl createTMDFeInfMDFeSupl() {
+        return new TMDFe.InfMDFeSupl();
+    }
+
+    /**
      * Create an instance of {@link TMDFe.InfMDFe.Emit }
      * 
      */
@@ -751,6 +800,14 @@ public class ObjectFactory {
      */
     public TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.Peri createTMDFeInfMDFeInfDocInfMunDescargaInfCTePeri() {
         return new TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.Peri();
+    }
+
+    /**
+     * Create an instance of {@link TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.InfEntregaParcial }
+     * 
+     */
+    public TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.InfEntregaParcial createTMDFeInfMDFeInfDocInfMunDescargaInfCTeInfEntregaParcial() {
+        return new TMDFe.InfMDFe.InfDoc.InfMunDescarga.InfCTe.InfEntregaParcial();
     }
 
     /**
@@ -985,6 +1042,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/mdfe", name = "retMDFeConsultaDFe")
     public JAXBElement<TRetMDFeConsultaDFe> createRetMDFeConsultaDFe(TRetMDFeConsultaDFe value) {
         return new JAXBElement<TRetMDFeConsultaDFe>(_RetMDFeConsultaDFe_QNAME, TRetMDFeConsultaDFe.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TRetMDFe }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.portalfiscal.inf.br/mdfe", name = "retMDFe")
+    public JAXBElement<TRetMDFe> createRetMDFe(TRetMDFe value) {
+        return new JAXBElement<TRetMDFe>(_RetMDFe_QNAME, TRetMDFe.class, null, value);
     }
 
 }

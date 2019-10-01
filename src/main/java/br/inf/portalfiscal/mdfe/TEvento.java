@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2017.01.19 às 11:37:18 PM BRT 
+// Gerado em: 2019.10.01 às 03:41:15 PM BRT 
 //
 
 
@@ -40,7 +40,10 @@ import org.w3c.dom.Element;
  *                 &lt;sequence&gt;
  *                   &lt;element name="cOrgao" type="{http://www.portalfiscal.inf.br/mdfe}TCOrgaoIBGE"/&gt;
  *                   &lt;element name="tpAmb" type="{http://www.portalfiscal.inf.br/mdfe}TAmb"/&gt;
- *                   &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+ *                   &lt;choice&gt;
+ *                     &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+ *                     &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
+ *                   &lt;/choice&gt;
  *                   &lt;element name="chMDFe" type="{http://www.portalfiscal.inf.br/mdfe}TChMDFe"/&gt;
  *                   &lt;element name="dhEvento" type="{http://www.portalfiscal.inf.br/mdfe}TDateTimeUTC"/&gt;
  *                   &lt;element name="tpEvento" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
@@ -185,7 +188,10 @@ public class TEvento {
      *       &lt;sequence&gt;
      *         &lt;element name="cOrgao" type="{http://www.portalfiscal.inf.br/mdfe}TCOrgaoIBGE"/&gt;
      *         &lt;element name="tpAmb" type="{http://www.portalfiscal.inf.br/mdfe}TAmb"/&gt;
-     *         &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+     *         &lt;choice&gt;
+     *           &lt;element name="CNPJ" type="{http://www.portalfiscal.inf.br/mdfe}TCnpj"/&gt;
+     *           &lt;element name="CPF" type="{http://www.portalfiscal.inf.br/mdfe}TCpf"/&gt;
+     *         &lt;/choice&gt;
      *         &lt;element name="chMDFe" type="{http://www.portalfiscal.inf.br/mdfe}TChMDFe"/&gt;
      *         &lt;element name="dhEvento" type="{http://www.portalfiscal.inf.br/mdfe}TDateTimeUTC"/&gt;
      *         &lt;element name="tpEvento" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
@@ -229,6 +235,7 @@ public class TEvento {
         "cOrgao",
         "tpAmb",
         "cnpj",
+        "cpf",
         "chMDFe",
         "dhEvento",
         "tpEvento",
@@ -241,8 +248,10 @@ public class TEvento {
         protected String cOrgao;
         @XmlElement(required = true)
         protected String tpAmb;
-        @XmlElement(name = "CNPJ", required = true)
+        @XmlElement(name = "CNPJ")
         protected String cnpj;
+        @XmlElement(name = "CPF")
+        protected String cpf;
         @XmlElement(required = true)
         protected String chMDFe;
         @XmlElement(required = true)
@@ -328,6 +337,30 @@ public class TEvento {
          */
         public void setCNPJ(String value) {
             this.cnpj = value;
+        }
+
+        /**
+         * Obtém o valor da propriedade cpf.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getCPF() {
+            return cpf;
+        }
+
+        /**
+         * Define o valor da propriedade cpf.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setCPF(String value) {
+            this.cpf = value;
         }
 
         /**
