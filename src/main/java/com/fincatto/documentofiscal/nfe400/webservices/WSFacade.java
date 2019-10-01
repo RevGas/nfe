@@ -167,7 +167,7 @@ public class WSFacade {
      * @return dados do cancelamento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento cancelaNota(final String chNFe, final String nProt, final String xJust) throws Exception {
+    public br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TProcEvento cancelaNota(final String chNFe, final String nProt, final String xJust) throws Exception {
         return this.wSCancelamento.cancelaNota(chNFe, nProt, xJust);
     }
     

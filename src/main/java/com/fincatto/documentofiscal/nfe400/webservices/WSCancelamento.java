@@ -3,11 +3,13 @@ package com.fincatto.documentofiscal.nfe400.webservices;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.ObjectFactory;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TEnvEvento;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TEvento;
+import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TProcEvento;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+import java.io.StringReader;
 import java.io.StringWriter;
 
 import java.math.BigDecimal;
@@ -18,6 +20,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 class WSCancelamento implements DFLog {
     
@@ -36,11 +39,28 @@ class WSCancelamento implements DFLog {
         return null;
     }
 
-    TRetEnvEvento cancelaNota(final String chNFe, final String nProt, final String xJust) throws Exception {
+    TProcEvento cancelaNota(final String chNFe, final String nProt, final String xJust) throws Exception {
         String xml = this.gerarDados(chNFe, nProt, xJust);
         xml = xml.replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "");
         final String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(xml);
-        return efetuaCancelamento(xmlAssinado, chNFe);
+        
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101");
+        Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
+        StringReader reader = new StringReader(xmlAssinado);
+        JAXBElement<TEnvEvento> tEnvEvento = (JAXBElement<TEnvEvento>) jaxbUnmarshaller.unmarshal(reader);
+       
+        TProcEvento procEvento = new TProcEvento();
+        procEvento.setEvento(tEnvEvento.getValue().getEvento().get(0));
+        
+        TRetEnvEvento retEnvEvento;
+        try {
+            retEnvEvento = efetuaCancelamento(xmlAssinado, chNFe);
+            procEvento.setRetEvento(retEnvEvento.getRetEvento().get(0));
+            procEvento.setVersao(VERSAO_LEIAUTE.toString());
+        } catch (Exception e) {
+            DFLog.getLogger(WSCancelamento.class);
+        }
+        return procEvento;
     }
 
     private TRetEnvEvento efetuaCancelamento(final String xmlAssinado, final String chaveAcesso) throws Exception {
