@@ -1,81 +1,75 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
+import br.inf.portalfiscal.cte.TEnviCTe;
+import br.inf.portalfiscal.cte.TRetEnviCTe;
+import br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.hom.CteCabecMsg;
+import br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.hom.CteDadosMsg;
+import br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.hom.ObjectFactory;
+import br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.hom.CteRecepcaoSinc;
+import br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.hom.CteRecepcaoSincSoap12;
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
-import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLote;
-import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLoteRetorno;
-import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLoteRetornoDados;
+import com.fincatto.documentofiscal.cte300.parsers.CTChaveParser;
+import com.fincatto.documentofiscal.cte300.parsers.CTeParser;
+import com.fincatto.documentofiscal.cte300.utils.CTeGeraChave;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
-import javax.xml.stream.XMLStreamException;
+import javax.xml.bind.JAXBException;
+import javax.xml.ws.Holder;
 
 class WSRecepcaoLote implements DFLog {
 
-    private static final String CTE_ELEMENTO = "CTe";
+    private static final String VERSAO = "3.00";
     private final CTeConfig config;
 
     WSRecepcaoLote(final CTeConfig config) {
         this.config = config;
     }
 
-    public CTeEnvioLoteRetornoDados envioRecepcao(CTeEnvioLote cteRecepcaoLote) throws Exception {
-        //assina o lote
-        final String documentoAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(cteRecepcaoLote.toString(), "infCte");
-        final CTeEnvioLote loteAssinado = this.config.getPersister().read(CTeEnvioLote.class, documentoAssinado);
+    public TRetEnviCTe envioRecepcao(TEnviCTe tEnviCTe) throws Exception {
+        CTeGeraChave gerarChave = new CTeGeraChave(tEnviCTe);
+        tEnviCTe.getCTe().get(0).getInfCte().getIde().setCCT(gerarChave.geraCodigoRandomico());
+        tEnviCTe.getCTe().get(0).getInfCte().setId("CTe"+ gerarChave.getChaveAcesso());
+        tEnviCTe.getCTe().get(0).getInfCTeSupl().setQrCodCTe("https://dfe-portal.svrs.rs.gov.br/cte/qrCode?chCTe="+
+                tEnviCTe.getCTe().get(0).getInfCte().getId().replace("CTe", "")+
+                "&tpAmb="+
+                tEnviCTe.getCTe().get(0).getInfCte().getIde().getTpAmb());
+        tEnviCTe.getCTe().get(0).getInfCte().getIde().setCDV(gerarChave.getDV().toString());
 
-        //comunica o lote
-        final CTeEnvioLoteRetorno retorno = comunicaLote(documentoAssinado);
-        return new CTeEnvioLoteRetornoDados(retorno, loteAssinado);
+        CteDadosMsg cteDadosMsg = new CteDadosMsg();
+        cteDadosMsg.getContent().add(CTeParser.parserTEnviCTe(getDocumentoAssinado(tEnviCTe)));
+        
+        return GatewayRecepcao.valueOfCodigoUF(new CTChaveParser().getTUf(tEnviCTe.getCTe().get(0).getInfCte().getIde().getCUF())).getTRetEnviCTe(tEnviCTe, this.config);
     }
+    
+    public TRetEnviCTe envioRecepcaoSinc(TEnviCTe tEnviCTe) throws Exception {
+        CteCabecMsg cteCabecMsg = new CteCabecMsg();
+        cteCabecMsg.setCUF(this.config.getCUF().getCodigoIbge());
+        cteCabecMsg.setVersaoDados(VERSAO);
 
-    private CTeEnvioLoteRetorno comunicaLote(final String loteAssinadoXml) throws Exception {
-//        //valida o lote assinado, para verificar se o xsd foi satisfeito, antes de comunicar com a sefaz
-//        XMLValidador.validaLoteCTe(loteAssinadoXml);
-//
-//        //envia o lote para a sefaz
-//        final OMElement omElement = this.cteToOMElement(loteAssinadoXml);
-//
-//        final CteDadosMsg dados = new CteDadosMsg();
-//        dados.setExtraElement(omElement);
-//
-//        final CteCabecMsgE cabecalhoSOAP = this.getCabecalhoSOAP();
-//        this.getLogger().debug(omElement.toString());
-//
-//        final CTAutorizador31 autorizador = CTAutorizador31.valueOfTipoEmissao(this.config.getTipoEmissao(), this.config.getCUF());
-//        final String endpoint = autorizador.getCteRecepcao(this.config.getAmbiente());
-//        if (endpoint == null) {
-//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para Recepcao, autorizador " + autorizador.name() + ", UF " + this.config.getCUF().name());
+        Holder<CteCabecMsg> holder = new Holder<>(new ObjectFactory().createCteCabecMsg(cteCabecMsg).getValue());
+        
+        CteRecepcaoSincSoap12 port = new CteRecepcaoSinc().getCteRecepcaoSincSoap12();
+//        CteRecepcaoSincResult result = port.cteRecepcaoSinc(compress(getDocumentoAssinado(tEnviCTe)));
+
+//        TRetEnviCTe tRetEnviCTe = ((JAXBElement<TRetEnviCTe>) result.getContent().get(0)).getValue();
+//        return tRetEnviCTe;
+        return null;
+    }
+    
+    private String getDocumentoAssinado(TEnviCTe tEnviCTe) throws JAXBException, Exception {
+        return new DFAssinaturaDigital(this.config).assinarDocumento(CTeParser.parserTEnviCTe(tEnviCTe).replace(" xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", ""), "infCte");
+    }
+    
+//    public static String compress(String str) throws Exception {
+//        if (str == null || str.length() == 0) {
+//            return str;
 //        }
-//        final CteRecepcaoLoteResult autorizacaoLoteResult = new CteRecepcaoStub(endpoint).cteRecepcaoLote(dados, cabecalhoSOAP);
-//        final CTeEnvioLoteRetorno retorno = this.config.getPersister().read(CTeEnvioLoteRetorno.class, autorizacaoLoteResult.getExtraElement().toString());
-//        this.getLogger().debug(retorno.toString());
-//        return retorno;
-        return null;
-    }
-
-    private String getCabecalhoSOAP() {
-//        final CteCabecMsg cabecalho = new CteCabecMsg();
-//        cabecalho.setCUF(this.config.getCUF().getCodigoIbge());
-//        cabecalho.setVersaoDados(CTeConfig.VERSAO);
-//        final CteCabecMsgE cabecalhoSOAP = new CteCabecMsgE();
-//        cabecalhoSOAP.setCteCabecMsg(cabecalho);
-//        return cabecalhoSOAP;
-        return null;
-    }
-
-    private String cteToOMElement(final String documento) throws XMLStreamException {
-//        final XMLInputFactory factory = XMLInputFactory.newInstance();
-//        factory.setProperty(XMLInputFactory.IS_COALESCING, false);
-//        XMLStreamReader reader = factory.createXMLStreamReader(new StringReader(documento));
-//        StAXOMBuilder builder = new StAXOMBuilder(reader);
-//        final OMElement ome = builder.getDocumentElement();
-//        final Iterator<?> children = ome.getChildrenWithLocalName(WSRecepcaoLote.CTE_ELEMENTO);
-//        while (children.hasNext()) {
-//            final OMElement omElement = (OMElement) children.next();
-//            if ((omElement != null) && (WSRecepcaoLote.CTE_ELEMENTO.equals(omElement.getLocalName()))) {
-//                omElement.addAttribute("xmlns", CTeConfig.NAMESPACE, null);
-//            }
-//        }
-//        return ome;
-        return null;
-    }
+//        ByteArrayOutputStream obj=new ByteArrayOutputStream();
+//        GZIPOutputStream gzip = new GZIPOutputStream(obj);
+//        gzip.write(str.getBytes("UTF-8"));
+//        gzip.close();
+//        String outStr = Base64.encode(obj.toByteArray());
+//        return outStr;
+//     }
+    
 }

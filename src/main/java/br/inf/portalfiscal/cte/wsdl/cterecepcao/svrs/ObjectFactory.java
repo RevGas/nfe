@@ -1,4 +1,3 @@
-
 package br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs;
 
 import javax.xml.bind.JAXBElement;

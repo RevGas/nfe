@@ -1,16 +1,24 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
+import br.inf.portalfiscal.cte.TConsStatServ;
+import br.inf.portalfiscal.cte.TRetConsStatServ;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteCabecMsg;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteDadosMsg;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteStatusServico;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteStatusServicoCTResult;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteStatusServicoSoap12;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.ObjectFactory;
 import com.fincatto.documentofiscal.DFLog;
-
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
-import com.fincatto.documentofiscal.cte300.classes.consultastatusservico.CTeConsStatServ;
-import com.fincatto.documentofiscal.cte300.classes.consultastatusservico.CTeConsStatServRet;
 
-import java.rmi.RemoteException;
+import java.net.MalformedURLException;
+import javax.xml.bind.JAXBElement;
+import javax.xml.ws.Holder;
 
 class WSStatusConsulta implements DFLog {
 
+    private static final String VERSAO_LEIAUTE = "3.00";
     private static final String NOME_SERVICO = "STATUS";
     private final CTeConfig config;
 
@@ -18,43 +26,36 @@ class WSStatusConsulta implements DFLog {
         this.config = config;
     }
 
-    CTeConsStatServRet consultaStatus(final DFUnidadeFederativa uf) throws Exception {
-//        final OMElement omElementConsulta = AXIOMUtil.stringToOM(gerarDadosConsulta(this.config).toString());
-//        this.getLogger().debug(omElementConsulta.toString());
-//
-//        final OMElement omElementResult = this.efetuaConsultaStatus(omElementConsulta, uf);
-//        this.getLogger().debug(omElementResult.toString());
-//
-//        return this.config.getPersister().read(CTeConsStatServRet.class, omElementResult.toString());
-        return null;
+    TRetConsStatServ consultaStatus() throws MalformedURLException {
+        return efetuaConsultaStatus(gerarDadosConsultaStatus(config), config.getCUF());
     }
 
-    private static CTeConsStatServ gerarDadosConsulta(final CTeConfig config) {
-        final CTeConsStatServ consStatServ = new CTeConsStatServ();
-        consStatServ.setAmbiente(config.getAmbiente());
-        consStatServ.setVersao(CTeConfig.VERSAO);
-        consStatServ.setServico(WSStatusConsulta.NOME_SERVICO);
-        return consStatServ;
+    private static TConsStatServ gerarDadosConsultaStatus(final CTeConfig config) {
+        final TConsStatServ tConsStatServ = new TConsStatServ();
+        tConsStatServ.setTpAmb(config.getTipoEmissao().getCodigo());
+        tConsStatServ.setVersao(VERSAO_LEIAUTE);
+        tConsStatServ.setXServ(NOME_SERVICO);
+        return tConsStatServ;
     }
 
-    private String efetuaConsultaStatus(final String omElement, final DFUnidadeFederativa unidadeFederativa) throws RemoteException {
-//        final CteStatusServicoStub.CteCabecMsg cabec = new CteStatusServicoStub.CteCabecMsg();
-//        cabec.setCUF(unidadeFederativa.getCodigoIbge());
-//        cabec.setVersaoDados(CTeConfig.VERSAO);
-//
-//        final CteStatusServicoStub.CteCabecMsgE cabecEnv = new CteStatusServicoStub.CteCabecMsgE();
-//        cabecEnv.setCteCabecMsg(cabec);
-//
-//        final CteStatusServicoStub.CteDadosMsg dados = new CteStatusServicoStub.CteDadosMsg();
-//        dados.setExtraElement(omElement);
-//
-//        final CTAutorizador31 autorizador = CTAutorizador31.valueOfCodigoUF(unidadeFederativa);
-//        final String endpoint = autorizador.getCteStatusServico(this.config.getAmbiente());
-//        if (endpoint == null) {
-//            throw new IllegalArgumentException("Nao foi possivel encontrar URL para StatusServico, autorizador " + autorizador.name() + ", UF " + unidadeFederativa.name());
-//        }
-//        return new CteStatusServicoStub(endpoint).cteStatusServicoCT(dados, cabecEnv).getExtraElement();
-        return null;
+    private TRetConsStatServ efetuaConsultaStatus(TConsStatServ tConsStatServ, DFUnidadeFederativa uf) throws MalformedURLException {
+        JAXBElement<TConsStatServ> eTConsStatServ = new br.inf.portalfiscal.cte.ObjectFactory().createConsStatServCte(tConsStatServ);
+        
+        CteCabecMsg cteCabecMsg = new CteCabecMsg();
+        cteCabecMsg.setCUF(uf.getCodigoIbge());
+        cteCabecMsg.setVersaoDados(VERSAO_LEIAUTE);
+        Holder<CteCabecMsg> holder = new Holder<>(new ObjectFactory().createCteCabecMsg(cteCabecMsg).getValue());
+                
+        CteDadosMsg cteDadosMsg = new CteDadosMsg();
+//        cteDadosMsg.getContent().add(cteCabecMsg);
+        cteDadosMsg.getContent().add(eTConsStatServ);
+                
+        CteStatusServicoSoap12 port = new CteStatusServico().getCteStatusServicoSoap12();
+        CteStatusServicoCTResult result = port.cteStatusServicoCT(cteDadosMsg, holder);
+        
+        TRetConsStatServ retorno = (TRetConsStatServ) result.getContent().get(0);
+        
+        return retorno;
     }
 
 }
