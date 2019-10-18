@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2019-10-09T16:58:49 -->
+<!-- 2019-10-18T09:41:33 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DAMDFE_RODO_RETRATO" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="40" bottomMargin="20" uuid="bec55d2c-9681-4c0e-8da0-084370ae6e8f">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -512,7 +512,7 @@ $F{CNPJ}.substring(12, 14)+
 				<textFieldExpression><![CDATA[$F{nProt}  +  " - " + new java.text.SimpleDateFormat("dd/MM/yyyy").format((new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse($F{dhRecbto}))) + 
 " às " + new java.text.SimpleDateFormat("HH:mm:ss").format((new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse($F{dhRecbto})))]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="310" y="220" width="245" height="10" uuid="70259075-01c9-44f2-b76c-68617d7b443a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -726,7 +726,7 @@ $F{CPF}.substring(9,11)]]></textFieldExpression>
 				<reportElement key="image" positionType="Float" x="414" y="0" width="130" height="130" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="cbc8e874-6456-4b91-b4ca-a61171270371"/>
 				<imageExpression><![CDATA[$P{QR_CODE}]]></imageExpression>
 			</image>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="310" y="232" width="245" height="10" uuid="bbe0a7df-4211-43a7-a4a4-d81ca8259c5e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
