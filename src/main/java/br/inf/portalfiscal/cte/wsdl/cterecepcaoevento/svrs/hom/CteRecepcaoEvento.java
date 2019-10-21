@@ -18,7 +18,7 @@ import javax.xml.ws.WebServiceFeature;
  * 
  */
 @WebServiceClient(name = "CteRecepcaoEvento", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento", wsdlLocation = "https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx?wsdl")
-//@HandlerChain(file="handler.xml")
+@HandlerChain(file="handler.xml")
 public class CteRecepcaoEvento
     extends Service
 {

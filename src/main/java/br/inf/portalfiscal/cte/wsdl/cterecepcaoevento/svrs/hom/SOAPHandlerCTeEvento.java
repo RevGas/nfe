@@ -5,9 +5,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPHeader;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
@@ -24,12 +24,14 @@ public class SOAPHandlerCTeEvento implements SOAPHandler<SOAPMessageContext> {
         if ((boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)) {
             try {
                 SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
-                SOAPHeader header = msg.getHeader();
+                
+                SOAPBody body = msg.getBody();
 
-                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcao");
-
-                SOAPHandlerUtil.getNamespaces(header);
-                SOAPHandlerUtil.forEachNode(header.getFirstChild());
+                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/cte");
+                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.w3.org/2000/09/xmldsig#");
+                
+                SOAPHandlerUtil.getNamespaces(body);
+                SOAPHandlerUtil.forEachNode(body.getFirstChild());
             } catch (SOAPException ex) {
                 Logger.getLogger(SOAPHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
