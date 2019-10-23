@@ -51,6 +51,18 @@ public enum GatewayInutilizacao {
         }
 
     },
+    MG {
+        @Override
+        public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetInutNFeMGNFE(xml, ambiente) : getTRetInutNFeMGNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.MG};
+        }
+
+    },
     MT {
         @Override
         public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
@@ -213,6 +225,46 @@ public enum GatewayInutilizacao {
 
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ce.hom.NFeInutilizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ce.hom.NFeInutilizacao4().getNFeInutilizacaoSoap12();
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ce.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetInutNFe getTRetInutNFeMGNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.NFeInutilizacao4().getNFeInutilizacao4Soap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.NFeInutilizacao4Result result = port.nfeInutilizacaoNF(dadosMsg);
+            
+            return (TRetInutNFe) result.getRetInutNFe().get(0);
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.hom.NFeInutilizacao4().getNFeInutilizacao4Soap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mg.hom.NFeInutilizacao4Result result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return (TRetInutNFe) result.getRetInutNFe().get(0);
+        }
+    }
+    
+    public TRetInutNFe getTRetInutNFeMGNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.NFeInutilizacao4().getNFeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.hom.NfeDadosMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.hom.NFeInutilizacao4().getNFeInutilizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mg.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
             return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
         }
