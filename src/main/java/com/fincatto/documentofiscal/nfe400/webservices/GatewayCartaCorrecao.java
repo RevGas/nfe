@@ -165,9 +165,9 @@ public enum GatewayCartaCorrecao {
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{
                 DFUnidadeFederativa.AC, DFUnidadeFederativa.AL, DFUnidadeFederativa.AP, DFUnidadeFederativa.DF,
-                DFUnidadeFederativa.ES, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI, DFUnidadeFederativa.RJ,
-                DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR, DFUnidadeFederativa.SC,
-                DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
+                DFUnidadeFederativa.ES, DFUnidadeFederativa.PA, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI,
+                DFUnidadeFederativa.RJ, DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR,
+                DFUnidadeFederativa.SC, DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
             };
         }
     };
@@ -198,7 +198,7 @@ public enum GatewayCartaCorrecao {
             return null;
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoAMNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.NfeDadosMsg();
@@ -212,7 +212,7 @@ public enum GatewayCartaCorrecao {
             return null;
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoBANFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NfeDadosMsg();
@@ -232,7 +232,7 @@ public enum GatewayCartaCorrecao {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
+
      public TRetEnvEvento getTRetEnvEventoCENFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeDadosMsg();
@@ -272,7 +272,7 @@ public enum GatewayCartaCorrecao {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-     
+
     public TRetEnvEvento getTRetEnvEventoGONFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeDadosMsg();
@@ -294,7 +294,7 @@ public enum GatewayCartaCorrecao {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoMGNFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NfeDadosMsg();
@@ -314,7 +314,7 @@ public enum GatewayCartaCorrecao {
             return ((JAXBElement<TRetEnvEvento>) result.getRetEnvEvento().get(0)).getValue();
         }
     }
-    
+
      public TRetEnvEvento getTRetEnvEventoMGNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NfeDadosMsg();
@@ -334,7 +334,7 @@ public enum GatewayCartaCorrecao {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoMTNFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mt.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mt.NfeDadosMsg();
@@ -354,7 +354,7 @@ public enum GatewayCartaCorrecao {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
+
      public TRetEnvEvento getTRetEnvEventoMTNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mt.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mt.NfeDadosMsg();
@@ -394,7 +394,7 @@ public enum GatewayCartaCorrecao {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoPRNFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeDadosMsg();
