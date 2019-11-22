@@ -2,6 +2,7 @@ package br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.jws.HandlerChain;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
@@ -17,6 +18,7 @@ import javax.xml.ws.WebServiceFeature;
  *
  */
 @WebServiceClient(name = "NfeInutilizacao4", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeInutilizacao4", wsdlLocation = "https://nfce.sefaz.mt.gov.br/nfcews/services/NfeInutilizacao4?wsdl")
+@HandlerChain(file="handler.xml")
 public class NfeInutilizacao4
     extends Service
 {
