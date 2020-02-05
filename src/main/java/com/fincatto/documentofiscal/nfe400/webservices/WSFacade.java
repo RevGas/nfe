@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.TEnviNFe;    
 import br.inf.portalfiscal.nfe.TRetConsReciNFe;
 
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
@@ -69,6 +70,10 @@ public class WSFacade {
      */
     public TRetEnviNFe enviaLote(final NFLoteEnvio lote) throws Exception {
         return this.wsLoteEnvio.enviaLote(lote);
+    }
+    
+    public TRetEnviNFe enviaLote(final TEnviNFe tEnviNFe) throws Exception {
+        return this.wsLoteEnvio.enviaLote(tEnviNFe);
     }
     
     public NFLoteEnvio getLoteAssinado(final NFLoteEnvio lote) throws Exception {
