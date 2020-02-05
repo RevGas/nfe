@@ -32,7 +32,7 @@ import java.util.List;
 public class DFAssinaturaDigital {
     private static final String C14N_TRANSFORM_METHOD = "http://www.w3.org/TR/2001/REC-xml-c14n-20010315";
 
-    private static final String[] ELEMENTOS_ASSINAVEIS = new String[]{"infEvento", "infCanc", "infNFe", "infInut", "infMDFe", "infCte"};
+    private static final String[] ELEMENTOS_ASSINAVEIS = new String[]{"infEvento", "infCanc", "infNFe", "infInut", "infMDFe", "infCte","ns3:infNFe"};
     private final DFConfig config;
     
     public DFAssinaturaDigital(final DFConfig config) {
