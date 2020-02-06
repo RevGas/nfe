@@ -72,8 +72,8 @@ public class WSFacade {
         return this.wsLoteEnvio.enviaLote(lote);
     }
     
-    public TRetEnviNFe enviaLote(final TEnviNFe tEnviNFe) throws Exception {
-        return this.wsLoteEnvio.enviaLote(tEnviNFe);
+    public TRetEnviNFe enviaLote(final String xml) throws Exception {
+        return this.wsLoteEnvio.enviaLote(xml);
     }
     
     public NFLoteEnvio getLoteAssinado(final NFLoteEnvio lote) throws Exception {
