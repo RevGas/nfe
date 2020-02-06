@@ -1,5 +1,15 @@
 package com.fincatto.documentofiscal.utils;
 
+import br.inf.portalfiscal.nfe.TEnviNFe;
+import br.inf.portalfiscal.nfe.TNFe;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
+import java.io.StringWriter;
+
 /**
  * Classe utilitária
  * @author rafael
@@ -26,6 +36,22 @@ public class Util {
             .replace('Ç', 'C')
             .replace('ñ', 'n')
             .replace('Ñ', 'N');
+    }
+
+    public String tNFeToString(TNFe tnfe) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(TNFe.class);
+        Marshaller marshaller = context.createMarshaller();
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(new JAXBElement(new QName("NFe"), TNFe.class, tnfe), stringWriter);
+        return stringWriter.toString();
+    }
+
+    public String tEnviNFeToString(TEnviNFe tEnviNFe) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(TEnviNFe.class);
+        Marshaller marshaller = context.createMarshaller();
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(new JAXBElement(new QName("enviNFe"), TEnviNFe.class, tEnviNFe), stringWriter);
+        return stringWriter.toString();
     }
     
 }
