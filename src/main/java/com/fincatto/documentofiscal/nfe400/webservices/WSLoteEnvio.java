@@ -44,11 +44,11 @@ class WSLoteEnvio implements DFLog {
         return loteEnvioRetorno;
     }
     
-    TRetEnviNFe enviaLote(final TEnviNFe tEnviNFe) throws Exception {
-        //XML
-        String loteAssinado = "";
+    TRetEnviNFe enviaLote(final String xml) throws Exception {
+        //XML to Object
+        TEnviNFe tEnviNFe = GatewayLoteEnvio.getTEnviNFe(xml).getValue();
         // comunica o lote
-        final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(loteAssinado, DFModelo.valueOf(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getMod()),
+        final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(xml, DFModelo.valueOf(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getMod()),
                 DFAmbiente.valueOf(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb()),  tEnviNFe.getNFe().get(0));
         return loteEnvioRetorno;
     }

@@ -583,7 +583,7 @@ public enum GatewayLoteEnvio {
         }
     }
 
-    private JAXBElement<TEnviNFe> getTEnviNFe(String xml) throws JAXBException {
+    public static JAXBElement<TEnviNFe> getTEnviNFe(String xml) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
 
         Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
