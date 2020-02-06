@@ -38,7 +38,7 @@ public class Util {
             .replace('Ñ', 'N');
     }
 
-    public String tNFeToString(TNFe tnfe) throws JAXBException {
+    public static String tNFeToString(TNFe tnfe) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(TNFe.class);
         Marshaller marshaller = context.createMarshaller();
         StringWriter stringWriter = new StringWriter();
@@ -46,12 +46,16 @@ public class Util {
         return stringWriter.toString();
     }
 
-    public String tEnviNFeToString(TEnviNFe tEnviNFe) throws JAXBException {
+    public static String tEnviNFeToString(TEnviNFe tEnviNFe) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(TEnviNFe.class);
         Marshaller marshaller = context.createMarshaller();
         StringWriter stringWriter = new StringWriter();
         marshaller.marshal(new JAXBElement(new QName("enviNFe"), TEnviNFe.class, tEnviNFe), stringWriter);
         return stringWriter.toString();
+    }
+
+    public static String chaveFromTNFe(TNFe tnfe){
+        return tnfe.getInfNFe().getId().replace("NFe","");
     }
     
 }

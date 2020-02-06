@@ -3,6 +3,7 @@ package com.fincatto.documentofiscal.utils.nf;
 import br.inf.portalfiscal.nfe.TNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.utils.Util;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigInteger;
@@ -38,7 +39,7 @@ public class TNFeGeraQRCode {
         }
         
         final StringBuilder parametros = new StringBuilder();
-        parametros.append(this.tnfe.getInfNFe().getId().replace("NFe","")).append("|"); // Chave de Acesso da NFC-e
+        parametros.append(Util.chaveFromTNFe(tnfe)).append("|"); // Chave de Acesso da NFC-e
         parametros.append("2").append("|"); // Versao do QRCode
         parametros.append(this.tnfe.getInfNFe().getIde().getTpNF()).append("|");
         parametros.append(idCSC);
@@ -71,7 +72,7 @@ public class TNFeGeraQRCode {
 
         // Monta os parametros do qrcode: https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?chNFe=43160493062776000117650010000012891000012891&nVersao=100&tpAmb=1&cDest=00400437031&dhEmi=323031362d30342d31355431363a32313a35312d30333a3030&vNF=88.00&vICMS=0.00&digVal=787971704e2f7771446134687070486e6b6b6c34705a39536a36633d&cIdToken=000001&cHashQRCode=852E4B5BC4EB9BF65484AEEBB06BE4A65F0E8E13
         final StringBuilder parametros = new StringBuilder();
-        parametros.append("chNFe=").append(this.tnfe.getInfNFe().getId().replace("NFe","")).append("&"); // Chave de Acesso da NFC-e
+        parametros.append("chNFe=").append(Util.chaveFromTNFe(tnfe)).append("&"); // Chave de Acesso da NFC-e
         parametros.append("nVersao=100").append("&"); // Versao do QRCode
         parametros.append("tpAmb=").append(this.tnfe.getInfNFe().getIde().getTpAmb()).append("&");
 

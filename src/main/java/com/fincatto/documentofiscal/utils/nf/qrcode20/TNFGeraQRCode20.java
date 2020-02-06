@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * Deve ser feita a implementação para emissão normal (1) e para contingência offline (9).
  */
-public abstract class NFGeraQRCode20 {
+public abstract class TNFGeraQRCode20 {
 
     public static final String VERSAO_QRCODE = "2";
 
@@ -23,7 +23,7 @@ public abstract class NFGeraQRCode20 {
     protected final String csc;
     protected final String idCSC;
 
-    public NFGeraQRCode20(TNFe tnfe, String csc, String idCSC) {
+    public TNFGeraQRCode20(TNFe tnfe, String csc, String idCSC) {
         this.tnfe = tnfe;
         this.csc = csc;
         this.idCSC = idCSC;

@@ -26,7 +26,7 @@ public class TNFeGeraHashCSRT {
     }
 
     public TNFeGeraHashCSRT(final TNFe tnfe) {
-        this.chaveAcesso = tnfe.getInfNFe().getId().replace("NFe","");
+        this.chaveAcesso = Util.chaveFromTNFe(tnfe);
         this.csrt = tnfe.getInfNFe().getInfRespTec().getIdCSRT();
     }
 
