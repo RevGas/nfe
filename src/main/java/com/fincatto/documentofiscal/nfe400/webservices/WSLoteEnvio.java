@@ -48,8 +48,8 @@ class WSLoteEnvio implements DFLog {
         //XML to Object
         TEnviNFe tEnviNFe = GatewayLoteEnvio.getTEnviNFe(xml).getValue();
         // comunica o lote
-        final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(xml, DFModelo.valueOf(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getMod()),
-                DFAmbiente.valueOf(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb()),  tEnviNFe.getNFe().get(0));
+        final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(xml, DFModelo.valueOfCodigo(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getMod()),
+                DFAmbiente.valueOfCodigo(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb()),  tEnviNFe.getNFe().get(0));
         return loteEnvioRetorno;
     }
     
@@ -120,7 +120,7 @@ class WSLoteEnvio implements DFLog {
     }
     
     private TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final DFUnidadeFederativa uf, String loteAssinadoXml, DFAmbiente ambiente, TNFe nfe) throws MalformedURLException, JAXBException, Exception {
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfTipoEmissao(NFTipoEmissao.valueOf(nfe.getInfNFe().getIde().getTpEmis()), uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfTipoEmissao(NFTipoEmissao.valueOfCodigo(nfe.getInfNFe().getIde().getTpEmis()), uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
     }
     
     private NFGeraQRCode20 getNfGeraQRCode20(NFNota nota) {
