@@ -1,8 +1,7 @@
 package com.fincatto.documentofiscal.utils.nf;
 
 import br.inf.portalfiscal.nfe.TNFe;
-import com.fincatto.documentofiscal.nfe.NFeConfig;
-import com.fincatto.documentofiscal.nfe400.classes.nota.NFNota;
+import com.fincatto.documentofiscal.utils.Util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

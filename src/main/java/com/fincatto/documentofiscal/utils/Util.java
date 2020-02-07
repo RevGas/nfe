@@ -57,5 +57,4 @@ public class Util {
     public static String chaveFromTNFe(TNFe tnfe){
         return tnfe.getInfNFe().getId().replace("NFe","");
     }
-    
 }
