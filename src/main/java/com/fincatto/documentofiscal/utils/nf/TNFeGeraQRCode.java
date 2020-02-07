@@ -41,7 +41,7 @@ public class TNFeGeraQRCode {
         final StringBuilder parametros = new StringBuilder();
         parametros.append(Util.chaveFromTNFe(tnfe)).append("|"); // Chave de Acesso da NFC-e
         parametros.append("2").append("|"); // Versao do QRCode
-        parametros.append(this.tnfe.getInfNFe().getIde().getTpNF()).append("|");
+        parametros.append(this.tnfe.getInfNFe().getIde().getTpAmb()).append("|");
         parametros.append(idCSC);
         
         return url.concat("?p=").concat(parametros.toString().concat("|").concat(StringUtils.upperCase(TNFeGeraQRCode.createHash(parametros.toString(), csc))));
@@ -107,6 +107,6 @@ public class TNFeGeraQRCode {
     }
     
     public String urlConsultaChaveAcesso() {
-        return this.tnfe.getInfNFe().getIde().getTpAmb().equals(DFAmbiente.PRODUCAO.getCodigo()) ? DFUnidadeFederativa.valueOfCodigo(this.tnfe.getInfNFe().getIde().getTpAmb()).getConsultaChaveAcessoProducao() : DFUnidadeFederativa.valueOfCodigo(this.tnfe.getInfNFe().getIde().getTpAmb()).getConsultaChaveAcessoHomologacao();
+        return this.tnfe.getInfNFe().getIde().getTpAmb().equals(DFAmbiente.PRODUCAO.getCodigo()) ? DFUnidadeFederativa.valueOfCodigo(this.tnfe.getInfNFe().getIde().getCUF()).getConsultaChaveAcessoProducao() : DFUnidadeFederativa.valueOfCodigo(this.tnfe.getInfNFe().getIde().getCUF()).getConsultaChaveAcessoHomologacao();
     }
 }
