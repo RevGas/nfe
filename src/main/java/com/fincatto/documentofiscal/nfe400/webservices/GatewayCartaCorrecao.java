@@ -54,7 +54,7 @@ public enum GatewayCartaCorrecao {
     GO {
         @Override
         public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : getTRetEnvEventoGONFE(xml, ambiente);
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : getTRetEnvEventoGONFCE(xml, ambiente);
         }
 
         @Override
@@ -292,6 +292,20 @@ public enum GatewayCartaCorrecao {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnvEvento getTRetEnvEventoGONFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NFeRecepcaoEvento4ServiceCartaCorrecao port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePortCartaCorrecao();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            return null;
         }
     }
 

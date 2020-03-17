@@ -52,7 +52,7 @@ public enum GatewayLoteEnvio {
     GO {
         @Override
         public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return getTRetEnviNFeGONFE(xml, ambiente);
+            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFeGONFE(xml, ambiente) : getTRetEnviNFeGONFCE(xml, ambiente);
         }
 
         @Override
@@ -301,6 +301,20 @@ public enum GatewayLoteEnvio {
             ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://homolog.sefaz.go.gov.br/nfe/services/NFeAutorizacao4");
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
+    public TRetEnviNFe getTRetEnviNFeGONFCE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnviNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NFeAutorizacao4Service port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NFeAutorizacao4().getNFeAutorizacao4Port();
+            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeAutorizacao4");
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+        } else {
+            return null;
         }
     }
 
