@@ -302,6 +302,7 @@ public enum GatewayCancelamento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NFeRecepcaoEvento4ServiceCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePortCancelamento();
+            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
