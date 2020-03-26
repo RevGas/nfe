@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.TRetConsSitNFe;
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
@@ -18,8 +19,8 @@ class WSNotaConsulta implements DFLog {
     WSNotaConsulta(final NFeConfig config) {
         this.config = config;
     }
-    
-    NFNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
+
+    TRetConsSitNFe consultaNota(final String chaveDeAcesso) throws Exception {
 //        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosConsulta(chaveDeAcesso).toString());
 //        WSNotaConsulta.LOGGER.debug(omElementConsulta.toString());
 

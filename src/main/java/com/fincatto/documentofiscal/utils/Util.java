@@ -2,59 +2,102 @@ package com.fincatto.documentofiscal.utils;
 
 import br.inf.portalfiscal.nfe.TEnviNFe;
 import br.inf.portalfiscal.nfe.TNFe;
+import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.ResNFe;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.*;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
+import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
  * Classe utilitária
+ *
  * @author rafael
  */
 public class Util {
 
     /**
      * Metodo para remover caracteres especiais do xml da nota fiscal
+     *
      * @param xml
-     * @return 
+     * @return
      */
     public static String convertToASCII2(String xml) {
         return xml.replaceAll("[ãâàáä]", "a")
-            .replaceAll("[êèéë]", "e")
-            .replaceAll("[îìíï]", "i")
-            .replaceAll("[õôòóö]", "o")
-            .replaceAll("[ûúùü]", "u")
-            .replaceAll("[ÃÂÀÁÄ]", "A")
-            .replaceAll("[ÊÈÉË]", "E")
-            .replaceAll("[ÎÌÍÏ]", "I")
-            .replaceAll("[ÕÔÒÓÖ]", "O")
-            .replaceAll("[ÛÙÚÜ]", "U")
-            .replace('ç', 'c')
-            .replace('Ç', 'C')
-            .replace('ñ', 'n')
-            .replace('Ñ', 'N');
+                .replaceAll("[êèéë]", "e")
+                .replaceAll("[îìíï]", "i")
+                .replaceAll("[õôòóö]", "o")
+                .replaceAll("[ûúùü]", "u")
+                .replaceAll("[ÃÂÀÁÄ]", "A")
+                .replaceAll("[ÊÈÉË]", "E")
+                .replaceAll("[ÎÌÍÏ]", "I")
+                .replaceAll("[ÕÔÒÓÖ]", "O")
+                .replaceAll("[ÛÙÚÜ]", "U")
+                .replace('ç', 'c')
+                .replace('Ç', 'C')
+                .replace('ñ', 'n')
+                .replace('Ñ', 'N');
     }
 
-    public static String tNFeToString(TNFe tnfe) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(TNFe.class);
+    public static String marshaller(Object object) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(object.getClass());
         Marshaller marshaller = context.createMarshaller();
         StringWriter stringWriter = new StringWriter();
-        marshaller.marshal(new JAXBElement(new QName("NFe"), TNFe.class, tnfe), stringWriter);
-        return stringWriter.toString();
+        marshaller.marshal(new JAXBElement(new QName(convert(object.getClass().getSimpleName())), object.getClass(), object), stringWriter);
+        return stringWriter.toString()
+                .replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns3=\"http://www.portalfiscal.inf.br/nfe\"", "xmlns=\"http://www.portalfiscal.inf.br/nfe\"")
+                .replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "")
+                .replace("xmlns:ns3=\"http://www.portalfiscal.inf.br/nfe\"", "")
+                .replace("ns2:", "")
+                .replace("ns3:", "");
     }
 
-    public static String tEnviNFeToString(TEnviNFe tEnviNFe) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(TEnviNFe.class);
-        Marshaller marshaller = context.createMarshaller();
-        StringWriter stringWriter = new StringWriter();
-        marshaller.marshal(new JAXBElement(new QName("enviNFe"), TEnviNFe.class, tEnviNFe), stringWriter);
-        return stringWriter.toString();
+    public static Object unmarshler(Class element, String value) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(element.getPackage().getName());
+        Unmarshaller jaxbUnmarshaller;
+        jaxbUnmarshaller = context.createUnmarshaller();
+        StringReader reader = new StringReader(value);
+        JAXBElement<Object> object = (JAXBElement<Object>) jaxbUnmarshaller.unmarshal(reader);
+        return object.getValue();
     }
 
-    public static String chaveFromTNFe(TNFe tnfe){
-        return tnfe.getInfNFe().getId().replace("NFe","");
+    public static String chaveFromTNFe(TNFe tnfe) {
+        return tnfe.getInfNFe().getId().replace("NFe", "");
     }
+
+    private static String convert(String objectName) {
+        switch (objectName) {
+            case "TEnviNFe":
+                return "enviNFe";
+
+            case "TNfeProc":
+                return "nfeProc";
+
+            case "TNFe":
+                return "NFe";
+
+            case "TRetEnvEvento":
+                return "retEnvEvento";
+//            case "TNFe":
+//                return "consReciNFe";
+//            case "TNFe":
+//                return "consSitNFe";
+//            case "TNFe":
+//                return "consStatServ";
+//            case "TNFe":
+//                return "retConsReciNFe";
+            case "TRetConsSitNFe":
+                return "retConsSitNFe";
+            case "TRetConsStatServ":
+                return "retConsStatServ";
+            case "TRetEnviNFe":
+                return "retEnviNFe";
+            case "TRetInutNFe":
+                return "retInutNFe";
+            default:
+                return objectName;
+        }
+    }
+
 }

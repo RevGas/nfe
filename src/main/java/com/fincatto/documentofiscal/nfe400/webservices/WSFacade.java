@@ -1,10 +1,7 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.TEnviNFe;    
-import br.inf.portalfiscal.nfe.TRetConsReciNFe;
+import br.inf.portalfiscal.nfe.*;
 
-import br.inf.portalfiscal.nfe.TRetEnviNFe;
-import br.inf.portalfiscal.nfe.TRetInutNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 
 import com.fincatto.documentofiscal.DFModelo;
@@ -123,7 +120,7 @@ public class WSFacade {
      * @return dados da consulta da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
+    public TRetConsSitNFe consultaNota(final String chaveDeAcesso) throws Exception {
         return this.wsNotaConsulta.consultaNota(chaveDeAcesso);
     }
     
