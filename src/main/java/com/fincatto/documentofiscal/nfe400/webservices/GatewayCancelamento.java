@@ -85,6 +85,17 @@ public enum GatewayCancelamento {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.MG};
         }
     },
+    MS {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoMSNFE(xml, ambiente) : getTRetEnvEventoMSNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.MS};
+        }
+    },
     MT {
         @Override
         public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
@@ -390,7 +401,28 @@ public enum GatewayCancelamento {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
+     
+    public TRetEnvEvento getTRetEnvEventoMSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            return null;
+        } else {
+            return null;
+        }
+    }
 
+     public TRetEnvEvento getTRetEnvEventoMSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NfeResultMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NfeResultMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NFeRecepcaoEventoSoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NFeRecepcaoEvento4().getNfeRecepcaoEventoSoap12Cancelamento();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NfeResultMsg2 result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            return null;
+        }
+    }
 
     public TRetEnvEvento getTRetEnvEventoPENFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {

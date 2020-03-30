@@ -5,16 +5,13 @@ import br.inf.portalfiscal.nfe.TRetInutNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.sun.org.apache.xerces.internal.dom.ElementNSImpl;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import javax.xml.ws.BindingProvider;
 import org.w3c.dom.Node;
 
@@ -79,6 +76,17 @@ public enum GatewayInutilizacao {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.MG};
         }
 
+    },
+    MS {
+        @Override
+        public TRetInutNFe getTRetInutNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetInutNFeMSNFE(xml, ambiente) : getTRetInutNFeMSNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.MS};
+        }
     },
     MT {
         @Override
@@ -316,7 +324,7 @@ public enum GatewayInutilizacao {
             return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
         }
     }
-
+    
     public TRetInutNFe getTRetInutNFeMTNFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.mt.NfeDadosMsg();
@@ -354,6 +362,28 @@ public enum GatewayInutilizacao {
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.mt.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
             return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+
+    public TRetInutNFe getTRetInutNFeMSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            return null;
+        } else {
+            return null;
+        }
+    }
+
+    public TRetInutNFe getTRetInutNFeMSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ms.NfeResultMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ms.NfeResultMsg();
+            dadosMsg.getContent().add(getTInutNFe(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ms.NFeInutilizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ms.NFeInutilizacao4().getNfeInutilizacaoSoap12();
+            br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.ms.NfeResultMsg2 result = port.nfeInutilizacaoNF(dadosMsg);
+
+            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+        } else {
+            return null;
         }
     }
 
