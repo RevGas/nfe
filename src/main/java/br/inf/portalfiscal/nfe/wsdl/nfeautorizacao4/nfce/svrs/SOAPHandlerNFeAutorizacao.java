@@ -23,6 +23,7 @@ public class SOAPHandlerNFeAutorizacao implements SOAPHandler<SOAPMessageContext
     public boolean handleMessage(SOAPMessageContext context) {
         if ((boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)) {
             try {
+                System.out.println("teste");
                 SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
                 SOAPBody body = msg.getBody();
 

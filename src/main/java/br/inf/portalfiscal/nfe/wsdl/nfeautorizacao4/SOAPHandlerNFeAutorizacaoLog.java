@@ -1,10 +1,7 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.hom;
+package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4;
 
-import br.inf.portalfiscal.nfe.wsdl.nfeautorizacao3.pr.*;
 import com.fincatto.nfe310.utils.SOAPHandlerUtil;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPEnvelope;
@@ -12,8 +9,11 @@ import javax.xml.soap.SOAPException;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class SOAPHandlerNFeAutorizacao implements SOAPHandler<SOAPMessageContext> {
+public class SOAPHandlerNFeAutorizacaoLog implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public Set<QName> getHeaders() {
@@ -24,7 +24,9 @@ public class SOAPHandlerNFeAutorizacao implements SOAPHandler<SOAPMessageContext
     public boolean handleMessage(SOAPMessageContext context) {
         if ((boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)) {
             try {
+                System.out.println(context.getMessage().getSOAPPart().getEnvelope());
                 System.out.println("teste");
+
                 SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
                 SOAPBody body = msg.getBody();
 
