@@ -1,14 +1,25 @@
 package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4;
 
+import br.inf.portalfiscal.nfe.TEnviNFe;
+import com.fincatto.documentofiscal.S3;
+import com.fincatto.documentofiscal.utils.Util;
 import com.fincatto.nfe310.utils.SOAPHandlerUtil;
+import org.apache.commons.io.FileUtils;
 
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,19 +35,13 @@ public class SOAPHandlerNFeAutorizacaoLog implements SOAPHandler<SOAPMessageCont
     public boolean handleMessage(SOAPMessageContext context) {
         if ((boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY)) {
             try {
-                System.out.println(context.getMessage().getSOAPPart().getEnvelope());
-                System.out.println("teste");
-
                 SOAPEnvelope msg = context.getMessage().getSOAPPart().getEnvelope();
                 SOAPBody body = msg.getBody();
-
-                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.portalfiscal.inf.br/nfe");
-                SOAPHandlerUtil.addListURIToRemovePrefixOfNamespace("http://www.w3.org/2000/09/xmldsig#");
-                SOAPHandlerUtil.addListNamespacetoAddAttribute("Signature", "http://www.w3.org/2000/09/xmldsig#");
-
-                SOAPHandlerUtil.getNamespaces(body);
-                SOAPHandlerUtil.forEachNode(body.getFirstChild());
-            } catch (SOAPException ex) {
+                DOMSource source = new DOMSource(body.getFirstChild().getFirstChild());
+                StringWriter stringResult = new StringWriter();
+                TransformerFactory.newInstance().newTransformer().transform(source, new StreamResult(stringResult));
+                new S3().sendDocuments(stringResult.toString(), "teste", "revgas-files", "log-df/");
+            } catch (Exception ex) {
                 Logger.getLogger(SOAPHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
