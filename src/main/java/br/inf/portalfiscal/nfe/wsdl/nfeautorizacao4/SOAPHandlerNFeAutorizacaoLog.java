@@ -1,25 +1,17 @@
 package br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4;
 
-import br.inf.portalfiscal.nfe.TEnviNFe;
 import com.fincatto.documentofiscal.S3;
-import com.fincatto.documentofiscal.utils.Util;
-import com.fincatto.nfe310.utils.SOAPHandlerUtil;
-import org.apache.commons.io.FileUtils;
 
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPEnvelope;
-import javax.xml.soap.SOAPException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
-import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +32,7 @@ public class SOAPHandlerNFeAutorizacaoLog implements SOAPHandler<SOAPMessageCont
                 DOMSource source = new DOMSource(body.getFirstChild().getFirstChild());
                 StringWriter stringResult = new StringWriter();
                 TransformerFactory.newInstance().newTransformer().transform(source, new StreamResult(stringResult));
-                new S3().sendDocuments(stringResult.toString(), "teste", "revgas-files", "log-df/");
+                new S3().sendEnviNFe(stringResult.toString());
             } catch (Exception ex) {
                 Logger.getLogger(SOAPHandler.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -5,13 +5,24 @@ import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.S3;
 import com.fincatto.documentofiscal.nfe.NFTipoEmissao;
+import com.fincatto.documentofiscal.utils.Util;
+import com.fincatto.nfe310.converters.ElementStringConverter;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.ws.BindingProvider;
 
 public enum GatewayLoteEnvio {
@@ -107,7 +118,7 @@ public enum GatewayLoteEnvio {
     PE {
         @Override
         public TRetEnviNFe getTRetEnviNFe(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFePENFE(xml, ambiente): SVRS.getTRetEnviNFeSVRSNFCE(xml, ambiente);
+            return DFModelo.NFE.equals(modelo) ? getTRetEnviNFePENFE(xml, ambiente) : SVRS.getTRetEnviNFeSVRSNFCE(xml, ambiente);
         }
 
         @Override
@@ -179,10 +190,10 @@ public enum GatewayLoteEnvio {
         @Override
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{
-                DFUnidadeFederativa.AC, DFUnidadeFederativa.AL, DFUnidadeFederativa.AP, DFUnidadeFederativa.DF,
-                DFUnidadeFederativa.ES, DFUnidadeFederativa.PA, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI,
-                DFUnidadeFederativa.RJ, DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR,
-                DFUnidadeFederativa.SC, DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
+                    DFUnidadeFederativa.AC, DFUnidadeFederativa.AL, DFUnidadeFederativa.AP, DFUnidadeFederativa.DF,
+                    DFUnidadeFederativa.ES, DFUnidadeFederativa.PA, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI,
+                    DFUnidadeFederativa.RJ, DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR,
+                    DFUnidadeFederativa.SC, DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
             };
         }
     };
@@ -301,7 +312,7 @@ public enum GatewayLoteEnvio {
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.NFeAutorizacao4Service port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.NFeAutorizacao4().getNFeAutorizacao4Port();
-            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeAutorizacao4");
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeAutorizacao4");
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         } else {
@@ -309,19 +320,19 @@ public enum GatewayLoteEnvio {
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.hom.NFeAutorizacao4Service port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.hom.NFeAutorizacao4().getNFeAutorizacao4Port();
-            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://homolog.sefaz.go.gov.br/nfe/services/NFeAutorizacao4");
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://homolog.sefaz.go.gov.br/nfe/services/NFeAutorizacao4");
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.go.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         }
     }
-    
+
     public TRetEnviNFe getTRetEnviNFeGONFCE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NFeAutorizacao4Service port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NFeAutorizacao4().getNFeAutorizacao4Port();
-            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeAutorizacao4");
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeAutorizacao4");
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.go.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         } else {
@@ -378,14 +389,14 @@ public enum GatewayLoteEnvio {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ms.NfeResultMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ms.NfeResultMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
-            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ms.NFeAutorizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ms.NFeAutorizacao4().getNfeAutorizacaoSoap12();           
+            br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ms.NFeAutorizacaoSoap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ms.NFeAutorizacao4().getNfeAutorizacaoSoap12();
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.ms.NfeResultMsg2 result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         } else {
             return null;
         }
     }
-    
+
     public TRetEnviNFe getTRetEnviNFeMTNFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeDadosMsg();
@@ -410,7 +421,7 @@ public enum GatewayLoteEnvio {
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.mt.NfeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.mt.NfeAutorizacao4().getNfeAutorizacao4Soap();
-            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfce.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao4");
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfce.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao4");
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.mt.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
         } else {
@@ -612,21 +623,28 @@ public enum GatewayLoteEnvio {
     }
 
     public TRetEnviNFe getTRetEnviNFeSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.NFeAutorizacao4().getNFeAutorizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
-            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.hom.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.hom.NFeAutorizacao4().getNFeAutorizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
-            return ((JAXBElement<TRetEnviNFe>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         }
+        try {
+            new S3().sendRetEnviNFe(Util.marshallerPuro(((JAXBElement<TRetEnviNFe>) retorno).getValue()),((JAXBElement<TRetEnviNFe>) retorno).getValue()); //TODO tentar novamente, redundancia
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ((JAXBElement<TRetEnviNFe>) retorno).getValue();
     }
 
     public static JAXBElement<TEnviNFe> getTEnviNFe(String xml) throws JAXBException {

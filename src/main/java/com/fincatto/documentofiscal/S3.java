@@ -1,6 +1,7 @@
 package com.fincatto.documentofiscal;
 
 import br.inf.portalfiscal.nfe.TEnviNFe;
+import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
@@ -31,6 +32,7 @@ import java.nio.file.Paths;
 public class S3 {
 
     private AmazonS3 s3client;
+    private final String bucket = "revgas-files";
 
     public S3() {
         connect();
@@ -43,17 +45,15 @@ public class S3 {
     /**
      * Envia um arquivo para um bucket
      *
-     * @param      bucketName Nome do bucket destino
-     * @param      key O caminho do arquivo no bucket com o nome e extensão. Ex.:
-     *                     /path/to/file.pdf
-     * @param      file O arquivo a ser enviado
+     * @param bucketName Nome do bucket destino
+     * @param key        O caminho do arquivo no bucket com o nome e extensão. Ex.:
+     *                   /path/to/file.pdf
+     * @param file       O arquivo a ser enviado
      * @return
-     * 
-     * @exception  AmazonServiceException sf o upload for rejeitado. 
-     *             Isso pode acontecer quando a permissão é negada, por exemplo
-     * @exception  AmazonClientException se o cliente encontrar algum erro
-     *             durante a comunicação com o com.fincatto.documentofiscal.S3. Ex.: Sem internet
-     *
+     * @throws AmazonServiceException sf o upload for rejeitado.
+     *                                Isso pode acontecer quando a permissão é negada, por exemplo
+     * @throws AmazonClientException  se o cliente encontrar algum erro
+     *                                durante a comunicação com o com.fincatto.documentofiscal.S3. Ex.: Sem internet
      * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/UploadObjSingleOpJava.html
      */
     public Boolean uploadFile(String bucketName, String key, File file) {
@@ -64,7 +64,7 @@ public class S3 {
             throw ex;
         }
     }
-    
+
     /**
      * Faz o download de um arquivo da Amazon com.fincatto.documentofiscal.S3. O download retorna uma
      * InputStream, essa stream e salva em um arquivo temporário no diretório
@@ -78,8 +78,8 @@ public class S3 {
      */
     public File downloadFile(String bucketName, String key) throws IOException {
         try (S3Object s3obj = getS3client().getObject(new GetObjectRequest(bucketName, key));
-                InputStream in = s3obj.getObjectContent()) {
-            
+             InputStream in = s3obj.getObjectContent()) {
+
             String path = System.getProperty("java.io.tmpdir");
             String filename = Paths.get(key).getFileName().toString();
 
@@ -90,17 +90,17 @@ public class S3 {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            
+
             // reescreve o arquivo
             OutputStream out = new FileOutputStream(file, false);
-            
+
             int read = 0;
             byte[] bytes = new byte[2048]; // buffer de 2KB
-            
+
             while ((read = in.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
-            
+
             out.close();
 
             return file;
@@ -109,7 +109,7 @@ public class S3 {
         }
     }
 
-    public boolean objectExists(String bucket,String key){
+    public boolean objectExists(String bucket, String key) {
         try {
             s3client.getObjectMetadata(bucket, key);
         } catch (AmazonS3Exception e) {
@@ -122,7 +122,7 @@ public class S3 {
      * Realizar o download de um diretório do com.fincatto.documentofiscal.S3
      * OBS: Configurar variáveis de ambiente do tomcat
      */
-    public void downloadDir(String bucket_name, String key_prefix,String dir_path, boolean pause) {
+    public void downloadDir(String bucket_name, String key_prefix, String dir_path, boolean pause) {
         TransferManagerBuilder builder = TransferManagerBuilder.standard();
         builder.setS3Client(s3client);
         TransferManager xfer_mgr = builder.build();
@@ -137,8 +137,7 @@ public class S3 {
         xfer_mgr.shutdownNow();
     }
 
-    public void waitForCompletion(Transfer xfer)
-    {
+    public void waitForCompletion(Transfer xfer) {
         try {
             xfer.waitForCompletion();
         } catch (AmazonServiceException e) {
@@ -153,38 +152,56 @@ public class S3 {
         }
     }
 
-    public String generatePresignedUrl(String bucketName, String key){
+    public String generatePresignedUrl(String bucketName, String key) {
 
-            // Set the presigned URL to expire after one hour.
-            java.util.Date expiration = new java.util.Date();
-            long expTimeMillis = expiration.getTime();
-            expTimeMillis += 1000 * 60 * 60;
-            expiration.setTime(expTimeMillis);
+        // Set the presigned URL to expire after one hour.
+        java.util.Date expiration = new java.util.Date();
+        long expTimeMillis = expiration.getTime();
+        expTimeMillis += 1000 * 60 * 60;
+        expiration.setTime(expTimeMillis);
 
-            // Generate the presigned URL.
-            GeneratePresignedUrlRequest generatePresignedUrlRequest =
-                    new GeneratePresignedUrlRequest(bucketName, key)
-                            .withMethod(HttpMethod.GET)
-                            .withExpiration(expiration);
-            URL url = s3client.generatePresignedUrl(generatePresignedUrlRequest);
+        // Generate the presigned URL.
+        GeneratePresignedUrlRequest generatePresignedUrlRequest =
+                new GeneratePresignedUrlRequest(bucketName, key)
+                        .withMethod(HttpMethod.GET)
+                        .withExpiration(expiration);
+        URL url = s3client.generatePresignedUrl(generatePresignedUrlRequest);
 
-            return url.toString();
+        return url.toString();
     }
 
-    public void sendDocuments(final String xml, final String name, String bucket, String path) throws Exception {
+    public void sendEnviNFe(final String xml) throws Exception {
         TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
-        File xmlTemp = File.createTempFile(name, ".xml");
-        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         String chaveNF = Util.chaveFromTNFe(enviNFe.getNFe().get(0));
-        this.uploadFile(bucket, path+"/"+enviNFe.getNFe().get(0).getInfNFe().getEmit().getCNPJ()+"/"+ "20" + chaveNF.substring(2, 4) +"/" + chaveNF.substring(4, 6) + "/" + chaveNF + ".xml", xmlTemp);
+        String cnpj = chaveNF.substring(6, 20);
+        String ano = "20" + chaveNF.substring(2, 4);
+        String mes = chaveNF.substring(4, 6);
+        String ambiente = enviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb().equals(DFAmbiente.HOMOLOGACAO.getCodigo()) ? "hom" : "prod";
+        String path = String.format("log-df/%s/%s/%s/%s/%s/%s.xml", ambiente, cnpj,"enviNFe", ano, mes, chaveNF);
+        File xmlTemp = File.createTempFile(chaveNF, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, path, xmlTemp);
     }
+
+    public void sendRetEnviNFe(final String xml, TRetEnviNFe retEnviNFe) throws Exception {
+        String chaveNF = retEnviNFe.getProtNFe().getInfProt().getChNFe();
+        String cnpj = chaveNF.substring(6, 20);
+        String ano = "20" + chaveNF.substring(2, 4);
+        String mes = chaveNF.substring(4, 6);
+        String ambiente = retEnviNFe.getTpAmb().equals(DFAmbiente.HOMOLOGACAO.getCodigo()) ? "hom" : "prod";
+        String path = String.format("log-df/%s/%s/%s/%s/%s/%s.xml", ambiente, cnpj,"retEnviNFe", ano, mes, chaveNF);
+        File xmlTemp = File.createTempFile(chaveNF, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, path, xmlTemp);
+    }
+
 
     /**
      * Realiza a conexão com o Amazon com.fincatto.documentofiscal.S3
      * OBS: Configurar variáveis de ambiente do tomcat
      */
     private void connect() {
-        BasicAWSCredentials creds = new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"), System.getProperty("AWS_SECRET_KEY")); 
+        BasicAWSCredentials creds = new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"), System.getProperty("AWS_SECRET_KEY"));
         s3client = AmazonS3ClientBuilder.standard().withRegion(Regions.SA_EAST_1).withCredentials(new AWSStaticCredentialsProvider(creds)).build();
     }
 

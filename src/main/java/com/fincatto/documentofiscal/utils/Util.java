@@ -53,6 +53,15 @@ public class Util {
                 .replace("ns3:", "");
     }
 
+    public static String marshallerPuro(Object object) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(object.getClass());
+        Marshaller marshaller = context.createMarshaller();
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(new JAXBElement(new QName(convert(object.getClass().getSimpleName())), object.getClass(), object), stringWriter);
+        System.out.println(stringWriter.toString());
+        return stringWriter.toString();
+    }
+
     public static Object unmarshler(Class element, String value) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(element.getPackage().getName());
         Unmarshaller jaxbUnmarshaller;
