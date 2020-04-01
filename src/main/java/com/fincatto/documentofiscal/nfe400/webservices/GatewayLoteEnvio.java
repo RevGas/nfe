@@ -335,6 +335,7 @@ public enum GatewayLoteEnvio {
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mg.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mg.NFeAutorizacao4().getNFeAutorizacao4Soap12();
+            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.fazenda.mg.gov.br/nfe2/services/NFeAutorizacao4");
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mg.NFeAutorizacao4LoteResult result = port.nfeAutorizacaoLote(nfeDadosMsg);
             return ((JAXBElement<TRetEnviNFe>) result.getRetEnviNFe().get(0)).getValue();
         } else {
