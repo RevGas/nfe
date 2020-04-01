@@ -1,6 +1,7 @@
 package com.fincatto.documentofiscal;
 
 import br.inf.portalfiscal.nfe.TEnviNFe;
+import br.inf.portalfiscal.nfe.TNfeProc;
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -18,6 +19,7 @@ import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.fincatto.documentofiscal.utils.Util;
 import org.apache.commons.io.FileUtils;
 
+import javax.xml.bind.JAXBException;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +34,7 @@ import java.nio.file.Paths;
 public class S3 {
 
     private AmazonS3 s3client;
-    private final String bucket = "revgas-files";
+    public static final String bucket = "revgas-files";
 
     public S3() {
         connect();
@@ -170,30 +172,37 @@ public class S3 {
         return url.toString();
     }
 
+    public static String getPath(String chaveNFe, String event, String tpAmb) {
+        String cnpj = chaveNFe.substring(6, 20);
+        String ano = "20" + chaveNFe.substring(2, 4);
+        String mes = chaveNFe.substring(4, 6);
+        String ambiente = tpAmb.equals(DFAmbiente.HOMOLOGACAO.getCodigo()) ? "hom" : "prod";
+        return String.format("log-df/%s/%s/%s/%s/%s/%s.xml", ambiente, cnpj, event, ano, mes, chaveNFe);
+    }
+
     public void sendEnviNFe(final String xml) throws Exception {
         TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
         String chaveNF = Util.chaveFromTNFe(enviNFe.getNFe().get(0));
-        String cnpj = chaveNF.substring(6, 20);
-        String ano = "20" + chaveNF.substring(2, 4);
-        String mes = chaveNF.substring(4, 6);
-        String ambiente = enviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb().equals(DFAmbiente.HOMOLOGACAO.getCodigo()) ? "hom" : "prod";
-        String path = String.format("log-df/%s/%s/%s/%s/%s/%s.xml", ambiente, cnpj,"enviNFe", ano, mes, chaveNF);
         File xmlTemp = File.createTempFile(chaveNF, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, path, xmlTemp);
+        this.uploadFile(bucket, getPath(chaveNF, "enviNFe", enviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb()), xmlTemp);
     }
 
     public void sendRetEnviNFe(final String xml, TRetEnviNFe retEnviNFe) throws Exception {
         String chaveNF = retEnviNFe.getProtNFe().getInfProt().getChNFe();
-        String cnpj = chaveNF.substring(6, 20);
-        String ano = "20" + chaveNF.substring(2, 4);
-        String mes = chaveNF.substring(4, 6);
-        String ambiente = retEnviNFe.getTpAmb().equals(DFAmbiente.HOMOLOGACAO.getCodigo()) ? "hom" : "prod";
-        String path = String.format("log-df/%s/%s/%s/%s/%s/%s.xml", ambiente, cnpj,"retEnviNFe", ano, mes, chaveNF);
         File xmlTemp = File.createTempFile(chaveNF, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, path, xmlTemp);
+        this.uploadFile(bucket, getPath(chaveNF, "retEnviNFe", retEnviNFe.getTpAmb()), xmlTemp);
     }
+
+    public void sendProcNFe(String xml) throws JAXBException, IOException {
+        TNfeProc tNfeProc = (TNfeProc) Util.unmarshler(TNfeProc.class, xml);
+        String chaveNF = Util.chaveFromTNFe(tNfeProc.getNFe());
+        File xmlTemp = File.createTempFile(chaveNF, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNF, "nfeProc", tNfeProc.getNFe().getInfNFe().getIde().getTpAmb()), xmlTemp);
+    }
+
 
 
     /**
@@ -204,5 +213,4 @@ public class S3 {
         BasicAWSCredentials creds = new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"), System.getProperty("AWS_SECRET_KEY"));
         s3client = AmazonS3ClientBuilder.standard().withRegion(Regions.SA_EAST_1).withCredentials(new AWSStaticCredentialsProvider(creds)).build();
     }
-
 }

@@ -640,7 +640,7 @@ public enum GatewayLoteEnvio {
             retorno = result.getContent().get(0);
         }
         try {
-            new S3().sendRetEnviNFe(Util.marshallerPuro(((JAXBElement<TRetEnviNFe>) retorno).getValue()),((JAXBElement<TRetEnviNFe>) retorno).getValue()); //TODO tentar novamente, redundancia
+            new S3().sendRetEnviNFe(Util.marshllerRetEnviNFe((JAXBElement<TRetEnviNFe>) retorno), ((JAXBElement<TRetEnviNFe>) retorno).getValue()); //TODO tentar novamente, redundancia
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -649,7 +649,6 @@ public enum GatewayLoteEnvio {
 
     public static JAXBElement<TEnviNFe> getTEnviNFe(String xml) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
-
         Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
         StringReader reader = new StringReader(xml);
         JAXBElement<TEnviNFe> tEnviNFe = (JAXBElement<TEnviNFe>) jaxbUnmarshaller.unmarshal(reader);

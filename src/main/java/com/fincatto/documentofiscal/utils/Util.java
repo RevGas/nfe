@@ -1,7 +1,6 @@
 package com.fincatto.documentofiscal.utils;
 
-import br.inf.portalfiscal.nfe.TEnviNFe;
-import br.inf.portalfiscal.nfe.TNFe;
+import br.inf.portalfiscal.nfe.*;
 import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.ResNFe;
 
 import javax.xml.bind.*;
@@ -60,6 +59,22 @@ public class Util {
         marshaller.marshal(new JAXBElement(new QName(convert(object.getClass().getSimpleName())), object.getClass(), object), stringWriter);
         System.out.println(stringWriter.toString());
         return stringWriter.toString();
+    }
+
+    public static String marshllerRetEnviNFe(JAXBElement<TRetEnviNFe> jAXBElement ) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(jAXBElement, result);
+        return result.toString();
+    }
+
+    public static String marshlerNfeProc(JAXBElement<TNfeProc> tNfeProc) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(TNfeProc.class.getPackage().getName());
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.marshal(tNfeProc, result);
+        return result.toString();
     }
 
     public static Object unmarshler(Class element, String value) throws JAXBException {
