@@ -15,7 +15,6 @@ import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeEmissaoNor
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import com.fincatto.documentofiscal.utils.Util;
 import com.fincatto.documentofiscal.validadores.XMLValidador;
-import com.fincatto.nfe310.utils.SOAPHandlerUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -25,15 +24,12 @@ import javax.xml.bind.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Objects;
 
 class WSLoteEnvio implements DFLog {
@@ -64,24 +60,13 @@ class WSLoteEnvio implements DFLog {
                 DFAmbiente.valueOfCodigo(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb()), tEnviNFe.getNFe().get(0));
 
         if(Objects.equals(loteEnvioRetorno.getProtNFe().getInfProt().getCStat(), String.valueOf(NFRetornoStatus.CODIGO_100.getCodigo()))){ // TODO melhorar verificação de status
-            uploadProcNFe(tEnviNFe,loteEnvioRetorno);//TODO tentar novamente e redundância
+            uploadProcNFe(tEnviNFe,loteEnvioRetorno);
         }
 
         return loteEnvioRetorno;
     }
 
-    /**
-     *
-     * Envia nota processada para o S3
-     *
-     * @param tEnviNFe
-     * @param retEnviNFe
-     * @throws ParserConfigurationException
-     * @throws IOException
-     * @throws SAXException
-     * @throws JAXBException
-     * @throws TransformerException
-     */
+
     void uploadProcNFe(TEnviNFe tEnviNFe, TRetEnviNFe retEnviNFe) throws ParserConfigurationException, IOException, SAXException, JAXBException, TransformerException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = factory.newDocumentBuilder();

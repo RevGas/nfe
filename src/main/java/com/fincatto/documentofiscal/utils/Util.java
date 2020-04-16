@@ -1,10 +1,6 @@
 package com.fincatto.documentofiscal.utils;
-
 import br.inf.portalfiscal.nfe.*;
-import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.ResNFe;
-
 import javax.xml.bind.*;
-import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -57,7 +53,6 @@ public class Util {
         Marshaller marshaller = context.createMarshaller();
         StringWriter stringWriter = new StringWriter();
         marshaller.marshal(new JAXBElement(new QName(convert(object.getClass().getSimpleName())), object.getClass(), object), stringWriter);
-        System.out.println(stringWriter.toString());
         return stringWriter.toString();
     }
 
@@ -74,6 +69,14 @@ public class Util {
         StringWriter result = new StringWriter();
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.marshal(tNfeProc, result);
+        return result.toString();
+    }
+
+    public static String marshlerTnfe(JAXBElement<TNFe> tnfe) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(TNFe.class.getPackage().getName());
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.marshal(tnfe, result);
         return result.toString();
     }
 

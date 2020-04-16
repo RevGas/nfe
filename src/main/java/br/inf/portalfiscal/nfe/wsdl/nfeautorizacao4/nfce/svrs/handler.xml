@@ -6,8 +6,5 @@
     <javaee:handler>
       <javaee:handler-class>br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.svrs.SOAPHandlerNFeAutorizacao</javaee:handler-class>
     </javaee:handler>
-    <javaee:handler>
-      <javaee:handler-class>br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.SOAPHandlerNFeAutorizacaoLog</javaee:handler-class>
-    </javaee:handler>
   </javaee:handler-chain>
 </javaee:handler-chains>
