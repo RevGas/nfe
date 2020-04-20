@@ -228,6 +228,12 @@ public class S3 {
         this.uploadFile(bucket, getPath(chaveNF, "retEnviNFe", retEnviNFe.getTpAmb()), xmlTemp);
     }
 
+    public void sendRetEnviNFe(final String xml, TRetEnviNFe retEnviNFe, String chaveNFe) throws IOException {
+        File xmlTemp = File.createTempFile(chaveNFe, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNFe, "retEnviNFe", retEnviNFe.getTpAmb()), xmlTemp);
+    }
+
     public void sendProcNFe(String xml) throws JAXBException, IOException {
         TNfeProc tNfeProc = (TNfeProc) Util.unmarshler(TNfeProc.class, xml);
         String chaveNF = Util.chaveFromTNFe(tNfeProc.getNFe());

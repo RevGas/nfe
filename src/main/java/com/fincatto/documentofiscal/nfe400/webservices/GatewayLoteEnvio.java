@@ -253,6 +253,7 @@ public enum GatewayLoteEnvio {
 
     public TRetEnviNFe getTRetEnviNFeBANFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         Object retorno;
+        TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
@@ -268,7 +269,7 @@ public enum GatewayLoteEnvio {
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.ba.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             retorno = result.getContent().get(0);
         }
-        sendRetEnviNFe(retorno);
+        sendRetEnviNFe(retorno, Util.chaveFromTNFe(enviNFe.getNFe().get(0)));
         return ((JAXBElement<TRetEnviNFe>) retorno).getValue();
     }
 
@@ -361,7 +362,7 @@ public enum GatewayLoteEnvio {
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mg.NFeAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mg.NFeAutorizacao4().getNFeAutorizacao4Soap12();
-            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.fazenda.mg.gov.br/nfe2/services/NFeAutorizacao4");
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.fazenda.mg.gov.br/nfe2/services/NFeAutorizacao4");
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mg.NFeAutorizacao4LoteResult result = port.nfeAutorizacaoLote(nfeDadosMsg);
             retorno = result.getRetEnviNFe().get(0);
         } else {
@@ -714,7 +715,11 @@ public enum GatewayLoteEnvio {
     }
 
     public static void sendRetEnviNFe(Object retorno) throws JAXBException, IOException {
-            new S3().sendRetEnviNFe(Util.marshllerRetEnviNFe((JAXBElement<TRetEnviNFe>) retorno), ((JAXBElement<TRetEnviNFe>) retorno).getValue()); //Tentar enviar para o S3
+        new S3().sendRetEnviNFe(Util.marshllerRetEnviNFe((JAXBElement<TRetEnviNFe>) retorno), ((JAXBElement<TRetEnviNFe>) retorno).getValue()); //Tentar enviar para o S3
+    }
+
+    public static void sendRetEnviNFe(Object retorno, String chaveNFe) throws JAXBException, IOException {
+        new S3().sendRetEnviNFe(Util.marshllerRetEnviNFe((JAXBElement<TRetEnviNFe>) retorno), ((JAXBElement<TRetEnviNFe>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
     }
 
 }

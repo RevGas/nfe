@@ -59,7 +59,7 @@ class WSLoteEnvio implements DFLog {
         final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(xml, DFModelo.valueOfCodigo(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getMod()),
                 DFAmbiente.valueOfCodigo(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb()), tEnviNFe.getNFe().get(0));
 
-        if(Objects.equals(loteEnvioRetorno.getProtNFe().getInfProt().getCStat(), String.valueOf(NFRetornoStatus.CODIGO_100.getCodigo()))){ // TODO melhorar verificação de status
+        if(loteEnvioRetorno.getProtNFe() != null && Objects.equals(loteEnvioRetorno.getProtNFe().getInfProt().getCStat(), String.valueOf(NFRetornoStatus.CODIGO_100.getCodigo()))){ // TODO melhorar verificação de status
             uploadProcNFe(tEnviNFe,loteEnvioRetorno);
         }
 
