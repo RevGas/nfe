@@ -489,6 +489,7 @@ public enum GatewayLoteEnvio {
 
     public TRetEnviNFe getTRetEnviNFePRNFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         Object retorno;
+        TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
@@ -504,7 +505,7 @@ public enum GatewayLoteEnvio {
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.pr.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             retorno = result.getContent().get(0);
         }
-        sendRetEnviNFe(retorno);
+        sendRetEnviNFe(retorno, Util.chaveFromTNFe(enviNFe.getNFe().get(0)));
         return ((JAXBElement<TRetEnviNFe>) retorno).getValue();
     }
 
