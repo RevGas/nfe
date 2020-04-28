@@ -425,6 +425,7 @@ public enum GatewayLoteEnvio {
 
     public TRetEnviNFe getTRetEnviNFeMTNFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         Object retorno;
+        TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
@@ -440,12 +441,13 @@ public enum GatewayLoteEnvio {
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.mt.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             retorno = result.getContent().get(0);
         }
-        sendRetEnviNFe(retorno);
+        sendRetEnviNFe(retorno, Util.chaveFromTNFe(enviNFe.getNFe().get(0)));
         return ((JAXBElement<TRetEnviNFe>) retorno).getValue();
     }
 
     public TRetEnviNFe getTRetEnviNFeMTNFCE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         Object retorno;
+        TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.mt.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.mt.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
@@ -462,7 +464,7 @@ public enum GatewayLoteEnvio {
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.mt.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             retorno = result.getContent().get(0);
         }
-        sendRetEnviNFe(retorno);
+        sendRetEnviNFe(retorno, Util.chaveFromTNFe(enviNFe.getNFe().get(0)));
         return ((JAXBElement<TRetEnviNFe>) retorno).getValue();
     }
 
@@ -511,6 +513,7 @@ public enum GatewayLoteEnvio {
 
     public TRetEnviNFe getTRetEnviNFePRNFCE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         Object retorno;
+        TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
@@ -526,7 +529,7 @@ public enum GatewayLoteEnvio {
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.pr.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             retorno = result.getContent().get(0);
         }
-        sendRetEnviNFe(retorno);
+        sendRetEnviNFe(retorno, Util.chaveFromTNFe(enviNFe.getNFe().get(0)));
         return ((JAXBElement<TRetEnviNFe>) retorno).getValue();
     }
 
@@ -574,6 +577,7 @@ public enum GatewayLoteEnvio {
 
     public TRetEnviNFe getTRetEnviNFeSPNFE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         Object retorno;
+        TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.sp.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.sp.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
@@ -589,12 +593,13 @@ public enum GatewayLoteEnvio {
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.sp.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             retorno = result.getContent().get(0);
         }
-        sendRetEnviNFe(retorno);
+        sendRetEnviNFe(retorno, Util.chaveFromTNFe(enviNFe.getNFe().get(0)));
         return ((JAXBElement<TRetEnviNFe>) retorno).getValue();
     }
 
     public TRetEnviNFe getTRetEnviNFeSPNFCE(final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
         Object retorno;
+        TEnviNFe enviNFe = (TEnviNFe) Util.unmarshler(TEnviNFe.class, xml);
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.sp.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.sp.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnviNFe(xml));
@@ -610,7 +615,7 @@ public enum GatewayLoteEnvio {
             br.inf.portalfiscal.nfe.wsdl.nfeautorizacao4.nfce.sp.hom.NfeResultMsg result = port.nfeAutorizacaoLote(nfeDadosMsg);
             retorno = result.getContent().get(0);
         }
-        sendRetEnviNFe(retorno);
+        sendRetEnviNFe(retorno, Util.chaveFromTNFe(enviNFe.getNFe().get(0)));
         return ((JAXBElement<TRetEnviNFe>) retorno).getValue();
     }
 
