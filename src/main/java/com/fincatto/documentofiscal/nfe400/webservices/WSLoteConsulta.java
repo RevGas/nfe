@@ -36,7 +36,7 @@ class WSLoteConsulta implements DFLog {
 
     TRetConsReciNFe consultaLote(final String numeroRecibo, final DFModelo modelo) throws Exception {
         TRetConsReciNFe tRetConsReciNFe = GatewayLoteConsulta.valueOfCodigoUF(this.config.getCUF()).getTRetConsReciNFe(numeroRecibo, this.config.getAmbiente(), this.config.getVersao());
-        if(tRetConsReciNFe.getProtNFe() != null && Objects.equals(tRetConsReciNFe.getProtNFe().get(0).getInfProt().getCStat(), String.valueOf(NFRetornoStatus.CODIGO_100.getCodigo()))){ // TODO melhorar verificação de status
+        if(tRetConsReciNFe.getProtNFe() != null && !tRetConsReciNFe.getProtNFe().isEmpty() && Objects.equals(tRetConsReciNFe.getProtNFe().get(0).getInfProt().getCStat(), String.valueOf(NFRetornoStatus.CODIGO_100.getCodigo()))){ // TODO melhorar verificação de status
             uploadProcNFe(tRetConsReciNFe);
         }
         return tRetConsReciNFe;
