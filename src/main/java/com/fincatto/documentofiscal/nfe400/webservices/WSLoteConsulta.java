@@ -24,20 +24,25 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 class WSLoteConsulta implements DFLog {
-    
+
     private final NFeConfig config;
-    
+
     WSLoteConsulta(final NFeConfig config) {
         this.config = config;
     }
 
     TRetConsReciNFe consultaLote(final String numeroRecibo, final DFModelo modelo) throws Exception {
         TRetConsReciNFe tRetConsReciNFe = GatewayLoteConsulta.valueOfCodigoUF(this.config.getCUF()).getTRetConsReciNFe(numeroRecibo, this.config.getAmbiente(), this.config.getVersao());
-        if(tRetConsReciNFe.getProtNFe() != null && !tRetConsReciNFe.getProtNFe().isEmpty() && Objects.equals(tRetConsReciNFe.getProtNFe().get(0).getInfProt().getCStat(), String.valueOf(NFRetornoStatus.CODIGO_100.getCodigo()))){ // TODO melhorar verificação de status
-            uploadProcNFe(tRetConsReciNFe);
+        if (tRetConsReciNFe.getProtNFe() != null && !tRetConsReciNFe.getProtNFe().isEmpty()) {
+            List<Integer> codes = Arrays.asList(NFRetornoStatus.CODIGO_301.getCodigo(), NFRetornoStatus.CODIGO_302.getCodigo(), NFRetornoStatus.CODIGO_303.getCodigo(), NFRetornoStatus.CODIGO_100.getCodigo());
+            if (codes.contains(Integer.valueOf(tRetConsReciNFe.getProtNFe().get(0).getInfProt().getCStat()))) {
+                uploadProcNFe(tRetConsReciNFe);
+            }
         }
         return tRetConsReciNFe;
     }

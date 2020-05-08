@@ -30,6 +30,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 class WSLoteEnvio implements DFLog {
@@ -59,8 +61,11 @@ class WSLoteEnvio implements DFLog {
         final TRetEnviNFe loteEnvioRetorno = this.comunicaLote(xml, DFModelo.valueOfCodigo(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getMod()),
                 DFAmbiente.valueOfCodigo(tEnviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb()), tEnviNFe.getNFe().get(0));
 
-        if(loteEnvioRetorno.getProtNFe() != null && Objects.equals(loteEnvioRetorno.getProtNFe().getInfProt().getCStat(), String.valueOf(NFRetornoStatus.CODIGO_100.getCodigo()))){ // TODO melhorar verificação de status
-            uploadProcNFe(tEnviNFe,loteEnvioRetorno);
+        if (loteEnvioRetorno.getProtNFe() != null) {
+            List<Integer> codes = Arrays.asList(NFRetornoStatus.CODIGO_301.getCodigo(), NFRetornoStatus.CODIGO_302.getCodigo(), NFRetornoStatus.CODIGO_303.getCodigo(), NFRetornoStatus.CODIGO_100.getCodigo());
+            if (codes.contains(Integer.valueOf(loteEnvioRetorno.getProtNFe().getInfProt().getCStat()))) {
+                uploadProcNFe(tEnviNFe, loteEnvioRetorno);
+            }
         }
 
         return loteEnvioRetorno;
