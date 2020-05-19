@@ -331,7 +331,7 @@ public enum GatewayCancelamento {
             ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.fazenda.mg.gov.br/nfe2/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NFeRecepcaoEvento4Result result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return (TRetEnvEvento) result.getRetEnvEvento().get(0);
+            return ((JAXBElement<TRetEnvEvento>) result.getRetEnvEvento().get(0)).getValue();
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -339,7 +339,7 @@ public enum GatewayCancelamento {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap12Cancelamento();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NFeRecepcaoEvento4Result result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return (TRetEnvEvento) result.getRetEnvEvento().get(0);
+            return ((JAXBElement<TRetEnvEvento>) result.getRetEnvEvento().get(0)).getValue();
         }
     }
 
