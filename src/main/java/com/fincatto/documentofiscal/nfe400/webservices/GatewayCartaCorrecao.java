@@ -152,7 +152,7 @@ public enum GatewayCartaCorrecao {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PA};
+            return new DFUnidadeFederativa[]{};
         }
     },
     SVRS {
