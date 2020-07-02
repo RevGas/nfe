@@ -17,7 +17,6 @@ public enum GatewayConsultaCadastro {
         @Override
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{
-                DFUnidadeFederativa.PI
             };
         }
     },

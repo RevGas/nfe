@@ -12,7 +12,6 @@ import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRe
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
-import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
 import java.io.IOException;
 
@@ -120,8 +119,8 @@ public class WSFacade {
      * @return dados da consulta da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public TRetConsSitNFe consultaNota(final String chaveDeAcesso) throws Exception {
-        return this.wsNotaConsulta.consultaNota(chaveDeAcesso);
+    public TRetConsSitNFe consultaProtocolo(final String chaveDeAcesso) throws Exception {
+        return this.wsNotaConsulta.consultaProtocolo(chaveDeAcesso);
     }
     
     /**
