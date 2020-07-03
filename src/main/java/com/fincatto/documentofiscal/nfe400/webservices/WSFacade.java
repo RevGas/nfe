@@ -122,6 +122,10 @@ public class WSFacade {
     public TRetConsSitNFe consultaProtocolo(final String chaveDeAcesso) throws Exception {
         return this.wsNotaConsulta.consultaProtocolo(chaveDeAcesso);
     }
+
+    public String consultaNota(final String chaveDeAcesso, final String tpAmb) throws Exception {
+        return this.wsNotaConsulta.consultaNota(chaveDeAcesso, tpAmb);
+    }
     
     /**
      * Faz a correcao da nota

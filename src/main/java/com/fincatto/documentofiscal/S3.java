@@ -221,11 +221,19 @@ public class S3 {
         this.uploadFile(bucket, getPath(chaveNF, "enviNFe", enviNFe.getNFe().get(0).getInfNFe().getIde().getTpAmb()), xmlTemp);
     }
 
+    public File downloadEnviNFe(final String chaveNF, String tbAmb) throws IOException {
+        return this.downloadFile(bucket, getPath(chaveNF, "enviNFe", tbAmb));
+    }
+
     public void sendRetEnviNFe(final String xml, TRetEnviNFe retEnviNFe) throws IOException {
         String chaveNF = retEnviNFe.getProtNFe().getInfProt().getChNFe();
         File xmlTemp = File.createTempFile(chaveNF, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         this.uploadFile(bucket, getPath(chaveNF, "retEnviNFe", retEnviNFe.getTpAmb()), xmlTemp);
+    }
+
+    public File downloadRetEnviNFe(final String chaveNF, String tbAmb) throws IOException {
+        return this.downloadFile(bucket, getPath(chaveNF, "retEnviNFe", tbAmb));
     }
 
     public void sendRetEnviNFe(final String xml, TRetEnviNFe retEnviNFe, String chaveNFe) throws IOException {
@@ -240,6 +248,10 @@ public class S3 {
         File xmlTemp = File.createTempFile(chaveNF, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         this.uploadFile(bucket, getPath(chaveNF, "nfeProc", tNfeProc.getNFe().getInfNFe().getIde().getTpAmb()), xmlTemp);
+    }
+
+    public File downloadProcNFe(final String chaveNF, String tbAmb) throws IOException {
+        return this.downloadFile(bucket, getPath(chaveNF, "nfeProc", tbAmb));
     }
 
 

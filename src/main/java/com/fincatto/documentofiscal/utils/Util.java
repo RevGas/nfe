@@ -2,8 +2,13 @@ package com.fincatto.documentofiscal.utils;
 import br.inf.portalfiscal.nfe.*;
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
+import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Classe utilitária
@@ -33,6 +38,14 @@ public class Util {
                 .replace('Ç', 'C')
                 .replace('ñ', 'n')
                 .replace('Ñ', 'N');
+    }
+
+    public static String fileToString(File file) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        Files.readAllLines(Paths.get(file.toURI()), StandardCharsets.UTF_8).forEach(line -> {
+            builder.append(line);
+        });
+        return builder.toString();
     }
 
     public static String marshaller(Object object) throws JAXBException {
