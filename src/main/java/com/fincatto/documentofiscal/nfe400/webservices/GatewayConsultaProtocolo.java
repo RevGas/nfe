@@ -46,9 +46,15 @@ public enum GatewayConsultaProtocolo {
             br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs.NFeConsultaProtocolo4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs.NFeConsultaProtocolo4().getNFeConsultaProtocolo4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs.NfeResultMsg result = port.nfeConsultaNF(nfeDadosMsg);
 
-            return ((JAXBElement<TRetConsSitNFe>) result.getContent().get(0)).getValue();
-        } else {
             return null;
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(tConsSitNFe);
+
+            br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs.hom.NFeConsultaProtocolo4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs.hom.NFeConsultaProtocolo4().getNFeConsultaProtocolo4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs.hom.NfeResultMsg result = port.nfeConsultaNF(nfeDadosMsg);
+
+            return ((JAXBElement<TRetConsSitNFe>) result.getContent().get(0)).getValue();
         }
     }
     
