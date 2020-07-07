@@ -32,7 +32,6 @@ public class SOAPHandlerNFeAutorizacaoLog implements SOAPHandler<SOAPMessageCont
                 DOMSource source = new DOMSource(body.getFirstChild().getFirstChild());
                 StringWriter stringResult = new StringWriter();
                 TransformerFactory.newInstance().newTransformer().transform(source, new StreamResult(stringResult));
-                System.out.println("envio");
                 new S3().sendEnviNFe(stringResult.toString());
             } catch (Exception ex) {
                 Logger.getLogger(SOAPHandler.class.getName()).log(Level.SEVERE, null, ex);
