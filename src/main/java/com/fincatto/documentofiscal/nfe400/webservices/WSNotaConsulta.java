@@ -28,8 +28,7 @@ class WSNotaConsulta implements DFLog {
     }
 
     TRetConsSitNFe consultaProtocolo(final String chNFe) throws Exception {
-        TRetConsSitNFe tRetConsSitNFe = this.efetuaConsulta(gerarDadosConsulta(chNFe));
-        return tRetConsSitNFe;
+        return this.efetuaConsulta(gerarDadosConsulta(chNFe));
     }
 
     private TRetConsSitNFe efetuaConsulta(JAXBElement<TConsSitNFe> tConsSitNFe) throws Exception {
