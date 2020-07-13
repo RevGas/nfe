@@ -2,6 +2,7 @@ package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.nfce.mt;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.jws.HandlerChain;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
@@ -17,6 +18,7 @@ import javax.xml.ws.WebServiceFeature;
  * 
  */
 @WebServiceClient(name = "NfeConsulta4", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4", wsdlLocation = "https://nfce.sefaz.mt.gov.br/nfcews/services/NfeConsulta4?wsdl")
+@HandlerChain(file="handler.xml")
 public class NfeConsulta4
     extends Service
 {

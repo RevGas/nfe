@@ -163,7 +163,10 @@ public enum GatewayConsultaProtocolo {
         @Override
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{
-                DFUnidadeFederativa.PI
+                DFUnidadeFederativa.AC, DFUnidadeFederativa.AL, DFUnidadeFederativa.AP, DFUnidadeFederativa.DF,
+                DFUnidadeFederativa.ES, DFUnidadeFederativa.PA, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI,
+                DFUnidadeFederativa.RJ, DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR,
+                DFUnidadeFederativa.SC, DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
             };
         }
 
@@ -289,7 +292,7 @@ public enum GatewayConsultaProtocolo {
 
             br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.mg.NfeResultMsg result = port.nfeConsultaNF(nfeDadosMsg);
 
-            return (TRetConsSitNFe) result.getRetConsSitNFe().get(0);
+            return ((JAXBElement<TRetConsSitNFe>) result.getRetConsSitNFe().get(0)).getValue();
         } else {
             return null;
         }
