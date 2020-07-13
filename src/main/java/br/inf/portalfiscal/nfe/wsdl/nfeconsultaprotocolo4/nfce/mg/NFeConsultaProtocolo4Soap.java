@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs;
+package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.nfce.mg;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -6,6 +6,7 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.ws.Action;
 
 
 /**
@@ -30,6 +31,7 @@ public interface NFeConsultaProtocolo4Soap {
      */
     @WebMethod(action = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4/nfeConsultaNF")
     @WebResult(name = "nfeResultMsg", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4", partName = "nfeConsultaNFResult")
+    @Action(input = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4/nfeConsultaNF", output = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4/NFeConsultaProtocolo4Soap/nfeConsultaNFResponse")
     public NfeResultMsg nfeConsultaNF(
         @WebParam(name = "nfeDadosMsg", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4", partName = "nfeDadosMsg")
         NfeDadosMsg nfeDadosMsg);

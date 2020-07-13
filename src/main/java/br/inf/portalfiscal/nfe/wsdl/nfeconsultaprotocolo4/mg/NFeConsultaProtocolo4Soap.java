@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs;
+package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.mg;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

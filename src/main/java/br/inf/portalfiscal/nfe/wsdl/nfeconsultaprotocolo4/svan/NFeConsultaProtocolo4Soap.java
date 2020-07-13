@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs;
+package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svan;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -23,6 +23,7 @@ public interface NFeConsultaProtocolo4Soap {
 
 
     /**
+     * Serviço destinado ao atendimento de solicitações de consulta da situação atual da NF-e na Base de Dados do Portal da Sefaz Virtual do Ambiente Nacional
      * 
      * @param nfeDadosMsg
      * @return

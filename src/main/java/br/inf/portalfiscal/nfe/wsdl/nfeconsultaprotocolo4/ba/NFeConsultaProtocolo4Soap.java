@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs;
+package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.ba;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -23,6 +23,7 @@ public interface NFeConsultaProtocolo4Soap {
 
 
     /**
+     * Serviço destinado à consulta da NF-e.
      * 
      * @param nfeDadosMsg
      * @return

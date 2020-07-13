@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.svrs;
+package br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.nfce.pr;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -14,22 +14,23 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "NFeConsultaProtocolo4Soap", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4")
+@WebService(name = "NFeConsultaProtocolo4Soap12", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
     ObjectFactory.class, br.inf.portalfiscal.nfe.ObjectFactory.class
 })
-public interface NFeConsultaProtocolo4Soap {
+public interface NFeConsultaProtocolo4Soap12 {
 
 
     /**
+     * Consulta situacao atual da NFCe
      * 
      * @param nfeDadosMsg
      * @return
      *     returns br.inf.portalfiscal.nfe.wsdl.nfeconsultaprotocolo4.NfeResultMsg
      */
     @WebMethod(action = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4/nfeConsultaNF")
-    @WebResult(name = "nfeResultMsg", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4", partName = "nfeConsultaNFResult")
+    @WebResult(name = "nfeResultMsg", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4", partName = "nfeResultMsg")
     public NfeResultMsg nfeConsultaNF(
         @WebParam(name = "nfeDadosMsg", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4", partName = "nfeDadosMsg")
         NfeDadosMsg nfeDadosMsg);
