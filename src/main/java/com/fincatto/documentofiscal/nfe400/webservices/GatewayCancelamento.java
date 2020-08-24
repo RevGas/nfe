@@ -1,10 +1,15 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TEnvEvento;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.S3;
+import com.fincatto.documentofiscal.utils.Util;
+
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
@@ -611,9 +616,11 @@ public enum GatewayCancelamento {
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
+
     }
 
-    public TRetEnvEvento getTRetEnvEventoSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException, IOException {
+        Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -621,7 +628,7 @@ public enum GatewayCancelamento {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCancelamento();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -629,8 +636,10 @@ public enum GatewayCancelamento {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCancelamento();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         }
+        sendRetEnvEvento(retorno);
+        return ((JAXBElement<TRetEnvEvento>) retorno).getValue();
     }
 
     private JAXBElement<TEnvEvento> getTEnvEvento(String xml) throws JAXBException {
@@ -640,6 +649,14 @@ public enum GatewayCancelamento {
         StringReader reader = new StringReader(xml);
         JAXBElement<TEnvEvento> tEnvEvento = (JAXBElement<TEnvEvento>) jaxbUnmarshaller.unmarshal(reader);
         return tEnvEvento;
+    }
+
+    public static void sendRetEnvEvento(Object retorno) throws JAXBException, IOException {
+        new S3 ().sendRetEnviEvento (Util.marshllerRetEnvEvento ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento>) retorno).getValue()); //Tentar enviar para o S3
+    }
+
+    public static void sendRetEnvEvento(Object retorno, String chaveNFe) throws JAXBException, IOException {
+        new S3().sendRetEnviEvento(Util.marshllerRetEnvEvento((JAXBElement<br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
     }
 
 }
