@@ -88,7 +88,7 @@ public class Util {
     }
 
     public static String marshllerRetEnvEventoCancelamento(JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento> jAXBElement ) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento");
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101");
         StringWriter result = new StringWriter();
         Marshaller marshaller = context.createMarshaller();
         marshaller.marshal(jAXBElement, result);
