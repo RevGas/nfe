@@ -95,6 +95,14 @@ public class Util {
         return result.toString();
     }
 
+    public static String marshllerRetInutNFe(JAXBElement<TRetInutNFe> jAXBElement) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(jAXBElement, result);
+        return result.toString();
+    }
+
     public static String marshllerretConsSitNFe(JAXBElement<TRetConsSitNFe> jAXBElement ) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
         StringWriter result = new StringWriter();
@@ -173,5 +181,4 @@ public class Util {
                 return objectName;
         }
     }
-
 }
