@@ -2,6 +2,7 @@ package com.fincatto.documentofiscal.nfe400.webservices;
 
 import br.inf.portalfiscal.nfe.TInutNFe;
 import br.inf.portalfiscal.nfe.TRetInutNFe;
+import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
@@ -10,9 +11,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 import javax.xml.ws.BindingProvider;
+
+import com.fincatto.documentofiscal.S3;
+import com.fincatto.documentofiscal.utils.Util;
 import org.w3c.dom.Node;
 
 public enum GatewayInutilizacao {
@@ -487,7 +492,8 @@ public enum GatewayInutilizacao {
         }
     }
 
-    public TRetInutNFe getTRetInutNFeSVRSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetInutNFe getTRetInutNFeSVRSNFE(String xml, DFAmbiente ambiente) throws JAXBException, IOException {
+        Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.NfeDadosMsg();
             dadosMsg.getContent().add(getTInutNFe(xml));
@@ -495,7 +501,7 @@ public enum GatewayInutilizacao {
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.NFeInutilizacao4().getNFeInutilizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
-            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeDadosMsg();
             dadosMsg.getContent().add(getTInutNFe(xml));
@@ -503,11 +509,14 @@ public enum GatewayInutilizacao {
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NFeInutilizacao4().getNFeInutilizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.svrs.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
-            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         }
+        sendRetEnvEvento (retorno);
+        return ((JAXBElement<TRetInutNFe>) retorno).getValue();
     }
 
-    public TRetInutNFe getTRetInutNFeSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetInutNFe getTRetInutNFeSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException, IOException {
+        Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.NfeDadosMsg();
             dadosMsg.getContent().add(getTInutNFe(xml));
@@ -515,7 +524,7 @@ public enum GatewayInutilizacao {
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.NFeInutilizacao4().getNFeInutilizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
-            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NfeDadosMsg dadosMsg = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NfeDadosMsg();
             dadosMsg.getContent().add(getTInutNFe(xml));
@@ -523,8 +532,10 @@ public enum GatewayInutilizacao {
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NFeInutilizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NFeInutilizacao4().getNFeInutilizacao4Soap();
             br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.hom.NfeResultMsg result = port.nfeInutilizacaoNF(dadosMsg);
 
-            return ((JAXBElement<TRetInutNFe>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         }
+        sendRetEnvEvento (retorno);
+        return ((JAXBElement<TRetInutNFe>) retorno).getValue();
     }
 
     private JAXBElement<TInutNFe> getTInutNFe(String xml) throws JAXBException {
@@ -535,6 +546,10 @@ public enum GatewayInutilizacao {
         JAXBElement<TInutNFe> tInutNFe = (JAXBElement<TInutNFe>) jaxbUnmarshaller.unmarshal(reader);
 
         return tInutNFe;
+    }
+
+    public static void sendRetEnvEvento(Object retorno) throws JAXBException, IOException {
+        new S3 ().sendRetEnvEventoInut (Util.marshllerRetInutNFe ((JAXBElement<TRetInutNFe>) retorno), ((JAXBElement<TRetInutNFe>) retorno).getValue()); //Tentar enviar para o S3
     }
 
 }
