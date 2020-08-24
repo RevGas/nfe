@@ -652,11 +652,11 @@ public enum GatewayCancelamento {
     }
 
     public static void sendRetEnvEvento(Object retorno) throws JAXBException, IOException {
-        new S3 ().sendRetEnviEvento (Util.marshllerRetEnvEvento ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento>) retorno).getValue()); //Tentar enviar para o S3
+        new S3 ().sendRetEnviEventoCancelamento (Util.marshllerRetEnvEventoCancelamento ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno).getValue()); //Tentar enviar para o S3
     }
 
     public static void sendRetEnvEvento(Object retorno, String chaveNFe) throws JAXBException, IOException {
-        new S3().sendRetEnviEvento(Util.marshllerRetEnvEvento((JAXBElement<br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
+        new S3().sendRetEnviEventoCancelamento(Util.marshllerRetEnvEventoCancelamento ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
     }
 
 }

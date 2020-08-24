@@ -244,6 +244,12 @@ public class S3 {
         this.uploadFile(bucket, getPath(chaveNFe, "retEnviNFe", retEnviNFe.getTpAmb()), xmlTemp);
     }
 
+    public void sendRetEnviNFe(final String xml, br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento retEnviNFe, String chaveNFe) throws IOException {
+        File xmlTemp = File.createTempFile(chaveNFe, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNFe, "retEnviNFe", retEnviNFe.getTpAmb()), xmlTemp);
+    }
+
     public void sendProcNFe(String xml) throws JAXBException, IOException {
         TNfeProc tNfeProc = (TNfeProc) Util.unmarshler(TNfeProc.class, xml);
         String chaveNF = Util.chaveFromTNFe(tNfeProc.getNFe());
@@ -309,6 +315,19 @@ public class S3 {
         File xmlTemp = File.createTempFile(chaveNF, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         this.uploadFile(bucket, getPath(chaveNF, "retEnvEvento", retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpAmb()), xmlTemp);
+    }
+
+    public void sendRetEnviEventoCancelamento(String xml, br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento retEnvEvento) throws IOException {
+        String chaveNF = retEnvEvento.getRetEvento ().get (0).getInfEvento ().getChNFe ();
+        File xmlTemp = File.createTempFile(chaveNF, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNF, "retEnvEvento", retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpAmb()), xmlTemp);
+    }
+
+    public void sendRetEnviEventoCancelamento(String xml, br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento retEnvEvento, String chaveNFe) throws IOException {
+        File xmlTemp = File.createTempFile(chaveNFe, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNFe, "retEnvEvento", retEnvEvento.getTpAmb()), xmlTemp);
     }
 
     private class ContactMessage {

@@ -87,6 +87,14 @@ public class Util {
         return result.toString();
     }
 
+    public static String marshllerRetEnvEventoCancelamento(JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento> jAXBElement ) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento");
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(jAXBElement, result);
+        return result.toString();
+    }
+
     public static String marshllerretConsSitNFe(JAXBElement<TRetConsSitNFe> jAXBElement ) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
         StringWriter result = new StringWriter();
