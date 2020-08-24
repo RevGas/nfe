@@ -309,7 +309,7 @@ public class S3 {
         File xmlTemp = File.createTempFile(intervalo, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         String cnpj = tInutNFe.getInfInut ().getCNPJ ();
-        String ano = tInutNFe.getInfInut ().getAno ();
+        String ano = "20"+tInutNFe.getInfInut ().getAno ();
         String mes = String.valueOf (LocalDateTime.now ().getMonthValue ()+1);
         System.out.println (mes);
         String ambiente = tInutNFe.getInfInut ().getTpAmb ().equals(DFAmbiente.HOMOLOGACAO.getCodigo()) ? "hom" : "prod";
