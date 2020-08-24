@@ -310,8 +310,7 @@ public class S3 {
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         String cnpj = tInutNFe.getInfInut ().getCNPJ ();
         String ano = "20"+tInutNFe.getInfInut ().getAno ();
-        String mes = String.valueOf (LocalDateTime.now ().getMonthValue ()+1);
-        System.out.println (mes);
+        String mes = String.format("%02d", LocalDateTime.now ().getMonthValue ());
         String ambiente = tInutNFe.getInfInut ().getTpAmb ().equals(DFAmbiente.HOMOLOGACAO.getCodigo()) ? "hom" : "prod";
         this.uploadFile(bucket, String.format("log-df/%s/%s/%s/%s/%s/%s.xml", ambiente, cnpj, "retInutNFe", ano, mes, intervalo), xmlTemp);
     }
@@ -335,7 +334,7 @@ public class S3 {
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         String cnpj = retInutNFe.getInfInut ().getCNPJ ();
         String ano = "20"+retInutNFe.getInfInut ().getAno ();
-        String mes = String.valueOf (ZonedDateTime.parse (retInutNFe.getInfInut ().getDhRecbto ()).getMonthValue ()+1);
+        String mes = String.format("%02d", LocalDateTime.now ().getMonthValue ());
         String ambiente = retInutNFe.getInfInut ().getTpAmb ().equals(DFAmbiente.HOMOLOGACAO.getCodigo()) ? "hom" : "prod";
         this.uploadFile(bucket, String.format("log-df/%s/%s/%s/%s/%s/%s.xml", ambiente, cnpj, "retInutNFe", ano, mes, intervalo), xmlTemp);
     }
