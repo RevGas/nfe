@@ -301,7 +301,7 @@ public class S3 {
         String chaveNF = tEnvEvento.getEvento ().get (0).getInfEvento ().getChNFe ();
         File xmlTemp = File.createTempFile(chaveNF, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPath(chaveNF+"-"+tEnvEvento.getEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+tEnvEvento.getEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).getTime (), "envEvento", tEnvEvento.getEvento ().get (0).getInfEvento ().getTpAmb ()), xmlTemp);
+        this.uploadFile(bucket, getPath(chaveNF+"-"+tEnvEvento.getEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+tEnvEvento.getEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli (), "envEvento", tEnvEvento.getEvento ().get (0).getInfEvento ().getTpAmb ()), xmlTemp);
     }
 
 //    public void sendRetEnvEvento(final String xml, TRetEnvEvento retEnvEvento, String chaveNFe) throws IOException {
@@ -321,13 +321,13 @@ public class S3 {
         String chaveNF = retEnvEvento.getRetEvento ().get (0).getInfEvento ().getChNFe ();
         File xmlTemp = File.createTempFile(chaveNF, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPath(chaveNF+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).getTime (), "retEnvEvento", retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpAmb()), xmlTemp);
+        this.uploadFile(bucket, getPath(chaveNF+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli (), "retEnvEvento", retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpAmb()), xmlTemp);
     }
 
     public void sendRetEnvEventoCancelamento(String xml, br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento retEnvEvento, String chaveNFe) throws IOException {
         File xmlTemp = File.createTempFile(chaveNFe, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPath(chaveNFe+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).getTime (), "retEnvEvento", retEnvEvento.getTpAmb()), xmlTemp);
+        this.uploadFile(bucket, getPath(chaveNFe+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli (), "retEnvEvento", retEnvEvento.getTpAmb()), xmlTemp);
     }
 
     private class ContactMessage {
