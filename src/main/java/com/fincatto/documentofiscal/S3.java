@@ -3,6 +3,8 @@ package com.fincatto.documentofiscal;
 import br.inf.portalfiscal.nfe.TEnviNFe;
 import br.inf.portalfiscal.nfe.TNfeProc;
 import br.inf.portalfiscal.nfe.TRetEnviNFe;
+import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TEnvEvento;
+import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
@@ -31,6 +33,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 
 /**
  * Responsável pelas operações de conexão com o Amazon com.fincatto.documentofiscal.S3, upload, download e
@@ -63,7 +66,6 @@ public class S3 {
      *                                Isso pode acontecer quando a permissão é negada, por exemplo
      * @throws AmazonClientException  se o cliente encontrar algum erro
      *                                durante a comunicação com o com.fincatto.documentofiscal.S3. Ex.: Sem internet
-     * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/UploadObjSingleOpJava.html
      */
     public Boolean uploadFile(String bucketName, String key, File file) {
         int tentative = 0;
@@ -242,6 +244,12 @@ public class S3 {
         this.uploadFile(bucket, getPath(chaveNFe, "retEnviNFe", retEnviNFe.getTpAmb()), xmlTemp);
     }
 
+    public void sendRetEnviNFe(final String xml, br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento retEnviNFe, String chaveNFe) throws IOException {
+        File xmlTemp = File.createTempFile(chaveNFe, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNFe, "retEnviNFe", retEnviNFe.getTpAmb()), xmlTemp);
+    }
+
     public void sendProcNFe(String xml) throws JAXBException, IOException {
         TNfeProc tNfeProc = (TNfeProc) Util.unmarshler(TNfeProc.class, xml);
         String chaveNF = Util.chaveFromTNFe(tNfeProc.getNFe());
@@ -285,6 +293,40 @@ public class S3 {
             return false;
         }
         return true;
+    }
+
+    public void sendEnvEvento(String xml) throws IOException, JAXBException {
+        TEnvEvento tEnvEvento = (TEnvEvento) Util.unmarshler(TEnvEvento.class, xml);
+        String chaveNF = tEnvEvento.getEvento ().get (0).getInfEvento ().getChNFe ();
+        File xmlTemp = File.createTempFile(chaveNF, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNF+"-"+tEnvEvento.getEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+tEnvEvento.getEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli (), "envEvento", tEnvEvento.getEvento ().get (0).getInfEvento ().getTpAmb ()), xmlTemp);
+    }
+
+//    public void sendRetEnvEvento(final String xml, TRetEnvEvento retEnvEvento, String chaveNFe) throws IOException {
+//        File xmlTemp = File.createTempFile(chaveNFe, ".xml");
+//        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+//        this.uploadFile(bucket, getPath(chaveNFe+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getNSeqEvento (), "retEnvEvento", retEnvEvento.getTpAmb()), xmlTemp);
+//    }
+//
+//    public void sendRetEnvEvento(final String xml, TRetEnvEvento retEnvEvento) throws IOException {
+//        String chaveNF = retEnvEvento.getRetEvento ().get (0).getInfEvento ().getChNFe ();
+//        File xmlTemp = File.createTempFile(chaveNF, ".xml");
+//        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+//        this.uploadFile(bucket, getPath(chaveNF+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getNSeqEvento (), "retEnvEvento", retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpAmb()), xmlTemp);
+//    }
+
+    public void sendRetEnvEventoCancelamento(String xml, br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento retEnvEvento) throws IOException {
+        String chaveNF = retEnvEvento.getRetEvento ().get (0).getInfEvento ().getChNFe ();
+        File xmlTemp = File.createTempFile(chaveNF, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNF+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli (), "retEnvEvento", retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpAmb()), xmlTemp);
+    }
+
+    public void sendRetEnvEventoCancelamento(String xml, br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento retEnvEvento, String chaveNFe) throws IOException {
+        File xmlTemp = File.createTempFile(chaveNFe, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNFe+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getTpEvento ()+"-"+retEnvEvento.getRetEvento ().get (0).getInfEvento ().getNSeqEvento ()+"-"+new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli (), "retEnvEvento", retEnvEvento.getTpAmb()), xmlTemp);
     }
 
     private class ContactMessage {
