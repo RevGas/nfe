@@ -296,7 +296,6 @@ public class S3 {
     }
 
     public void sendEnvEvento(String xml) throws IOException, JAXBException {
-        System.out.println ("xml evendo >>>>> "+xml);
         TEnvEvento tEnvEvento = (TEnvEvento) Util.unmarshler(TEnvEvento.class, xml);
         String chaveNF = tEnvEvento.getEvento ().get (0).getInfEvento ().getChNFe ();
         File xmlTemp = File.createTempFile(chaveNF, ".xml");
