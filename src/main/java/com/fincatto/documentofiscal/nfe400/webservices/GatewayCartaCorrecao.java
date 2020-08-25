@@ -5,6 +5,10 @@ import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TR
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.S3;
+import com.fincatto.documentofiscal.utils.Util;
+
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
@@ -557,7 +561,8 @@ public enum GatewayCartaCorrecao {
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoSVRSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSVRSNFE(String xml, DFAmbiente ambiente) throws JAXBException, IOException {
+        Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -565,7 +570,7 @@ public enum GatewayCartaCorrecao {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NFeRecepcaoEvento4SoapCartaCorrecao port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCartaCorrecao();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -573,8 +578,10 @@ public enum GatewayCartaCorrecao {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4SoapCartaCorrecao port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCartaCorrecao();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         }
+        sendRetEnvEvento(retorno);
+        return ((JAXBElement<TRetEnvEvento>) retorno).getValue();
     }
 
     public TRetEnvEvento getTRetEnvEventoSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
@@ -606,4 +613,11 @@ public enum GatewayCartaCorrecao {
         return tEnvEvento;
     }
 
+    public static void sendRetEnvEvento(Object retorno) throws JAXBException, IOException {
+        new S3().sendRetEnvEventoCartaCorrecao (Util.marshllerRetEnvEventoCartaCorrecao ((JAXBElement<TRetEnvEvento>) retorno), ((JAXBElement<TRetEnvEvento>) retorno).getValue()); //Tentar enviar para o S3
+    }
+
+    public static void sendRetEnvEvento(Object retorno, String chaveNFe) throws JAXBException, IOException {
+        new S3().sendRetEnvEventoCartaCorrecao (Util.marshllerRetEnvEventoCartaCorrecao ((JAXBElement<TRetEnvEvento>) retorno), ((JAXBElement<TRetEnvEvento>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
+    }
 }
