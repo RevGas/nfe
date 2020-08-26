@@ -5,6 +5,10 @@ import br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_Manife
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.S3;
+import com.fincatto.documentofiscal.utils.Util;
+
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
@@ -39,7 +43,8 @@ public enum GatewayManifestaDestinatario {
         throw new IllegalStateException(String.format("N\u00e3o existe metodo de envio para a UF %s", uf.getCodigo()));
     }
 
-    public TRetEnvEvento getTRetEnvEventoANNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoANNFE(String xml, DFAmbiente ambiente) throws JAXBException, IOException {
+        Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -47,7 +52,7 @@ public enum GatewayManifestaDestinatario {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NFeRecepcaoEvento4SoapManifestaDestinatario port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapManifestaDestinatario();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeRecepcaoEventoNFResult result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -55,8 +60,10 @@ public enum GatewayManifestaDestinatario {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NFeRecepcaoEvento4SoapManifestaDestinatario port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapManifestaDestinatario();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NfeRecepcaoEventoNFResult result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         }
+        sendRetEnvEvento(retorno);
+        return ((JAXBElement<TRetEnvEvento>) retorno).getValue();
     }
 
     public TRetEnvEvento getTRetEnvEventoANNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
@@ -74,6 +81,14 @@ public enum GatewayManifestaDestinatario {
         StringReader reader = new StringReader(xml);
         JAXBElement<TEnvEvento> tEnvEvento = (JAXBElement<TEnvEvento>) jaxbUnmarshaller.unmarshal(reader);
         return tEnvEvento;
+    }
+
+    public static void sendRetEnvEvento(Object retorno) throws JAXBException, IOException {
+        new S3().sendRetEnvEventoManifestacao (Util.marshllerRetEnvEventoManifestacao ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento>) retorno).getValue()); //Tentar enviar para o S3
+    }
+
+    public static void sendRetEnvEvento(Object retorno, String chaveNFe) throws JAXBException, IOException {
+        new S3().sendRetEnvEventoManifestacao (Util.marshllerRetEnvEventoManifestacao ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
     }
 
 }

@@ -103,6 +103,15 @@ public class Util {
         return result.toString();
     }
 
+
+    public static String marshllerRetEnvEventoManifestacao(JAXBElement<br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento> jAXBElement) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101");
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(jAXBElement, result);
+        return result.toString();
+    }
+
     public static String marshllerRetInutNFe(JAXBElement<TRetInutNFe> jAXBElement) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
         StringWriter result = new StringWriter();

@@ -351,6 +351,19 @@ public class S3 {
         this.uploadFile(bucket, getPath(chaveNFe + "-" + retEnvEvento.getRetEvento().get(0).getInfEvento().getTpEvento() + "-" + retEnvEvento.getRetEvento().get(0).getInfEvento().getNSeqEvento() + "-" + new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli(), "retEnvEvento", retEnvEvento.getTpAmb()), xmlTemp);
     }
 
+    public void sendRetEnvEventoManifestacao(String xml, br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento retEnvEvento) throws IOException {
+        String chaveNF = retEnvEvento.getRetEvento().get(0).getInfEvento().getChNFe();
+        File xmlTemp = File.createTempFile(chaveNF, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNF + "-" + retEnvEvento.getRetEvento().get(0).getInfEvento().getTpEvento() + "-" + retEnvEvento.getRetEvento().get(0).getInfEvento().getNSeqEvento() + "-" + new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli(), "retEnvEvento", retEnvEvento.getRetEvento().get(0).getInfEvento().getTpAmb()), xmlTemp);
+    }
+
+    public void sendRetEnvEventoManifestacao(String xml, br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento retEnvEvento, String chaveNFe) throws IOException {
+        File xmlTemp = File.createTempFile(chaveNFe, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPath(chaveNFe + "-" + retEnvEvento.getRetEvento().get(0).getInfEvento().getTpEvento() + "-" + retEnvEvento.getRetEvento().get(0).getInfEvento().getNSeqEvento() + "-" + new Timestamp(System.currentTimeMillis()).toInstant().toEpochMilli(), "retEnvEvento", retEnvEvento.getTpAmb()), xmlTemp);
+    }
+
     private class ContactMessage {
 
         public static final String REGULAR_MESSAGE = "regular";
