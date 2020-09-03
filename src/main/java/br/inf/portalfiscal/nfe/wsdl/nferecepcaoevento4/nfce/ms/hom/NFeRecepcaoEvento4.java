@@ -1,4 +1,4 @@
-package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms;
+package br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.hom;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "NFeRecepcaoEvento4", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", wsdlLocation = "https://nfce.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4?WSDL")
+@WebServiceClient(name = "NFeRecepcaoEvento4", targetNamespace = "http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", wsdlLocation = "https://hom.nfce.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4?wsdl")
 @HandlerChain(file="handler.xml")
 public class NFeRecepcaoEvento4
     extends Service
@@ -31,7 +31,7 @@ public class NFeRecepcaoEvento4
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://nfce.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4?WSDL");
+            url = new URL("https://hom.nfce.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -72,7 +72,7 @@ public class NFeRecepcaoEvento4
     public NFeRecepcaoEventoSoap getNfeRecepcaoEventoSoap12() {
         return super.getPort(new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", "nfeRecepcaoEventoSoap12"), NFeRecepcaoEventoSoap.class);
     }
-
+    
     /**
      * 
      * @return
@@ -82,7 +82,7 @@ public class NFeRecepcaoEvento4
     public NFeRecepcaoEventoSoapCancelamento getNfeRecepcaoEventoSoap12Cancelamento() {
         return super.getPort(new QName("http://www.portalfiscal.inf.br/nfe/wsdl/NFeRecepcaoEvento4", "nfeRecepcaoEventoSoap12"), NFeRecepcaoEventoSoapCancelamento.class);
     }
-    
+
     /**
      * 
      * @return
