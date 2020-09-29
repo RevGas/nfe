@@ -37,6 +37,12 @@ public class NFProtocoloInfo extends DFBase {
 
     @Element(name = "xMotivo", required = false)
     private String motivo;
+    
+    @Element(name = "cMsg", required = false)
+    private String codigoMessage;
+    
+    @Element(name = "xMsg", required = false)
+    private String mensagem;
 
     public void setAmbiente(final DFAmbiente ambiente) {
         this.ambiente = ambiente;
@@ -116,4 +122,21 @@ public class NFProtocoloInfo extends DFBase {
     public void setIdentificador(final String identificador) {
         this.identificador = identificador;
     }
+    
+    public String getCodigoMessage() {
+        return codigoMessage;
+    }
+
+    public void setCodigoMessage(String codigoMessage) {
+        this.codigoMessage = codigoMessage;
+    }
+    
+     public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+    
 }
