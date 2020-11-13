@@ -57,8 +57,8 @@ public class NFDanfeReport {
 		return toPDF(createJasperPrintNFe(logoEmpresa, marcaDagua));
 	}
 
-	public byte[] gerarDanfeNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, List<NFCePagamento> pgtos) throws Exception {
-		return toPDF(createJasperPrintNFCe(informacoesComplementares, mostrarMsgFinalizacao, pgtos));
+	public byte[] gerarDanfeNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, List<NFCePagamento> pgtos, String rodape) throws Exception {
+		return toPDF(createJasperPrintNFCe(informacoesComplementares, mostrarMsgFinalizacao, pgtos, rodape));
 	}
 
     private static byte[] toPDF(JasperPrint print) throws JRException {
@@ -92,7 +92,7 @@ public class NFDanfeReport {
         }
     }
     
-    public JasperPrint createJasperPrintNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, List<NFCePagamento> pgtos)
+    public JasperPrint createJasperPrintNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, List<NFCePagamento> pgtos, String rodape)
     		throws IOException, WriterException, JRException {
     	if (!DFModelo.NFCE.equals(nota.getNota().getInfo().getIdentificacao().getModelo())) {
 			throw new IllegalStateException("Nao e possivel gerar DANFe NFCe de uma NFe");
@@ -112,6 +112,7 @@ public class NFDanfeReport {
     		parameters.put("QR_CODE", gerarQRCode());
     		parameters.put("CHAVE_ACESSO_FORMATADA", formatarChaveAcesso());
     		parameters.put("INFORMACOES_COMPLEMENTARES", informacoesComplementares);
+                parameters.put("RODAPE", rodape);
     		parameters.put("MOSTRAR_MSG_FINALIZACAO", mostrarMsgFinalizacao);
     		parameters.put("URL_CONSULTA", homologacao ? nota.getNota().getInfo().getIdentificacao().getUf().getQrCodeHomologacao() :
     			nota.getNota().getInfo().getIdentificacao().getUf().getQrCodeProducao());
