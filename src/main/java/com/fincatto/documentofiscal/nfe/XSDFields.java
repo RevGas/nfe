@@ -3,8 +3,9 @@ package com.fincatto.documentofiscal.nfe;
 public enum  XSDFields {
     CEP(0, "Cep", "CEPTEndereco"),
     FANTASYNAME(1, "Nome Fantasia", "xFantemitinfNFeTNFe"),
-    NAME(2, "Razão Social ou Nome do Expedidor/Recebedor", "xNome"),
-    ADDITIONALINFORMATION(3, "Informações Adicionais", "infCplinfAdicinfNFeTNFe")
+    NAME(2, "Razão Social ou Nome", "xNome"),
+    ADDITIONALINFORMATION(3, "Informações Adicionais", "infCplinfAdicinfNFeTNFe"),
+    PASSPORT(4, "Número do passaporte", "idEstrangeiro")
     ;
 
     Integer id;

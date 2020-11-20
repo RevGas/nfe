@@ -3,6 +3,7 @@ package com.fincatto.dfe.utils;
 import com.fincatto.documentofiscal.nfe.XSDFields;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
@@ -15,16 +16,14 @@ public class AdapterXSDError {
         Integer size = result.length - 1;
         String lastField = result[size];
         if( lastField.trim().equals("is expected.")) { //requerid
-            String[] term = new String [] {result[1]};
-            field = AdapterXSDError.getField(term);
-            finalMessage = field + " não pode ser em branco.";
+            finalMessage = getMessageEmpty(xsdError);
         }
         else if (!AdapterXSDError.isNullOrEmpty(result[1])) { //invalid
             field = AdapterXSDError.getField(result);
-            finalMessage = "O valor " + result[1] + " é inválido para o campo " + field + " do Expedidor/Recebedor.";
+            finalMessage = "O valor " + result[1] + " é inválido para o campo " + field + ".";
         } else { // campo em branco
             field = AdapterXSDError.getField(result);
-            finalMessage = field + " do Expedidor/Recebedor não pode ser em branco.";
+            finalMessage = field + " não pode ser em branco.";
         }
         return finalMessage;
     }
@@ -52,6 +51,35 @@ public class AdapterXSDError {
         }
 
         return "";
+    }
+
+    public static String getMessageEmpty(String xsdError) {
+        String str = xsdError;
+        String[] result = str.split("'");
+        String erroComplet = result[3].replace("{", " ")
+                .replace("}", " ").replace("\"", " ");
+        String[] fieldErroComplet = erroComplet.split(",");
+
+        ArrayList<String> fieldsResult = new ArrayList<>();
+        for (String e : fieldErroComplet) {
+            String[] fields = e.split(" :");
+            for (String f : fields) {
+                if (!f.contains("http")) {
+                    fieldsResult.add(f.trim());
+                }
+            }
+        }
+        ArrayList<String> newFiedls = new ArrayList<>();
+        fieldsResult.forEach(messageField -> {
+            XSDFields field = XSDFields.getFieldTypeByKey(messageField);
+            if(AdapterXSDError.isNullOrEmpty(field)) {
+                newFiedls.add(messageField);
+            } else {
+                newFiedls.add(field.getDescription());
+            }
+        });
+        String messageFinal = "Um dos seguintes campos obrigatórios está vazio: " + newFiedls.toString() + ".";
+        return messageFinal.replace("[", "").replace("]", "");
     }
 
     public static boolean isNullOrEmpty(Object obj) {
