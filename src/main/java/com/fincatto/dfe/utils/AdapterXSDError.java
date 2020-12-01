@@ -14,8 +14,8 @@ public class AdapterXSDError {
         String field = "";
         String finalMessage = "";
         Integer size = result.length - 1;
-        String lastField = result[size];
-        if( lastField.trim().equals("is expected.")) { //requerid
+        String lastField = result[size].trim();
+        if( lastField.equals("is expected.")) { //requerid
             finalMessage = getMessageEmpty(xsdError);
         }
         else if (!AdapterXSDError.isNullOrEmpty(result[1])) { //invalid
