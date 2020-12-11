@@ -30,27 +30,44 @@ public class AdapterXSDError {
 
     public static String getField(String[] term) {
         if(term.length <= 1) {
-            XSDFields fields = XSDFields.getFieldTypeByKey(term[0]);
-            if(AdapterXSDError.isNullOrEmpty(fields)) {
+            XSDFields fieldAdapter = XSDFields.getFieldTypeByKey(term[0]);
+            if(AdapterXSDError.isNullOrEmpty(fieldAdapter)) {
                 return term[0];
             } else {
-                return fields.getDescription();
+                return fieldAdapter.getDescription();
             }
         } else {
             for (String r : term) {
                 String[] fieldComplet = r.split("_");
                 if(fieldComplet.length > 1) {
-                    XSDFields fields = XSDFields.getFieldTypeByKey(fieldComplet[1]);
-                    if(AdapterXSDError.isNullOrEmpty(fields)) {
+                    XSDFields fieldAdapter = XSDFields.getFieldTypeByKey(fieldComplet[1]);
+                    if(AdapterXSDError.isNullOrEmpty(fieldAdapter)) {
                         return fieldComplet[1];
                     } else {
-                        return fields.getDescription();
+                        return fieldAdapter.getDescription();
                     }
                 }
             }
+            // sem nó raiz
+            //teste
+            int size = term.length - 1;
+            String lastField = term[size].trim();
+            if(lastField.equals(".")) {
+                XSDFields fieldAdapter = XSDFields.getFieldTypeByKey(term[size - 1].trim());
+                if(AdapterXSDError.isNullOrEmpty(fieldAdapter)) {
+                    return term[size - 1].trim();
+                } else {
+                    return fieldAdapter.getDescription();
+                }
+            } else {
+                XSDFields fieldAdapter = XSDFields.getFieldTypeByKey(lastField);
+                if(AdapterXSDError.isNullOrEmpty(fieldAdapter)) {
+                    return lastField;
+                } else {
+                    return fieldAdapter.getDescription();
+                }
+            }
         }
-
-        return "";
     }
 
     public static String getMessageEmpty(String xsdError) {

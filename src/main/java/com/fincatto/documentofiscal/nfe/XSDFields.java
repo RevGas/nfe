@@ -5,7 +5,8 @@ public enum  XSDFields {
     FANTASYNAME(1, "Nome Fantasia", "xFantemitinfNFeTNFe"),
     NAME(2, "Razão Social ou Nome", "xNome"),
     ADDITIONALINFORMATION(3, "Informações Adicionais", "infCplinfAdicinfNFeTNFe"),
-    PASSPORT(4, "Número do passaporte", "idEstrangeiro")
+    PASSPORT(4, "Número do passaporte", "idEstrangeiro"),
+    STATEREGISTRATION(5, "Inscrição Estadual do destinatário", "TIeDestNaoIsento")
     ;
 
     Integer id;
