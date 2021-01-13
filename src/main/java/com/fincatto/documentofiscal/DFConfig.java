@@ -51,6 +51,24 @@ public abstract class DFConfig {
     public abstract KeyStore getCertificadoKeyStore() throws KeyStoreException;
 
     /**
+     * KeyStore contendo o certificado da software house usado para transmissão. <br>
+     * Esse certificado e fornecido por uma autoridade certificadora. <br>
+     * Em caso de duvidas, consulte seu contador.
+     *
+     * @return KeyStore do certificado da software house.
+     * @throws KeyStoreException Caso nao consiga carregar o KeyStore.
+     */
+    public abstract KeyStore getCertificadoTransmissaoKeyStore() throws KeyStoreException;
+
+    /**
+     * Senha do certificado da software house usado para transmissão, contido dentro do KeyStore do certificado.
+     *
+     * @return Senha do certificado da software house usado para transmissão.
+     * @see #getCertificadoKeyStore()
+     */
+    public abstract String getCertificadoTransmissaoSenha();
+
+    /**
      * Retorna o nome do alias do certificado dentro do {@link KeyStore} retornado por {@link #getCertificadoKeyStore()}. Caso seja retornado {@code null}, sera utilizado o primeiro alias do {@link KeyStore}.
      *
      * @return o nome do alias do certificado ou {@code null}

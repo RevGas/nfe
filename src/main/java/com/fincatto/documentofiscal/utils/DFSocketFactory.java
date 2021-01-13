@@ -40,8 +40,8 @@ public class DFSocketFactory {
     }
 
     private static KeyManager[] createKeyManagers(final DFConfig config) throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException, GeneralSecurityException {
-        final String alias = getAlias(config.getCertificadoKeyStore());
-        return new KeyManager[]{new CustomX509KeyManager(getKeyManagerForKeystore(config.getCertificadoKeyStore(), config.getCertificadoSenha()), alias)};
+        final String alias = getAlias(config.getCertificadoTransmissaoKeyStore());
+        return new KeyManager[]{new CustomX509KeyManager(getKeyManagerForKeystore(config.getCertificadoTransmissaoKeyStore(), config.getCertificadoTransmissaoSenha()), alias)};
     }
 
     private static TrustManager[] createTrustManagers(final DFConfig config) throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException {
