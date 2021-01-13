@@ -1,6 +1,8 @@
 package com.fincatto.documentofiscal.utils;
+
 import br.inf.portalfiscal.nfe.*;
 import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
+import com.fincatto.documentofiscal.nfe.XSDFields;
 
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
@@ -8,9 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Classe utilitária
@@ -71,7 +76,7 @@ public class Util {
         return stringWriter.toString();
     }
 
-    public static String marshllerRetEnviNFe(JAXBElement<TRetEnviNFe> jAXBElement ) throws JAXBException {
+    public static String marshllerRetEnviNFe(JAXBElement<TRetEnviNFe> jAXBElement) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
         StringWriter result = new StringWriter();
         Marshaller marshaller = context.createMarshaller();
@@ -79,7 +84,7 @@ public class Util {
         return result.toString();
     }
 
-    public static String marshllerRetEnvEvento(JAXBElement<TRetEnvEvento> jAXBElement ) throws JAXBException {
+    public static String marshllerRetEnvEvento(JAXBElement<TRetEnvEvento> jAXBElement) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101");
         StringWriter result = new StringWriter();
         Marshaller marshaller = context.createMarshaller();
@@ -87,7 +92,7 @@ public class Util {
         return result.toString();
     }
 
-    public static String marshllerRetEnvEventoCancelamento(JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento> jAXBElement ) throws JAXBException {
+    public static String marshllerRetEnvEventoCancelamento(JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento> jAXBElement) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101");
         StringWriter result = new StringWriter();
         Marshaller marshaller = context.createMarshaller();
@@ -120,7 +125,7 @@ public class Util {
         return result.toString();
     }
 
-    public static String marshllerretConsSitNFe(JAXBElement<TRetConsSitNFe> jAXBElement ) throws JAXBException {
+    public static String marshllerretConsSitNFe(JAXBElement<TRetConsSitNFe> jAXBElement) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
         StringWriter result = new StringWriter();
         Marshaller marshaller = context.createMarshaller();
@@ -128,7 +133,7 @@ public class Util {
         return result.toString();
     }
 
-    public static String marshllerRetRetConsReciNFe(JAXBElement<TRetConsReciNFe> jAXBElement ) throws JAXBException {
+    public static String marshllerRetRetConsReciNFe(JAXBElement<TRetConsReciNFe> jAXBElement) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
         StringWriter result = new StringWriter();
         Marshaller marshaller = context.createMarshaller();

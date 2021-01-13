@@ -39,7 +39,7 @@ public class WSFacade {
     private final WSCancelamento wSCancelamento;
 
     public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
-        HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
+        HttpsURLConnection.setDefaultSSLSocketFactory(config.createDFSocketFactory().createSSLContext().getSocketFactory());
 
         HttpsURLConnection.setFollowRedirects(true);
         

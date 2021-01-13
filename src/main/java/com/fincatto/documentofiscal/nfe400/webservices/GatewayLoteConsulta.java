@@ -22,6 +22,17 @@ public enum GatewayLoteConsulta {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.BA};
         }
     },
+    SVRS {
+        @Override
+        public TRetConsReciNFe getTRetConsReciNFe(final String numeroRecibo, final DFAmbiente ambiente, final String versao) throws JAXBException, Exception {
+            return getTRetConsReciNFeSVRSNFE(versao, numeroRecibo, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PI};
+        }
+    },
     SP {
         @Override
         public TRetConsReciNFe getTRetConsReciNFe(final String numeroRecibo, final DFAmbiente ambiente, final String versao) throws JAXBException, Exception {
@@ -66,6 +77,19 @@ public enum GatewayLoteConsulta {
         }
     }
 
+    public TRetConsReciNFe getTRetConsReciNFeSVRSNFE(final String versao, final String numeroRecibo, final DFAmbiente ambiente) throws JAXBException, Exception {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            return null;
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.svrs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.svrs.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTConsReciNFe(versao, numeroRecibo, ambiente));
+
+            br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.svrs.hom.NFeRetAutorizacao4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.svrs.hom.NFeRetAutorizacao4().getNFeRetAutorizacao4Soap();
+            br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.svrs.hom.NfeResultMsg result = port.nfeRetAutorizacaoLote(nfeDadosMsg);
+            return ((JAXBElement<TRetConsReciNFe>) result.getContent().get(0)).getValue();
+        }
+    }
+    
     public TRetConsReciNFe getTRetConsReciNFeSPNFE(final String versao, final String numeroRecibo, final DFAmbiente ambiente) throws JAXBException, Exception {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.sp.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferetautorizacao4.sp.NfeDadosMsg();
