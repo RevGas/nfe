@@ -36,6 +36,16 @@ public class NFeConfigFake extends NFeConfig implements DFLog {
     }
 
     @Override
+    public KeyStore getCertificadoTransmissaoKeyStore() throws KeyStoreException {
+        return null;
+    }
+
+    @Override
+    public String getCertificadoTransmissaoSenha() {
+        return null;
+    }
+
+    @Override
     public String getCertificadoSenha() {
         return "senha";
     }

@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 
 public class MDFeConfigTest {
 
@@ -26,6 +27,16 @@ public class MDFeConfigTest {
 
         @Override
         public KeyStore getCertificadoKeyStore() {
+            return null;
+        }
+
+        @Override
+        public KeyStore getCertificadoTransmissaoKeyStore() throws KeyStoreException {
+            return null;
+        }
+
+        @Override
+        public String getCertificadoTransmissaoSenha() {
             return null;
         }
 

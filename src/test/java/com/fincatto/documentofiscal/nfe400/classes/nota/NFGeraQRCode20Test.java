@@ -1,6 +1,7 @@
 package com.fincatto.documentofiscal.nfe400.classes.nota;
 
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,6 +44,16 @@ public class NFGeraQRCode20Test {
 
             @Override
             public KeyStore getCertificadoKeyStore() {
+                return null;
+            }
+
+            @Override
+            public KeyStore getCertificadoTransmissaoKeyStore() throws KeyStoreException {
+                return null;
+            }
+
+            @Override
+            public String getCertificadoTransmissaoSenha() {
                 return null;
             }
 
