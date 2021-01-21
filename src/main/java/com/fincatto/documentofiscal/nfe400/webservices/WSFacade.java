@@ -5,7 +5,7 @@ import br.inf.portalfiscal.nfe.*;
 import com.fincatto.documentofiscal.DFAmbiente;
 
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.DFSocketFactory;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;

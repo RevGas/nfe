@@ -5,6 +5,7 @@ import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TConsCad;
 import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TRetConsCad;
 import br.inf.portalfiscal.nfe.model.consulta_cadastro.PL_006v.TUfCons;
 import com.fincatto.documentofiscal.DFLog;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ class WSConsultaCadastro implements DFLog {
     }
 
     private TRetConsCad efetuaConsulta(final JAXBElement<TConsCad> tConsCad, final DFUnidadeFederativa UF) throws JAXBException, Exception {
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayConsultaCadastro.valueOfCodigoUF(UF).getTRetConsCad(tConsCad, UF.getCodigoIbge());
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayConsultaCadastro.valueOfCodigoUF(UF).getTRetConsCad(tConsCad, UF.getCodigoIbge(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
     }
 
     private JAXBElement<TConsCad> getDadosConsulta(final String cnpj, final DFUnidadeFederativa uf) {

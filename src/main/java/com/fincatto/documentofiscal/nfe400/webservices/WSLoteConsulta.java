@@ -7,6 +7,7 @@ import com.fincatto.documentofiscal.nfe.NFeConfig;
 
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.nfe400.classes.NFRetornoStatus;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.utils.Util;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -37,7 +38,7 @@ class WSLoteConsulta implements DFLog {
     }
 
     TRetConsReciNFe consultaLote(final String numeroRecibo, final DFModelo modelo) throws Exception {
-        TRetConsReciNFe tRetConsReciNFe = GatewayLoteConsulta.valueOfCodigoUF(this.config.getCUF()).getTRetConsReciNFe(numeroRecibo, this.config.getAmbiente(), this.config.getVersao());
+        TRetConsReciNFe tRetConsReciNFe = GatewayLoteConsulta.valueOfCodigoUF(this.config.getCUF()).getTRetConsReciNFe(numeroRecibo, this.config.getAmbiente(), this.config.getVersao(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
         if (tRetConsReciNFe.getProtNFe() != null && !tRetConsReciNFe.getProtNFe().isEmpty()) {
             List<Integer> codes = Arrays.asList(NFRetornoStatus.CODIGO_301.getCodigo(), NFRetornoStatus.CODIGO_302.getCodigo(), NFRetornoStatus.CODIGO_303.getCodigo(), NFRetornoStatus.CODIGO_100.getCodigo());
             if (codes.contains(Integer.valueOf(tRetConsReciNFe.getProtNFe().get(0).getInfProt().getCStat()))) {

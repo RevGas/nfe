@@ -13,6 +13,7 @@ import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCode20;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeContingenciaOffline20;
 import com.fincatto.documentofiscal.nfe400.utils.qrcode20.NFGeraQRCodeEmissaoNormal20;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.utils.Util;
 import com.fincatto.documentofiscal.validadores.XMLValidador;
 import org.apache.commons.lang3.StringUtils;
@@ -168,11 +169,11 @@ class WSLoteEnvio implements DFLog {
     }
 
     private TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final DFUnidadeFederativa uf, String loteAssinadoXml, DFAmbiente ambiente, NFNota nota) throws MalformedURLException, JAXBException, Exception {
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfTipoEmissao(nota.getInfo().getIdentificacao().getTipoEmissao(), uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfTipoEmissao(nota.getInfo().getIdentificacao().getTipoEmissao(), uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente,  new DFSocketFactory(config).createSSLContext().getSocketFactory());
     }
 
     private TRetEnviNFe getTRetEnviNFe(final DFModelo modelo, final DFUnidadeFederativa uf, String loteAssinadoXml, DFAmbiente ambiente, TNFe nfe) throws MalformedURLException, JAXBException, Exception {
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfTipoEmissao(NFTipoEmissao.valueOfCodigo(nfe.getInfNFe().getIde().getTpEmis()), uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente);
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayLoteEnvio.valueOfTipoEmissao(NFTipoEmissao.valueOfCodigo(nfe.getInfNFe().getIde().getTpEmis()), uf).getTRetEnviNFe(modelo, loteAssinadoXml, ambiente, new DFSocketFactory(config).createSSLContext().getSocketFactory());
     }
 
     private NFGeraQRCode20 getNfGeraQRCode20(NFNota nota) {

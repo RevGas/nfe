@@ -2,9 +2,10 @@ package com.fincatto.documentofiscal.nfe310.webservices;
 
 import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.DistDFeInt;
 import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.RetDistDFeInt;
+
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.rmi.RemoteException;
+import java.security.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -12,9 +13,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 import javax.xml.transform.dom.DOMResult;
+import javax.xml.ws.BindingProvider;
 
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import org.w3c.dom.Document;
-
 
 import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NFeDistribuicaoDFe;
 import br.inf.portalfiscal.nfe.wsdl.nfedistribuicaodfe.an.NFeDistribuicaoDFeSoap;
@@ -71,7 +73,7 @@ class WSDistribuicaoDocumentoFiscal {
         return distDFeInt;
     }
 
-    private RetDistDFeInt efetuaConsultaDocumentoFiscal(final DistDFeInt distDFeInt, final DFUnidadeFederativa unidadeFederativa) throws RemoteException, JAXBException, MalformedURLException {
+    private RetDistDFeInt efetuaConsultaDocumentoFiscal(final DistDFeInt distDFeInt, final DFUnidadeFederativa unidadeFederativa) throws IOException, JAXBException, GeneralSecurityException {
         JAXBContext jaxbContext = JAXBContext.newInstance(DistDFeInt.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         JAXBElement<DistDFeInt> jaxbElement = new JAXBElement<>(new QName("http://www.portalfiscal.inf.br/nfe", "distDFeInt"), DistDFeInt.class, distDFeInt);
@@ -83,6 +85,9 @@ class WSDistribuicaoDocumentoFiscal {
         nfeDadosMsg.getContent().add(((Document) dOMResult.getNode()).getDocumentElement());
 
         NFeDistribuicaoDFeSoap port = new NFeDistribuicaoDFe().getNFeDistribuicaoDFeSoap12();
+
+        ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", new DFSocketFactory(config).createSSLContext().getSocketFactory());
+
         NfeDistDFeInteresseResponse.NfeDistDFeInteresseResult result = port.nfeDistDFeInteresse(nfeDadosMsg);
 
         return (RetDistDFeInt) result.getContent().get(0);

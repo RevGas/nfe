@@ -5,6 +5,7 @@ import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.S3;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.utils.Util;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -33,7 +34,7 @@ class WSNotaConsulta implements DFLog {
 
     private TRetConsSitNFe efetuaConsulta(JAXBElement<TConsSitNFe> tConsSitNFe) throws Exception {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(tConsSitNFe.getValue().getChNFe());
-        return GatewayConsultaProtocolo.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetConsSitNFe(tConsSitNFe, chaveParser.getModelo(), config.getAmbiente());
+        return GatewayConsultaProtocolo.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetConsSitNFe(tConsSitNFe, chaveParser.getModelo(), config.getAmbiente(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
     }
 
     String consultaNota(String chNFe, String TpAmb) {

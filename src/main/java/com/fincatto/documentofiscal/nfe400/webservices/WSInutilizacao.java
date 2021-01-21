@@ -10,6 +10,7 @@ import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.utils.Util;
 
 import java.io.StringWriter;
@@ -49,7 +50,7 @@ class WSInutilizacao implements DFLog {
     }
 
     private TRetInutNFe efetuaInutilizacao(final String xml, final DFModelo modelo) throws Exception {
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayInutilizacao.valueOfCodigoUF(this.config.getCUF()).getTRetInutNFe(modelo, xml, this.config.getAmbiente());
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayInutilizacao.valueOfCodigoUF(this.config.getCUF()).getTRetInutNFe(modelo, xml, this.config.getAmbiente(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
     }
 
     private TInutNFe geraDadosInutilizacao(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) {

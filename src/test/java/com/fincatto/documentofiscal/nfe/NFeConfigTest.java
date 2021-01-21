@@ -32,16 +32,6 @@ public class NFeConfigTest {
         }
 
         @Override
-        public KeyStore getCertificadoTransmissaoKeyStore() throws KeyStoreException {
-            return null;
-        }
-
-        @Override
-        public String getCertificadoTransmissaoSenha() {
-            return null;
-        }
-
-        @Override
         public String getCertificadoSenha() {
             return null;
         }

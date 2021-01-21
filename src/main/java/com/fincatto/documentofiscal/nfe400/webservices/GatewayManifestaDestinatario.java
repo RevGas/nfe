@@ -6,22 +6,25 @@ import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.S3;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.utils.Util;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
+import javax.net.ssl.SSLSocketFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.ws.BindingProvider;
 
 public enum GatewayManifestaDestinatario {
 
     AN {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoANNFE(xml, ambiente) : getTRetEnvEventoANNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoANNFE(xml, ambiente, socketFactory) : getTRetEnvEventoANNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -30,7 +33,7 @@ public enum GatewayManifestaDestinatario {
         }
     };
 
-    public abstract TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception;
+    public abstract TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception;
 
     public abstract DFUnidadeFederativa[] getUFs();
 
@@ -43,13 +46,14 @@ public enum GatewayManifestaDestinatario {
         throw new IllegalStateException(String.format("N\u00e3o existe metodo de envio para a UF %s", uf.getCodigo()));
     }
 
-    public TRetEnvEvento getTRetEnvEventoANNFE(String xml, DFAmbiente ambiente) throws JAXBException, IOException {
+    public TRetEnvEvento getTRetEnvEventoANNFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, IOException {
         Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NFeRecepcaoEvento4SoapManifestaDestinatario port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapManifestaDestinatario();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeRecepcaoEventoNFResult result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             retorno = result.getContent().get(0);
@@ -58,6 +62,7 @@ public enum GatewayManifestaDestinatario {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NFeRecepcaoEvento4SoapManifestaDestinatario port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapManifestaDestinatario();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NfeRecepcaoEventoNFResult result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             retorno = result.getContent().get(0);
@@ -66,7 +71,7 @@ public enum GatewayManifestaDestinatario {
         return ((JAXBElement<TRetEnvEvento>) retorno).getValue();
     }
 
-    public TRetEnvEvento getTRetEnvEventoANNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoANNFCE(String xml, DFAmbiente ambiente, SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             return null;
         } else {

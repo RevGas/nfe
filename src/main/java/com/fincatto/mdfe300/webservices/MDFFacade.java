@@ -7,7 +7,7 @@ import br.inf.portalfiscal.mdfe.TRetConsReciMDFe;
 import br.inf.portalfiscal.mdfe.TRetConsSitMDFe;
 import br.inf.portalfiscal.mdfe.TRetConsStatServ;
 import br.inf.portalfiscal.mdfe.TRetEvento;
-import com.fincatto.documentofiscal.DFSocketFactory;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;

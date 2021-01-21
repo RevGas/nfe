@@ -1,7 +1,7 @@
 package com.fincatto.documentofiscal.nfe;
 
 import com.fincatto.documentofiscal.DFConfig;
-import com.fincatto.documentofiscal.DFSocketFactory;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
