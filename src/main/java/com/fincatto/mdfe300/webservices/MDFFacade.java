@@ -72,7 +72,7 @@ public class MDFFacade {
      * @return Estrutura XML contendo a mensagem do resultado da consulta de protocolo.
      * @throws java.net.MalformedURLException
      */
-    public TRetConsSitMDFe consultaMDFe(final String chaveMDFe) throws MalformedURLException {
+    public TRetConsSitMDFe consultaMDFe(final String chaveMDFe) throws IOException, GeneralSecurityException {
         return this.wsConsultaMDF.consultaMDFe(chaveMDFe);
     }
 
@@ -81,7 +81,7 @@ public class MDFFacade {
      * @return  Estrutura XML contendo a mensagem do resultado da consulta do status do serviço.
      * @throws java.net.MalformedURLException
      */
-    public TRetConsStatServ consultaStatusServicoMDFe() throws MalformedURLException {
+    public TRetConsStatServ consultaStatusServicoMDFe() throws IOException, GeneralSecurityException {
         return this.wsConsultaStatusServicoMDF.consultaStatus();
     }
 
@@ -92,7 +92,7 @@ public class MDFFacade {
      * @return Estrutura XML contendo a mensagem do resultado da consulta não encerrados.
      * @throws java.net.MalformedURLException
      */
-    public TRetConsMDFeNaoEnc consultaNaoEncerradosMDFe(final String cnpjEmitente) throws MalformedURLException {
+    public TRetConsMDFeNaoEnc consultaNaoEncerradosMDFe(final String cnpjEmitente) throws IOException, GeneralSecurityException {
         return this.wsConsultaNaoEncerradosMDF.consultaNaoEncerrados(cnpjEmitente);
     }
 
