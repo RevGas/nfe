@@ -99,8 +99,8 @@ Adicionando o webservice de Consulta cadastro
         <javaee:handler>
           <javaee:handler-class>br.inf.portalfiscal.nfe.wsdl.cadconsultacadastro4.svrs.SOAPHandlerNFeConsultaCadastro</javaee:handler-class>
         </javaee:handler>
-        </javaee:handler-chain>
-        </javaee:handler-chains>
+  </javaee:handler-chain>
+</javaee:handler-chains>
       1.3.2.2 - Adicionar classe br.inf.portalfiscal.nfe.wsdl.cadconsultacadastro4.svrs.SOAPHandlerNFeConsultaCadastro ao pacote
         public class SOAPHandlerNFeConsultaCadastro implements SOAPHandler<SOAPMessageContext> {
           @Override

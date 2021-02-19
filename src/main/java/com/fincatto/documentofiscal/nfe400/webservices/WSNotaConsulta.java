@@ -1,14 +1,23 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
+import br.inf.portalfiscal.nfe.*;
 import com.fincatto.documentofiscal.DFLog;
-import com.fincatto.documentofiscal.DFModelo;
+import com.fincatto.documentofiscal.S3;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
-import com.fincatto.documentofiscal.nfe400.classes.NFAutorizador400;
-import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsulta;
-import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
+import com.fincatto.documentofiscal.utils.Util;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
-import java.math.BigDecimal;
+import javax.xml.bind.JAXBElement;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
 
 class WSNotaConsulta implements DFLog {
     private static final String NOME_SERVICO = "CONSULTAR";
@@ -18,39 +27,62 @@ class WSNotaConsulta implements DFLog {
     WSNotaConsulta(final NFeConfig config) {
         this.config = config;
     }
-    
-    NFNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
-//        final OMElement omElementConsulta = AXIOMUtil.stringToOM(this.gerarDadosConsulta(chaveDeAcesso).toString());
-//        WSNotaConsulta.LOGGER.debug(omElementConsulta.toString());
 
-//        final OMElement omElementRetorno = this.efetuaConsulta(omElementConsulta, chaveDeAcesso);
-//        WSNotaConsulta.LOGGER.debug(omElementRetorno.toString());
-//        return new Persister(new DFRegistryMatcher(), new Format(0)).read(NFNotaConsultaRetorno.class, omElementRetorno.toString());
-        return null;
+    TRetConsSitNFe consultaProtocolo(final String chNFe) throws Exception {
+        return this.efetuaConsulta(gerarDadosConsulta(chNFe));
     }
 
-    private String efetuaConsulta(final String omElementConsulta, final String chaveDeAcesso) throws Exception {
-        final NotaFiscalChaveParser notaFiscalChaveParser = new NotaFiscalChaveParser(chaveDeAcesso);
+    private TRetConsSitNFe efetuaConsulta(JAXBElement<TConsSitNFe> tConsSitNFe) throws Exception {
+        final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(tConsSitNFe.getValue().getChNFe());
+        return GatewayConsultaProtocolo.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetConsSitNFe(tConsSitNFe, chaveParser.getModelo(), config.getAmbiente(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
+    }
 
-//        final NFeConsultaProtocolo4Stub.NfeDadosMsg dados = new NFeConsultaProtocolo4Stub.NfeDadosMsg();
-//        dados.setExtraElement(omElementConsulta);
+    String consultaNota(String chNFe, String TpAmb) {
+        String procNFe;
+        try{
+            procNFe = Util.fileToString(new S3().downloadProcNFe(chNFe, TpAmb));
+            return procNFe;
+        } catch (Exception ignored){}
 
-        final NFAutorizador400 autorizador = NFAutorizador400.valueOfChaveAcesso(chaveDeAcesso);
-        final String endpoint = DFModelo.NFCE.equals(notaFiscalChaveParser.getModelo()) ? autorizador.getNfceConsultaProtocolo(this.config.getAmbiente()) : autorizador.getNfeConsultaProtocolo(this.config.getAmbiente());
-        if (endpoint == null) {
-            throw new IllegalArgumentException("Nao foi possivel encontrar URL para ConsultaProtocolo " + notaFiscalChaveParser.getModelo().name() + ", autorizador " + autorizador.name());
-        }
-//        final NfeConsultaNFResult consultaNFResult = new NFeConsultaProtocolo4Stub(endpoint).nfeConsultaNF(dados);
-//        return consultaNFResult.getExtraElement();
+        try{
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = factory.newDocumentBuilder();
+            TRetConsSitNFe retConsSitNFe =  consultaProtocolo(chNFe);
+            TNfeProc tNfeProc = new TNfeProc();
+            tNfeProc.setVersao(retConsSitNFe.getVersao());
+            Document enviNFeDocument = dBuilder.parse(new S3().downloadEnviNFe(chNFe, TpAmb));
+            Document retConsSitNFeDocument = dBuilder.parse(new ByteArrayInputStream(Util.marshllerretConsSitNFe(new ObjectFactory().createRetConsSitNFe(retConsSitNFe)).getBytes()));
+            Document nfeProcDocument = dBuilder.parse(new ByteArrayInputStream(Util.marshlerNfeProc(new ObjectFactory().createNfeProc(tNfeProc)).getBytes()));
+
+            //Extrair e importar Nodes no nfeProc
+            Node nfeNode = enviNFeDocument.getElementsByTagName("NFe").item(0);
+            Node prot = retConsSitNFeDocument.getElementsByTagName("protNFe").item(0);
+            nfeNode = nfeProcDocument.importNode(nfeNode, true);
+            prot = nfeProcDocument.importNode(prot, true);
+            Node nfeProcNode = nfeProcDocument.getFirstChild();
+            nfeProcNode.appendChild(nfeNode);
+            nfeProcNode.appendChild(prot);
+
+            //Gerar string de procNfe e enviar para o S3
+            DOMSource source = new DOMSource(nfeProcNode);
+            StringWriter stringResult = new StringWriter();
+            TransformerFactory.newInstance().newTransformer().transform(source, new StreamResult(stringResult));
+
+            new S3().sendProcNFe(stringResult.toString());
+            return stringResult.toString();
+        } catch (Exception ignored){}
         return null;
     }
     
-    private NFNotaConsulta gerarDadosConsulta(final String chaveDeAcesso) {
-        final NFNotaConsulta notaConsulta = new NFNotaConsulta();
-        notaConsulta.setAmbiente(this.config.getAmbiente());
-        notaConsulta.setChave(chaveDeAcesso);
-        notaConsulta.setServico(WSNotaConsulta.NOME_SERVICO);
-        notaConsulta.setVersao(new BigDecimal(WSNotaConsulta.VERSAO_SERVICO));
-        return notaConsulta;
+    private JAXBElement<TConsSitNFe> gerarDadosConsulta(final String chNFe) {
+        final TConsSitNFe consulta = new TConsSitNFe();
+        consulta.setChNFe(chNFe);
+        consulta.setTpAmb(this.config.getAmbiente().getCodigo());
+        consulta.setVersao(WSNotaConsulta.VERSAO_SERVICO);
+        consulta.setXServ(WSNotaConsulta.NOME_SERVICO);
+        
+        JAXBElement<TConsSitNFe> tConsSitNFe = (JAXBElement<TConsSitNFe>) new ObjectFactory().createConsSitNFe(consulta);
+        
+        return tConsSitNFe;
     }
 }

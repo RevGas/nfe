@@ -1,20 +1,17 @@
 package com.fincatto.documentofiscal.nfe400.webservices;
 
-import br.inf.portalfiscal.nfe.TRetConsReciNFe;
+import br.inf.portalfiscal.nfe.*;
 
-import br.inf.portalfiscal.nfe.TRetEnviNFe;
-import br.inf.portalfiscal.nfe.TRetInutNFe;
 import com.fincatto.documentofiscal.DFAmbiente;
 
 import com.fincatto.documentofiscal.DFModelo;
-import com.fincatto.documentofiscal.DFSocketFactory;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
 import com.fincatto.documentofiscal.nfe400.classes.lote.envio.NFLoteEnvio;
-import com.fincatto.documentofiscal.nfe400.classes.nota.consulta.NFNotaConsultaRetorno;
 import com.fincatto.documentofiscal.nfe400.classes.statusservico.consulta.NFStatusServicoConsultaRetorno;
 import java.io.IOException;
 
@@ -42,7 +39,7 @@ public class WSFacade {
     private final WSCancelamento wSCancelamento;
 
     public WSFacade(final NFeConfig config) throws IOException, KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, GeneralSecurityException {
-        HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
+        HttpsURLConnection.setDefaultSSLSocketFactory(config.createDFSocketFactory().createSSLContext().getSocketFactory());
 
         HttpsURLConnection.setFollowRedirects(true);
         
@@ -69,6 +66,10 @@ public class WSFacade {
      */
     public TRetEnviNFe enviaLote(final NFLoteEnvio lote) throws Exception {
         return this.wsLoteEnvio.enviaLote(lote);
+    }
+    
+    public TRetEnviNFe enviaLote(final String xml) throws Exception {
+        return this.wsLoteEnvio.enviaLote(xml);
     }
     
     public NFLoteEnvio getLoteAssinado(final NFLoteEnvio lote) throws Exception {
@@ -118,8 +119,12 @@ public class WSFacade {
      * @return dados da consulta da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public NFNotaConsultaRetorno consultaNota(final String chaveDeAcesso) throws Exception {
-        return this.wsNotaConsulta.consultaNota(chaveDeAcesso);
+    public TRetConsSitNFe consultaProtocolo(final String chaveDeAcesso) throws Exception {
+        return this.wsNotaConsulta.consultaProtocolo(chaveDeAcesso);
+    }
+
+    public String consultaNota(final String chaveDeAcesso, final String tpAmb) throws Exception {
+        return this.wsNotaConsulta.consultaNota(chaveDeAcesso, tpAmb);
     }
     
     /**

@@ -4,11 +4,10 @@
     <groupId>com.tartigrado</groupId>
     <artifactId>nfe</artifactId>
     <packaging>jar</packaging>
-    <version>4.0.64</version>
+    <version>4.2.0</version>
     <name>nfe</name>
     <description>Biblioteca de comunicacao de nota fiscal eletronica brasileira</description>
     <url>https://github.com/wmixvideo/nfe</url>
-
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -101,7 +100,21 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-lambda</artifactId>
+            <version>1.11.632</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-cbor</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- Jasperreports -->
         <!-- http://mvnrepository.com/artifact/jasperreports/jasperreports -->
         <!-- http://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
@@ -187,6 +200,11 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.11.632</version>
         </dependency>
     </dependencies>
 

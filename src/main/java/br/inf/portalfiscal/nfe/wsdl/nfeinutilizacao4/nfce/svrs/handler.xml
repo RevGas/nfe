@@ -6,5 +6,8 @@
         <javaee:handler>
             <javaee:handler-class>br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.nfce.svrs.SOAPHandlerInutilizacao</javaee:handler-class>
         </javaee:handler>
-    </javaee:handler-chain>
+        <javaee:handler>
+            <javaee:handler-class>br.inf.portalfiscal.nfe.wsdl.nfeinutilizacao4.SOAPHandlerInutilizacaoLog</javaee:handler-class>
+        </javaee:handler>
+  </javaee:handler-chain>
 </javaee:handler-chains>

@@ -1,6 +1,7 @@
 package com.fincatto.documentofiscal.nfe400.classes.nota;
 
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 
 import org.junit.Assert;
 import org.junit.Test;

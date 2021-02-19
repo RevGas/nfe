@@ -33,7 +33,7 @@ public abstract class BigDecimalValidador {
     }
 
     public static String tamanho21ComAte10CasasDecimais(final BigDecimal valor, final String info) {
-        return BigDecimalValidador.parse(valor, "0.##########", 22, 10, info);
+        return BigDecimalValidador.parse(valor, "0.0000000000", 22, 10, info);
     }
 
     public static String tamanho15comAte4CasasDecimais(final BigDecimal valor, final String info) {

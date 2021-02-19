@@ -1,6 +1,13 @@
 package com.fincatto.documentofiscal.nfe;
 
 import com.fincatto.documentofiscal.DFConfig;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 
 /**
  * Configuração basica do sistema de notas fiscais.
@@ -40,4 +47,19 @@ public abstract class NFeConfig extends DFConfig {
     public String getVersao() {
         return "4.00";
     }
+    
+    /**
+     * Criar a DFSocketFactory específica por usuário
+     * @return
+     * @throws CertificateException
+     * @throws UnrecoverableKeyException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyStoreException
+     * @throws KeyManagementException
+     * @throws IOException 
+     */
+    public DFSocketFactory createDFSocketFactory() throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
+        return new DFSocketFactory(this);
+    }   
+    
 }

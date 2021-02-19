@@ -9,6 +9,8 @@ import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
+
 import java.io.StringWriter;
 
 import java.time.LocalDateTime;
@@ -39,7 +41,7 @@ public class WSManifestacaoDestinatario implements DFLog {
 
     private br.inf.portalfiscal.nfe.model.evento_manifesta_destinatario.Evento_ManifestaDest_PL_v101.TRetEnvEvento efetuaManifestacaoDestinatario(final String xml, final String chaveAcesso) throws Exception {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayManifestaDestinatario.AN.getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayManifestaDestinatario.AN.getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
     }
 
     private String gerarDadosManifestacaoDestinatario(final String chNFe, final String descEvento, final String tpEvento, final String xJust, final String CNPJ) throws JAXBException {

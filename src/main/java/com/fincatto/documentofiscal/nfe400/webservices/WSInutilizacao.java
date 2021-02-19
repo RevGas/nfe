@@ -6,9 +6,12 @@ import br.inf.portalfiscal.nfe.TRetInutNFe;
 
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFModelo;
+import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.classes.evento.inutilizacao.NFRetornoEventoInutilizacao;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
+import com.fincatto.documentofiscal.utils.Util;
 
 import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
@@ -36,13 +39,18 @@ class WSInutilizacao implements DFLog {
 
     TRetInutNFe inutilizaNota(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) throws Exception {
         final TInutNFe inutNFe = this.geraDadosInutilizacao(anoInutilizacaoNumeracao, cnpjEmitente, serie, numeroInicial, numeroFinal, justificativa, modelo);
-        final String inutilizacaoXMLAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(getXML(inutNFe));
+        String xml = getXML(inutNFe);
+        //Remover caracteres especiais do xml para o autorizador MT
+        if (config.getCUF().getCodigo().equals(DFUnidadeFederativa.MT.getCodigo())) {
+            xml = Util.convertToASCII2(xml);
+        }        
+        final String inutilizacaoXMLAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(xml);
         final TRetInutNFe retorno = this.efetuaInutilizacao(inutilizacaoXMLAssinado, modelo);
         return retorno;
     }
 
     private TRetInutNFe efetuaInutilizacao(final String xml, final DFModelo modelo) throws Exception {
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayInutilizacao.valueOfCodigoUF(this.config.getCUF()).getTRetInutNFe(modelo, xml, this.config.getAmbiente());
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayInutilizacao.valueOfCodigoUF(this.config.getCUF()).getTRetInutNFe(modelo, xml, this.config.getAmbiente(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
     }
 
     private TInutNFe geraDadosInutilizacao(final int anoInutilizacaoNumeracao, final String cnpjEmitente, final String serie, final String numeroInicial, final String numeroFinal, final String justificativa, final DFModelo modelo) {

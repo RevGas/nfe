@@ -68,6 +68,11 @@ public abstract class DFCadeiaCertificados implements DFLog {
                     final String host = new URI(urlNFAutorizacao).getHost();
                     DFCadeiaCertificados.get(keyStore, host);
                 }
+                final String urlNFConsultaProtocolo = aut.getNfeConsultaProtocolo(ambiente);
+                if (StringUtils.isNotBlank(urlNFConsultaProtocolo)) {
+                    final String host = new URI(urlNFConsultaProtocolo).getHost();
+                    DFCadeiaCertificados.get(keyStore, host);
+                }
         
                 // Para NFCe...
                 final String urlNFCStatus = aut.getNfceStatusServico(ambiente);
@@ -78,6 +83,11 @@ public abstract class DFCadeiaCertificados implements DFLog {
                 final String urlNFCAutorizacao = aut.getNfceAutorizacao(ambiente);
                 if (StringUtils.isNotBlank(urlNFCAutorizacao)) {
                     final String host = new URI(urlNFCAutorizacao).getHost();
+                    DFCadeiaCertificados.get(keyStore, host);
+                }
+                final String urlNFCConsultaProtocolo = aut.getNfeConsultaProtocolo(ambiente);
+                if (StringUtils.isNotBlank(urlNFCConsultaProtocolo)) {
+                    final String host = new URI(urlNFCConsultaProtocolo).getHost();
                     DFCadeiaCertificados.get(keyStore, host);
                 }
             }

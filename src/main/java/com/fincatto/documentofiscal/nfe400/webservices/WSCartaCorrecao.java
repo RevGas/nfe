@@ -9,6 +9,8 @@ import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
+
 import java.io.StringWriter;
 
 import java.math.BigDecimal;
@@ -48,7 +50,7 @@ class WSCartaCorrecao implements DFLog {
 
     private TRetEnvEvento efetua(final String xml, final String chaveAcesso) throws Exception {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayCartaCorrecao.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayCartaCorrecao.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
     }
 
     private String gerarDados(final String chaveAcesso, final String motivo) throws JAXBException {

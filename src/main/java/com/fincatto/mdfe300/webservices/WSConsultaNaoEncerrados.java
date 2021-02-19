@@ -1,11 +1,16 @@
 package com.fincatto.mdfe300.webservices;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.*;
+import java.security.cert.CertificateException;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
 
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.mdfe300.classes.MDFAutorizador;
 
 import br.inf.portalfiscal.mdfe.TConsMDFeNaoEnc;
@@ -28,7 +33,7 @@ class WSConsultaNaoEncerrados {
         this.config = config;
     }
 
-    TRetConsMDFeNaoEnc consultaNaoEncerrados(final String cnpjEmitente) throws MalformedURLException {
+    TRetConsMDFeNaoEnc consultaNaoEncerrados(final String cnpjEmitente) throws IOException, GeneralSecurityException {
         TConsMDFeNaoEnc consMDFeNaoEnc = new TConsMDFeNaoEnc();
         consMDFeNaoEnc.setTpAmb(this.config.getAmbiente().getCodigo());
         consMDFeNaoEnc.setVersao(VERSAO_LEIAUTE);
@@ -46,6 +51,7 @@ class WSConsultaNaoEncerrados {
         Holder<MdfeCabecMsg> holder = new Holder<>(new ObjectFactory().createMdfeCabecMsg(mdfeCabecMsg).getValue());
 
         MDFeConsNaoEncSoap12 port = new MDFeConsNaoEnc(new URL(MDFAutorizador.MDFe.getMDFeConsNaoEnc(this.config.getAmbiente()))).getMDFeConsNaoEncSoap12();
+        ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", new DFSocketFactory(config).createSSLContext().getSocketFactory());
         MdfeConsNaoEncResult result = port.mdfeConsNaoEnc(mdfeDadosMsg, holder);
 
         return ((JAXBElement<TRetConsMDFeNaoEnc>) result.getContent().get(0)).getValue();

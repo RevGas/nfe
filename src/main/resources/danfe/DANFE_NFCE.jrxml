@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2020-11-12T18:13:55 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DANFE_NFCE" pageWidth="226" pageHeight="1000" columnWidth="226" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="f2ad8431-eb6a-4415-9a7a-8bcb81e49e5d">
 	<property name="ireport.zoom" value="7.0"/>
 	<property name="ireport.x" value="0"/>
@@ -17,6 +18,7 @@
 	<parameter name="CHAVE_ACESSO_FORMATADA" class="java.lang.String"/>
 	<parameter name="INFORMACOES_COMPLEMENTARES" class="java.lang.String"/>
 	<parameter name="MOSTRAR_MSG_FINALIZACAO" class="java.lang.Boolean"/>
+	<parameter name="RODAPE" class="java.lang.String"/>
 	<field name="nota.info.emitente.nomeFantasia" class="java.lang.String"/>
 	<field name="nota.info.emitente.cnpj" class="java.lang.String"/>
 	<field name="nota.info.emitente.inscricaoEstadual" class="java.lang.String"/>
@@ -62,9 +64,6 @@ new BigDecimal($F{nota.info.total.icmsTotal.outrasDespesasAcessorias})).subtract
 new BigDecimal($F{nota.info.total.icmsTotal.valorTotalDesconto}))]]></variableExpression>
 		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
 	<title>
 		<band splitType="Stretch"/>
 	</title>
@@ -330,9 +329,9 @@ $V{ACRESCIMOS}.signum() < 0 ? "DESCONTOS R$" : "ACRÉSCIMOS R$"]]></textFieldExp
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="200" splitType="Prevent">
+		<band height="188" splitType="Prevent">
 			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement key="image" positionType="Float" x="42" y="11" width="130" height="130" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="4e2dc02b-2c45-4b9b-80b2-1e8872c134d6"/>
+				<reportElement key="image" positionType="Float" x="42" y="6" width="130" height="130" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="4e2dc02b-2c45-4b9b-80b2-1e8872c134d6"/>
 				<imageExpression><![CDATA[$P{QR_CODE}]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -350,15 +349,6 @@ $V{ACRESCIMOS}.signum() < 0 ? "DESCONTOS R$" : "ACRÉSCIMOS R$"]]></textFieldExp
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField>
-				<reportElement key="textField" positionType="Float" x="9" y="162" width="196" height="26" isRemoveLineWhenBlank="true" uuid="a2b6af14-e98c-419d-a319-a304d1e30d2c">
-					<printWhenExpression><![CDATA[$P{MOSTRAR_MSG_FINALIZACAO}]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA[".\n.\n."]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement key="line" positionType="Float" x="9" y="150" width="196" height="1" isRemoveLineWhenBlank="true" uuid="e9b9d243-de30-429a-80c4-25a191127073">
 					<printWhenExpression><![CDATA[$P{MOSTRAR_MSG_FINALIZACAO}]]></printWhenExpression>
@@ -367,15 +357,22 @@ $V{ACRESCIMOS}.signum() < 0 ? "DESCONTOS R$" : "ACRÉSCIMOS R$"]]></textFieldExp
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<staticText>
-				<reportElement key="textField" positionType="Float" x="9" y="151" width="196" height="10" isRemoveLineWhenBlank="true" uuid="1946bde5-0069-49eb-8a22-b436875e80bd">
+			<textField>
+				<reportElement key="textField" positionType="Float" x="9" y="162" width="196" height="26" isRemoveLineWhenBlank="true" uuid="97bf6ff1-d142-4b47-b50d-897f54407a01">
 					<printWhenExpression><![CDATA[$P{MOSTRAR_MSG_FINALIZACAO}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Fim da DANF-e]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[".\n.\n."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="textField" positionType="Float" x="9" y="151" width="196" height="10" isRemoveLineWhenBlank="true" uuid="f0a0eaf8-caa4-4ed5-9a60-55f9fbd37283"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RODAPE}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

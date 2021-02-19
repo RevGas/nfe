@@ -1,6 +1,6 @@
 package com.fincatto.documentofiscal.mdfe3.webservices;
 
-import com.fincatto.documentofiscal.DFSocketFactory;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.mdfe3.MDFeConfig;
 import com.fincatto.documentofiscal.mdfe3.classes.consultaRecibo.MDFeConsultaReciboRetorno;

@@ -7,6 +7,7 @@ import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import java.io.StringReader;
 import java.util.Arrays;
+import javax.net.ssl.SSLSocketFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -17,8 +18,8 @@ public enum GatewayEvento {
 
     AM {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoAMNFE(xml, ambiente) : getTRetEnvEventoAMNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoAMNFE(xml, ambiente, socketFactory) : getTRetEnvEventoAMNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -28,8 +29,8 @@ public enum GatewayEvento {
     },
     AN {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoANNFE(xml, ambiente) : getTRetEnvEventoANNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoANNFE(xml, ambiente, socketFactory) : getTRetEnvEventoANNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -39,8 +40,8 @@ public enum GatewayEvento {
     },
     BA {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoBANFE(xml, ambiente) : SVRS.getTRetEnvEventoSVRSNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoBANFE(xml, ambiente, socketFactory) : SVRS.getTRetEnvEventoSVRSNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -51,8 +52,8 @@ public enum GatewayEvento {
     },
     CE {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoCENFE(xml, ambiente) : getTRetEnvEventoCENFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoCENFE(xml, ambiente, socketFactory) : getTRetEnvEventoCENFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -63,8 +64,8 @@ public enum GatewayEvento {
     },
     GO {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : getTRetEnvEventoGONFE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente, socketFactory) : getTRetEnvEventoGONFE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -75,8 +76,8 @@ public enum GatewayEvento {
     },
     MA {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? SVAN.getTRetEnvEvento(modelo, xml, ambiente) : SVRS.getTRetEnvEvento(modelo, xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? SVAN.getTRetEnvEvento(modelo, xml, ambiente, socketFactory) : SVRS.getTRetEnvEvento(modelo, xml, ambiente, socketFactory);
         }
 
         @Override
@@ -86,8 +87,8 @@ public enum GatewayEvento {
     },
     PE {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoPENFE(xml, ambiente) : SVRS.getTRetEnvEvento(modelo, xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoPENFE(xml, ambiente, socketFactory) : SVRS.getTRetEnvEvento(modelo, xml, ambiente, socketFactory);
         }
 
         @Override
@@ -98,8 +99,8 @@ public enum GatewayEvento {
     },
     PR {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoPRNFE(xml, ambiente) : getTRetEnvEventoPRNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoPRNFE(xml, ambiente, socketFactory) : getTRetEnvEventoPRNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -110,8 +111,8 @@ public enum GatewayEvento {
     },
     RS {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoRSNFE(xml, ambiente) : getTRetEnvEventoRSNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoRSNFE(xml, ambiente, socketFactory) : getTRetEnvEventoRSNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -122,8 +123,8 @@ public enum GatewayEvento {
     },
     SP {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSPNFE(xml, ambiente) : getTRetEnvEventoSPNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSPNFE(xml, ambiente, socketFactory) : getTRetEnvEventoSPNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -134,19 +135,19 @@ public enum GatewayEvento {
     },
     SVAN {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSVANNFE(xml, ambiente) : getTRetEnvEventoSVANNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSVANNFE(xml, ambiente, socketFactory) : getTRetEnvEventoSVANNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PA};
+            return new DFUnidadeFederativa[]{};
         }
     },
     SVRS {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSVRSNFE(xml, ambiente) : getTRetEnvEventoSVRSNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSVRSNFE(xml, ambiente, socketFactory) : getTRetEnvEventoSVRSNFCE(xml, ambiente, socketFactory);
         }
 
         @Override
@@ -160,7 +161,7 @@ public enum GatewayEvento {
         }
     };
 
-    public abstract TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception;
+    public abstract TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException, Exception;
 
     public abstract DFUnidadeFederativa[] getUFs();
 
@@ -173,12 +174,13 @@ public enum GatewayEvento {
         throw new IllegalStateException(String.format("N\u00e3o existe metodo de envio para a UF %s", uf.getCodigo()));
     }
 
-    public TRetEnvEvento getTRetEnvEventoAMNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoAMNFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.am.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.am.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.am.RecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.am.RecepcaoEvento4().getRecepcaoEvento4Soap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.am.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -187,12 +189,13 @@ public enum GatewayEvento {
         }
     }
     
-    public TRetEnvEvento getTRetEnvEventoAMNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoAMNFCE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.RecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.RecepcaoEvento4().getRecepcaoEvento4Soap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -201,12 +204,13 @@ public enum GatewayEvento {
         }
     }
     
-    public TRetEnvEvento getTRetEnvEventoANNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoANNFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.NfeRecepcaoEventoNFResult result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -215,13 +219,14 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.an.hom.NfeRecepcaoEventoNFResult result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoANNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoANNFCE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             return null;
         } else {
@@ -229,12 +234,13 @@ public enum GatewayEvento {
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoBANFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoBANFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -243,18 +249,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
     
-     public TRetEnvEvento getTRetEnvEventoCENFE(String xml, DFAmbiente ambiente) throws JAXBException {
+     public TRetEnvEvento getTRetEnvEventoCENFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NFeRecepcaoEventoSoap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NFeRecepcaoEvento4().getNFeRecepcaoEventoSoap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -263,18 +271,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.hom.NFeRecepcaoEventoSoap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.hom.NFeRecepcaoEvento4().getNFeRecepcaoEventoSoap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoCENFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoCENFCE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ce.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ce.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ce.NFeRecepcaoEventoSoap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ce.NFeRecepcaoEvento4().getNFeRecepcaoEventoSoap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ce.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -283,18 +293,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ce.hom.NFeRecepcaoEventoSoap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ce.hom.NFeRecepcaoEvento4().getNFeRecepcaoEventoSoap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ce.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
      
-    public TRetEnvEvento getTRetEnvEventoGONFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoGONFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NFeRecepcaoEvento4Service port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
@@ -304,6 +316,7 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NFeRecepcaoEvento4Service port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
@@ -311,12 +324,13 @@ public enum GatewayEvento {
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoPENFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoPENFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -325,18 +339,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.hom.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
     
-    public TRetEnvEvento getTRetEnvEventoPRNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoPRNFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -345,18 +361,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.hom.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoPRNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoPRNFCE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -365,18 +383,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.hom.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePort();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.pr.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoRSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoRSNFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.rs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.rs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.rs.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.rs.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.rs.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -385,18 +405,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.rs.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.rs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.rs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoRSNFCE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.rs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.rs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.rs.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.rs.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.rs.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -405,18 +427,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.rs.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.rs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.rs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoSPNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSPNFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.sp.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.sp.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.sp.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.sp.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.sp.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -425,18 +449,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.sp.hom.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.sp.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.sp.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoSPNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSPNFCE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.sp.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.sp.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.sp.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.sp.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.sp.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -445,18 +471,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.sp.hom.NFeRecepcaoEvento4Soap12 port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.sp.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap12();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.sp.hom.NfeResultMsg result = port.nfeRecepcaoEventoNF(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoSVANNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSVANNFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.NfeRecepcaoEventoResult result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -465,13 +493,14 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svan.hom.NfeRecepcaoEventoResult result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoSVANNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSVANNFCE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             return null;
         } else {
@@ -479,12 +508,13 @@ public enum GatewayEvento {
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoSVRSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSVRSNFE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -493,18 +523,20 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSVRSNFCE(String xml, DFAmbiente ambiente, final SSLSocketFactory socketFactory) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -513,6 +545,7 @@ public enum GatewayEvento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4Soap port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap();
+            ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();

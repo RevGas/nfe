@@ -5,6 +5,10 @@ import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRe
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import com.fincatto.documentofiscal.S3;
+import com.fincatto.documentofiscal.utils.Util;
+
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
@@ -54,7 +58,7 @@ public enum GatewayCancelamento {
     GO {
         @Override
         public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : getTRetEnvEventoGONFE(xml, ambiente);
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : getTRetEnvEventoGONFCE(xml, ambiente);
         }
 
         @Override
@@ -72,6 +76,28 @@ public enum GatewayCancelamento {
         @Override
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{DFUnidadeFederativa.MA};
+        }
+    },
+    MG {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoMGNFE(xml, ambiente) : getTRetEnvEventoMGNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.MG};
+        }
+    },
+    MS {
+        @Override
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoMSNFE(xml, ambiente) : getTRetEnvEventoMSNFCE(xml, ambiente);
+        }
+
+        @Override
+        public DFUnidadeFederativa[] getUFs() {
+            return new DFUnidadeFederativa[]{DFUnidadeFederativa.MS};
         }
     },
     MT {
@@ -141,7 +167,7 @@ public enum GatewayCancelamento {
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
-            return new DFUnidadeFederativa[]{DFUnidadeFederativa.PA};
+            return new DFUnidadeFederativa[]{};
         }
     },
     SVRS {
@@ -154,9 +180,9 @@ public enum GatewayCancelamento {
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{
                 DFUnidadeFederativa.AC, DFUnidadeFederativa.AL, DFUnidadeFederativa.AP, DFUnidadeFederativa.DF,
-                DFUnidadeFederativa.ES, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI, DFUnidadeFederativa.RJ,
-                DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR, DFUnidadeFederativa.SC,
-                DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
+                DFUnidadeFederativa.ES, DFUnidadeFederativa.PA, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI,
+                DFUnidadeFederativa.RJ, DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR,
+                DFUnidadeFederativa.SC, DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
             };
         }
     };
@@ -187,7 +213,7 @@ public enum GatewayCancelamento {
             return null;
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoAMNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.am.NfeDadosMsg();
@@ -201,8 +227,8 @@ public enum GatewayCancelamento {
             return null;
         }
     }
-    
-    
+
+
     public TRetEnvEvento getTRetEnvEventoBANFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ba.NfeDadosMsg();
@@ -222,7 +248,7 @@ public enum GatewayCancelamento {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
+
      public TRetEnvEvento getTRetEnvEventoCENFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeDadosMsg();
@@ -262,7 +288,7 @@ public enum GatewayCancelamento {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-     
+
     public TRetEnvEvento getTRetEnvEventoGONFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeDadosMsg();
@@ -280,6 +306,62 @@ public enum GatewayCancelamento {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NFeRecepcaoEvento4ServiceCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePortCancelamento();
             ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        }
+    }
+
+    public TRetEnvEvento getTRetEnvEventoGONFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NFeRecepcaoEvento4ServiceCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePortCancelamento();
+            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            return null;
+        }
+    }
+
+    public TRetEnvEvento getTRetEnvEventoMGNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap12Cancelamento();
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.fazenda.mg.gov.br/nfe2/services/NFeRecepcaoEvento4");
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NFeRecepcaoEvento4Result result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getRetEnvEvento().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap12Cancelamento();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.hom.NFeRecepcaoEvento4Result result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getRetEnvEvento().get(0)).getValue();
+        }
+    }
+
+     public TRetEnvEvento getTRetEnvEventoMGNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCancelamento();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.hom.NfeDadosMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.hom.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCancelamento();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
@@ -304,7 +386,7 @@ public enum GatewayCancelamento {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
+
      public TRetEnvEvento getTRetEnvEventoMTNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mt.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mt.NfeDadosMsg();
@@ -325,7 +407,46 @@ public enum GatewayCancelamento {
         }
     }
 
-    
+    public TRetEnvEvento getTRetEnvEventoMSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.NfeResultMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.NfeResultMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.NFeRecepcaoEventoSoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.NFeRecepcaoEvento4().getNfeRecepcaoEventoSoap12Cancelamento();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.NfeResultMsg2 result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.hom.NfeResultMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.hom.NfeResultMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.hom.NFeRecepcaoEventoSoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.hom.NFeRecepcaoEvento4().getNfeRecepcaoEventoSoap12Cancelamento();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ms.hom.NfeResultMsg2 result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        }
+    }
+
+     public TRetEnvEvento getTRetEnvEventoMSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+        if (DFAmbiente.PRODUCAO.equals(ambiente)) {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NfeResultMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NfeResultMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NFeRecepcaoEventoSoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NFeRecepcaoEvento4().getNfeRecepcaoEventoSoap12Cancelamento();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NfeResultMsg2 result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        } else {
+            final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.hom.NfeResultMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.hom.NfeResultMsg();
+            nfeDadosMsg.getContent().add(getTEnvEvento(xml));
+
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.hom.NFeRecepcaoEventoSoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.hom.NFeRecepcaoEvento4().getNfeRecepcaoEventoSoap12Cancelamento();
+            br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.hom.NfeResultMsg2 result = port.nfeRecepcaoEvento(nfeDadosMsg);
+
+            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+        }
+    }
+
     public TRetEnvEvento getTRetEnvEventoPENFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pe.NfeDadosMsg();
@@ -345,7 +466,7 @@ public enum GatewayCancelamento {
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
         }
     }
-    
+
     public TRetEnvEvento getTRetEnvEventoPRNFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.pr.NfeDadosMsg();
@@ -494,7 +615,8 @@ public enum GatewayCancelamento {
         }
     }
 
-    public TRetEnvEvento getTRetEnvEventoSVRSNFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSVRSNFE(String xml, DFAmbiente ambiente) throws JAXBException, IOException {
+        Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -502,7 +624,7 @@ public enum GatewayCancelamento {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCancelamento();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -510,11 +632,14 @@ public enum GatewayCancelamento {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCancelamento();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.svrs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         }
+        sendRetEnvEvento(retorno);
+        return ((JAXBElement<TRetEnvEvento>) retorno).getValue();
     }
 
-    public TRetEnvEvento getTRetEnvEventoSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoSVRSNFCE(String xml, DFAmbiente ambiente) throws JAXBException, IOException {
+        Object retorno;
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -522,7 +647,7 @@ public enum GatewayCancelamento {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCancelamento();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         } else {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -530,8 +655,10 @@ public enum GatewayCancelamento {
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4SoapCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4SoapCancelamento();
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.svrs.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
-            return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
+            retorno = result.getContent().get(0);
         }
+        sendRetEnvEvento(retorno);
+        return ((JAXBElement<TRetEnvEvento>) retorno).getValue();
     }
 
     private JAXBElement<TEnvEvento> getTEnvEvento(String xml) throws JAXBException {
@@ -541,6 +668,14 @@ public enum GatewayCancelamento {
         StringReader reader = new StringReader(xml);
         JAXBElement<TEnvEvento> tEnvEvento = (JAXBElement<TEnvEvento>) jaxbUnmarshaller.unmarshal(reader);
         return tEnvEvento;
+    }
+
+    public static void sendRetEnvEvento(Object retorno) throws JAXBException, IOException {
+        new S3 ().sendRetEnvEventoCancelamento (Util.marshllerRetEnvEventoCancelamento ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno).getValue()); //Tentar enviar para o S3
+    }
+
+    public static void sendRetEnvEvento(Object retorno, String chaveNFe) throws JAXBException, IOException {
+        new S3().sendRetEnvEventoCancelamento (Util.marshllerRetEnvEventoCancelamento ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
     }
 
 }

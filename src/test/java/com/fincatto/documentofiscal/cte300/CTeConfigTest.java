@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 
 public class CTeConfigTest {
     
@@ -28,7 +29,7 @@ public class CTeConfigTest {
         public KeyStore getCertificadoKeyStore() {
             return null;
         }
-        
+
         @Override
         public String getCertificadoSenha() {
             return null;

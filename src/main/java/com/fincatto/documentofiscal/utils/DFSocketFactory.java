@@ -1,4 +1,6 @@
-package com.fincatto.documentofiscal;
+package com.fincatto.documentofiscal.utils;
+
+import com.fincatto.documentofiscal.DFConfig;
 
 import java.io.IOException;
 import java.net.Socket;

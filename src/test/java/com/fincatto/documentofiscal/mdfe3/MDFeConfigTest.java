@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 
 public class MDFeConfigTest {
 
