@@ -3,8 +3,10 @@ package com.fincatto.mdfe300.webservices;
 import java.net.URL;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
 
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.mdfe300.classes.MDFAutorizador;
 
 import br.inf.portalfiscal.mdfe.TConsReciMDFe;
@@ -43,6 +45,7 @@ class WSRetornoRecepcao {
         Holder<MdfeCabecMsg> holder = new Holder<>(objectFactory.createMdfeCabecMsg(mdfeCabecMsg).getValue());
 
         MDFeRetRecepcaoSoap12 port = new MDFeRetRecepcao(new URL(MDFAutorizador.MDFe.getMDFeRetRecepcao(this.config.getAmbiente()))).getMDFeRetRecepcaoSoap12();
+        ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", new DFSocketFactory(config).createSSLContext().getSocketFactory());
         MdfeRetRecepcaoResult result = port.mdfeRetRecepcao(mdfeDadosMsg, holder);
 
         return ((JAXBElement<TRetConsReciMDFe>) result.getContent().get(0)).getValue();

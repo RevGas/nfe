@@ -10,6 +10,8 @@ import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.nfe400.classes.evento.NFEnviaEventoRetorno;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
 import java.io.StringWriter;
+
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,9 +58,9 @@ class WSEvento {
         switch (tpEvento) {
             case EVENTO_CANCELAMENTO :
             case EVENTO_CARTA_CORRECAO :
-                return com.fincatto.documentofiscal.nfe400.webservices.GatewayEvento.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
+                return com.fincatto.documentofiscal.nfe400.webservices.GatewayEvento.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
             default :
-                return com.fincatto.documentofiscal.nfe400.webservices.GatewayEvento.AN.getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente());
+                return com.fincatto.documentofiscal.nfe400.webservices.GatewayEvento.AN.getTRetEnvEvento(chaveParser.getModelo(), xml, this.config.getAmbiente(), new DFSocketFactory(config).createSSLContext().getSocketFactory());
         } 
     }
 

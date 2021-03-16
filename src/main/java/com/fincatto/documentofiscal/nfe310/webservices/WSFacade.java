@@ -25,7 +25,7 @@ import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import br.inf.portalfiscal.nfe.model.distribuicao.PL_NFeDistDFe_102.RetDistDFeInt;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
-import com.fincatto.documentofiscal.DFSocketFactory;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe.classes.distribuicao.NFDistribuicaoIntRetorno;
 import com.fincatto.documentofiscal.nfe.webservices.distribuicao.WSDistribuicaoNFe;

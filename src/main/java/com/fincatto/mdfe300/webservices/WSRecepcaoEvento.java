@@ -9,8 +9,10 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
 
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
 import com.fincatto.mdfe300.classes.MDFAutorizador;
 
 import br.inf.portalfiscal.mdfe.TEvento;
@@ -59,6 +61,7 @@ class WSRecepcaoEvento {
         Holder<MdfeCabecMsg> holder = new Holder<>(new ObjectFactory().createMdfeCabecMsg(mdfeCabecMsg).getValue());
 
         MDFeRecepcaoEventoSoap12 port = new MDFeRecepcaoEvento(new URL(MDFAutorizador.MDFe.getMDFeRecepcaoEvento(this.config.getAmbiente()))).getMDFeRecepcaoEventoSoap12();
+        ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", new DFSocketFactory(config).createSSLContext().getSocketFactory());
         MdfeRecepcaoEventoResult result = port.mdfeRecepcaoEvento(mdfeDadosMsg, holder);
 
         return ((JAXBElement<TRetEvento>) result.getContent().get(0)).getValue();
