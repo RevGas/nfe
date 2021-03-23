@@ -6,6 +6,7 @@ import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TEv
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TProcEvento;
 import br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.DFLog;
+import com.fincatto.documentofiscal.nfe.NFTipoEmissao;
 import com.fincatto.documentofiscal.nfe.NFeConfig;
 import com.fincatto.documentofiscal.nfe400.NotaFiscalChaveParser;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
@@ -65,7 +66,8 @@ class WSCancelamento implements DFLog {
 
     private TRetEnvEvento efetuaCancelamento(final String xmlAssinado, final String chaveAcesso) throws Exception {
         final NotaFiscalChaveParser chaveParser = new NotaFiscalChaveParser(chaveAcesso);
-        return com.fincatto.documentofiscal.nfe400.webservices.GatewayCancelamento.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xmlAssinado, this.config.getAmbiente());
+        NFTipoEmissao tipoEmissao = chaveParser.getFormaEmissao();
+        return com.fincatto.documentofiscal.nfe400.webservices.GatewayCancelamento.valueOfCodigoUF(chaveParser.getNFUnidadeFederativa()).getTRetEnvEvento(chaveParser.getModelo(), xmlAssinado, this.config.getAmbiente(), tipoEmissao);
     }
 
     private String gerarDados(final String chaveAcesso, final String numeroProtocolo, final String motivo) throws JAXBException {
