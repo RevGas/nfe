@@ -4,7 +4,7 @@
     <groupId>com.tartigrado</groupId>
     <artifactId>nfe</artifactId>
     <packaging>jar</packaging>
-    <version>4.2.4</version>
+    <version>4.2.6</version>
     <name>nfe</name>
     <description>Biblioteca de comunicacao de nota fiscal eletronica brasileira</description>
     <url>https://github.com/wmixvideo/nfe</url>
@@ -154,7 +154,7 @@
         <dependency>
             <groupId>com.tartigrado</groupId>
             <artifactId>model_nfe</artifactId>
-            <version>PL_009_V4_00_NT_2018_005_v1.20</version>
+            <version>PL_009_V4_00_NT_2020_006_v1.10</version>
         </dependency>
         <dependency>
             <groupId>com.tartigrado</groupId>
