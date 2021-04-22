@@ -6,22 +6,23 @@ import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.S3;
+import com.fincatto.documentofiscal.nfe.NFTipoEmissao;
 import com.fincatto.documentofiscal.utils.Util;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.ws.BindingProvider;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Arrays;
 
 public enum GatewayCancelamento {
 
     AM {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoAMNFE(xml, ambiente) : getTRetEnvEventoAMNFCE(xml, ambiente);
         }
 
@@ -33,8 +34,15 @@ public enum GatewayCancelamento {
     },
     BA {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoBANFE(xml, ambiente) : SVRS.getTRetEnvEventoSVRSNFCE(xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
+            if (DFModelo.NFE.equals(modelo)) {
+                if (tipoEmissao.equals(NFTipoEmissao.EMISSAO_NORMAL)) {
+                    return getTRetEnvEventoBANFE(xml, ambiente);
+                }
+                return SVRS.getTRetEnvEventoSVRSNFE(xml, ambiente);
+            } else {
+                return SVRS.getTRetEnvEventoSVRSNFCE(xml, ambiente);
+            }
         }
 
         @Override
@@ -45,7 +53,7 @@ public enum GatewayCancelamento {
     },
     CE {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoCENFE(xml, ambiente) : getTRetEnvEventoCENFCE(xml, ambiente);
         }
 
@@ -57,7 +65,7 @@ public enum GatewayCancelamento {
     },
     GO {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoGONFE(xml, ambiente) : getTRetEnvEventoGONFCE(xml, ambiente);
         }
 
@@ -69,8 +77,8 @@ public enum GatewayCancelamento {
     },
     MA {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? SVAN.getTRetEnvEvento(modelo, xml, ambiente) : SVRS.getTRetEnvEvento(modelo, xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? SVAN.getTRetEnvEvento(modelo, xml, ambiente, tipoEmissao) : SVRS.getTRetEnvEvento(modelo, xml, ambiente, tipoEmissao);
         }
 
         @Override
@@ -80,7 +88,7 @@ public enum GatewayCancelamento {
     },
     MG {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoMGNFE(xml, ambiente) : getTRetEnvEventoMGNFCE(xml, ambiente);
         }
 
@@ -91,7 +99,7 @@ public enum GatewayCancelamento {
     },
     MS {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoMSNFE(xml, ambiente) : getTRetEnvEventoMSNFCE(xml, ambiente);
         }
 
@@ -102,7 +110,7 @@ public enum GatewayCancelamento {
     },
     MT {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoMTNFE(xml, ambiente) : getTRetEnvEventoMTNFCE(xml, ambiente);
         }
 
@@ -113,8 +121,8 @@ public enum GatewayCancelamento {
     },
     PE {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
-            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoPENFE(xml, ambiente) : SVRS.getTRetEnvEvento(modelo, xml, ambiente);
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
+            return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoPENFE(xml, ambiente) : SVRS.getTRetEnvEvento(modelo, xml, ambiente, tipoEmissao);
         }
 
         @Override
@@ -125,7 +133,7 @@ public enum GatewayCancelamento {
     },
     PR {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoPRNFE(xml, ambiente) : getTRetEnvEventoPRNFCE(xml, ambiente);
         }
 
@@ -137,7 +145,7 @@ public enum GatewayCancelamento {
     },
     RS {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoRSNFE(xml, ambiente) : getTRetEnvEventoRSNFCE(xml, ambiente);
         }
 
@@ -149,7 +157,7 @@ public enum GatewayCancelamento {
     },
     SP {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSPNFE(xml, ambiente) : getTRetEnvEventoSPNFCE(xml, ambiente);
         }
 
@@ -161,7 +169,7 @@ public enum GatewayCancelamento {
     },
     SVAN {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSVANNFE(xml, ambiente) : getTRetEnvEventoSVANNFCE(xml, ambiente);
         }
 
@@ -172,22 +180,22 @@ public enum GatewayCancelamento {
     },
     SVRS {
         @Override
-        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception {
+        public TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente, final NFTipoEmissao tipoEmissao) throws JAXBException, Exception {
             return DFModelo.NFE.equals(modelo) ? getTRetEnvEventoSVRSNFE(xml, ambiente) : getTRetEnvEventoSVRSNFCE(xml, ambiente);
         }
 
         @Override
         public DFUnidadeFederativa[] getUFs() {
             return new DFUnidadeFederativa[]{
-                DFUnidadeFederativa.AC, DFUnidadeFederativa.AL, DFUnidadeFederativa.AP, DFUnidadeFederativa.DF,
-                DFUnidadeFederativa.ES, DFUnidadeFederativa.PA, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI,
-                DFUnidadeFederativa.RJ, DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR,
-                DFUnidadeFederativa.SC, DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
+                    DFUnidadeFederativa.AC, DFUnidadeFederativa.AL, DFUnidadeFederativa.AP, DFUnidadeFederativa.DF,
+                    DFUnidadeFederativa.ES, DFUnidadeFederativa.PA, DFUnidadeFederativa.PB, DFUnidadeFederativa.PI,
+                    DFUnidadeFederativa.RJ, DFUnidadeFederativa.RN, DFUnidadeFederativa.RO, DFUnidadeFederativa.RR,
+                    DFUnidadeFederativa.SC, DFUnidadeFederativa.SE, DFUnidadeFederativa.TO
             };
         }
     };
 
-    public abstract TRetEnvEvento getTRetEnvEvento(final DFModelo modelo, final String xml, final DFAmbiente ambiente) throws JAXBException, Exception;
+    public abstract TRetEnvEvento getTRetEnvEvento(DFModelo modelo, String xml, DFAmbiente ambiente, NFTipoEmissao tipoEmissao) throws JAXBException, Exception;
 
     public abstract DFUnidadeFederativa[] getUFs();
 
@@ -249,7 +257,7 @@ public enum GatewayCancelamento {
         }
     }
 
-     public TRetEnvEvento getTRetEnvEventoCENFE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoCENFE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.ce.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -295,7 +303,7 @@ public enum GatewayCancelamento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NFeRecepcaoEvento4ServiceCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePortCancelamento();
-            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -304,7 +312,7 @@ public enum GatewayCancelamento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NFeRecepcaoEvento4ServiceCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePortCancelamento();
-            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.go.hom.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -317,7 +325,7 @@ public enum GatewayCancelamento {
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NFeRecepcaoEvento4ServiceCancelamento port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NFeRecepcaoEvento4().getNFeRecepcaoEvento4ServicePortCancelamento();
-            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
+            ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.go.NfeResultMsg result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getContent().get(0)).getValue();
@@ -347,7 +355,7 @@ public enum GatewayCancelamento {
         }
     }
 
-     public TRetEnvEvento getTRetEnvEventoMGNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoMGNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mg.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -387,7 +395,7 @@ public enum GatewayCancelamento {
         }
     }
 
-     public TRetEnvEvento getTRetEnvEventoMTNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoMTNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mt.NfeDadosMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.mt.NfeDadosMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -427,7 +435,7 @@ public enum GatewayCancelamento {
         }
     }
 
-     public TRetEnvEvento getTRetEnvEventoMSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
+    public TRetEnvEvento getTRetEnvEventoMSNFCE(String xml, DFAmbiente ambiente) throws JAXBException {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             final br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NfeResultMsg nfeDadosMsg = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.nfce.ms.NfeResultMsg();
             nfeDadosMsg.getContent().add(getTEnvEvento(xml));
@@ -611,7 +619,7 @@ public enum GatewayCancelamento {
         if (DFAmbiente.PRODUCAO.equals(ambiente)) {
             return null;
         } else {
-           return null;
+            return null;
         }
     }
 
@@ -671,11 +679,11 @@ public enum GatewayCancelamento {
     }
 
     public static void sendRetEnvEvento(Object retorno) throws JAXBException, IOException {
-        new S3 ().sendRetEnvEventoCancelamento (Util.marshllerRetEnvEventoCancelamento ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno).getValue()); //Tentar enviar para o S3
+        new S3().sendRetEnvEventoCancelamento(Util.marshllerRetEnvEventoCancelamento((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno).getValue()); //Tentar enviar para o S3
     }
 
     public static void sendRetEnvEvento(Object retorno, String chaveNFe) throws JAXBException, IOException {
-        new S3().sendRetEnvEventoCancelamento (Util.marshllerRetEnvEventoCancelamento ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
+        new S3().sendRetEnvEventoCancelamento(Util.marshllerRetEnvEventoCancelamento((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno), ((JAXBElement<br.inf.portalfiscal.nfe.model.evento_cancelamento.Evento_Canc_PL_v101.TRetEnvEvento>) retorno).getValue(), chaveNFe); //Tentar enviar para o S3
     }
 
 }

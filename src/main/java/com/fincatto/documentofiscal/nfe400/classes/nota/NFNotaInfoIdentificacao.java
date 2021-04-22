@@ -91,6 +91,9 @@ public class NFNotaInfoIdentificacao extends DFBase {
     @ElementList(entry = "NFref", inline = true, required = false)
     private List<NFInfoReferenciada> referenciadas;
 
+    @Element(name = "indIntermed")
+    protected String indIntermed;
+
     public void setUf(final DFUnidadeFederativa uf) {
         this.uf = uf;
     }
@@ -289,5 +292,13 @@ public class NFNotaInfoIdentificacao extends DFBase {
 
     public List<NFInfoReferenciada> getReferenciadas() {
         return this.referenciadas;
+    }
+
+    public String getIndIntermed() {
+        return this.indIntermed;
+    }
+
+    public void setIndIntermed(String value) {
+        this.indIntermed = value;
     }
 }
