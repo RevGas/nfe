@@ -1,6 +1,5 @@
-package br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs;
 
-import br.inf.portalfiscal.cte.TRetConsStatServ;
+package br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.hom;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -8,7 +7,6 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.ws.Holder;
 
 
 /**
@@ -20,7 +18,7 @@ import javax.xml.ws.Holder;
 @WebService(name = "CteStatusServicoSoap12", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteStatusServico")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
-    ObjectFactory.class, br.inf.portalfiscal.cte.ObjectFactory.class, br.inf.portalfiscal.cte.TRetConsStatServ.class
+    ObjectFactory.class, br.inf.portalfiscal.cte.ObjectFactory.class
 })
 public interface CteStatusServicoSoap12 {
 
@@ -35,8 +33,6 @@ public interface CteStatusServicoSoap12 {
     @WebResult(name = "cteStatusServicoCTResult", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteStatusServico", partName = "cteStatusServicoCTResult")
     public CteStatusServicoCTResult cteStatusServicoCT(
         @WebParam(name = "cteDadosMsg", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteStatusServico", partName = "cteDadosMsg")
-        CteDadosMsg cteDadosMsg,
-        @WebParam(name = "cteCabecMsg", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteStatusServico", header = true, mode = WebParam.Mode.INOUT, partName = "cteCabecMsg")
-        Holder<CteCabecMsg> cteCabecMsg);
+                CteDadosMsg cteDadosMsg);
 
 }

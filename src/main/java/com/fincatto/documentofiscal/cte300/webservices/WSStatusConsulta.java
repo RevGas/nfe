@@ -2,12 +2,12 @@ package com.fincatto.documentofiscal.cte300.webservices;
 
 import br.inf.portalfiscal.cte.TConsStatServ;
 import br.inf.portalfiscal.cte.TRetConsStatServ;
-import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteCabecMsg;
-import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteDadosMsg;
-import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteStatusServico;
-import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteStatusServicoCTResult;
-import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.CteStatusServicoSoap12;
-import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.ObjectFactory;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.hom.CteCabecMsg;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.hom.CteDadosMsg;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.hom.CteStatusServico;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.hom.CteStatusServicoCTResult;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.hom.CteStatusServicoSoap12;
+import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.hom.ObjectFactory;
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
@@ -51,11 +51,10 @@ class WSStatusConsulta implements DFLog {
         cteDadosMsg.getContent().add(eTConsStatServ);
                 
         CteStatusServicoSoap12 port = new CteStatusServico().getCteStatusServicoSoap12();
-        CteStatusServicoCTResult result = port.cteStatusServicoCT(cteDadosMsg, holder);
-        
-        TRetConsStatServ retorno = (TRetConsStatServ) result.getContent().get(0);
-        
-        return retorno;
+        CteStatusServicoCTResult result = port.cteStatusServicoCT(cteDadosMsg);
+
+        TRetConsStatServ tRetConsStatServ = ((JAXBElement<TRetConsStatServ>) result.getContent().get(0)).getValue();
+        return tRetConsStatServ;
     }
 
 }

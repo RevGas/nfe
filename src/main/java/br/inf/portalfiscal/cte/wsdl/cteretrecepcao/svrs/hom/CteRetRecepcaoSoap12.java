@@ -1,5 +1,7 @@
 package br.inf.portalfiscal.cte.wsdl.cteretrecepcao.svrs.hom;
 
+import br.inf.portalfiscal.cte.TRetConsReciCTe;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -18,7 +20,7 @@ import javax.xml.ws.Holder;
 @WebService(name = "CteRetRecepcaoSoap12", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRetRecepcao")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
-    ObjectFactory.class, br.inf.portalfiscal.cte.TConsReciCTe.class
+    ObjectFactory.class, br.inf.portalfiscal.cte.ObjectFactory.class
 })
 public interface CteRetRecepcaoSoap12 {
 

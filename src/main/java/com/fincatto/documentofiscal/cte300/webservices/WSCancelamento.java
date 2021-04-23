@@ -34,7 +34,8 @@ class WSCancelamento implements DFLog {
     }
 
     TRetEvento cancelaCTe(final String chCTe, final String nProt, final String XJus) throws Exception {
-        final String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(CTeParser.parserTEvento(gerarDadosCancelamento(chCTe, nProt, XJus)), "infEvento");
+        String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(CTeParser.parserTEvento(gerarDadosCancelamento(chCTe, nProt, XJus)), "infEvento");
+        xmlAssinado = xmlAssinado.replaceAll("ns4:", "");
         JAXBElement<TEvento> eTEvento = CTeParser.parserTEvento(xmlAssinado);
         return efetuaCancelamento(eTEvento);
     }
