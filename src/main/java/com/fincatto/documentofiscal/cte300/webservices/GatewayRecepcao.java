@@ -3,12 +3,10 @@ package com.fincatto.documentofiscal.cte300.webservices;
 import br.inf.portalfiscal.cte.TEnviCTe;
 import br.inf.portalfiscal.cte.TRetEnviCTe;
 import br.inf.portalfiscal.cte.TUf;
-import br.inf.portalfiscal.nfe.TRetEnviNFe;
 import com.fincatto.documentofiscal.S3;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 import com.fincatto.documentofiscal.cte300.parsers.CTeParser;
 import com.fincatto.documentofiscal.utils.DFAssinaturaDigital;
-import com.fincatto.documentofiscal.utils.Util;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -139,7 +137,7 @@ public enum GatewayRecepcao {
             br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.CteRecepcaoLoteResult result = port.cteRecepcaoLote(cteDadosMsg, holder);
 
             TRetEnviCTe tRetEnviCTe = ((JAXBElement<TRetEnviCTe>) result.getContent().get(0)).getValue();
-            sendTRetEnviCTe(tRetEnviCTe);
+            sendTRetEnviCTe(tRetEnviCTe, tEnviCTe);
             return tRetEnviCTe;
         } else { // Homologação
             br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.hom.CteDadosMsg cteDadosMsg = new br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.hom.CteDadosMsg();
@@ -155,7 +153,7 @@ public enum GatewayRecepcao {
             br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.hom.CteRecepcaoLoteResult result = port.cteRecepcaoLote(cteDadosMsg, holder);
 
             TRetEnviCTe tRetEnviCTe = ((JAXBElement<TRetEnviCTe>) result.getContent().get(0)).getValue();
-            sendTRetEnviCTe(tRetEnviCTe);
+            sendTRetEnviCTe(tRetEnviCTe, tEnviCTe);
             return tRetEnviCTe;
         }
     }
@@ -168,8 +166,8 @@ public enum GatewayRecepcao {
         return new DFAssinaturaDigital(config).assinarDocumento(CTeParser.parserTEnviCTe(tEnviCTe).replace(" xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", ""), "infCte");
     }
 
-    public static void sendTRetEnviCTe(TRetEnviCTe retorno) throws JAXBException, IOException {
-        new S3().sendTRetEnviCTe(retorno); //Tentar enviar para o S3
+    public static void sendTRetEnviCTe(TRetEnviCTe retorno, TEnviCTe tEnviCTe) throws JAXBException, IOException {
+        new S3().sendTRetEnviCTe(retorno, tEnviCTe); //Tentar enviar para o S3
     }
 
 }

@@ -400,18 +400,19 @@ public class S3 {
         this.uploadFile(bucket, getPathCte(id, "tEvento",tEvento.getInfEvento().getTpAmb()), xmlTemp);
     }
 
-    public void sendTRetEnviCTe(TRetEnviCTe retorno) throws JAXBException, IOException {
+    public void sendTRetEnviCTe(TRetEnviCTe retorno, TEnviCTe tEnviCTe) throws JAXBException, IOException {
         String xml =  Util.marshaller(retorno);
         File xmlTemp = File.createTempFile(xml, ".xml");
+        String chaveCTe = Util.chaveFromCTe(tEnviCTe.getCTe().get(0));
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPathCte(retorno.getInfRec().getNRec(), "tRetEnviCTe",retorno.getTpAmb()), xmlTemp);
+        this.uploadFile(bucket, getPathCte(chaveCTe, "tRetEnviCTe",retorno.getTpAmb()), xmlTemp);
     }
 
     public void sendTRetConsReciCTe(TRetConsReciCTe retorno) throws IOException, JAXBException {
         String xml =  Util.marshaller(retorno);
         File xmlTemp = File.createTempFile(xml, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPathCte(retorno.getNRec(), "tRetConsReciCTe",retorno.getTpAmb()), xmlTemp);
+        this.uploadFile(bucket, getPathCte(retorno.getProtCTe().get(0).getInfProt().getChCTe(), "tRetConsReciCTe",retorno.getTpAmb()), xmlTemp);
     }
 
     private class ContactMessage {
