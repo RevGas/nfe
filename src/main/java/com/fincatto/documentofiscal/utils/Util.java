@@ -1,5 +1,6 @@
 package com.fincatto.documentofiscal.utils;
 
+import br.inf.portalfiscal.cte.TCTe;
 import br.inf.portalfiscal.nfe.*;
 import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.nfe.XSDFields;
@@ -202,5 +203,9 @@ public class Util {
             default:
                 return objectName;
         }
+    }
+
+    public static String chaveFromCTe(TCTe tcTe) {
+        return tcTe.getInfCte().getId().replace("CTe", "");
     }
 }

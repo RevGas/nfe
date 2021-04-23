@@ -4,7 +4,7 @@
     <groupId>com.tartigrado</groupId>
     <artifactId>nfe</artifactId>
     <packaging>jar</packaging>
-    <version>4.2.6</version>
+    <version>4.2.4-cte</version>
     <name>nfe</name>
     <description>Biblioteca de comunicacao de nota fiscal eletronica brasileira</description>
     <url>https://github.com/wmixvideo/nfe</url>
@@ -22,7 +22,7 @@
         <developerConnection>scm:git:git@github.com:wmixvideo/nfe.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
-    
+
     <repositories>
         <repository>
             <id>tartigrado</id>
@@ -108,6 +108,14 @@
                 <exclusion>
                     <groupId>com.fasterxml.jackson.core</groupId>
                     <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -205,6 +213,12 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-s3</artifactId>
             <version>1.11.632</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.3</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

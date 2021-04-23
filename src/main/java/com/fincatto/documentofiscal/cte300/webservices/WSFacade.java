@@ -5,10 +5,11 @@ import br.inf.portalfiscal.cte.TRetConsReciCTe;
 import br.inf.portalfiscal.cte.TRetConsStatServ;
 import br.inf.portalfiscal.cte.TRetEnviCTe;
 import br.inf.portalfiscal.cte.TRetEvento;
-import com.fincatto.documentofiscal.DFSocketFactory;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 
 import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsultaRetorno;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
