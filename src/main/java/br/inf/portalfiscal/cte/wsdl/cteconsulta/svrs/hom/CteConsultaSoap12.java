@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @WebService(name = "CteConsultaSoap12", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteConsulta")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
-    ObjectFactory.class
+    ObjectFactory.class, br.inf.portalfiscal.cte.ObjectFactory.class
 })
 public interface CteConsultaSoap12 {
 

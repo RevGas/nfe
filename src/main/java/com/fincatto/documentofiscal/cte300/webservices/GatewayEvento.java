@@ -3,6 +3,7 @@ package com.fincatto.documentofiscal.cte300.webservices;
 import br.inf.portalfiscal.cte.TEvento;
 import br.inf.portalfiscal.cte.TRetEvento;
 import br.inf.portalfiscal.cte.TUf;
+import br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.hom.ObjectFactory;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 import java.util.Arrays;
 import javax.xml.bind.JAXBElement;
