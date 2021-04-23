@@ -32,7 +32,12 @@ public class SOAPHandlerCTeRecepcaoEventoLog implements SOAPHandler<SOAPMessageC
                 DOMSource source = new DOMSource(body.getFirstChild().getFirstChild());
                 StringWriter stringResult = new StringWriter();
                 TransformerFactory.newInstance().newTransformer().transform(source, new StreamResult(stringResult));
-                new S3().sendTConsReciCTe(stringResult.toString());
+                if(stringResult.toString().contains("evCancCTe")){
+                    new S3().sendTEvento(stringResult.toString());
+                }else{
+                    new S3().sendTConsReciCTe(stringResult.toString());
+                }
+
             } catch (Exception ex) {
                 Logger.getLogger(SOAPHandler.class.getName()).log(Level.SEVERE, null, ex);
             }

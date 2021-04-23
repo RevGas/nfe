@@ -2,7 +2,6 @@ package com.fincatto.documentofiscal.cte300.webservices;
 
 import br.inf.portalfiscal.cte.TConsReciCTe;
 import br.inf.portalfiscal.cte.TRetConsReciCTe;
-import br.inf.portalfiscal.cte.TRetEnviCTe;
 import br.inf.portalfiscal.cte.wsdl.cteretrecepcao.svrs.hom.CteCabecMsg;
 import br.inf.portalfiscal.cte.wsdl.cteretrecepcao.svrs.hom.CteDadosMsg;
 import br.inf.portalfiscal.cte.wsdl.cteretrecepcao.svrs.hom.CteRetRecepcao;

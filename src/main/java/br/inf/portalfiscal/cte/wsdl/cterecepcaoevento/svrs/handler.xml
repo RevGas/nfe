@@ -7,7 +7,7 @@
       <javaee:handler-class>br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.hom.SOAPHandlerCTeRecepcao</javaee:handler-class>
     </javaee:handler>
     <javaee:handler>
-      <javaee:handler-class>br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.SOAPHandlerCTeRecepcaoEventoLog</javaee:handler-class>
+      <javaee:handler-class>br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.SOAPHandlerCTeRecepcaoEventoLog</javaee:handler-class>
     </javaee:handler>
   </javaee:handler-chain>
 </javaee:handler-chains>

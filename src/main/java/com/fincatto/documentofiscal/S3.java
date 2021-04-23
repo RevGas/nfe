@@ -385,34 +385,33 @@ public class S3 {
     }
 
     public void sendTConsReciCTe(String xml) throws IOException, JAXBException {
-        TConsReciCTe enviCTe = (TConsReciCTe) Util.unmarshler(TConsReciCTe.class, xml);
-        String nRec = enviCTe.getNRec();
-        File xmlTemp = File.createTempFile(nRec, ".xml");
-        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPathCte(nRec, "enviCTe",enviCTe.getTpAmb()), xmlTemp);
+            TConsReciCTe enviCTe = (TConsReciCTe) Util.unmarshler(TConsReciCTe.class, xml);
+            String nRec = enviCTe.getNRec();
+            File xmlTemp = File.createTempFile(nRec, ".xml");
+            FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+            this.uploadFile(bucket, getPathCte(nRec, "enviCTe", enviCTe.getTpAmb()), xmlTemp);
     }
 
     public void sendTEvento(String xml) throws JAXBException, IOException {
-        TEvento tEvento = (TEvento) Util.unmarshler(TEvento.class, xml);
-        String id = tEvento.getInfEvento().getId();
-        File xmlTemp = File.createTempFile(id, ".xml");
+        br.inf.portalfiscal.cte.TEvento tEvento = (br.inf.portalfiscal.cte.TEvento) Util.unmarshler(br.inf.portalfiscal.cte.TEvento.class, xml);
+        File xmlTemp = File.createTempFile(tEvento.getInfEvento().getChCTe() + "-" + tEvento.getInfEvento().getNSeqEvento(), ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPathCte(id, "tEvento",tEvento.getInfEvento().getTpAmb()), xmlTemp);
+        this.uploadFile(bucket, getPathCte(tEvento.getInfEvento().getChCTe(), "tEvento", tEvento.getInfEvento().getTpAmb()), xmlTemp);
     }
 
     public void sendTRetEnviCTe(TRetEnviCTe retorno, TEnviCTe tEnviCTe) throws JAXBException, IOException {
-        String xml =  Util.marshaller(retorno);
+        String xml = Util.marshaller(retorno);
         File xmlTemp = File.createTempFile(xml, ".xml");
         String chaveCTe = Util.chaveFromCTe(tEnviCTe.getCTe().get(0));
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPathCte(chaveCTe, "tRetEnviCTe",retorno.getTpAmb()), xmlTemp);
+        this.uploadFile(bucket, getPathCte(chaveCTe, "tRetEnviCTe", retorno.getTpAmb()), xmlTemp);
     }
 
     public void sendTRetConsReciCTe(TRetConsReciCTe retorno) throws IOException, JAXBException {
-        String xml =  Util.marshaller(retorno);
+        String xml = Util.marshaller(retorno);
         File xmlTemp = File.createTempFile(xml, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
-        this.uploadFile(bucket, getPathCte(retorno.getProtCTe().get(0).getInfProt().getChCTe(), "tRetConsReciCTe",retorno.getTpAmb()), xmlTemp);
+        this.uploadFile(bucket, getPathCte(retorno.getProtCTe().get(0).getInfProt().getChCTe(), "tRetConsReciCTe", retorno.getTpAmb()), xmlTemp);
     }
 
     private class ContactMessage {
