@@ -19,6 +19,9 @@ import javax.xml.bind.Marshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import com.fincatto.documentofiscal.utils.Util;
+import com.tartigrado.df.validadores.cte.CTeValidatorFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -36,6 +39,7 @@ class WSCancelamento implements DFLog {
     TRetEvento cancelaCTe(final String chCTe, final String nProt, final String XJus) throws Exception {
         String xmlAssinado = new DFAssinaturaDigital(this.config).assinarDocumento(CTeParser.parserTEvento(gerarDadosCancelamento(chCTe, nProt, XJus)), "infEvento");
         xmlAssinado = xmlAssinado.replaceAll("ns4:", "");
+        CTeValidatorFactory.padrao().validaEvCancCTe(xmlAssinado);
         JAXBElement<TEvento> eTEvento = CTeParser.parserTEvento(xmlAssinado);
         return efetuaCancelamento(eTEvento);
     }
@@ -61,7 +65,7 @@ class WSCancelamento implements DFLog {
         infEvento.setCOrgao(chaveParser.getNFUnidadeFederativa().getCodigoIbge());
         infEvento.setChCTe(chCTe);
         infEvento.setDetEvento(detEvento);
-        infEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZZZ").format(ZonedDateTime.now()));
+        infEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX").format(ZonedDateTime.now()));
         infEvento.setId(String.format("ID%s%s0%s", WSCancelamento.EVENTO_CANCELAMENTO, chCTe, "1"));
         infEvento.setNSeqEvento("1");
         infEvento.setTpAmb(this.config.getAmbiente().getCodigo());
@@ -69,6 +73,7 @@ class WSCancelamento implements DFLog {
                 
         TEvento tEvento = new TEvento();
         tEvento.setInfEvento(infEvento);
+        tEvento.setVersao(VERSAO_LEIAUTE);
         
         return tEvento;
     }

@@ -9,6 +9,7 @@ import com.fincatto.documentofiscal.S3;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 import com.fincatto.documentofiscal.cte300.parsers.CTeParser;
 import com.fincatto.documentofiscal.utils.Util;
+import com.tartigrado.df.validadores.cte.CTeValidatorFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -38,10 +39,10 @@ class WSRecepcaoLoteRetorno implements DFLog {
         return efetuaConsulta(gerarDadosConsulta(nRec));
     }
 
-    private TRetConsReciCTe efetuaConsulta(final TConsReciCTe tConsReciCTe) throws JAXBException, IOException {
+    private TRetConsReciCTe efetuaConsulta(final TConsReciCTe tConsReciCTe) throws Exception {
         CteDadosMsg cteDadosMsg = new CteDadosMsg();
         cteDadosMsg.getContent().add(CTeParser.parserTConsReciCTe(tConsReciCTe));
-
+        CTeValidatorFactory.padrao().validaTConsReciCTe(Util.marshllerTConsReciCTe(CTeParser.parserTConsReciCTe(tConsReciCTe)));
         CteCabecMsg cteCabecMsg = new CteCabecMsg();
         cteCabecMsg.setCUF(this.config.getCUF().getCodigoIbge());
         cteCabecMsg.setVersaoDados(VERSAO);

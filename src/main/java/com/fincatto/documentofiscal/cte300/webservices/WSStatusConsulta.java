@@ -11,9 +11,13 @@ import br.inf.portalfiscal.cte.wsdl.ctestatusservico.svrs.hom.ObjectFactory;
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.DFUnidadeFederativa;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
+import com.fincatto.documentofiscal.utils.Util;
+import com.tartigrado.df.validadores.cte.CTeValidatorFactory;
+import com.tartigrado.df.validadores.cte.exception.CTeXSDValidationException;
 
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 import javax.xml.ws.Holder;
 
 class WSStatusConsulta implements DFLog {
@@ -26,7 +30,7 @@ class WSStatusConsulta implements DFLog {
         this.config = config;
     }
 
-    TRetConsStatServ consultaStatus() throws MalformedURLException {
+    TRetConsStatServ consultaStatus() throws Exception {
         return efetuaConsultaStatus(gerarDadosConsultaStatus(config), config.getCUF());
     }
 
@@ -38,7 +42,7 @@ class WSStatusConsulta implements DFLog {
         return tConsStatServ;
     }
 
-    private TRetConsStatServ efetuaConsultaStatus(TConsStatServ tConsStatServ, DFUnidadeFederativa uf) throws MalformedURLException {
+    private TRetConsStatServ efetuaConsultaStatus(TConsStatServ tConsStatServ, DFUnidadeFederativa uf) throws Exception {
         JAXBElement<TConsStatServ> eTConsStatServ = new br.inf.portalfiscal.cte.ObjectFactory().createConsStatServCte(tConsStatServ);
         
         CteCabecMsg cteCabecMsg = new CteCabecMsg();
@@ -49,10 +53,9 @@ class WSStatusConsulta implements DFLog {
         CteDadosMsg cteDadosMsg = new CteDadosMsg();
 //        cteDadosMsg.getContent().add(cteCabecMsg);
         cteDadosMsg.getContent().add(eTConsStatServ);
-                
+        CTeValidatorFactory.padrao().validaTConsStatServ(Util.marshllerCTeConsStatServ(eTConsStatServ));
         CteStatusServicoSoap12 port = new CteStatusServico().getCteStatusServicoSoap12();
         CteStatusServicoCTResult result = port.cteStatusServicoCT(cteDadosMsg);
-
         TRetConsStatServ tRetConsStatServ = ((JAXBElement<TRetConsStatServ>) result.getContent().get(0)).getValue();
         return tRetConsStatServ;
     }

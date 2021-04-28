@@ -1,10 +1,10 @@
 package com.fincatto.documentofiscal.utils;
 
-import br.inf.portalfiscal.cte.CteProc;
-import br.inf.portalfiscal.cte.TCTe;
-import br.inf.portalfiscal.cte.TRetConsReciCTe;
+import br.inf.portalfiscal.cte.*;
+import br.inf.portalfiscal.cte.TConsStatServ;
 import br.inf.portalfiscal.nfe.*;
 import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
+import com.fincatto.documentofiscal.cte300.classes.consultastatusservico.CTeConsStatServ;
 
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
@@ -75,6 +75,22 @@ public class Util {
         StringWriter stringWriter = new StringWriter();
         marshaller.marshal(new JAXBElement(new QName(convert(object.getClass().getSimpleName())), object.getClass(), object), stringWriter);
         return stringWriter.toString();
+    }
+
+    public static String marshallerCTe(Object object) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.cte");
+        Marshaller marshaller = context.createMarshaller();
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(new JAXBElement(new QName(convert(object.getClass().getSimpleName())), object.getClass(), object), stringWriter);
+        return stringWriter.toString();
+    }
+
+    public static String marshllerCTeConsStatServ(JAXBElement<TConsStatServ> jAXBElement) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.cte");
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(jAXBElement, result);
+        return result.toString();
     }
 
     public static String marshllerRetEnviNFe(JAXBElement<TRetEnviNFe> jAXBElement) throws JAXBException {
@@ -192,14 +208,6 @@ public class Util {
 
             case "TRetEnvEvento":
                 return "retEnvEvento";
-//            case "TNFe":
-//                return "consReciNFe";
-//            case "TNFe":
-//                return "consSitNFe";
-//            case "TNFe":
-//                return "consStatServ";
-//            case "TNFe":
-//                return "retConsReciNFe";
             case "TRetConsSitNFe":
                 return "retConsSitNFe";
             case "TRetConsStatServ":
@@ -208,6 +216,8 @@ public class Util {
                 return "retEnviNFe";
             case "TRetInutNFe":
                 return "retInutNFe";
+            case "TConsStatServ":
+                return "consStatServCte";
             default:
                 return objectName;
         }
@@ -238,5 +248,13 @@ public class Util {
                 .replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"","")
                 .replace("xmlns:ns3=\"http://www.portalfiscal.inf.br/cte\"",
                         "xmlns=\"http://www.portalfiscal.inf.br/cte\"");
+    }
+
+    public static String marshllerTConsReciCTe(JAXBElement<TConsReciCTe> parserTConsReciCTe) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.cte");
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(parserTConsReciCTe, result);
+        return result.toString();
     }
 }
