@@ -1,4 +1,3 @@
-
 package br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs;
 
 import java.util.ArrayList;

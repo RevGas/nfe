@@ -1,4 +1,3 @@
-
 package br.inf.portalfiscal.cte.wsdl.ctestatusservico.mt;
 
 import java.util.ArrayList;
@@ -59,8 +58,8 @@ public class CteStatusServicoCTResult {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Object }
      * {@link String }
+     * {@link Object }
      * 
      * 
      */

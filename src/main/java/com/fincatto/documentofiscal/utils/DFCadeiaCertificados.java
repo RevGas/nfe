@@ -32,7 +32,7 @@ public abstract class DFCadeiaCertificados implements DFLog {
                 final String host = new URI(urlMD).getHost();
                 DFCadeiaCertificados.get(keyStore, host);
             }
-            
+    
             //Para Distribuicao
             final String urlDistribuicao = "https://www1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx?WSDL";
             if (StringUtils.isNotBlank(urlDistribuicao)) {
