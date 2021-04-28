@@ -1,9 +1,10 @@
 package com.fincatto.documentofiscal.utils;
 
+import br.inf.portalfiscal.cte.CteProc;
 import br.inf.portalfiscal.cte.TCTe;
+import br.inf.portalfiscal.cte.TRetConsReciCTe;
 import br.inf.portalfiscal.nfe.*;
 import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
-import com.fincatto.documentofiscal.nfe.XSDFields;
 
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
@@ -11,12 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * Classe utilitária
@@ -65,6 +63,8 @@ public class Util {
                 .replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns3=\"http://www.portalfiscal.inf.br/nfe\"", "xmlns=\"http://www.portalfiscal.inf.br/nfe\"")
                 .replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", "")
                 .replace("xmlns:ns3=\"http://www.portalfiscal.inf.br/nfe\"", "")
+                .replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"\n" +
+                        "    xmlns:ns3=\"http://www.portalfiscal.inf.br/cte\"", "")
                 .replace("ns2:", "")
                 .replace("ns3:", "");
     }
@@ -167,6 +167,14 @@ public class Util {
         return object.getValue();
     }
 
+    public static CteProc unmarshlerCTe(Class element, String value) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(element.getPackage().getName());
+        Unmarshaller jaxbUnmarshaller;
+        jaxbUnmarshaller = context.createUnmarshaller();
+        StringReader reader = new StringReader(value);
+        return (CteProc) jaxbUnmarshaller.unmarshal(reader);
+    }
+
     public static String chaveFromTNFe(TNFe tnfe) {
         return tnfe.getInfNFe().getId().replace("NFe", "");
     }
@@ -207,5 +215,28 @@ public class Util {
 
     public static String chaveFromCTe(TCTe tcTe) {
         return tcTe.getInfCte().getId().replace("CTe", "");
+    }
+
+    public static String chaveFromtRetConsReciCTe(TRetConsReciCTe tRetConsReciCTe) {
+        return tRetConsReciCTe.getProtCTe().get(0).getInfProt().getChCTe();
+    }
+
+    public static String marshllerRetConsReciCTe(JAXBElement<TRetConsReciCTe> retConsReciCTe) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.cte");
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(retConsReciCTe, result);
+        return result.toString();
+    }
+
+    public static String marshallerCteProc(CteProc cteProc) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.cte");
+        Marshaller marshaller = context.createMarshaller();
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(new JAXBElement(new QName("cteProc"), CteProc.class, cteProc), stringWriter);
+        return stringWriter.toString()
+                .replace("xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"","")
+                .replace("xmlns:ns3=\"http://www.portalfiscal.inf.br/cte\"",
+                        "xmlns=\"http://www.portalfiscal.inf.br/cte\"");
     }
 }

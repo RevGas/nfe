@@ -1,9 +1,6 @@
 package com.fincatto.documentofiscal;
 
-import br.inf.portalfiscal.cte.TConsReciCTe;
-import br.inf.portalfiscal.cte.TEnviCTe;
-import br.inf.portalfiscal.cte.TRetConsReciCTe;
-import br.inf.portalfiscal.cte.TRetEnviCTe;
+import br.inf.portalfiscal.cte.*;
 import br.inf.portalfiscal.nfe.*;
 import br.inf.portalfiscal.nfe.model.evento_carta_correcao.Evento_CCe_PL_v101.TRetEnvEvento;
 import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TEnvEvento;
@@ -412,6 +409,14 @@ public class S3 {
         File xmlTemp = File.createTempFile(xml, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         this.uploadFile(bucket, getPathCte(retorno.getProtCTe().get(0).getInfProt().getChCTe(), "tRetConsReciCTe", retorno.getTpAmb()), xmlTemp);
+    }
+
+    public void sendProcCTe(String xml) throws JAXBException, IOException {
+        CteProc cteProc = (CteProc) Util.unmarshlerCTe(CteProc.class, xml);
+        String chaveCT = Util.chaveFromCTe(cteProc.getCTe());
+        File xmlTemp = File.createTempFile(chaveCT, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPathCte(chaveCT, "cteProc", cteProc.getCTe().getInfCte().getIde().getTpAmb()), xmlTemp);
     }
 
     private class ContactMessage {
