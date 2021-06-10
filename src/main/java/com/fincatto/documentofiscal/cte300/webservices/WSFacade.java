@@ -1,19 +1,24 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
-import com.fincatto.documentofiscal.DFUnidadeFederativa;
+import br.inf.portalfiscal.cte.TEnviCTe;
+import br.inf.portalfiscal.cte.TRetConsReciCTe;
+import br.inf.portalfiscal.cte.TRetConsStatServ;
+import br.inf.portalfiscal.cte.TRetEnviCTe;
+import br.inf.portalfiscal.cte.TRetEvento;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
-import com.fincatto.documentofiscal.cte300.classes.consultastatusservico.CTeConsStatServRet;
-import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLote;
-import com.fincatto.documentofiscal.cte300.classes.enviolote.CTeEnvioLoteRetornoDados;
-import com.fincatto.documentofiscal.cte300.classes.enviolote.consulta.CTeConsultaRecLoteRet;
-import com.fincatto.documentofiscal.cte300.classes.evento.cancelamento.CTeRetornoCancelamento;
 
 import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsultaRetorno;
+import com.fincatto.documentofiscal.utils.DFSocketFactory;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import javax.net.ssl.HttpsURLConnection;
 
 public class WSFacade {
 
@@ -24,8 +29,8 @@ public class WSFacade {
 
     private final WSRecepcaoLoteRetorno wsRecepcaoLoteRetorno;
 
-    public WSFacade(final CTeConfig config) throws KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
-//        Protocol.registerProtocol("https", new Protocol("https", new DFSocketFactory(config), 443));
+    public WSFacade(final CTeConfig config) throws KeyManagementException, UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException, GeneralSecurityException {
+        HttpsURLConnection.setDefaultSSLSocketFactory(new DFSocketFactory(config).createSSLContext().getSocketFactory());
         this.wsStatusConsulta = new WSStatusConsulta(config);
         this.wsRecepcaoLote = new WSRecepcaoLote(config);
         this.wsRecepcaoLoteRetorno = new WSRecepcaoLoteRetorno(config);
@@ -36,47 +41,47 @@ public class WSFacade {
     /**
      * Faz a consulta de status responsavel pela UF
      *
-     * @param uf uf UF que deseja consultar o status do sefaz responsavel
      * @return dados da consulta de status retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com
      * o sefaz
      */
-    public CTeConsStatServRet consultaStatus(final DFUnidadeFederativa uf) throws Exception {
-        return this.wsStatusConsulta.consultaStatus(uf);
+    public TRetConsStatServ consultaStatus() throws Exception {
+        return this.wsStatusConsulta.consultaStatus();
     }
 
     /**
-     * Faz o envio do lote para a SEFAZ
+     * Faz o envio do lote para a SEFAZ de forma assíncrona
      *
-     * @param cteRecepcao a ser eviado para a SEFAZ
+     * @param tEnviCTe a ser eviado para a SEFAZ
      * @return dados do retorno do envio do lote e o xml assinado
-<<<<<<< HEAD
-     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com
-     * o sefaz
-     *
-=======
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
->>>>>>> master
      */
-    public CTeEnvioLoteRetornoDados envioRecepcaoLote(CTeEnvioLote cteRecepcao) throws Exception {
-        return this.wsRecepcaoLote.envioRecepcao(cteRecepcao);
+    public TRetEnviCTe envioRecepcaoLote(TEnviCTe tEnviCTe) throws Exception {
+        return this.wsRecepcaoLote.envioRecepcao(tEnviCTe);
+    }
+    
+    /**
+     * Faz o envio do lote para a SEFAZ de forma síncrona
+     *
+     * @param tEnviCTe a ser eviado para a SEFAZ
+     * @return dados do retorno do envio do lote e o xml assinado
+     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
+     */
+    public TRetEnviCTe envioRecepcaoLoteSinc(TEnviCTe tEnviCTe) throws Exception {
+        return this.wsRecepcaoLote.envioRecepcaoSinc(tEnviCTe);
     }
 
     /**
      * Faz a consulta do processamento do lote na SEFAZ
      *
-     * @param numRecibo do recebimento do lote
+     * @param nRec do recebimento do lote
      * @return dados da consulta do processamento do lote
-<<<<<<< HEAD
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com
      * o sefaz
      *
-=======
-     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
->>>>>>> master
      */
-    public CTeConsultaRecLoteRet consultaEnvioRecepcaoLote(String numRecibo) throws Exception {
-        return this.wsRecepcaoLoteRetorno.consultaLote(numRecibo);
+    public TRetConsReciCTe consultaEnvioRecepcaoLote(String nRec) throws Exception {
+        return this.wsRecepcaoLoteRetorno.consultaLote(nRec);
     }
 
     /**
@@ -92,27 +97,14 @@ public class WSFacade {
 
     /**
      * Faz o cancelamento do CTe
-     *
-     * @param chave chave de acesso da nota
-     * @param numeroProtocolo numero do protocolo da nota
-     * @param motivo motivo do cancelamento
+     * @param chCTe chave de acesso do CTe
+     * @param nProt numero do protocolo do CTe
+     * @param XJus motivo do cancelamento do CTe
      * @return dados do cancelamento da nota retornado pelo webservice
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public CTeRetornoCancelamento cancelaNota(final String chave, final String numeroProtocolo, final String motivo) throws Exception {
-        return this.wsCancelamento.cancelaNota(chave, numeroProtocolo, motivo);
+    public TRetEvento cancelaCTe(final String chCTe, final String nProt, final String XJus) throws Exception {
+        return this.wsCancelamento.cancelaCTe(chCTe, nProt, XJus);
     }
 
-    /**
-     * Faz o cancelamento da nota com evento ja assinado
-     * ATENCAO: Esse metodo deve ser utilizado para assinaturas A3
-     *
-     * @param chave chave de acesso da nota
-     * @param eventoAssinadoXml evento ja assinado em formato XML
-     * @return dados do cancelamento da nota retornado pelo webservice
-     * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
-     */
-    public CTeRetornoCancelamento cancelaNotaAssinada(final String chave, final String eventoAssinadoXml) throws Exception {
-        return this.wsCancelamento.cancelaNotaAssinada(chave, eventoAssinadoXml);
-    }
 }

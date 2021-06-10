@@ -344,6 +344,7 @@ public enum GatewayCartaCorrecao {
 
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NFeRecepcaoEvento4SoapCartaCorrecao port = new br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NFeRecepcaoEvento4().getNFeRecepcaoEvento4Soap12CartaCorrecao();
             ((BindingProvider) port).getRequestContext().put("com.sun.xml.internal.ws.transport.https.client.SSLSocketFactory", socketFactory);
+            ((BindingProvider)port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://nfe.fazenda.mg.gov.br/nfe2/services/NFeRecepcaoEvento4");
             br.inf.portalfiscal.nfe.wsdl.nferecepcaoevento4.mg.NFeRecepcaoEvento4Result result = port.nfeRecepcaoEvento(nfeDadosMsg);
 
             return ((JAXBElement<TRetEnvEvento>) result.getRetEnvEvento().get(0)).getValue();

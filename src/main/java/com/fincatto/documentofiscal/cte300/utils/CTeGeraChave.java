@@ -1,22 +1,21 @@
 package com.fincatto.documentofiscal.cte300.utils;
 
-import com.fincatto.documentofiscal.cte300.classes.nota.CTeNota;
+import br.inf.portalfiscal.cte.TEnviCTe;
+import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Random;
-import java.util.UUID;
 
 public class CTeGeraChave {
     
-    private final CTeNota nota;
+    private final TEnviCTe tEnviCTe;
     
-    public CTeGeraChave(final CTeNota nota) {
-        this.nota = nota;
+    public CTeGeraChave(final TEnviCTe tEnviCTe) {
+        this.tEnviCTe = tEnviCTe;
     }
     
     public String geraCodigoRandomico() {
-        final Random random = new Random(UUID.randomUUID().timestamp());
+        final Random random = new Random(new Date().toInstant().toEpochMilli());
         return StringUtils.leftPad(String.valueOf(random.nextInt(100000000)), 8, "0");
     }
     
@@ -45,9 +44,17 @@ public class CTeGeraChave {
     }
     
     private String geraChaveAcessoSemDV() {
-        if (StringUtils.isBlank(this.nota.getCteNotaInfo().getIdentificacao().getCodigoNumerico())) {
+        if (StringUtils.isBlank(this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getCCT())) {
             throw new IllegalStateException("Codigo numerico deve estar presente para gerar a chave de acesso");
         }
-        return StringUtils.leftPad(this.nota.getCteNotaInfo().getIdentificacao().getCodigoUF().getCodigoIbge(), 2, "0") + StringUtils.leftPad(DateTimeFormatter.ofPattern("yyMM").format(this.nota.getCteNotaInfo().getIdentificacao().getDataEmissao()), 4, "0") + StringUtils.leftPad(this.nota.getCteNotaInfo().getEmitente().getCnpj(), 14, "0") + StringUtils.leftPad(this.nota.getCteNotaInfo().getIdentificacao().getModelo().getCodigo(), 2, "0") + StringUtils.leftPad(this.nota.getCteNotaInfo().getIdentificacao().getSerie() + "", 3, "0") + StringUtils.leftPad(this.nota.getCteNotaInfo().getIdentificacao().getNumero() + "", 9, "0") + StringUtils.leftPad(this.nota.getCteNotaInfo().getIdentificacao().getTipoEmissao().getCodigo(), 1, "0") + StringUtils.leftPad(this.nota.getCteNotaInfo().getIdentificacao().getCodigoNumerico(), 8, "0");
+        return StringUtils.leftPad(this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getCUF(), 2, "0") +
+            StringUtils.leftPad(this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getDhEmi().substring(2,4)+
+                    this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getDhEmi().substring(5,7), 4, "0") +
+            StringUtils.leftPad(this.tEnviCTe.getCTe().get(0).getInfCte().getEmit().getCNPJ(), 14, "0") +
+            StringUtils.leftPad(this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getMod(), 2, "0") + 
+            StringUtils.leftPad(this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getSerie() + "", 3, "0") +
+            StringUtils.leftPad(this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getNCT() + "", 9, "0") +
+            StringUtils.leftPad(this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getTpEmis(), 1, "0") +
+            StringUtils.leftPad(this.tEnviCTe.getCTe().get(0).getInfCte().getIde().getCCT(), 8, "0");
     }
 }
