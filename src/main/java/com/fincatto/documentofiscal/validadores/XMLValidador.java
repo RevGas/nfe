@@ -33,7 +33,7 @@ public final class XMLValidador {
 
     private static boolean valida400(final String xml, final String xsd) {
         try {
-            final URL xsdPath = XMLValidador.class.getClassLoader().getResource(String.format("schemas/PL_009_V4_00_NT_2020_006_v1.10/%s", xsd));
+            final URL xsdPath = XMLValidador.class.getClassLoader().getResource(String.format("schemas/PL_009_V4_00_NT_2018_005_v1.20/%s", xsd));
             final SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
             final Schema schema = schemaFactory.newSchema(new StreamSource(xsdPath.toURI().toString()));
             schema.newValidator().validate(new StreamSource(new StringReader(xml)));
