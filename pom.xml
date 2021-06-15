@@ -162,7 +162,7 @@
         <dependency>
             <groupId>com.tartigrado</groupId>
             <artifactId>model_nfe</artifactId>
-            <version>PL_009_V4_00_NT_2020_006_v1.10</version>
+            <version>PL_009_V4_00_NT_2018_005_v1.20</version>
         </dependency>
         <dependency>
             <groupId>com.tartigrado</groupId>
