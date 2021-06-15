@@ -31,6 +31,7 @@
 		</queryString>
 		<field name="_THIS" class="java.lang.String"/>
 	</subDataset>
+	<parameter name="QR_CODE" class="java.lang.Object"/>
 	<parameter name="NOTAS_FISCAIS_T1" class="java.util.List"/>
 	<parameter name="NOTAS_FISCAIS_T2" class="java.util.List"/>
 	<queryString language="XPath">
@@ -2287,14 +2288,12 @@ $F{chCTe}.substring(40, 44)]]></textFieldExpression>
 					<jr:codeExpression><![CDATA[$F{chCTe}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
-			<componentElement>
+			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement x="470" y="39" width="82" height="89" uuid="27807b0b-76f4-4bcc-9905-38c3ebfa6c77">
 					<property name="com.jaspersoft.studio.unit.margin" value="pixel"/>
 				</reportElement>
-				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<jr:codeExpression><![CDATA[$F{qrCodCTe}]]></jr:codeExpression>
-				</jr:QRCode>
-			</componentElement>
+				<imageExpression><![CDATA[$P{QR_CODE}]]></imageExpression>
+			</image>
 			<componentElement>
 				<reportElement x="0" y="477" width="80" height="25" uuid="4f2dcd03-48b9-4f38-92fe-a66af77744dd">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
