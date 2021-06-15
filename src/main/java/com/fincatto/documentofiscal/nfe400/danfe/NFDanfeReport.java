@@ -52,16 +52,6 @@ public class NFDanfeReport {
         this.nota = nota;
     }
 
-    public static void main(String[] args) throws Exception {
-        File xml = new File("/home/artur/nfe.xml");
-
-        NFDanfeReport danfe = new NFDanfeReport(FileUtils.readFileToString(xml, StandardCharsets.UTF_8));
-        final byte[] fileByte = danfe.gerarDanfeNFe(null, null, null);
-
-        File temp = new File("/home/artur/DANFE.pdf");
-        FileUtils.writeByteArrayToFile(temp, fileByte);
-    }
-
     public byte[] gerarDanfeNFe(byte[] logoEmpresa, String marcaDagua, String rodape) throws Exception {
         return toPDF(createJasperPrintNFe(logoEmpresa, marcaDagua, "Emitido por RevGás"));
     }
