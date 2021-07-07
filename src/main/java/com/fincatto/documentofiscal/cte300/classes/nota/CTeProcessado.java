@@ -24,7 +24,7 @@ public class CTeProcessado extends DFBase {
     private String versao;
 
     @Element(name = "CTe")
-    private CTeNota cte;
+    private CTeNotaAtualizado cte;
 
     @Element(name = "protCTe")
     private CTeProtocolo protocolo;
@@ -45,11 +45,11 @@ public class CTeProcessado extends DFBase {
         this.versao = versao;
     }
 
-    public CTeNota getCte() {
+    public CTeNotaAtualizado getCte() {
         return this.cte;
     }
 
-    public void setCte(final CTeNota cte) {
+    public void setCte(final CTeNotaAtualizado cte) {
         this.cte = cte;
     }
 

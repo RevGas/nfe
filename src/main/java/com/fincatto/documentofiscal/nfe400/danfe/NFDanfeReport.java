@@ -2,6 +2,7 @@ package com.fincatto.documentofiscal.nfe400.danfe;
 
 import com.fincatto.documentofiscal.DFAmbiente;
 import com.fincatto.documentofiscal.DFModelo;
+import com.fincatto.documentofiscal.cte300.dacte.CTeDacteReport;
 import com.fincatto.documentofiscal.nfe400.classes.nota.NFNotaProcessada;
 import com.fincatto.documentofiscal.persister.DFPersister;
 import com.google.zxing.BarcodeFormat;
@@ -20,6 +21,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRXmlDataSource;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -31,15 +33,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
+import java.io.*;
 import java.math.BigDecimal;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class NFDanfeReport {
 
@@ -54,7 +53,7 @@ public class NFDanfeReport {
     }
 
     public byte[] gerarDanfeNFe(byte[] logoEmpresa, String marcaDagua, String rodape) throws Exception {
-        return toPDF(createJasperPrintNFe(logoEmpresa, marcaDagua, rodape));
+        return toPDF(createJasperPrintNFe(logoEmpresa, marcaDagua, "Emitido por RevGás"));
     }
 
     public byte[] gerarDanfeNFCe(String informacoesComplementares, boolean mostrarMsgFinalizacao, List<NFCePagamento> pgtos, String rodape) throws Exception {
