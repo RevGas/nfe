@@ -6,6 +6,7 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.ws.Holder;
 
 
 /**
@@ -32,6 +33,8 @@ public interface CteRecepcaoEventoSoap12 {
     @WebResult(name = "cteRecepcaoEventoResult", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento", partName = "cteRecepcaoEventoResult")
     public CteRecepcaoEventoResult cteRecepcaoEvento(
         @WebParam(name = "cteDadosMsg", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento", partName = "cteDadosMsg")
-        CteDadosMsg cteDadosMsg);
+        CteDadosMsg cteDadosMsg,
+        @WebParam(name = "cteCabecMsg", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento", header = true, mode = WebParam.Mode.INOUT, partName = "cteCabecMsg")
+                Holder<CteCabecMsg> cteCabecMsg);
 
 }

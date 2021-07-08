@@ -123,17 +123,16 @@ public enum GatewayEvento {
             br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteDadosMsg cteDadosMsg = new br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteDadosMsg();
             cteDadosMsg.getContent().add(eTEvento);
 
-//            br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteCabecMsg cteCabecMsg = new br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteCabecMsg();
-//            cteCabecMsg.setCUF(config.getCUF().getCodigoIbge());
-//            cteCabecMsg.setVersaoDados("3.00");
-//
-//            Holder<br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteCabecMsg> holder = new Holder<>(new br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.ObjectFactory().createCteCabecMsg(cteCabecMsg).getValue());
+            br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteCabecMsg cteCabecMsg = new br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteCabecMsg();
+            cteCabecMsg.setCUF(config.getCUF().getCodigoIbge());
+            cteCabecMsg.setVersaoDados("3.00");
+
+            Holder<br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteCabecMsg> holder = new Holder<>(new br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.ObjectFactory().createCteCabecMsg(cteCabecMsg).getValue());
 
             br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteRecepcaoEventoSoap12 port = new br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteRecepcaoEvento().getCteRecepcaoEventoSoap12();
-            br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteRecepcaoEventoResult result = port.cteRecepcaoEvento(cteDadosMsg);
+            br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.CteRecepcaoEventoResult result = port.cteRecepcaoEvento(cteDadosMsg, holder);
 
-            TRetEvento tProcEvento = ((JAXBElement<TRetEvento>) result.getContent().get(0)).getValue();
-            return tProcEvento;
+            return ((JAXBElement<TRetEvento>) result.getContent().get(0)).getValue();
         } else { // Homologação
             br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.hom.CteDadosMsg cteDadosMsg = new br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.hom.CteDadosMsg();
             cteDadosMsg.getContent().add(eTEvento);
@@ -147,8 +146,7 @@ public enum GatewayEvento {
             br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.hom.CteRecepcaoEventoSoap12 port = new br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.hom.CteRecepcaoEvento().getCteRecepcaoEventoSoap12();
             br.inf.portalfiscal.cte.wsdl.cterecepcaoevento.svrs.hom.CteRecepcaoEventoResult result = port.cteRecepcaoEvento(cteDadosMsg, holder);
 
-            TRetEvento tProcEvento = ((JAXBElement<TRetEvento>) result.getContent().get(0)).getValue();
-            return tProcEvento;
+            return ((JAXBElement<TRetEvento>) result.getContent().get(0)).getValue();
         }
     }
     
