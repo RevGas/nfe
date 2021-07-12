@@ -65,7 +65,7 @@ class WSCancelamento implements DFLog {
         infEvento.setCOrgao(chaveParser.getNFUnidadeFederativa().getCodigoIbge());
         infEvento.setChCTe(chCTe);
         infEvento.setDetEvento(detEvento);
-        infEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX").format(ZonedDateTime.now()));
+        infEvento.setDhEvento(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX").format(ZonedDateTime.now(this.config.getTimeZone().toZoneId())));
         infEvento.setId(String.format("ID%s%s0%s", WSCancelamento.EVENTO_CANCELAMENTO, chCTe, "1"));
         infEvento.setNSeqEvento("1");
         infEvento.setTpAmb(this.config.getAmbiente().getCodigo());

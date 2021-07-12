@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "CteRecepcaoEvento", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento", wsdlLocation = "https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx?wsdl")
+@WebServiceClient(name = "CteRecepcaoEvento", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoEvento", wsdlLocation = "https://cte.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx?wsdl")
 @HandlerChain(file="handler.xml")
 public class CteRecepcaoEvento
     extends Service
@@ -31,7 +31,7 @@ public class CteRecepcaoEvento
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://cte-homologacao.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx?wsdl");
+            url = new URL("https://cte.svrs.rs.gov.br/ws/cterecepcaoevento/cterecepcaoevento.asmx?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

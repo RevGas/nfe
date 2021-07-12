@@ -2,11 +2,13 @@ package com.fincatto.documentofiscal.cte300.webservices;
 
 import br.inf.portalfiscal.cte.CteProc;
 import br.inf.portalfiscal.cte.TConsReciCTe;
+import br.inf.portalfiscal.cte.TEvento;
 import br.inf.portalfiscal.cte.TRetConsReciCTe;
 import br.inf.portalfiscal.cte.wsdl.cteretrecepcao.svrs.hom.*;
 import com.fincatto.documentofiscal.DFLog;
 import com.fincatto.documentofiscal.S3;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
+import com.fincatto.documentofiscal.cte300.parsers.CTChaveParser;
 import com.fincatto.documentofiscal.cte300.parsers.CTeParser;
 import com.fincatto.documentofiscal.utils.Util;
 import com.tartigrado.df.validadores.cte.CTeValidatorFactory;
@@ -40,22 +42,15 @@ class WSRecepcaoLoteRetorno implements DFLog {
     }
 
     private TRetConsReciCTe efetuaConsulta(final TConsReciCTe tConsReciCTe) throws Exception {
-        CteDadosMsg cteDadosMsg = new CteDadosMsg();
-        cteDadosMsg.getContent().add(CTeParser.parserTConsReciCTe(tConsReciCTe));
-        CTeValidatorFactory.padrao().validaTConsReciCTe(Util.marshllerTConsReciCTe(CTeParser.parserTConsReciCTe(tConsReciCTe)));
-        CteCabecMsg cteCabecMsg = new CteCabecMsg();
-        cteCabecMsg.setCUF(this.config.getCUF().getCodigoIbge());
-        cteCabecMsg.setVersaoDados(VERSAO);
+        JAXBElement<TConsReciCTe> etConsReciCTe = CTeParser.parserTConsReciCTe(tConsReciCTe);
+        CTeValidatorFactory.padrao().validaTConsReciCTe(Util.marshllerTConsReciCTe(etConsReciCTe));
 
-        Holder<CteCabecMsg> holder = new Holder<>(new ObjectFactory().createCteCabecMsg(cteCabecMsg).getValue());
+        TRetConsReciCTe tRetConsReciCTe = GatewayRetRecepcao.valueOfCodigoUF(new CTChaveParser().getTUf(this.config.getCUF().getCodigoIbge()))
+                .getTRetConsReciCTe(etConsReciCTe, this.config);
 
-        CteRetRecepcaoSoap12 port = new CteRetRecepcao().getCteRetRecepcaoSoap12();
-        CteRetRecepcaoResult result = port.cteRetRecepcao(cteDadosMsg, holder);
-
-        TRetConsReciCTe tRetEnviCTe = ((JAXBElement<TRetConsReciCTe>) result.getContent().get(0)).getValue();
-        sendTRetEnviCTe(tRetEnviCTe);
-        uploadProcCTe(tRetEnviCTe);
-        return tRetEnviCTe;
+        sendTRetEnviCTe(tRetConsReciCTe);
+        uploadProcCTe(tRetConsReciCTe);
+        return tRetConsReciCTe;
     }
 
     private void uploadProcCTe(TRetConsReciCTe tRetConsReciCTe) {
@@ -97,13 +92,18 @@ class WSRecepcaoLoteRetorno implements DFLog {
     private TConsReciCTe gerarDadosConsulta(final String nRec) {
         TConsReciCTe tConsReciCTe = new TConsReciCTe();
         tConsReciCTe.setNRec(nRec);
-        tConsReciCTe.setTpAmb("2");
+        tConsReciCTe.setTpAmb(this.config.getAmbiente().getCodigo());
         tConsReciCTe.setVersao("3.00");
         return tConsReciCTe;
     }
 
     public static void sendTRetEnviCTe(TRetConsReciCTe retorno) throws JAXBException, IOException {
-        new S3().sendTRetConsReciCTe(retorno); //Tentar enviar para o S3
+        try {
+            new S3().sendTRetConsReciCTe(retorno); //Tentar enviar para o S3
+        } catch (IndexOutOfBoundsException exception) {
+            System.out.println("OCORREU UM ERRO AO TENTAR ENVIAR PARA O S3");
+        }
+
     }
 
 }

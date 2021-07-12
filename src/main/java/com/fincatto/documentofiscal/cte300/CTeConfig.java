@@ -3,6 +3,8 @@ package com.fincatto.documentofiscal.cte300;
 import com.fincatto.documentofiscal.DFConfig;
 import com.fincatto.documentofiscal.cte300.classes.CTTipoEmissao;
 
+import java.util.TimeZone;
+
 /**
  * Configuracao basica CT-e.
  * @author Caio
@@ -19,5 +21,10 @@ public abstract class CTeConfig extends DFConfig {
      */
     public CTTipoEmissao getTipoEmissao() {
         return CTTipoEmissao.EMISSAO_NORMAL;
+    }
+
+    @Override
+    public TimeZone getTimeZone() {
+        return TIMEZONE_SP;
     }
 }
