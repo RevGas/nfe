@@ -5,16 +5,16 @@ import br.inf.portalfiscal.cte.TConsStatServ;
 import br.inf.portalfiscal.nfe.*;
 import br.inf.portalfiscal.nfe.model.evento_generico.Evento_Generico_PL_v101.TRetEnvEvento;
 import com.fincatto.documentofiscal.cte300.classes.consultastatusservico.CTeConsStatServ;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Classe utilitária
@@ -231,11 +231,23 @@ public class Util {
         return tRetConsReciCTe.getProtCTe().get(0).getInfProt().getChCTe();
     }
 
+    public static String chaveFromtRetCTe(TRetCTe tRetConsReciCTe) {
+        return tRetConsReciCTe.getProtCTe().getInfProt().getChCTe();
+    }
+
     public static String marshllerRetConsReciCTe(JAXBElement<TRetConsReciCTe> retConsReciCTe) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.cte");
         StringWriter result = new StringWriter();
         Marshaller marshaller = context.createMarshaller();
         marshaller.marshal(retConsReciCTe, result);
+        return result.toString();
+    }
+
+    public static String marshllerRetCTe(JAXBElement<TRetCTe> retCTe) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.cte");
+        StringWriter result = new StringWriter();
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(retCTe, result);
         return result.toString();
     }
 
@@ -256,5 +268,29 @@ public class Util {
         Marshaller marshaller = context.createMarshaller();
         marshaller.marshal(parserTConsReciCTe, result);
         return result.toString();
+    }
+
+    public static String compress(String str) throws Exception {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+        ByteArrayOutputStream obj = new ByteArrayOutputStream();
+        GZIPOutputStream gzip = new GZIPOutputStream(obj);
+        gzip.write(str.getBytes(StandardCharsets.UTF_8));
+        gzip.close();
+        return Base64.encode(obj.toByteArray());
+    }
+
+    public static String decompress(String encoded) throws Exception {
+        GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(Base64.decode(encoded)));
+        BufferedReader br = new BufferedReader(new InputStreamReader(gis, StandardCharsets.UTF_8));
+        StringBuilder outStr = new StringBuilder();
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            outStr.append(line);
+        }
+
+        return outStr.toString();
     }
 }

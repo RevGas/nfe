@@ -1,5 +1,5 @@
 
-package br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.hom;
+package br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

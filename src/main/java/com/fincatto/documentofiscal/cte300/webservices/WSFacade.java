@@ -1,10 +1,6 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
-import br.inf.portalfiscal.cte.TEnviCTe;
-import br.inf.portalfiscal.cte.TRetConsReciCTe;
-import br.inf.portalfiscal.cte.TRetConsStatServ;
-import br.inf.portalfiscal.cte.TRetEnviCTe;
-import br.inf.portalfiscal.cte.TRetEvento;
+import br.inf.portalfiscal.cte.*;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 
 import com.fincatto.documentofiscal.cte300.classes.nota.consulta.CTeNotaConsultaRetorno;
@@ -67,7 +63,7 @@ public class WSFacade {
      * @return dados do retorno do envio do lote e o xml assinado
      * @throws Exception caso nao consiga gerar o xml ou problema de conexao com o sefaz
      */
-    public TRetEnviCTe envioRecepcaoLoteSinc(TEnviCTe tEnviCTe) throws Exception {
+    public TRetCTe envioRecepcaoLoteSinc(TEnviCTe tEnviCTe) throws Exception {
         return this.wsRecepcaoLote.envioRecepcaoSinc(tEnviCTe);
     }
 

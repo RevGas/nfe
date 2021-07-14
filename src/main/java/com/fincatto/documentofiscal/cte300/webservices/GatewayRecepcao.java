@@ -1,8 +1,6 @@
 package com.fincatto.documentofiscal.cte300.webservices;
 
-import br.inf.portalfiscal.cte.TEnviCTe;
-import br.inf.portalfiscal.cte.TRetEnviCTe;
-import br.inf.portalfiscal.cte.TUf;
+import br.inf.portalfiscal.cte.*;
 import com.fincatto.documentofiscal.S3;
 import com.fincatto.documentofiscal.cte300.CTeConfig;
 import com.fincatto.documentofiscal.cte300.parsers.CTeParser;
@@ -14,12 +12,19 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.ws.Holder;
 
+import static com.fincatto.documentofiscal.utils.Util.compress;
+
 public enum GatewayRecepcao {
     
     MG {
         @Override
         public TRetEnviCTe getTRetEnviCTe(TEnviCTe tEnviCTe, CTeConfig config) {
             return getTRetEnviCTeMG(tEnviCTe, config);
+        }
+
+        @Override
+        public TRetCTe getTRetCTe(TCTe tcTe, CTeConfig config) {
+            return getTRetCTeMG(tcTe, config);
         }
         
         @Override
@@ -32,7 +37,12 @@ public enum GatewayRecepcao {
     MS {
         @Override
         public TRetEnviCTe getTRetEnviCTe(TEnviCTe tEnviCTe, CTeConfig config) {
-            return getTRetEnviCTeMG(tEnviCTe, config);
+            return getTRetEnviCTeMS(tEnviCTe, config);
+        }
+
+        @Override
+        public TRetCTe getTRetCTe(TCTe tcTe, CTeConfig config) {
+            return getTRetCTeMS(tcTe, config);
         }
         
         @Override
@@ -47,6 +57,11 @@ public enum GatewayRecepcao {
         public TRetEnviCTe getTRetEnviCTe(TEnviCTe tEnviCTe, CTeConfig config) {
             return getTRetEnviCTeMT(tEnviCTe, config);
         }
+
+        @Override
+        public TRetCTe getTRetCTe(TCTe tcTe, CTeConfig config) {
+            return getTRetCTeMT(tcTe, config);
+        }
         
         @Override
         public TUf[] getUFs() {
@@ -59,6 +74,11 @@ public enum GatewayRecepcao {
         @Override
         public TRetEnviCTe getTRetEnviCTe(TEnviCTe tEnviCTe, CTeConfig config) {
             return getTRetEnviCTePR(tEnviCTe, config);
+        }
+
+        @Override
+        public TRetCTe getTRetCTe(TCTe tcTe, CTeConfig config) {
+            return getTRetCTePR(tcTe, config);
         }
         
         @Override
@@ -75,6 +95,11 @@ public enum GatewayRecepcao {
         }
 
         @Override
+        public TRetCTe getTRetCTe(TCTe tcTe, CTeConfig config) {
+            return getTRetCTeSVSP(tcTe, config);
+        }
+
+        @Override
         public TUf[] getUFs() {
             return new TUf[]{
                 TUf.AP, TUf.PE, TUf.RR, TUf.SP
@@ -85,6 +110,11 @@ public enum GatewayRecepcao {
         @Override
         public TRetEnviCTe getTRetEnviCTe(TEnviCTe tEnviCTe, CTeConfig config) throws Exception {
             return getTRetEnviCTeSVRS(tEnviCTe, config);
+        }
+
+        @Override
+        public TRetCTe getTRetCTe(TCTe tcTe, CTeConfig config) throws Exception {
+            return getTRetCTeSVRS(tcTe, config);
         }
 
         @Override
@@ -113,13 +143,33 @@ public enum GatewayRecepcao {
     public TRetEnviCTe getTRetEnviCTeMG(TEnviCTe tEnviCTe, CTeConfig config) {
        return null;
     }
+
+    public TRetCTe getTRetCTeMG(TCTe tcTe, CTeConfig config) {
+        return null;
+    }
+
+    public TRetEnviCTe getTRetEnviCTeMS(TEnviCTe tEnviCTe, CTeConfig config) {
+       return null;
+    }
+
+    public TRetCTe getTRetCTeMS(TCTe tcTe, CTeConfig config) {
+        return null;
+    }
     
     public TRetEnviCTe getTRetEnviCTeMT(TEnviCTe tEnviCTe, CTeConfig config) {
        return null;
     }
+
+    public TRetCTe getTRetCTeMT(TCTe tcTe, CTeConfig config) {
+        return null;
+    }
     
     public TRetEnviCTe getTRetEnviCTePR(TEnviCTe tEnviCTe, CTeConfig config) {
        return null;
+    }
+
+    public TRetCTe getTRetCTePR(TCTe tcTe, CTeConfig config) {
+        return null;
     }
     
     public TRetEnviCTe getTRetEnviCTeSVRS(TEnviCTe tEnviCTe, CTeConfig config) throws Exception {
@@ -157,17 +207,54 @@ public enum GatewayRecepcao {
             return tRetEnviCTe;
         }
     }
+
+    public TRetCTe getTRetCTeSVRS(TCTe tcTe, CTeConfig config) throws Exception {
+        if (isProduction(tcTe)) {
+            br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.CteRecepcaoSincSoap12 port = new br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.CteRecepcaoSinc().getCteRecepcaoSincSoap12();
+            String compressed = compress(getDocumentoAssinado(tcTe, config));
+            br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.CteRecepcaoSincResult result = port.cteRecepcaoSinc(compressed);
+
+            TRetCTe retCTeJAXBElement = ((JAXBElement<TRetCTe>) result.getContent().get(0)).getValue();
+            sendTRetCTe(retCTeJAXBElement, tcTe);
+            return retCTeJAXBElement;
+        } else {
+            br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.hom.CteRecepcaoSincSoap12 port = new br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.hom.CteRecepcaoSinc().getCteRecepcaoSincSoap12();
+            String compressed = compress(getDocumentoAssinado(tcTe, config));
+            br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.hom.CteRecepcaoSincResult result = port.cteRecepcaoSinc(compressed);
+
+            TRetCTe retCTeJAXBElement = ((JAXBElement<TRetCTe>) result.getContent().get(0)).getValue();
+            sendTRetCTe(retCTeJAXBElement, tcTe);
+            return retCTeJAXBElement;
+        }
+    }
     
     public TRetEnviCTe getTRetEnviCTeSVSP(TEnviCTe tEnviCTe, CTeConfig config) {
        return null;
+    }
+
+    public TRetCTe getTRetCTeSVSP(TCTe tcTe, CTeConfig config) {
+        return null;
     }
     
     private String getDocumentoAssinado(TEnviCTe tEnviCTe, CTeConfig config) throws JAXBException, Exception {
         return new DFAssinaturaDigital(config).assinarDocumento(CTeParser.parserTEnviCTe(tEnviCTe).replace(" xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", ""), "infCte");
     }
 
+    private String getDocumentoAssinado(TCTe tcte, CTeConfig config) throws JAXBException, Exception {
+        return new DFAssinaturaDigital(config).assinarDocumento(CTeParser.parserTCTe(tcte).replace(" xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\"", ""), "infCte");
+    }
+
     public static void sendTRetEnviCTe(TRetEnviCTe retorno, TEnviCTe tEnviCTe) throws JAXBException, IOException {
         new S3().sendTRetEnviCTe(retorno, tEnviCTe); //Tentar enviar para o S3
     }
 
+    public static void sendTRetCTe(TRetCTe retorno, TCTe tEnviCTe) throws JAXBException, IOException {
+        new S3().sendTRetCTe(retorno, tEnviCTe); //Tentar enviar para o S3
+    }
+
+    public abstract TRetCTe getTRetCTe(TCTe tcTe, CTeConfig config) throws Exception;
+
+    private boolean isProduction(TCTe tcTe) {
+        return tcTe.getInfCte().getIde().getTpAmb().equals("1");
+    }
 }

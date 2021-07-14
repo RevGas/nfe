@@ -1,5 +1,5 @@
 
-package br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.hom;
+package br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;

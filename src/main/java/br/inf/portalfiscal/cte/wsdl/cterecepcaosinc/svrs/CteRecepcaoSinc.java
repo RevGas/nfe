@@ -1,4 +1,5 @@
-package br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs.hom;
+
+package br.inf.portalfiscal.cte.wsdl.cterecepcaosinc.svrs;
 
 import javax.jws.HandlerChain;
 import javax.xml.namespace.QName;
@@ -13,7 +14,7 @@ import java.net.URL;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "CteRecepcaoSinc", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoSinc", wsdlLocation = "https://cte-homologacao.svrs.rs.gov.br/ws/CTeRecepcaoSinc/CTeRecepcaosinc.asmx?wsdl")
+@WebServiceClient(name = "CteRecepcaoSinc", targetNamespace = "http://www.portalfiscal.inf.br/cte/wsdl/CteRecepcaoSinc", wsdlLocation = "https://cte.svrs.rs.gov.br/ws/CTeRecepcaosinc/CTeRecepcaosinc.asmx?wsdl")
 @HandlerChain(file="handler.xml")
 public class CteRecepcaoSinc
     extends Service
@@ -27,7 +28,7 @@ public class CteRecepcaoSinc
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://cte-homologacao.svrs.rs.gov.br/ws/CTeRecepcaoSinc/CTeRecepcaosinc.asmx?wsdl");
+            url = new URL("https://cte.svrs.rs.gov.br/ws/CTeRecepcaosinc/CTeRecepcaosinc.asmx?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

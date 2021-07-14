@@ -396,6 +396,14 @@ public class S3 {
         this.uploadFile(bucket, getPathCte(tEvento.getInfEvento().getChCTe(), "tEvento", tEvento.getInfEvento().getTpAmb()), xmlTemp);
     }
 
+    public void sendTRetCTe(TRetCTe retorno, TCTe tcTe) throws JAXBException, IOException {
+        String xml = Util.marshaller(retorno);
+        File xmlTemp = File.createTempFile(xml, ".xml");
+        String chaveCTe = Util.chaveFromCTe(tcTe);
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPathCte(chaveCTe, "TRetCTe", retorno.getTpAmb()), xmlTemp);
+    }
+
     public void sendTRetEnviCTe(TRetEnviCTe retorno, TEnviCTe tEnviCTe) throws JAXBException, IOException {
         String xml = Util.marshaller(retorno);
         File xmlTemp = File.createTempFile(xml, ".xml");
@@ -417,6 +425,15 @@ public class S3 {
         File xmlTemp = File.createTempFile(chaveCT, ".xml");
         FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
         this.uploadFile(bucket, getPathCte(chaveCT, "cteProc", cteProc.getCTe().getInfCte().getIde().getTpAmb()), xmlTemp);
+    }
+
+    public void sendCTe(String xml) throws JAXBException, IOException {
+        TCTe tcTe = (TCTe) Util.unmarshler(TCTe.class, xml);
+        String chaveCTe = Util.chaveFromCTe(tcTe);
+        File xmlTemp = File.createTempFile(chaveCTe, ".xml");
+        FileUtils.writeByteArrayToFile(xmlTemp, xml.getBytes(StandardCharsets.UTF_8));
+        this.uploadFile(bucket, getPathCte(chaveCTe, "CTe", tcTe.getInfCte().getIde().getTpAmb()), xmlTemp);
+
     }
 
     private class ContactMessage {

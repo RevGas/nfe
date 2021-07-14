@@ -1,9 +1,7 @@
 package com.fincatto.documentofiscal.cte300.parsers;
 
-import br.inf.portalfiscal.cte.TConsReciCTe;
-import br.inf.portalfiscal.cte.TEnviCTe;
-import br.inf.portalfiscal.cte.TEvento;
-import br.inf.portalfiscal.cte.TProcEvento;
+import br.inf.portalfiscal.cte.*;
+
 import java.io.StringReader;
 import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
@@ -24,6 +22,18 @@ public class CTeParser {
         JAXBElement<TEnviCTe> etEnviCTe = factoryObject.createEnviCTe(tEnviCTe);
         StringWriter stringWriter = new StringWriter();
         marshaller.marshal(etEnviCTe, stringWriter);
+        return stringWriter.toString();
+    }
+
+
+    public static String parserTCTe(TCTe tcTe) throws JAXBException {
+        br.inf.portalfiscal.cte.ObjectFactory factoryObject = new br.inf.portalfiscal.cte.ObjectFactory();
+        JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.cte");
+        Marshaller marshaller = context.createMarshaller();
+
+        JAXBElement<TCTe> tcTeJAXBElement = factoryObject.createCTe(tcTe);
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(tcTeJAXBElement, stringWriter);
         return stringWriter.toString();
     }
     
