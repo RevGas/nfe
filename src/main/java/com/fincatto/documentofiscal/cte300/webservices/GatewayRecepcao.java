@@ -173,7 +173,7 @@ public enum GatewayRecepcao {
     }
     
     public TRetEnviCTe getTRetEnviCTeSVRS(TEnviCTe tEnviCTe, CTeConfig config) throws Exception {
-        if (tEnviCTe.getCTe().get(0).getInfCte().getIde().getTpAmb().equals("1")) { // Produção
+        if (isProduction(tEnviCTe.getCTe().get(0))) { // Produção
             br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.CteDadosMsg cteDadosMsg = new br.inf.portalfiscal.cte.wsdl.cterecepcao.svrs.CteDadosMsg();
             cteDadosMsg.getContent().add(CTeParser.parserTEnviCTe(getDocumentoAssinado(tEnviCTe, config)));
 
